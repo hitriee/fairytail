@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import {View, Text} from 'react-native';
 
-function test() {
+function Map() {
   return (
-    <div>test</div>
-  )
+    <View>
+      <Text>This Screen is Map</Text>
+    </View>
+  );
 }
 
-export default test
+export default Map;

@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import {View, Text} from 'react-native';
 
-function test() {
+function MessageList() {
   return (
-    <div>test</div>
-  )
+    <View>
+      <Text>This Screen is MessageList</Text>
+    </View>
+  );
 }
 
-export default test
+export default MessageList;
