@@ -1,0 +1,110 @@
+package com.example.testcloud.Controller;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.example.testcloud.DTO.FileDto;
+import org.jcodec.api.FrameGrab;
+import org.jcodec.common.model.Picture;
+import org.jcodec.scale.AWTUtil;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Map;
+import java.util.UUID;
+@RestController
+public class FileController {
+
+    private String cloudName = "ddej9pc8r";
+
+    private String apiKey = "841597953323693";
+
+    private String apiSecret = "E9SOKeID4Qdh858OYrbNx6ApsXk";
+
+    private String rootPath = System.getProperty("user.dir");
+    Map config = ObjectUtils.asMap("cloud_name", cloudName , "api_key", apiKey , "api_secret", apiSecret, "secure", true);
+    Cloudinary cloudinary = new Cloudinary(config);
+    @GetMapping("/test")
+    public String getTest() throws Exception{
+        return null;
+    }
+
+    @PostMapping("/upload")
+    public String upload(@RequestParam MultipartFile[] uploadfile) throws Exception{
+        if (uploadfile.length != 0){
+            for (MultipartFile file : uploadfile){
+                if(!file.isEmpty()){
+                    FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
+                    String newFileName = dto.getUuid()+"_"+dto.getFileName();
+                    File filePath = new File(rootPath+"/" + dto.getUuid()+"_"+dto.getFileName());
+                    file.transferTo(filePath);
+//                    cloudinary.uploader().upload(newFileName, ObjectUtils.emptyMap());
+                }
+                return file.getContentType();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 이미지 파일 저장 후 클라우드에 저장
+     * @param files
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/image")
+    public Map imageUpload(@RequestParam MultipartFile[] files) throws Exception{
+        if(files.length != 0){
+            for (MultipartFile file : files){
+                if(!file.isEmpty()){
+                    FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
+                    String newFileName = dto.getUuid()+"_"+dto.getFileName()+"_";
+                    File filePath = new File(rootPath+"/"+newFileName);
+                    file.transferTo(filePath);
+//                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "image", "public_id", "image/" + newFileName));
+//                    filePath.delete();
+                }
+
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 동영상 파일 저장 후 클라우드에 저장
+     * @param files
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/video")
+    public Map videoUpload(@RequestParam MultipartFile[] files) throws Exception{
+        if(files.length != 0){
+            for (MultipartFile file : files){
+                if(!file.isEmpty()){
+                    FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
+                    String newFileName = dto.getUuid()+"_"+dto.getFileName();
+                    File filePath = new File(rootPath+"/"+newFileName);
+                    file.transferTo(filePath);
+//                  makeThumbNail(filePath, new File(filePath.getPath()+"_thumbnail.png"));
+//                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "video", "public_id", "image/" + newFileName));
+//                    filePath.delete();
+                }
+
+            }
+        }
+        return null;
+    }
+
+    public void makeThumbNail(File source, File thumbnail) throws Exception{
+        int frameNumber = 0;
+        Picture picture = FrameGrab.getFrameFromFile(source, frameNumber);
+        BufferedImage bufferedImage = AWTUtil.toBufferedImage(picture);
+        ImageIO.write(bufferedImage, "png", thumbnail);
+    }
+
+
+}
