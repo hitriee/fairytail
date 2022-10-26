@@ -7,9 +7,20 @@ import net.bramp.ffmpeg.builder.FFmpegBuilder;
 
 public class FfmpegUtil {
     private String winPath = "C:/Users/multicampus/Downloads/ffmpeg/bin/";
+    private String linuxPath = "/usr/bin/";
+
+    public String checkOs(){
+        String osName = System.getProperty("os.name").toLowerCase();
+        if(osName.contains("win")){
+            return winPath;
+        } else{
+            return linuxPath;
+        }
+    }
     public boolean makeThumbNail(String path) throws Exception{
-        FFmpeg ffmpeg = new FFmpeg(winPath+ "ffmpeg");
-        FFprobe ffprobe = new FFprobe(winPath + "ffprobe");
+        String osPath = checkOs();
+        FFmpeg ffmpeg = new FFmpeg(osPath+ "ffmpeg");
+        FFprobe ffprobe = new FFprobe(osPath + "ffprobe");
 
         FFmpegBuilder builder = new FFmpegBuilder()
                 .overrideOutputFiles(true)
