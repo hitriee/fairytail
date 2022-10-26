@@ -7,7 +7,6 @@ import com.example.testcloud.Util.FfmpegUtil;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +27,18 @@ public class FileController {
 
     private FfmpegUtil ffmpegUtil = new FfmpegUtil();
 
-    private String rootPath = System.getProperty("user.dir");
+    private String serverPath = "/media/video";
+    private String localPath = System.getProperty("user.dir");
+
+    public String osCheck(){
+        String osName = System.getProperty("os.name").toLowerCase();
+        if(osName.contains("win")){
+            return localPath;
+        } else{
+            return serverPath;
+        }
+    }
+
     Map config = ObjectUtils.asMap("cloud_name", cloudName , "api_key", apiKey , "api_secret", apiSecret, "secure", true);
     Cloudinary cloudinary = new Cloudinary(config);
     @GetMapping("/test")
@@ -41,9 +51,10 @@ public class FileController {
         if (uploadfile.length != 0){
             for (MultipartFile file : uploadfile){
                 if(!file.isEmpty()){
+                    String rootPath = osCheck();
                     FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
                     String newFileName = dto.getUuid()+"_"+dto.getFileName();
-                    File filePath = new File(rootPath+"/" + dto.getUuid()+"_"+dto.getFileName());
+                    File filePath = new File(rootPath +"/" + dto.getUuid()+"_"+dto.getFileName());
                     file.transferTo(filePath);
 //                    cloudinary.uploader().upload(newFileName, ObjectUtils.emptyMap());
                 }
@@ -64,9 +75,10 @@ public class FileController {
         if(files.length != 0){
             for (MultipartFile file : files){
                 if(!file.isEmpty()){
+                    String rootPath = osCheck();
                     FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
                     String newFileName = dto.getUuid()+"_"+dto.getFileName()+"_";
-                    File filePath = new File(rootPath+"/"+newFileName);
+                    File filePath = new File(rootPath +"/"+newFileName);
                     file.transferTo(filePath);
 //                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "image", "public_id", "image/" + newFileName));
 //                    filePath.delete();
@@ -90,13 +102,14 @@ public class FileController {
                 if(!file.isEmpty()){
                     FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
                     String newFileName = dto.getUuid()+"_"+dto.getFileName();
-                    File filePath = new File(rootPath+"/"+newFileName);
+                    String rootPath = osCheck();
+                    File filePath = new File(rootPath +"/"+newFileName);
                     file.transferTo(filePath);
-                    boolean check = ffmpegUtil.makeThumbNail(rootPath+"/"+newFileName);
+                    boolean check = ffmpegUtil.makeThumbNail(rootPath +"/"+newFileName);
                     if(check){
-                        return "성공" + filePath.getPath();
+                        return "성공";
                     } else{
-                        return "썸네일 실패" + filePath.getPath();
+                        return "썸네일 실패";
                     }
 //                  makeThumbNail(filePath, new File(filePath.getPath()+"_thumbnail.png"));
 //                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "video", "public_id", "image/" + newFileName));
