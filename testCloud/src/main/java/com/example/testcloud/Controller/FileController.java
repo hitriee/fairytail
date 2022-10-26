@@ -3,6 +3,7 @@ package com.example.testcloud.Controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.testcloud.DTO.FileDto;
+import com.example.testcloud.Util.FfmpegUtil;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
@@ -24,6 +25,8 @@ public class FileController {
     private String apiKey = "841597953323693";
 
     private String apiSecret = "E9SOKeID4Qdh858OYrbNx6ApsXk";
+
+    private FfmpegUtil ffmpegUtil = new FfmpegUtil();
 
     private String rootPath = System.getProperty("user.dir");
     Map config = ObjectUtils.asMap("cloud_name", cloudName , "api_key", apiKey , "api_secret", apiSecret, "secure", true);
@@ -81,7 +84,7 @@ public class FileController {
      * @throws Exception
      */
     @PostMapping("/video")
-    public Map videoUpload(@RequestParam MultipartFile[] files) throws Exception{
+    public String videoUpload(@RequestParam MultipartFile[] files) throws Exception{
         if(files.length != 0){
             for (MultipartFile file : files){
                 if(!file.isEmpty()){
@@ -89,6 +92,12 @@ public class FileController {
                     String newFileName = dto.getUuid()+"_"+dto.getFileName();
                     File filePath = new File(rootPath+"/"+newFileName);
                     file.transferTo(filePath);
+                    boolean check = ffmpegUtil.makeThumbNail(rootPath+"/"+newFileName);
+                    if(check){
+                        return "성공" + filePath.getPath();
+                    } else{
+                        return "썸네일 실패" + filePath.getPath();
+                    }
 //                  makeThumbNail(filePath, new File(filePath.getPath()+"_thumbnail.png"));
 //                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "video", "public_id", "image/" + newFileName));
 //                    filePath.delete();
@@ -96,7 +105,7 @@ public class FileController {
 
             }
         }
-        return null;
+        return "파일 업로드 실패";
     }
 
     public void makeThumbNail(File source, File thumbnail) throws Exception{
