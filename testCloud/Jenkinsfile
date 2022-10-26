@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    stages {
+        stage("git"){ //git에 브랜치 url, credentialsId는 젠킨스에 등록한 인증으로
+            steps{
+                git branch: 'feature/be-contentTest', credentialsId: 'gitIDPW', url: 'https://lab.ssafy.com/s07-final/S07P31C209.git'
+            }
+        }
+        stage('build') {
+            steps{
+                sh "ls -a"
+                dir('testCloud') { //gradle 권한 설정 후 gradle로 도커 이미지 빌드하는 명령어 실행
+                    script{
+                        try{
+                            sh "chmod +x gradlew"
+                            sh "./gradlew bootBuildImage --imageName=test"
+                        } catch(e){
+                            echo "fail build"
+                        }
+                    }
+                    script{ //이미 실행 중인 컨테이너가 있으면 중지 후 삭제
+                        try{
+                            sh "docker stop test"
+                            sh "docker rm test"
+                        } catch(e){
+                            echo "container none"
+                        }
+                    } //8083 포트에서 spring이라는 이미지를 spring이라는 컨테이너이름으로 설정해서 실행
+                    sh "docker run -d -p 8082:8082 --name test test"
+                }
+            }
+        }
+    }
+}
