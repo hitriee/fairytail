@@ -35,7 +35,7 @@ public class FileController {
         if(osName.contains("win")){
             return localPath;
         } else{
-            return serverPath;
+            return localPath;
         }
     }
 
