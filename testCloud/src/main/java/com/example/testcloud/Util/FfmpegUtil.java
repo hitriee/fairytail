@@ -9,6 +9,7 @@ import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 
 public class FfmpegUtil{
     private String osPath = System.getProperty("user.dir")+"/ffmpeg/";
+    private String winPath = System.getProperty("user.dir")+"/winffmpeg/";
     public boolean makeThumbNail(String path) throws Exception{
         FFmpeg ffmpeg = new FFmpeg(osPath+ "ffmpeg");
         FFprobe ffprobe = new FFprobe(osPath + "ffprobe");
