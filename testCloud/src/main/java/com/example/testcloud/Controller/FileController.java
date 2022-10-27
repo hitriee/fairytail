@@ -104,6 +104,8 @@ public class FileController {
                     String newFileName = dto.getUuid()+"_"+dto.getFileName();
                     String rootPath = osCheck();
                     File filePath = new File(rootPath +"/"+newFileName);
+                    filePath.setWritable(true);
+                    filePath.setReadable(true);
                     file.transferTo(filePath);
                     boolean check = ffmpegUtil.makeThumbNail(rootPath +"/"+newFileName);
                     if(check){
