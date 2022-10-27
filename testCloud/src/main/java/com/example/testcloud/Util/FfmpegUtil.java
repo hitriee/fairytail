@@ -6,7 +6,7 @@ import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 
 public class FfmpegUtil {
-    private String winPath = System.getProperty("user.dir");
+    private String winPath = System.getProperty("user.dir")+"/";
     private String linuxPath = "/usr/bin/";
 
     public String checkOs(){
