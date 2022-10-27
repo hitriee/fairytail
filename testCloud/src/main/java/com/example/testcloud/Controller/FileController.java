@@ -108,8 +108,9 @@ public class FileController {
                     filePath.setReadable(true);
                     file.transferTo(filePath);
                     boolean check = ffmpegUtil.makeThumbNail(rootPath +"/"+newFileName);
+                    String result = ffmpegUtil.checkTime(rootPath+"/"+ newFileName);
                     if(check){
-                        return "성공";
+                        return "성공" + " " + result;
                     } else{
                         return "썸네일 실패";
                     }
