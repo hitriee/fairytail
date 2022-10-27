@@ -27,7 +27,7 @@ public class FileController {
 
     private FfmpegUtil ffmpegUtil = new FfmpegUtil();
 
-    private String serverPath = "/media/video";
+    private String serverPath = "workspace/media/video";
     private String localPath = System.getProperty("user.dir");
 
     public String osCheck(){
@@ -35,7 +35,7 @@ public class FileController {
         if(osName.contains("win")){
             return localPath;
         } else{
-            return localPath;
+            return serverPath;
         }
     }
 
