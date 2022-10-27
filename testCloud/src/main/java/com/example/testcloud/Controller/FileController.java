@@ -27,7 +27,7 @@ public class FileController {
 
     private FfmpegUtil ffmpegUtil = new FfmpegUtil();
 
-    private String serverPath = "workspace/media/video";
+    private String serverPath = System.getProperty("user.dir")+"/media/video" ;
     private String localPath = System.getProperty("user.dir");
 
     public String osCheck(){
