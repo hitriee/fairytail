@@ -10,16 +10,6 @@ pipeline {
             steps{
                 sh "ls -a"
                 dir('testCloud') { //gradle 권한 설정 후 gradle로 도커 이미지 빌드하는 명령어 실행
-                    script{ //이미 실행 중인 컨테이너가 있으면 중지 후 삭제
-                        try{
-                            sh "docker stop test"
-                            sh "docker rm test"
-                            sh "docker rmi test"
-                        } catch(e){
-                            echo "container none"
-                            echo "image none"
-                        }
-                    }
                     script{
                         try{
                             sh "chmod +x gradlew"
@@ -28,8 +18,17 @@ pipeline {
                             echo "fail build"
                         }
                     }
+                    script{ //이미 실행 중인 컨테이너가 있으면 중지 후 삭제
+                        try{
+                            sh "docker stop test"
+                            sh "docker rm test"
+                        } catch(e){
+                            echo "container none"
+                        }
+                    }
                     //8083 포트에서 spring이라는 이미지를 spring이라는 컨테이너이름으로 설정해서 실행
                     sh "docker run -d -p 8082:8082 -v /home/ubuntu/back/ffmpeg:/workspace/ffmpeg -v /home/ubuntu/back/media/video:/workspace/media/video --name test test"
+                    sh "docker rmi $(docker images -f "dangling=true" -q)"
                 }
             }
         }
