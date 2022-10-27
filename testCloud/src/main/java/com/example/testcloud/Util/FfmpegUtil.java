@@ -6,7 +6,7 @@ import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 
 public class FfmpegUtil {
-    private String winPath = "C:/Users/multicampus/Downloads/ffmpeg/bin/";
+    private String winPath = System.getProperty("user.dir");
     private String linuxPath = "/usr/bin/";
 
     public String checkOs(){
@@ -14,7 +14,7 @@ public class FfmpegUtil {
         if(osName.contains("win")){
             return winPath;
         } else{
-            return linuxPath;
+            return winPath;
         }
     }
     public boolean makeThumbNail(String path) throws Exception{
