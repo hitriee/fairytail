@@ -8,9 +8,19 @@ import net.bramp.ffmpeg.probe.FFmpegFormat;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 
 public class FfmpegUtil{
-    private String osPath = System.getProperty("user.dir")+"/ffmpeg/";
+    private String serverPath = System.getProperty("user.dir")+"/ffmpeg/";
     private String winPath = System.getProperty("user.dir")+"/winffmpeg/";
+
+    public String checkOs(){
+        String osName = System.getProperty("os.name").toLowerCase();
+        if(osName.contains("win")){
+            return winPath;
+        } else{
+            return serverPath;
+        }
+    }
     public boolean makeThumbNail(String path) throws Exception{
+        String osPath = checkOs();
         FFmpeg ffmpeg = new FFmpeg(osPath+ "ffmpeg");
         FFprobe ffprobe = new FFprobe(osPath + "ffprobe");
         FFmpegBuilder builder = new FFmpegBuilder()
@@ -27,6 +37,7 @@ public class FfmpegUtil{
     }
 
     public String checkTime(String path) throws Exception{
+        String osPath = checkOs();
         FFprobe ffprobe = new FFprobe(osPath + "ffprobe");
         FFmpegProbeResult probeResult = ffprobe.probe(path);
         FFmpegFormat format = probeResult.getFormat();
