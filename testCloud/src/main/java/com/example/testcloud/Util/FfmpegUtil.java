@@ -36,13 +36,12 @@ public class FfmpegUtil{
         return true;
     }
 
-    public String checkTime(String path) throws Exception{
+    public double checkTime(String path) throws Exception{
         String osPath = checkOs();
         FFprobe ffprobe = new FFprobe(osPath + "ffprobe");
         FFmpegProbeResult probeResult = ffprobe.probe(path);
         FFmpegFormat format = probeResult.getFormat();
         double second = format.duration;
-        String result = second + "";
-        return result;
+        return second;
     }
 }

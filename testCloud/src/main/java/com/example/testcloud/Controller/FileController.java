@@ -25,6 +25,7 @@ public class FileController {
 
     private String apiSecret = "E9SOKeID4Qdh858OYrbNx6ApsXk";
 
+
     private FfmpegUtil ffmpegUtil = new FfmpegUtil();
 
     private String serverPath = System.getProperty("user.dir")+"/media/video" ;
@@ -46,6 +47,12 @@ public class FileController {
         return null;
     }
 
+    /**
+     *
+     * @param uploadfile
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/upload")
     public String upload(@RequestParam MultipartFile[] uploadfile) throws Exception{
         if (uploadfile.length != 0){
@@ -83,7 +90,6 @@ public class FileController {
 //                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "image", "public_id", "image/" + newFileName));
 //                    filePath.delete();
                 }
-
             }
         }
         return null;
@@ -108,7 +114,7 @@ public class FileController {
                     filePath.setReadable(true);
                     file.transferTo(filePath);
                     boolean check = ffmpegUtil.makeThumbNail(rootPath +"/"+newFileName);
-                    String result = ffmpegUtil.checkTime(rootPath+"/"+ newFileName);
+                    double result = ffmpegUtil.checkTime(rootPath+"/"+ newFileName);
                     if(check){
                         return "성공" + " " + result;
                     } else{
@@ -118,7 +124,6 @@ public class FileController {
 //                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "video", "public_id", "image/" + newFileName));
 //                    filePath.delete();
                 }
-
             }
         }
         return "파일 업로드 실패";
@@ -130,6 +135,4 @@ public class FileController {
         BufferedImage bufferedImage = AWTUtil.toBufferedImage(picture);
         ImageIO.write(bufferedImage, "png", thumbnail);
     }
-
-
 }
