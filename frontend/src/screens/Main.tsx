@@ -1,9 +1,11 @@
 import React from "react";
+import Room from "../components/room/Room";
 
 function Main() {
   return (
     <>
-      <p>this is main</p>
+      <Room />
+      {/* <p>this is main</p> */}
     </>
   );
 }
