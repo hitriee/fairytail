@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-three/drei": "^9.37.1",
+    "@react-three/fiber": "^8.8.10",
+    "maath": "^0.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-globe.gl": "^2.22.4",
     "react-scripts": "5.0.1",
+    "three": "^0.146.0",
+    "three-conic-polygon-geometry": "^1.5.2",
+    "three-geojson-geometry": "^1.1.8",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -16,6 +23,7 @@
     "@types/node": "^16.18.2",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
+    "@types/three": "^0.144.0",
     "typescript": "^4.8.4"
   },
   "scripts": {

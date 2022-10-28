@@ -14,14 +14,14 @@ import Settings from './screens/Settings';
 function App() {
   return (
     <>
-      <Main />
+      {/* <Main />
       <MessageCreate />
       <MessageDetail />
       <MessageList />
-      <MessageVR />
+      <MessageVR /> */}
       <Globe />
-      <Map />
-      <Settings />
+      {/* <Map />
+      <Settings /> */}
     </>
   );
 }

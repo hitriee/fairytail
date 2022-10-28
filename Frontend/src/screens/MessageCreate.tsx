@@ -1,11 +1,10 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 
 function MessageCreate() {
   return (
-    <View>
-      <Text>This Screen is MessageCreate</Text>
-    </View>
+    <>
+      <p>This Screen is MessageCreate</p>
+    </>
   );
 }
 
