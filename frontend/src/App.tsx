@@ -1,31 +1,29 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import './App.scss';
+import './App.css';
 
-// route
-import Intro from './screens/Intro';
+// Screens
 import Main from './screens/Main';
-import Globe from './screens/Globe';
-import Map from './screens/Map';
-import MessageList from './screens/MessageList';
 import MessageCreate from './screens/MessageCreate';
 import MessageDetail from './screens/MessageDetail';
-import VR from './screens/VR';
+import MessageList from './screens/MessageList';
+import MessageVR from './screens/MessageVR';
+import Globe from './screens/Globe';
+import Map from './screens/Map';
+import Settings from './screens/Settings';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/globe" element={<Globe />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/vr" element={<VR />} />
-        <Route path="/message/list" element={<MessageList />} />
-        <Route path="/message/create" element={<MessageCreate />} />
-        <Route path="/message/detail" element={<MessageDetail />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      {/* <Main />
+      <MessageCreate />
+      <MessageDetail />
+      <MessageList />
+      <MessageVR /> */}
+      <Globe />
+      {/* <Map />
+      <Settings /> */}
+    </>
   );
 }
+
 export default App;
