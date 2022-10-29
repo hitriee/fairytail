@@ -1,13 +1,9 @@
-import React from "react";
-import "../styles/_utils.scss";
-import "./MessageCreate.scss";
+import React from 'react';
 
 function MessageCreate() {
   return (
     <>
-      <div id="create">
-        <h1>하이용!</h1>
-      </div>
+      <p>This Screen is MessageCreate</p>
     </>
   );
 }
