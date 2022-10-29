@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import "./Carousel.scss";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -7,9 +7,12 @@ import { EffectCoverflow } from "swiper";
 import { debounce } from "lodash";
 import { emojiArr } from "../../assets/emojis";
 
-function Carousel() {
+type CarouselProps = {
+  onSlideChange: Dispatch<SetStateAction<number>>;
+};
+
+function Carousel({ onSlideChange }: CarouselProps) {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   const handleResize = debounce(() => {
     setWindowSize(window.innerWidth);
@@ -47,6 +50,7 @@ function Carousel() {
         slideShadows: false,
       }}
       modules={[EffectCoverflow]}
+      onSlideChange={(swiper) => onSlideChange(swiper.realIndex)}
     >
       {emojiArr.map((item, index) => {
         return (

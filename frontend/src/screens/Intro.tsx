@@ -6,7 +6,7 @@ function Intro() {
     <>
       <p>This Screen is Intro</p>
       <div>
-        <Link to="main">
+        <Link to="/main">
           <button>go Main</button>
         </Link>
       </div>

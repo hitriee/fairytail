@@ -1,20 +1,103 @@
-.Screen {
+@font-face {
+  font-family: "PretendardVariable";
+  src: url("../styles/fonts/PretendardVariable.ttf") format("truetype");
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "PretendardVariable";
+  font-weight: 500;
+}
+
+.screen {
   display: flex;
   justify-content: center;
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-evenly;
+  background-color: black;
+}
+
+.header {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-area {
+  height: 60vh;
+  width: 80%;
+  padding: 3vh;
+  background-color: #ffffff;
+  box-shadow: inset -5px -5px 4px rgba(91, 91, 91, 0.65);
+  border-radius: 4vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+input,
+textarea {
+  border: 0;
+  text-align: center;
+  resize: none;
+  outline: none;
+}
+
+.title {
+  width: 100%;
+  font-size: 3vh;
+  font-weight: 600;
+  border-bottom: 3px solid #cccccc;
+  padding-bottom: 1vh;
+}
+
+.content {
+  width: 100%;
+  font-size: 2.5vh;
+}
+
+.file {
+  font-size: 2vh;
+  color: #b49aff;
+}
+
+.save-area {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit {
+  border: 1px solid #b49aff55;
+  background-color: white;
+  color: #b49aff;
+  border-radius: 4vh;
+  padding: 0.5vh 2.5vw;
+  font-size: 2vh;
+}
+
+.submit:hover {
+  color: white;
+  background-color: #b49aff;
+}
+
 @media (max-device-aspect-ratio: 9 / 16) {
-  .Container {
+  .container {
     height: 100vh;
     width: 100vw;
-    background-color: aqua;
   }
 }
 
 @media (min-device-aspect-ratio: 9 / 16) {
-  .Container {
+  .container {
     height: 100vh;
     width: 56vh;
-    background-color: red;
   }
 }
