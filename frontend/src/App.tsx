@@ -24,7 +24,7 @@ function App() {
         <Route path="/message/list" element={<MessageList />} />
         <Route path="/message/create" element={<MessageCreate />} />
         <Route path="/message/detail" element={<MessageDetail />} />
-        <Route path="/message/detail" element={<MessageDetail />} />
+        <Route path="/message/update" element={<MessageCreate />} />
       </Routes>
     </BrowserRouter>
   );

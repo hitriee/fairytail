@@ -1,0 +1,12 @@
+#detail {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  .card {
+    flex-wrap: wrap;
+    background-color: aliceblue;
+    border-width: 10px;
+    border-color: black;
+  }
+}

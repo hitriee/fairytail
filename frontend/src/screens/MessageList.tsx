@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 function MessageList() {
   return (
     <>
-      <p>This Screen is MessageList</p>
+      <p>this is MessageList</p>
     </>
   );
 }
