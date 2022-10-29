@@ -1,14 +1,15 @@
 import React from "react";
 import "../styles/_utils.scss";
 import "./MessageCreate.scss";
+import Carousel from "../components/messageCreate/Carousel";
 
 function MessageCreate() {
   return (
-    <>
-      <div id="create">
-        <h1>하이용!</h1>
+      <div className="Screen">
+        <div className="Container">
+          <Carousel />
+        </div>
       </div>
-    </>
   );
 }
 
