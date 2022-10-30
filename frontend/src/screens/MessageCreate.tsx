@@ -6,8 +6,11 @@ import Toggle from "../components/messageCreate/Toggle";
 import { HiArrowLeft } from "react-icons/hi2";
 import Message, { Content } from "../components/messageCreate/Message";
 import useGeolocation from "../apis/useGeolocation";
+import Loading from "../components/loading/Loading";
 
 function MessageCreate() {
+  const [loading, setLoading] = useState(false);
+
   const [emojiNo, setEmojiNo] = useState(0);
   const [content, setContent] = useState<Content>({
     title: "",
@@ -20,6 +23,14 @@ function MessageCreate() {
   function useSubmit() {
     const location = useGeolocation();
 
+    setLoading(true);
+
+    // 서버 통신
+    const timer = setTimeout(() => {
+      console.log("3초 정지");
+      // setLoading(false);
+    }, 3000);
+
     console.log(emojiNo);
     console.log(content);
     console.log(isShare);
@@ -28,6 +39,8 @@ function MessageCreate() {
 
   return (
     <div className="screen">
+      {loading ? <Loading /> : null}
+
       <div className="container">
         <div className="header">
           <Link to="/main">
