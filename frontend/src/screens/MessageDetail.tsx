@@ -1,72 +1,62 @@
-import React, { useEffect, useState } from "react";
+import { useState, useRef } from "react";
 import NavBar from "../components/common/NavBar";
-import skull from "../assets/images/skull.png";
-import heart from "../assets/images/red-heart.png";
-import unlike from "../assets/images/unlike.png";
-import love from "../assets/images/like.png";
+import Content from "../components/messageDetail/Content";
+import Like from "../components/messageDetail/Like";
+import dummy from "../components/messageDetail/dummy";
+import wave from "../assets/images/wave.png";
+import milkyway from "../assets/images/milkyway.jpg";
 import "./MessageDetail.scss";
 import "../styles/_utils.scss";
 
+import domToImage from "dom-to-image";
+import { saveAs } from "file-saver";
+
 function MessageDetail() {
+  const detail = useRef(null!);
   // 현재 사용자 정보
   const username = "나원경";
-  // 백에서 글 정보 받아오기
-  // 더미 데이터
-  const [title, content, count, like, date, author] = [
-    "제목입니다",
-    "내용입니다",
-    121,
-    true,
-    new Date(),
-    "원경",
-  ];
-  const isMine = author === username;
-  const [myLike, setLike] = useState(like);
-  const [more, setMore] = useState(false);
+  // dummy => 더미 데이터
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
+  const types = ["text", "image", "video", "voice"];
+  // 백에서 받아올 정보 - 제목, 내용/url, 좋아요 수, 작성일, 작성자, 글 유형, 풍선 번호
+  // const [title, content, count, like, date, author, type] = dummy[0];
+  // const [title, content, count, like, date, author, type] = dummy[1];
+  // const [title, content, count, like, date, author, type] = dummy[2];
+  // const [title, content, count, like, date, author, type] = dummy[3];
+  const [title, content, count, like, date, author, type] = dummy[4];
+  const isMine = author === username;
+  const [more, setMore] = useState(false);
+
+  const hiddenMenu = () => (more ? setMore(false) : null);
+  const showMenu = () => setMore(true);
   const modifiedDate = () =>
     `${date.getFullYear()}.${date.getMonth()}.${date.getDate()} (${
       weekday[date.getDay()]
     }) ${date.getHours()}:${date.getMinutes()}`;
-  const changeLike = () => {
-    if (!isMine) {
-      setLike(!myLike);
-      console.log("백에 like 변경 요청?");
-    }
-  };
-  // 아니면 나갈 때만 요청
+  // const detail = document.querySelector("#detail")!;
+
   return (
-    <div>
-      <NavBar isMine={isMine} />
-      <div id="detail">
-        <div className="aurora">
-          <p>글 관련 (물결 모양) </p>
-          <p>{title}</p>
-          <div className="card">
-            <p>{content}</p>
-            <p>{modifiedDate()}</p>
-          </div>
-        </div>
-        <p>{count}</p>
-        {/* <img src={heart} alt="like" /> */}
-        {myLike ? (
-          <img
-            src={love}
-            alt="like"
-            style={{ width: 10 }}
-            onClick={changeLike}
+    <>
+      <img className="background" src={milkyway} alt="배경" />
+      <main id="detail" onClick={hiddenMenu}>
+        <img src={wave} className="wave" alt="파도 모양" />
+        <NavBar
+          isMine={isMine}
+          more={more}
+          showMenu={showMenu}
+          detail={detail}
+        />
+        <section className="core" ref={detail}>
+          <Content
+            title={title}
+            content={content}
+            type={type}
+            date={modifiedDate()}
           />
-        ) : (
-          <img
-            src={unlike}
-            alt="unlike"
-            style={{ width: 10 }}
-            onClick={changeLike}
-          />
-        )}
-        <img src={skull} alt="skull" style={{ width: 30 }} />
-      </div>
-    </div>
+          <Like count={count} like={like} isMine={isMine} />
+        </section>
+      </main>
+    </>
   );
 }
 

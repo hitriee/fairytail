@@ -7,11 +7,11 @@ interface props {
   onConfirmed?: () => void;
 }
 
-function Confirm({ title, message, open, onConfirmed }: props) {
+function Alert({ title, message, open, onConfirmed }: props) {
   return (
     <>
       {open ? (
-        <div className="card">
+        <div id="alert">
           <p>{title}</p>
           <p>{message}</p>
           <button onClick={onConfirmed}>확인</button>
@@ -21,4 +21,4 @@ function Confirm({ title, message, open, onConfirmed }: props) {
   );
 }
 
-export default Confirm;
+export default Alert;
