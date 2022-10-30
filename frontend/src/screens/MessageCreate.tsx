@@ -4,14 +4,23 @@ import "./MessageCreate.scss";
 import Carousel from "../components/messageCreate/Carousel";
 import Toggle from "../components/messageCreate/Toggle";
 import { HiArrowLeft } from "react-icons/hi2";
-import Content from "../components/messageCreate/Content";
+import Message, { Content } from "../components/messageCreate/Message";
 
 function MessageCreate() {
   const [emojiNo, setEmojiNo] = useState(0);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState(null);
-  const [contentType, setContentType] = useState(0);
+  const [content, setContent] = useState<Content>({
+    title: "",
+    type: "string",
+    file: null,
+    fileURL: "",
+  });
   const [isShare, setIsShare] = useState(false);
+
+  const submitMessage = () => {
+    console.log(emojiNo);
+    console.log(content);
+    console.log(isShare);
+  };
 
   return (
     <div className="screen">
@@ -23,18 +32,13 @@ function MessageCreate() {
         </div>
 
         <Carousel onSlideChange={setEmojiNo} />
-        <div className="create-area">
-          <input
-            className="title"
-            placeholder="제목을 입력하세요."
-            maxLength={10}
-          />
 
-          <Content />
+        <div className="card">
+          <Message mode="create" content={content} setContent={setContent} />
 
-          <div className="save-area">
+          <div className="save-container">
             <Toggle label="✨ 공개 여부" onClick={setIsShare} />
-            <button className="submit" onClick={() => console.log(emojiNo)}>
+            <button className="btn" onClick={submitMessage}>
               등록
             </button>
           </div>

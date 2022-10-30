@@ -18,7 +18,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-content: space-evenly;
+  align-content: center;
   background-color: black;
 }
 
@@ -28,7 +28,7 @@
   justify-content: space-between;
 }
 
-.create-area {
+.card {
   height: 60vh;
   width: 80%;
   padding: 3vh;
@@ -37,7 +37,7 @@
   border-radius: 4vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -49,38 +49,31 @@ textarea {
   outline: none;
 }
 
-.title {
-  width: 100%;
-  font-size: 3vh;
-  font-weight: 600;
-  border-bottom: 3px solid #cccccc;
-  padding-bottom: 1vh;
-}
-
 .file {
   font-size: 2vh;
   color: #b49aff;
 }
 
-.save-area {
+.save-container {
   width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.submit {
+.btn {
   border: 1px solid #b49aff55;
   background-color: white;
   color: #b49aff;
   border-radius: 4vh;
   padding: 0.5vh 2.5vw;
   font-size: 2vh;
-}
+  cursor: pointer;
 
-.submit:hover {
-  color: white;
-  background-color: #b49aff;
+  &:hover {
+    color: white;
+    background-color: #b49aff;
+  }
 }
 
 @media (max-device-aspect-ratio: 9 / 16) {
