@@ -1,9 +1,18 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Intro.scss";
+import { ReactComponent as Intro_logo } from "../assets/images/intro_logo.svg";
 
 function Intro() {
   return (
     <>
-      <p>This Screen is Intro</p>
+      <div id="intro">
+        <Intro_logo className="introLogo" />
+
+        <Link to="main">
+          <button>go Main</button>
+        </Link>
+      </div>
     </>
   );
 }
