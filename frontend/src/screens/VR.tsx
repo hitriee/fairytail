@@ -7,7 +7,6 @@ import {
   Image,
   Cursor,
   Sky,
-  Entity,
 } from '@belivvr/aframe-react';
 import {emojiArr} from '../assets/emojis';
 
@@ -25,29 +24,79 @@ AFRAME.registerComponent('clickhandler', {
 });
 
 function VR() {
+  const data = [
+    {like_cnt: 0, emoji_no: 0, post_id: 0},
+    {like_cnt: 1, emoji_no: 1, post_id: 1},
+    {like_cnt: 2, emoji_no: 2, post_id: 2},
+    {like_cnt: 3, emoji_no: 3, post_id: 3},
+    {like_cnt: 4, emoji_no: 4, post_id: 4},
+  ];
+
+  const maxX = 5;
+  const minX = -5;
+  const maxY = 10;
+  const minY = 1;
+  const maxZ = 5;
+  const minZ = -5;
+
+  const minSize = 0.15;
+  const maxSize = 0.5;
+
+  let emojis = data.map(({like_cnt, emoji_no, post_id}) => {
+    <Image
+      src={emojiArr[emoji_no]}
+      height={like_cnt > 2 ? 0.5 : 0.15}
+      width={like_cnt > 2 ? 0.5 : 0.15}
+      rotation={{x: 0, y: 0, z: 0}}
+      position={{x: 0, y: 1, z: -1}}
+      shader="standard"
+      clickhandler={`txt.${post_id}`}
+    />;
+  });
+
+  const test = () => {
+    let arr: typeof Image[] = [];
+    for (let i = 0; i < 5; i++) {
+      return (
+        <Image
+          src={emojiArr[0]}
+          height={0.15}
+          width={0.15}
+          rotation={{x: 0, y: 0, z: 0}}
+          position={{x: 0, y: 1, z: -1}}
+          shader="standard"
+          clickhandler="txt:img!"
+        />
+      );
+    }
+    return arr;
+  };
+
   return (
     <Scene cursor="rayOrigin: mouse">
-      <Assets>
-        <img
-          id="city"
-          src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg"
-        />
-        <img id="test" src={emojiArr[0]} alt="테스트" />
-      </Assets>
-
-      <Sky id="" src="#city" />
-
-      <Entity />
+      <Sky color="#00FF00" />
 
       <Image
-        src="#test"
-        opacity={1}
-        width={1}
-        position={{x: 1, y: 0.7, z: 0}}
-        billboard
+        src={emojiArr[0]}
+        height={0.15}
+        width={0.15}
+        rotation={{x: 0, y: 0, z: 0}}
+        position={{x: 0, y: 1, z: -1}}
+        shader="standard"
+        clickhandler="txt:img!"
       />
 
-      <Box
+      {/* <Image
+        src={emojiArr[0]}
+        height={0.5}
+        width={0.5}
+        rotation={{x: 0, y: 0, z: 0}}
+        position={{x: 0, y: 2, z: -1}}
+        shader="standard"
+        clickhandler="txt:img!"
+      /> */}
+
+      {/* <Box
         position={{x: -5, y: 10, z: -5}}
         rotation={{x: 0, y: 45, z: 0}}
         color="#ff3c00"
@@ -94,10 +143,9 @@ function VR() {
         rotation={{x: 0, y: 45, z: 0}}
         color="#ff00bf"
         clickhandler="txt:box8"
-      />
+      /> */}
 
       <Camera
-        near={1}
         wasdControlsEnabled={false}
         orbit-controls="
         autoRotate: true;
@@ -107,33 +155,8 @@ function VR() {
         initialPosition: 0 0 0;
         minPolarAngle: 0;
         maxPolarAngle: 90;
-      ">
-        <Cursor
-          id="cursor"
-          animation__click={{
-            property: 'scale',
-            from: '0.1 0.1 0.1',
-            to: '1 1 1',
-            easing: 'easeInCubic',
-            dur: 150,
-            startEvents: ['click'],
-          }}
-          animation__clickreset={{
-            property: 'scale',
-            to: '0.1 0.1 0.1',
-            dur: 1,
-            startEvents: ['animationcomplete__click'],
-          }}
-          animation__fusing={{
-            property: 'scale',
-            from: '1 1 1',
-            to: '0.1 0.1 0.1',
-            easing: 'easeInCubic',
-            dur: 150,
-            startEvents: ['fusing'],
-          }}
-        />
-      </Camera>
+      "
+      />
     </Scene>
   );
 }
