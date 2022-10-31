@@ -103,30 +103,36 @@ public class FileController {
      */
     @PostMapping("/video")
     public String videoUpload(@RequestParam MultipartFile[] files) throws Exception{
-        if(files.length != 0){
-            for (MultipartFile file : files){
-                if(!file.isEmpty()){
-                    FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
-                    String newFileName = dto.getUuid()+"_"+dto.getFileName();
-                    String rootPath = osCheck();
-                    File filePath = new File(rootPath +"/"+newFileName);
-                    filePath.setWritable(true);
-                    filePath.setReadable(true);
-                    file.transferTo(filePath);
-                    boolean check = ffmpegUtil.makeThumbNail(rootPath +"/"+newFileName);
-                    double result = ffmpegUtil.checkTime(rootPath+"/"+ newFileName);
-                    if(check){
-                        return "성공" + " " + result;
-                    } else{
-                        return "썸네일 실패";
-                    }
+        try {
+            if(files.length != 0){
+                for (MultipartFile file : files){
+                    if(!file.isEmpty()){
+                        FileDto dto = new FileDto(UUID.randomUUID().toString(), file.getOriginalFilename(), file.getContentType());
+                        String newFileName = dto.getUuid()+"_"+dto.getFileName();
+                        String rootPath = osCheck();
+                        File filePath = new File(rootPath +"/"+newFileName);
+                        filePath.setWritable(true);
+                        filePath.setReadable(true);
+                        file.transferTo(filePath);
+                        boolean check = ffmpegUtil.makeThumbNail(rootPath +"/"+newFileName);
+                        double result = ffmpegUtil.checkTime(rootPath+"/"+ newFileName);
+                        if(check){
+                            return "성공" + " " + result;
+                        } else{
+                            return "썸네일 실패";
+                        }
 //                  makeThumbNail(filePath, new File(filePath.getPath()+"_thumbnail.png"));
-//                    Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "video", "public_id", "image/" + newFileName));
-//                    filePath.delete();
+//                  Map map = cloudinary.uploader().upload(newFileName, ObjectUtils.asMap("resource_type", "video", "public_id", "image/" + newFileName));
+//                  filePath.delete();
+                    }
                 }
+            } else{
+                return "파일 없음";
             }
+        } catch (Exception e){
+            return "파일 업로드 실패";
         }
-        return "파일 업로드 실패";
+        return null;
     }
 
     public void makeThumbNail(File source, File thumbnail) throws Exception{

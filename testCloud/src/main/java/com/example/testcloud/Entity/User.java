@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -13,14 +15,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "test_user")
 @Builder
+@DynamicInsert
+@DynamicUpdate
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;
-    private String username;
-    private Integer block_cnt;
+    @Column(name = "user_name")
+    private String userName;
+    @Column(name = "block_cnt")
+    private Integer blockCnt;
     private Integer status;
-    private Integer write_cnt;
-
+    @Column(name = "write_cnt")
+    private Integer writeCnt;
 }

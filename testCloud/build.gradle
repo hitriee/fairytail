@@ -39,6 +39,13 @@ dependencies {
 	implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.7.4'
 	// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.4'
+	implementation 'org.mapstruct:mapstruct:1.4.1.Final'
+	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+	implementation "org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE"
+
 }
 
 tasks.named('test') {
