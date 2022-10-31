@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import "./MessageCreate.scss";
-import Carousel from "../components/messageCreate/Carousel";
-import Toggle from "../components/messageCreate/Toggle";
-import { HiArrowLeft } from "react-icons/hi2";
-import Message, { Content } from "../components/messageCreate/Message";
-import useGeolocation from "../apis/useGeolocation";
-import Loading from "../components/loading/Loading";
+import {useState} from 'react';
+import {Link} from 'react-router-dom';
+import './MessageCreate.scss';
+import Carousel from '../components/messageCreate/Carousel';
+import Toggle from '../components/messageCreate/Toggle';
+import {HiArrowLeft} from 'react-icons/hi2';
+import Message, {Content} from '../components/messageCreate/Message';
+import useGeolocation from '../apis/useGeolocation';
+import Loading from '../components/loading/Loading';
 
 function MessageCreate() {
   const [loading, setLoading] = useState(false);
 
   const [emojiNo, setEmojiNo] = useState(0);
   const [content, setContent] = useState<Content>({
-    title: "",
-    type: "string",
+    title: '',
+    type: 'string',
     file: null,
-    fileURL: "",
+    fileURL: '',
   });
   const [isShare, setIsShare] = useState(false);
 
@@ -27,7 +27,7 @@ function MessageCreate() {
 
     // 서버 통신
     const timer = setTimeout(() => {
-      console.log("3초 정지");
+      console.log('3초 정지');
       // setLoading(false);
     }, 3000);
 

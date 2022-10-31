@@ -1,0 +1,25 @@
+#messageList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .container {
+    display: flex;
+    align-content: flex-start;
+    background-color: yellowgreen;
+    &-info {
+      background-color: skyblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &-balloon {
+        margin-top: 10%;
+        width: 30%;
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
+        // align-items: center;
+      }
+    }
+  }
+}

@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'PretendardVariable';
+  src: url('../src/styles/fonts/PretendardVariable.ttf') format('truetype');
+}
+
+* {
+  font-family: 'PretendardVariable';
+  font-weight: 500;
+}
+
 .App {
   text-align: center;
 }
