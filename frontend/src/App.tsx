@@ -1,16 +1,17 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.scss";
+import React from 'react';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import './App.scss';
 
 // route
-import Intro from "./screens/Intro";
-import Main from "./screens/Main";
-import Globe from "./screens/Globe";
-import Map from "./screens/Map";
-import MessageList from "./screens/MessageList";
-import MessageCreate from "./screens/MessageCreate";
-import MessageDetail from "./screens/MessageDetail";
-import VR from "./screens/VR";
+import Intro from './screens/Intro';
+import Main from './screens/Main';
+import Globe from './screens/Globe';
+import Map from './screens/Map';
+import MessageList from './screens/MessageList';
+import MessageCreate from './screens/MessageCreate';
+import MessageDetail from './screens/MessageDetail';
+import VR from './screens/VR';
+import Settings from './screens/Settings';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/message/list" element={<MessageList />} />
         <Route path="/message/create" element={<MessageCreate />} />
         <Route path="/message/detail" element={<MessageDetail />} />
-        <Route path="/message/update" element={<MessageCreate />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,0 +1,59 @@
+.music-player-container {
+  width: 90%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.track-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play-btn {
+  cursor: pointer;
+}
+
+.track {
+  width: 90%;
+  height: 2vh;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(to right, #b49aff, #001459);
+}
+
+.track-input {
+  width: 100%;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+  &:focus {
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  &::-webkit-slider-thumb {
+    height: 2vh;
+    width: 1vw;
+    background: transparent;
+    border: none;
+    outline: 0;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+}
+
+.time-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.7vh;
+}
