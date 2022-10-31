@@ -17,11 +17,11 @@
     "@types/node": "^16.18.2",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
-    "dom-to-image": "^2.6.0",
-    "file-saver": "^2.0.5",
-    "html-to-image": "^1.10.8",
     "@types/styled-components": "^5.1.26",
     "@types/three": "^0.144.0",
+    "customize-cra": "^1.0.0",
+    "dom-to-image": "^2.6.0",
+    "file-saver": "^2.0.5",
     "history": "^5.3.0",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
@@ -36,9 +36,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -60,9 +60,6 @@
     ]
   },
   "devDependencies": {
-    "html-webpack-plugin": "^5.5.0",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.1"
+    "react-app-rewired": "^2.2.1"
   }
 }

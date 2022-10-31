@@ -11,21 +11,35 @@ import MessageList from './screens/MessageList';
 import MessageCreate from './screens/MessageCreate';
 import MessageDetail from './screens/MessageDetail';
 import VR from './screens/VR';
-import Settings from './screens/Settings';
+import NotFound from './screens/NotFound';
+// import Settings from './screens/Settings';
+
+import {
+  main,
+  intro,
+  globe,
+  map,
+  vr,
+  messageList,
+  messageCreate,
+  messageDetail,
+  notFound,
+} from './apis/router';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/globe" element={<Globe />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/vr" element={<VR />} />
-        <Route path="/message/list" element={<MessageList />} />
-        <Route path="/message/create" element={<MessageCreate />} />
-        <Route path="/message/detail" element={<MessageDetail />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path={intro()} element={<Intro />} />
+        <Route path={main()} element={<Main />} />
+        <Route path={globe()} element={<Globe />} />
+        <Route path={map()} element={<Map />} />
+        <Route path={vr()} element={<VR />} />
+        <Route path={messageList()} element={<MessageList />} />
+        <Route path={messageCreate()} element={<MessageCreate />} />
+        <Route path={messageDetail()} element={<MessageDetail />} />
+        <Route path={notFound()} element={<NotFound />} />
+        {/* <Route path="/settings" element={<Settings />} /> */}
       </Routes>
     </BrowserRouter>
   );

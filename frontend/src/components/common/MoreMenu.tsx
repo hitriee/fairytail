@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import * as htmlToImg from "html-to-image";
-import { saveAs } from "file-saver";
-import Report from "../messageDetail/Report";
-import Confirm from "./Confirm";
-import Alert from "./Alert";
-import "./Common.scss";
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router';
+import domToImg from 'dom-to-image';
+import {saveAs} from 'file-saver';
+import Report from '../messageDetail/Report';
+import Confirm from './Confirm';
+import Alert from './Alert';
+import './Common.scss';
 
 interface props {
   isMine: boolean;
   detail: any;
 }
 
-function MoreMenu({ isMine, detail }: props) {
+function MoreMenu({isMine, detail}: props) {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
+  const [title, setTitle] = useState('');
+  const [message, setMessage] = useState('');
   const [openConfirm, setConfirm] = useState(false);
   const [openReport, setReport] = useState(false);
   const [openAlert, setAlert] = useState(false);
@@ -37,36 +37,36 @@ function MoreMenu({ isMine, detail }: props) {
     //   .catch((err) => {
     //     console.log(err);
     //   });
-    htmlToImg.toPng(detail.current).then((blob) => {
-      saveAs(blob, "fairytail.jpeg");
+    domToImg.toPng(detail.current).then(blob => {
+      saveAs(blob, 'fairytail.jpeg');
     });
   };
   const reportBallon = () => {
     // 신고 페이지가 필요 없을까?
-    setTitle("신고 확인");
-    setMessage("신고");
+    setTitle('신고 확인');
+    setMessage('신고');
     setReport(true);
-    console.log("신고 페이지로");
-    console.log("back에 요청 - axios");
+    console.log('신고 페이지로');
+    console.log('back에 요청 - axios');
   };
-  const toEdit = () => navigate("/message/update");
+  const toEdit = () => navigate('/message/update');
   const onDelete = () => {
-    setTitle("삭제 확인");
-    setMessage("정말 이 글을 삭제하시겠습니까?");
+    setTitle('삭제 확인');
+    setMessage('정말 이 글을 삭제하시겠습니까?');
     setConfirm(true);
-    console.log("delete");
+    console.log('delete');
     console.log(title, message, openConfirm);
   };
   const onCancel = () => {
-    console.log("cancel");
+    console.log('cancel');
     setConfirm(false);
-    setTitle("");
-    setMessage("");
+    setTitle('');
+    setMessage('');
   };
   const onAlert = () => {
     setAlert(false);
-    setTitle("");
-    setMessage("");
+    setTitle('');
+    setMessage('');
   };
   useEffect(() => {
     console.log(message);
@@ -80,7 +80,7 @@ function MoreMenu({ isMine, detail }: props) {
   //   setMessage("");
   // }, [deleted]);
   return (
-    <div className="right">
+    <>
       <main id="menu">
         {isMine ? (
           <>
@@ -95,8 +95,7 @@ function MoreMenu({ isMine, detail }: props) {
           <>
             <article
               className="button button-not center"
-              onClick={reportBallon}
-            >
+              onClick={reportBallon}>
               신고
             </article>
           </>
@@ -119,7 +118,7 @@ function MoreMenu({ isMine, detail }: props) {
         onConfirmed={onAlert}
       />
       <Report onCancel={() => setReport(false)} open={openReport} />
-    </div>
+    </>
   );
 }
 

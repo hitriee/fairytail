@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { IoArrowBack, IoEllipsisVertical } from "react-icons/io5";
-import MoreMenu from "./MoreMenu";
-import "./Common.scss";
+import {useState} from 'react';
+import {useNavigate} from 'react-router';
+import {IoArrowBack, IoEllipsisVertical} from 'react-icons/io5';
+import MoreMenu from './MoreMenu';
+import './Common.scss';
 
 interface props {
   isMine: boolean;
@@ -11,7 +11,7 @@ interface props {
   detail: any;
 }
 
-function NavBar({ isMine, more, showMenu, detail }: props) {
+function NavBar({isMine, more, showMenu, detail}: props) {
   const navigate = useNavigate();
   const toBack = () => navigate(-1);
   return (
@@ -20,13 +20,13 @@ function NavBar({ isMine, more, showMenu, detail }: props) {
         <IoArrowBack
           onClick={toBack}
           color="white"
-          className="icon-small button"
+          className="icon-medium button"
         />
         {detail ? (
           <IoEllipsisVertical
             onClick={showMenu}
             color="white"
-            className="icon-small button"
+            className="icon-medium button"
           />
         ) : (
           <div></div>

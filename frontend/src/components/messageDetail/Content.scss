@@ -1,13 +1,12 @@
-.card {
+.card-detail {
   position: relative;
   display: block;
   margin-right: auto;
   margin-left: auto;
-  // flex-wrap: wrap;
+  flex-wrap: wrap;
   background-color: white;
-  width: 20vw;
-  height: 20vw;
-  border: 1px solid black;
+  width: 15vw;
+  height: 15vw;
   border-radius: 10%;
 }
 .like {
@@ -15,14 +14,13 @@
 }
 
 .content {
-  display: block;
-  margin-top: 1.2vw;
-  margin-bottom: 1.2vw;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  justify-content: center;
   line-height: 160%;
-  // padding-top: auto;
-  // padding-bottom: auto;
-  margin-left: auto;
-  margin-right: auto;
+  justify-content: center;
+  align-items: center;
   width: 15vw;
   height: 15vw;
 }
