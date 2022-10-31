@@ -2,10 +2,10 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router';
 import domToImg from 'dom-to-image';
 import {saveAs} from 'file-saver';
-import Report from '../messageDetail/Report';
-import Confirm from './Confirm';
-import Alert from './Alert';
-import './Common.scss';
+import Report from '@messageDetail/Report';
+import Confirm from '@common/Confirm';
+import Alert from '@common/Alert';
+import '@common/Common.scss';
 
 interface props {
   isMine: boolean;
@@ -81,29 +81,31 @@ function MoreMenu({isMine, detail}: props) {
   // }, [deleted]);
   return (
     <>
-      <main id="menu">
-        {isMine ? (
-          <>
-            <article className="button button-not center" onClick={toEdit}>
-              수정
-            </article>
-            <article className="button button-not center" onClick={onDelete}>
-              삭제
-            </article>
-          </>
-        ) : (
-          <>
-            <article
-              className="button button-not center"
-              onClick={reportBallon}>
-              신고
-            </article>
-          </>
-        )}
-        <article className="button button-not center" onClick={saveBallon}>
-          저장
-        </article>
-      </main>
+      <div className="right">
+        <main id="menu">
+          {isMine ? (
+            <>
+              <article className="button button-not center" onClick={toEdit}>
+                수정
+              </article>
+              <article className="button button-not center" onClick={onDelete}>
+                삭제
+              </article>
+            </>
+          ) : (
+            <>
+              <article
+                className="button button-not center"
+                onClick={reportBallon}>
+                신고
+              </article>
+            </>
+          )}
+          <article className="button button-not center" onClick={saveBallon}>
+            저장
+          </article>
+        </main>
+      </div>
       <Confirm
         title={title}
         message={message}

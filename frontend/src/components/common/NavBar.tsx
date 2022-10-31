@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router';
 import {IoArrowBack, IoEllipsisVertical} from 'react-icons/io5';
-import MoreMenu from './MoreMenu';
 import './Common.scss';
 
 interface props {
@@ -28,11 +27,8 @@ function NavBar({isMine, more, showMenu, detail}: props) {
             color="white"
             className="icon-medium button"
           />
-        ) : (
-          <div></div>
-        )}
+        ) : null}
       </div>
-      {more ? <MoreMenu isMine={isMine} detail={detail} /> : null}
     </>
   );
 }

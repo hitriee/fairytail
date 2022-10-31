@@ -1,12 +1,13 @@
 import {useState, useRef} from 'react';
-import NavBar from '../components/common/NavBar';
-import Content from '../components/messageDetail/Content';
-import Like from '../components/messageDetail/Like';
-import dummy from '../components/messageDetail/dummy';
-import wave from '../assets/images/wave.png';
-import milkyway from '../assets/images/milkyway.jpg';
-import './MessageDetail.scss';
-import '../styles/_utils.scss';
+import NavBar from '@common/NavBar';
+import MoreMenu from '@common/MoreMenu';
+import Content from '@messageDetail/Content';
+import Like from '@messageDetail/Like';
+import dummy from '@messageDetail/dummy';
+import wave from '@images/wave.png';
+import milkyway from '@images/milkyway.jpg';
+import '@screens/MessageDetail.scss';
+import '@styles/_utils.scss';
 
 function MessageDetail() {
   const detail = useRef(null!);
@@ -15,8 +16,9 @@ function MessageDetail() {
   // dummy => 더미 데이터
   const types = ['text', 'image', 'video', 'audio'];
   // 백에서 받아올 정보 - 제목, 내용/url, 좋아요 수, 작성일, 작성자, 글 유형, 풍선 번호
-  const index = 4;
-  const [title, content, like_cnt, is_like, date, user_id, type] = dummy[index];
+  const index = 0;
+  const [title, content, like_cnt, is_like, date, user_id, type, emoji_no] =
+    dummy[index];
   const isMine = user_id === myId;
   const [more, setMore] = useState(false);
 
@@ -29,7 +31,7 @@ function MessageDetail() {
   const modifiedDate = () => `${date.getFullYear()}-${month}-${day}`;
 
   return (
-    <>
+    <div className="detail">
       <img className="background" src={milkyway} alt="배경" />
       <main id="detail" onClick={hiddenMenu}>
         <img src={wave} className="wave" alt="파도 모양" ref={detail} />
@@ -39,6 +41,7 @@ function MessageDetail() {
           showMenu={showMenu}
           detail={detail}
         />
+        {more ? <MoreMenu isMine={isMine} detail={detail} /> : null}
         <section className="core">
           <Content
             title={title}
@@ -46,10 +49,15 @@ function MessageDetail() {
             type={type}
             date={modifiedDate()}
           />
-          <Like count={like_cnt} like={is_like} isMine={isMine} />
+          <Like
+            count={like_cnt}
+            like={is_like}
+            isMine={isMine}
+            emoji={emoji_no}
+          />
         </section>
       </main>
-    </>
+    </div>
   );
 }
 

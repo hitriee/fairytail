@@ -1,5 +1,5 @@
 import {Preview} from '@components/messageCreate/Message';
-import './Content.scss';
+import '@messageDetail/Content.scss';
 interface props {
   title: string;
   content: string;

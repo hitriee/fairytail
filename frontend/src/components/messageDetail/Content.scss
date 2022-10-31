@@ -23,6 +23,17 @@
   align-items: center;
   width: 15vw;
   height: 15vw;
+  &-text {
+    white-space: normal;
+    // white-space: pre;
+    // white-space: nowrap;
+    // word-break: normal;
+    // word-break: break-all;
+    // word-break: keep-all;
+    // text-overflow: clip;
+    // text-overflow: ellipsis;
+    // https://www.funyphp.com/archive/html/12?sfl=mb_id%2C1&stx=webmaster&sst=wr_hit&sod=desc&sop=and
+  }
 }
 .center {
   text-align: center;

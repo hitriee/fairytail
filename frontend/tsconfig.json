@@ -18,8 +18,26 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
+      "@apis/*": ["src/apis/*"],
+      "@bgms/*": ["src/assets/bgms/*"],
+      "@emojis/*": ["src/assets/emojis/*"],
+      "@images/*": ["src/assets/images/*"],
       "@components/*": ["src/components/*"],
-      "@apis/*": ["src/apis/*"]
+      "@common/*": ["src/components/common/*"],
+      "@globe/*": ["src/components/globe/*"],
+      "@intro/*": ["src/components/intro/*"],
+      "@loading/*": ["src/components/loading/*"],
+      "@main/*": ["src/components/main/*"],
+      "@map/*": ["src/components/map/*"],
+      "@messageCreate/*": ["src/components/messageCreate/*"],
+      "@messageDetail/*": ["src/components/messageDetail/*"],
+      "@messageList/*": ["src/components/messageList/*"],
+      "@notification/*": ["src/components/notification/*"],
+      "@room/*": ["src/components/room/*"],
+      "@settings/*": ["src/components/settings/*"],
+      "@screens/*": ["src/screens/*"],
+      "@styles/*": ["src/styles/*"],
+      "@fonts/*": ["src/styles/fonts/*"]
     }
   },
   "include": ["src"]

@@ -8,33 +8,37 @@
   display: flex;
   flex-direction: column;
   width: 100px;
-  position: absolute;
   z-index: 1;
+  position: absolute;
   background-color: white;
   border-radius: 4%;
-  right: 0;
-  // right: 30vw;
 }
 
-#confirm {
-  width: 100px;
-  height: 70px;
+.modal {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10%;
+  align-items: center;
+  background-color: white;
   z-index: 50;
-  background-color: white;
-}
-
-#alert {
-  width: 100px;
-  height: 70px;
-  z-index: 99;
-  background-color: white;
-}
-
-#report {
-  width: 100px;
-  height: 70px;
-  z-index: 50;
-  background-color: white;
+  width: 200px;
+  &-confirm {
+    height: 70px;
+  }
+  &-alert {
+    height: 40px;
+    z-index: 99;
+  }
+  &-report {
+    height: 300px;
+  }
+  &-parent {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
 }
 
 .button {
@@ -51,23 +55,5 @@
 .right {
   display: flex;
   justify-content: flex-end;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99;
-  background-color: white;
-}
-
-.modal.openModal {
-  display: flex;
-  align-items: center;
-  /* 팝업이 열릴때 스르륵 열리는 효과 */
-  animation: modal-bg-show 0.3s;
-  background-color: white;
+  position: relative;
 }
