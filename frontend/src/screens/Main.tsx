@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Room from "../components/room/Room";
+import Loading from "../components/loading/Loading";
 
 function Main() {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+  }, [Room]);
+
   return (
     <>
-      <Room />
+      {loading ? <Room /> : <Loading />}
+      {/* {<Room /> && <div>Loading...</div>} */}
+      {/* {<Room /> ? <div>Loding...</div> : <Room />} */}
       {/* <p>this is main</p> */}
     </>
   );
