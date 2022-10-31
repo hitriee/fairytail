@@ -1,6 +1,6 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.scss";
+import React from 'react';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import './App.scss';
 
 // route
 import Intro from "./screens/Intro";

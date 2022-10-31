@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "fairytail",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,6 +14,7 @@
     "@types/node": "^16.18.2",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
+    "@types/three": "^0.144.0",
     "history": "^5.3.0",
     "node-sass": "^7.0.3",
     "node-scss": "^7.0.3",
