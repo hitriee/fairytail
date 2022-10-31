@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 function Main() {
   return (
     <>
-      <p>this is main</p>
+      <p>Hi!</p>
     </>
   );
 }
