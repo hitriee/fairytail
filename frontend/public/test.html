@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <title>Cube Layout</title>
+    <meta name="description" content="6-sided layout of images facing camera"></meta>
+    <meta property="og:image" content="https://raw.githubusercontent.com/supermedium/superframe/master/components/layout/examples/cube/preview.png"></meta>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id="img" crossorigin="anonymous" src="https://i.imgur.com/wjobVTN.jpeg" />
+        <a-mixin id="image" geometry="primitive: plane;width: 2; height: 2;" material="shader: flat; src: #img; side: double" look-at="[camera]"></a-mixin>
+      </a-assets>
+      <a-entity position="0 5 0" layout="type: dodecahedron; radius: 15">
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+      </a-entity>
+      <a-entity position="3.5 0 0" layout="type: dodecahedron; radius: 15">
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+      </a-entity>
+      <a-entity position="7 0 0" layout="type: dodecahedron; radius: 15">
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+        <a-entity mixin="image"></a-entity>
+      </a-entity>
+      <a-sky color="#ECECEC"></a-sky>
+      <a-entity camera="active: true" look-controls />
+    </a-scene>
+  </body>
+</html>
