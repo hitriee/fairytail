@@ -11,10 +11,10 @@ import '@styles/_utils.scss';
 
 function MessageDetail() {
   const detail = useRef(null!);
+  const menu = useRef<HTMLSpanElement>(null!);
   // 현재 사용자 정보
   const myId = 1;
   // dummy => 더미 데이터
-  const types = ['text', 'image', 'video', 'audio'];
   // 백에서 받아올 정보 - 제목, 내용/url, 좋아요 수, 작성일, 작성자, 글 유형, 풍선 번호
   const index = 0;
   const [title, content, like_cnt, is_like, date, user_id, type, emoji_no] =
@@ -22,7 +22,9 @@ function MessageDetail() {
   const isMine = user_id === myId;
   const [more, setMore] = useState(false);
 
-  const hiddenMenu = () => (more ? setMore(false) : null);
+  const hiddenMenu = () => {
+    if (more) setMore(false);
+  };
   const showMenu = () => String(setMore(true));
   let month: number | string = date.getMonth();
   if (month < 10) month = '0' + month;
