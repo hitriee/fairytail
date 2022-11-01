@@ -2,11 +2,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  background-image: url('../assets/images/milkyway.jpg');
+  // background-repeat: repeat-y;
+  height: 100%;
   &-container {
-    background-color: yellowgreen;
+    // background-color: yellowgreen;
+    // height: 100vh;
+    overflow: overlay;
+    ::-webkit-scrollbar {
+      display: none;
+    }
     &-info {
-      background-color: skyblue;
+      // background-color: skyblue;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -15,8 +22,12 @@
         width: 30%;
       }
     }
-    &-list {
-      background-color: grey;
-    }
+    // &-list {
+    //   // overflow: auto;
+    //   // background-color: grey;
+    // }
+  }
+  &-container::-webkit-scrollbar {
+    width: 1vw;
   }
 }
