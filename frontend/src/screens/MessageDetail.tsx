@@ -5,7 +5,6 @@ import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import dummy from '@messageDetail/dummy';
 import wave from '@images/wave.png';
-import milkyway from '@images/milkyway.jpg';
 import '@screens/MessageDetail.scss';
 import '@styles/_utils.scss';
 
@@ -34,7 +33,6 @@ function MessageDetail() {
 
   return (
     <div className="detail">
-      <img className="background" src={milkyway} alt="배경" />
       <main id="detail" onClick={hiddenMenu}>
         <img src={wave} className="wave" alt="파도 모양" ref={detail} />
         <NavBar
