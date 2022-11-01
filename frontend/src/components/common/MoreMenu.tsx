@@ -119,7 +119,9 @@ function MoreMenu({isMine, detail}: props) {
         open={openAlert}
         onConfirmed={onAlert}
       />
-      <Report onCancel={() => setReport(false)} open={openReport} />
+      {openReport ? (
+        <Report onCancel={() => setReport(false)} open={openReport} />
+      ) : null}
     </>
   );
 }
