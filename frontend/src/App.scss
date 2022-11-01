@@ -1,9 +1,10 @@
 @font-face {
   font-family: 'PretendardVariable';
-  src: url('../src/styles/fonts/PretendardVariable.ttf') format('truetype');
+  src: url('../styles/fonts/PretendardVariable.ttf') format('truetype');
 }
 
 * {
+  box-sizing: border-box;
   font-family: 'PretendardVariable';
   font-weight: 500;
 }
