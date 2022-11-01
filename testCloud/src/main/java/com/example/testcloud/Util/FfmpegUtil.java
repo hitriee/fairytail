@@ -6,7 +6,10 @@ import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import net.bramp.ffmpeg.probe.FFmpegFormat;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class FfmpegUtil{
     private String serverPath = System.getProperty("user.dir")+"/ffmpeg/";
     private String winPath = System.getProperty("user.dir")+"/winffmpeg/";

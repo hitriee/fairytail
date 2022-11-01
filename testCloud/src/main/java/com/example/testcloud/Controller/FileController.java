@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.testcloud.DTO.FileDto;
 import com.example.testcloud.Util.FfmpegUtil;
+import lombok.RequiredArgsConstructor;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.UUID;
 @RestController
+@RequiredArgsConstructor
 public class FileController {
 
     private String cloudName = "ddej9pc8r";
@@ -26,7 +28,7 @@ public class FileController {
     private String apiSecret = "E9SOKeID4Qdh858OYrbNx6ApsXk";
 
 
-    private FfmpegUtil ffmpegUtil = new FfmpegUtil();
+    private final FfmpegUtil ffmpegUtil;
 
     private String serverPath = System.getProperty("user.dir")+"/media/video" ;
     private String localPath = System.getProperty("user.dir");
