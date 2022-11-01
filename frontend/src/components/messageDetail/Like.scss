@@ -1,0 +1,34 @@
+.count {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.red {
+  color: palevioletred;
+}
+
+.white {
+  color: white;
+}
+
+.icon {
+  &-small {
+    width: 2vw;
+    height: 2vw;
+  }
+  &-medium {
+    width: 3vw;
+    height: 3vw;
+  }
+}
+
+.ballon {
+  width: 10vw;
+  display: block;
+}
+
+.etc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
