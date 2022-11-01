@@ -5,9 +5,15 @@
   margin-left: auto;
   flex-wrap: wrap;
   background-color: white;
-  width: 15vw;
-  height: 15vw;
   border-radius: 10%;
+  &-text {
+    width: 18vw;
+    min-height: 18vw;
+  }
+  &-audio {
+    width: 15vw;
+    min-height: 15vw;
+  }
 }
 .like {
   position: relative;
@@ -18,19 +24,17 @@
   flex-direction: column;
   align-content: stretch;
   justify-content: center;
-  line-height: 160%;
+  line-height: 200%;
   justify-content: center;
   align-items: center;
-  width: 15vw;
-  height: 15vw;
+  width: 18vw;
+  padding: 1vw;
   &-text {
-    white-space: normal;
-    // white-space: pre;
-    // white-space: nowrap;
     // word-break: normal;
     // word-break: break-all;
     // word-break: keep-all;
-    // text-overflow: clip;
+    margin: 1.5vw;
+    text-overflow: clip;
     // text-overflow: ellipsis;
     // https://www.funyphp.com/archive/html/12?sfl=mb_id%2C1&stx=webmaster&sst=wr_hit&sod=desc&sop=and
   }
