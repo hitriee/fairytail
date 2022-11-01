@@ -11,12 +11,16 @@ function MessageList() {
   //   setItems({data});
   // }, []);
   return (
-    <div id="messageList">
-      <div className="container">
-        <div className="container-info">
-          <img className="container-info-balloon" src={balloon} alt="balloon" />
+    <div className="messageList">
+      <div className="messageList-container">
+        <div className="messageList-container-info">
+          <img
+            className="messageList-container-info-balloon"
+            src={balloon}
+            alt="balloon"
+          />
         </div>
-        <div className="container-list">
+        <div className="messageList-container-list">
           {items.length === 0 && (
             <div className="leagueopen-empty">작성한 메세지가 없습니다.</div>
           )}

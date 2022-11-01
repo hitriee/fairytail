@@ -1,3 +1,37 @@
 .myMessage {
+  display: flex;
+  flex-direction: row;
   box-sizing: border-box;
+  background-color: white;
+  margin: 2%;
+  width: 96%;
+  height: 80px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  &-emoji {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 8vh;
+      margin-left: 10px;
+    }
+  }
+  &-container {
+    flex-wrap: wrap;
+    margin-left: 2%;
+    &-title {
+      display: block;
+      font-weight: 1000;
+      font-size: large;
+      width: 100%;
+    }
+    &-like {
+      img {
+        width: 15px;
+      }
+    }
+  }
 }
