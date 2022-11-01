@@ -1,24 +1,19 @@
 .myMessage {
   display: flex;
   flex-direction: row;
-  // flex-wrap: wrap;
   box-sizing: border-box;
   background-color: white;
   margin: 3%;
-  width: 94%;
   height: 75px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-radius: 20px;
   &-emoji {
     display: flex;
     flex-basis: 1;
     justify-content: center;
     align-items: center;
     img {
-      width: 8vh;
-      margin-left: 10px;
+      width: 100%;
+      margin-left: 50%;
     }
   }
   &-container {
@@ -28,7 +23,7 @@
     &-title {
       display: block;
       font-weight: 1000;
-      font-size: large;
+      font-size: 120%;
       width: 100%;
       margin-bottom: 2%;
     }
@@ -42,7 +37,6 @@
       margin: 2%;
       img {
         height: 35%;
-        // margin-top: 10%;
       }
     }
   }

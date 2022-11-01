@@ -1,13 +1,19 @@
-#intro {
+.intro {
   // background-color: black;
-  background-image: url("../assets/images/milkyway.jpg");
-  height: 100vh;
+  // background-image: url('../assets/images/milkyway.jpg');
+  // height: 100vh;
   display: flex;
   // margin-top: 10%;
   flex-direction: column;
   // justify-content: center;
   align-items: center;
   .introLogo {
-    margin-top: 10%;
+    margin-top: 15vh;
   }
+}
+.iframeBackground {
+  position: absolute;
+  z-index: -1;
+  height: 100vh;
+  width: 100vw;
 }
