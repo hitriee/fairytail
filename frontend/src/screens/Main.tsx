@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Room from "../components/room/Room";
-import Loading from "../components/loading/Loading";
+import React, {useState, useEffect} from 'react';
+import Room from '../components/room/Room';
+import Loading from '../components/loading/Loading';
 
 function Main() {
   const [loading, setLoading] = useState(false);
