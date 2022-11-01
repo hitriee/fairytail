@@ -1,0 +1,22 @@
+.messageList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &-container {
+    background-color: yellowgreen;
+    &-info {
+      background-color: skyblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &-balloon {
+        margin-top: 10%;
+        width: 30%;
+      }
+    }
+    &-list {
+      background-color: grey;
+    }
+  }
+}

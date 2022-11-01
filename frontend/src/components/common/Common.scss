@@ -1,0 +1,59 @@
+#navBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+#menu {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  z-index: 1;
+  position: absolute;
+  background-color: white;
+  border-radius: 4%;
+}
+
+.modal {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10%;
+  align-items: center;
+  background-color: white;
+  z-index: 50;
+  width: 200px;
+  &-confirm {
+    height: 70px;
+  }
+  &-alert {
+    height: 40px;
+    z-index: 99;
+  }
+  &-report {
+    height: 300px;
+  }
+  &-parent {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+}
+
+.button {
+  cursor: pointer;
+  padding: 10px;
+  &-not {
+    border-radius: 3px;
+    &:hover {
+      background-color: aliceblue;
+    }
+  }
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}

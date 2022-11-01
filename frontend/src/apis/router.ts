@@ -5,4 +5,6 @@ export const map = () => '/map';
 export const vr = () => '/vr';
 export const messageList = () => '/message/list';
 export const messageCreate = () => '/message/create';
-export const messageDetail = () => '/message/detail';
+export const messageDetail = () => '/message/detail/:id';
+export const notFound = () => '/404';
+export const settings = () => '/settings';
