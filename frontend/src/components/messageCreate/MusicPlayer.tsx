@@ -1,7 +1,9 @@
-import React, { useState, useRef } from "react";
-import styled from "styled-components";
-import "./MusicPlayer.scss";
-import { HiPlay, HiPause } from "react-icons/hi2";
+import React, {useState, useRef} from 'react';
+import styled from 'styled-components';
+import './MusicPlayer.scss';
+// HiPlay에서 오류 발생 (가능하다면 다른 아이콘 사용 추천)
+// Invalid ARIA attribute `ariaHidden`. Did you mean `aria-hidden`?
+import {HiPlay, HiPause} from 'react-icons/hi2';
 
 type MusicPlayerProps = {
   fileURL: string;
@@ -12,7 +14,7 @@ type AudioInfo = {
   duration: number;
 };
 
-function MusicPlayer({ fileURL }: MusicPlayerProps) {
+function MusicPlayer({fileURL}: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -22,19 +24,19 @@ function MusicPlayer({ fileURL }: MusicPlayerProps) {
   });
 
   const handleUpdateTime = (
-    e: React.SyntheticEvent<HTMLAudioElement, Event>
+    e: React.SyntheticEvent<HTMLAudioElement, Event>,
   ) => {
     const target = e.target as HTMLAudioElement;
 
-    if (target.localName === "audio") {
+    if (target.localName === 'audio') {
       const currentTime = target.currentTime;
       const duration = target.duration;
-      setAudioInfo({ ...audioInfo, currentTime, duration });
+      setAudioInfo({...audioInfo, currentTime, duration});
     }
   };
 
   const handleChangeFile = (
-    e: React.SyntheticEvent<HTMLAudioElement, Event>
+    e: React.SyntheticEvent<HTMLAudioElement, Event>,
   ) => {
     handleUpdateTime(e);
     setIsPlaying(false);
@@ -46,19 +48,19 @@ function MusicPlayer({ fileURL }: MusicPlayerProps) {
     } else {
       audioRef.current && audioRef.current.play();
     }
-    setIsPlaying((prev) => !prev);
+    setIsPlaying(prev => !prev);
   };
 
   const handleDrag = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
       audioRef.current.currentTime = Number(e.target.value);
     }
-    setAudioInfo({ ...audioInfo, currentTime: Number(e.target.value) });
+    setAudioInfo({...audioInfo, currentTime: Number(e.target.value)});
   };
 
   const getTime = (time: number) => {
     const minute = Math.floor(time / 60);
-    const second = ("0" + Math.floor(time % 60)).slice(-2);
+    const second = ('0' + Math.floor(time % 60)).slice(-2);
     return `${minute}:${second}`;
   };
 
@@ -118,8 +120,8 @@ const AnimateTrack = styled.div`
   top: 0;
   left: 0;
   transform: translateX(
-    ${({ audioInfo }: { audioInfo: AudioInfo }) =>
-      Math.round((audioInfo.currentTime * 100) / audioInfo.duration) + "%"}
+    ${({audioInfo}: {audioInfo: AudioInfo}) =>
+      Math.round((audioInfo.currentTime * 100) / audioInfo.duration) + '%'}
   );
   pointer-events: none;
 `;

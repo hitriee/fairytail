@@ -1,7 +1,7 @@
-import React, { useRef, useState, Dispatch, SetStateAction } from "react";
-import "../../screens/MessageCreate.scss";
-import "./Message.scss";
-import MusicPlayer from "./MusicPlayer";
+import React, {useRef, useState, Dispatch, SetStateAction} from 'react';
+import '../../screens/MessageCreate.scss';
+import './Message.scss';
+import MusicPlayer from './MusicPlayer';
 
 export type Content = {
   title: string;
@@ -15,25 +15,24 @@ type PreviewProps = {
   fileURL: string;
 };
 
-function Preview({ type, fileURL }: PreviewProps) {
+export function Preview({type, fileURL}: PreviewProps) {
   let preview: any;
 
-  if (type.startsWith("string")) {
+  if (type.startsWith('string')) {
     preview = <p className="content-text">{fileURL}</p>;
-  } else if (type.startsWith("image")) {
+  } else if (type.startsWith('image')) {
     preview = <img className="content-image" src={fileURL} alt={type} />;
-  } else if (type.startsWith("video")) {
+  } else if (type.startsWith('video')) {
     preview = (
       <video
         className="content-image"
         controls={true}
         autoPlay={true}
-        playsInline={true}
-      >
+        playsInline={true}>
         <source src={fileURL} />
       </video>
     );
-  } else if (type.startsWith("audio")) {
+  } else if (type.startsWith('audio')) {
     preview = <MusicPlayer fileURL={fileURL} />;
   } else {
     preview = <div>업로드할 수 없는 파일 형식입니다. 다시 시도해주세요.</div>;
@@ -48,7 +47,7 @@ type MessageProps = {
   setContent: Dispatch<SetStateAction<Content>>;
 };
 
-function Message({ mode, content, setContent }: MessageProps) {
+function Message({mode, content, setContent}: MessageProps) {
   const newFileRef = useRef<HTMLInputElement>(null);
 
   const [newTitle, setNewTitle] = useState(content.title);
@@ -62,22 +61,22 @@ function Message({ mode, content, setContent }: MessageProps) {
 
   const cancleNewFile = () => {
     if (newFileRef.current) {
-      newFileRef.current.value = "";
+      newFileRef.current.value = '';
     }
 
     setNewFile(null);
-    setNewFileURL("");
-    setNewFileType("string");
+    setNewFileURL('');
+    setNewFileType('string');
     setContent({
       title: newTitle,
-      type: "string",
+      type: 'string',
       file: null,
-      fileURL: "",
+      fileURL: '',
     });
   };
 
   const selectNewFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("확인");
+    console.log('확인');
     const fileList = e.target.files;
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
@@ -94,39 +93,39 @@ function Message({ mode, content, setContent }: MessageProps) {
     }
   };
 
-  if (mode === "create" || mode === "update") {
+  if (mode === 'create' || mode === 'update') {
     return (
       <div className="message-container">
         <input
           className="title"
           placeholder="제목을 입력하세요."
           maxLength={10}
-          onChange={(e) => {
+          onChange={e => {
             setNewTitle(e.target.value);
-            setContent((prev) => {
+            setContent(prev => {
               prev.title = e.target.value;
               return prev;
             });
           }}
           defaultValue={content.title}
         />
-        {newFileURL === "" || newType === "string" ? (
+        {newFileURL === '' || newType === 'string' ? (
           // create 이거나, type이 text인 글을 update 하는 경우 -> textarea
           <textarea
             className="content-text"
             placeholder="내용을 입력하세요."
             maxLength={150}
             rows={10}
-            onChange={(e) => {
+            onChange={e => {
               setNewFileURL(e.target.value);
-              setContent((prev) => {
-                prev.type = "string";
+              setContent(prev => {
+                prev.type = 'string';
                 prev.file = null;
                 prev.fileURL = e.target.value;
                 return prev;
               });
             }}
-            defaultValue={typeof content.file === "string" ? content.file : ""}
+            defaultValue={typeof content.file === 'string' ? content.file : ''}
           />
         ) : (
           <Preview type={newType} fileURL={newFileURL} />
@@ -147,7 +146,7 @@ function Message({ mode, content, setContent }: MessageProps) {
         )}
 
         <input
-          style={{ display: "none" }}
+          style={{display: 'none'}}
           type="file"
           accept="*"
           ref={newFileRef}
@@ -155,7 +154,7 @@ function Message({ mode, content, setContent }: MessageProps) {
         />
       </div>
     );
-  } else if (mode === "read") {
+  } else if (mode === 'read') {
     return (
       <div>
         <div className="title">{content ? content.title : null}</div>
