@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Cube Layout</title>
+    <meta name="description" content="6-sided layout of images facing camera"></meta>
+    <meta property="og:image" content="https://raw.githubusercontent.com/supermedium/superframe/master/components/layout/examples/cube/preview.png"></meta>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="./apng-canvas.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id="img1" crossorigin="anonymous" src="https://i.imgur.com/wjobVTN.jpeg" />
+        <img id="img2" crossorigin="anonymous" src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/319/smiling-face-with-hearts_1f970.png" />
+        <img id="img3" crossorigin="anonymous" src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/319/star-struck_1f929.png" />
+        <a-mixin id="image1" geometry="primitive: plane;width: 2; height: 2;" material="shader: flat; src: #img1; side: double" look-at="[camera]"></a-mixin>
+        <a-mixin id="image2" geometry="primitive: plane;width: 2; height: 2;" material="shader: flat; src: #img2; side: double" look-at="[camera]"></a-mixin>
+        <a-mixin id="image3" geometry="primitive: plane;width: 2; height: 2;" material="shader: flat; src: #img3; side: double" look-at="[camera]"></a-mixin>
+      </a-assets>
+      <a-entity position="0 5 0" layout="type: dodecahedron; radius: 15">
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+        <a-entity mixin="image1"></a-entity>
+      </a-entity>
+      <a-entity position="3 3 3" rotation="45 90 180" layout="type: dodecahedron; radius: 15">
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+        <a-entity mixin="image2"></a-entity>
+      </a-entity>
+      <a-entity position="-3 -3 -3" rotation="45 90 180" layout="type: dodecahedron; radius: 15">
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+        <a-entity mixin="image3"></a-entity>
+      </a-entity>
+
+      <a-sky color="#ECECEC"></a-sky>
+      <a-entity camera="active: true" look-controls />
+    </a-scene>
+  </body>
+</html>
