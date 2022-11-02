@@ -1,127 +1,150 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router';
-import domToImg from 'dom-to-image';
+import {useState} from 'react';
+import html2canvas from 'html2canvas';
+import {useNavigate} from 'react-router-dom';
 import {saveAs} from 'file-saver';
+import {returnTrue, returnFalse} from '@common/commonFunc';
 import Report from '@messageDetail/Report';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import '@common/Common.scss';
 
 interface props {
+  open: boolean;
   isMine: boolean;
   detail: any;
+  messageId: string | undefined;
+  type: string;
+  content: string;
+  close: () => void;
 }
 
-function MoreMenu({isMine, detail}: props) {
+interface popUp {
+  title: string;
+  message: string;
+}
+
+function MoreMenu({
+  open,
+  isMine,
+  detail,
+  messageId,
+  type,
+  content,
+  close,
+}: props) {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
+  const [info, setInfo] = useState({title: '', message: ''});
   const [openConfirm, setConfirm] = useState(false);
   const [openReport, setReport] = useState(false);
   const [openAlert, setAlert] = useState(false);
   const [deleted, setDeleted] = useState(false);
 
-  const saveBallon = async () => {
-    console.log(detail);
-    // htmlToImg.toBlob(detail.current).then((blob: any) => {
-    //   saveAs(blob, "fairytail.png");
-    // });
-    // htmlToImg
-    //   .toJpeg(detail.current, { cacheBust: true })
-    //   .then((dataUrl) => {
-    //     const link = document.createElement("a");
-    //     link.download = "fairytail.jpeg";
-    //     link.href = dataUrl;
-    //     link.click();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    domToImg.toPng(detail.current).then(blob => {
-      saveAs(blob, 'fairytail.jpeg');
-    });
+  // info 값 변경
+  const changeInfo = (title: popUp['title'], message: popUp['message']) => {
+    setInfo(() => ({
+      title,
+      message,
+    }));
   };
-  const reportBallon = () => {
-    // 신고 페이지가 필요 없을까?
-    setTitle('신고 확인');
-    setMessage('신고');
-    setReport(true);
+
+  const saveMessage = async () => {
+    if (type.startsWith('string')) {
+      const height = window.innerHeight;
+      html2canvas(detail.current, {width: 520, height}).then(canvas => {
+        saveAs(canvas.toDataURL(), 'fairytail.png');
+      });
+    } else {
+      // content는 url형식
+      saveAs(content, 'fairytail.png');
+    }
+    close();
+  };
+  // 신고 팝업
+  const reportMessage = () => {
+    setReport(returnTrue);
     console.log('신고 페이지로');
     console.log('back에 요청 - axios');
   };
-  const toEdit = () => navigate('/message/update');
+  // 수정 페이지로 이동
+  const toEdit = () => {
+    navigate(`/message/update/${messageId}`);
+    close();
+  };
+  // 삭제 확인
   const onDelete = () => {
-    setTitle('삭제 확인');
-    setMessage('정말 이 글을 삭제하시겠습니까?');
-    setConfirm(true);
-    console.log('delete');
-    console.log(title, message, openConfirm);
+    changeInfo('삭제 확인', '정말 이 글을 삭제하시겠습니까?');
+    setConfirm(returnTrue);
+    close();
   };
+  // 취소 버튼
   const onCancel = () => {
-    console.log('cancel');
-    setConfirm(false);
-    setTitle('');
-    setMessage('');
+    setConfirm(returnFalse);
+    changeInfo('', '');
+    close();
   };
-  const onAlert = () => {
-    setAlert(false);
-    setTitle('');
-    setMessage('');
+  // 알림 창
+  const closeAlert = () => {
+    setAlert(returnFalse);
+    close();
+    changeInfo('', '');
   };
-  useEffect(() => {
-    console.log(message);
-  }, [message]);
-  // useEffect(() => {
-  //   // 백에 삭제 요청
-  //   // 삭제 확인
-  //   setTitle("");
-  //   setMessage("삭제되었습니다");
-  //   setAlert(false);
-  //   setMessage("");
-  // }, [deleted]);
+  // 신고 취소
+  const onReportCancel = () => {
+    setReport(returnFalse);
+    close();
+  };
+
+  // 삭제 요청 백에 보내기
+  const deleteMessage = () => {
+    setDeleted(returnTrue);
+    // axios.delete('url')
+    // .then(())
+    changeInfo('삭제 확인', '글이 정상적으로 삭제되었습니다');
+    setAlert(returnTrue);
+    setConfirm(returnFalse);
+    // 동기로 처리
+    // changeInfo('', '');
+  };
+
   return (
     <>
       <div className="right">
-        <main id="menu">
-          {isMine ? (
-            <>
-              <article className="button button-not center" onClick={toEdit}>
-                수정
-              </article>
-              <article className="button button-not center" onClick={onDelete}>
-                삭제
-              </article>
-            </>
-          ) : (
-            <>
-              <article
-                className="button button-not center"
-                onClick={reportBallon}>
-                신고
-              </article>
-            </>
-          )}
-          <article className="button button-not center" onClick={saveBallon}>
-            저장
-          </article>
-        </main>
+        {open ? (
+          <main id="menu">
+            {isMine ? (
+              <>
+                <article className="button button-not center" onClick={toEdit}>
+                  수정
+                </article>
+                <article
+                  className="button button-not center"
+                  onClick={onDelete}>
+                  삭제
+                </article>
+              </>
+            ) : (
+              <>
+                <article
+                  className="button button-not center"
+                  onClick={reportMessage}>
+                  신고
+                </article>
+              </>
+            )}
+            <article className="button button-not center" onClick={saveMessage}>
+              저장
+            </article>
+          </main>
+        ) : null}
       </div>
       <Confirm
-        title={title}
-        message={message}
-        onConfirmed={() => setDeleted(true)}
+        info={info}
+        onConfirmed={deleteMessage}
         onCancel={onCancel}
         open={openConfirm}
       />
-      <Alert
-        title={title}
-        message={message}
-        open={openAlert}
-        onConfirmed={onAlert}
-      />
-      {openReport ? (
-        <Report onCancel={() => setReport(false)} open={openReport} />
-      ) : null}
+      <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
+      <Report onCancel={onReportCancel} open={openReport} />
     </>
   );
 }

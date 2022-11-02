@@ -1,22 +1,28 @@
-import React from "react";
-
 interface props {
-  title: string;
-  message: string;
+  info: {
+    title: string;
+    message: string;
+  };
   open: boolean;
-  onConfirmed?: () => void;
+  onConfirmed: () => void;
 }
 
-function Alert({ title, message, open, onConfirmed }: props) {
+function Alert({info, open, onConfirmed}: props) {
   return (
     <>
-      {open ? (
-        <div id="alert">
-          <p>{title}</p>
-          <p>{message}</p>
-          <button onClick={onConfirmed}>확인</button>
-        </div>
-      ) : null}
+      <main id="alert">
+        <section className={open ? 'modal' : ''}>
+          {open ? (
+            <article className="modal-alert">
+              <p>{info.title}</p>
+              <p>{info.message}</p>
+              <footer className="modal-footer">
+                <button onClick={onConfirmed}>확인</button>
+              </footer>
+            </article>
+          ) : null}
+        </section>
+      </main>
     </>
   );
 }

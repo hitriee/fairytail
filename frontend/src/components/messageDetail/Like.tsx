@@ -1,6 +1,5 @@
 import {useState} from 'react';
-import {IoHeartOutline} from 'react-icons/io5';
-import {IoHeartSharp} from 'react-icons/io5';
+import {IoHeartOutline, IoHeartSharp} from 'react-icons/io5';
 import {emojiArr} from '@emojis/index';
 import '@messageDetail/Like.scss';
 
