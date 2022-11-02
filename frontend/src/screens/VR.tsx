@@ -1,9 +1,10 @@
 import './VR.scss';
+import Iframe from 'react-iframe';
 
 function VR() {
   return (
     <div className="vr">
-      <iframe className="vr-frame" src="vr.html" />
+      <Iframe className="vr-frame" url="vr.html" src="vr.html" />
     </div>
   );
 }
