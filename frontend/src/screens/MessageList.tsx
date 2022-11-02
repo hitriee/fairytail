@@ -3,6 +3,7 @@ import './MessageList.scss';
 import balloon from '../assets/images/balloon.gif';
 import MyMessage from '../components/messageList/MyMessage';
 import items from './items.json';
+import Iframe from 'react-iframe';
 
 function MessageList() {
   // const [items, setItems] = useState([]);
@@ -12,10 +13,11 @@ function MessageList() {
   // }, []);
   return (
     <>
-      <iframe
+      <Iframe
         className="messageBackground"
-        title="messageBackground"
+        url="Background.html"
         src="../background/Background.html"
+        frameBorder={0}
       />
       <div className="messageList">
         <div className="messageList-container">

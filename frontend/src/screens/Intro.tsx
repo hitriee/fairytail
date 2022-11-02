@@ -1,15 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './Intro.scss';
-import {ReactComponent as IntroLogo} from '../assets/images/introLogo.svg';
+import {ReactComponent as IntroLogo} from '@images/introLogo.svg';
+import Iframe from 'react-iframe';
 
 function Intro() {
   return (
     <>
-      <iframe
+      <Iframe
         className="iframeBackground"
-        title="background"
+        url="background/Background.html"
         src="background/Background.html"
+        frameBorder={0}
       />
       <div className="intro">
         <IntroLogo className="introLogo" />
