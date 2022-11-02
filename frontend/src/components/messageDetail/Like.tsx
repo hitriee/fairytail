@@ -1,5 +1,6 @@
 import {useState} from 'react';
-import {IoHeartOutline, IoHeartSharp} from 'react-icons/io5';
+import {ReactComponent as HeartRegular} from '@images/heart-regular.svg';
+import {ReactComponent as HeartSolid} from '@images/heart-solid.svg';
 import {emojiArr} from '@emojis/index';
 import '@messageDetail/Like.scss';
 
@@ -22,9 +23,9 @@ function Like({count, like, isMine, emoji}: props) {
       <p className="white count">{count}</p>
       {/* <img src={heart} alt="like" /> */}
       {isMine || myLike ? (
-        <IoHeartOutline className="white icon-medium" onClick={changeLike} />
+        <HeartRegular className="white icon-medium" onClick={changeLike} />
       ) : (
-        <IoHeartSharp className="red icon-medium" onClick={changeLike} />
+        <HeartSolid className="red icon-medium" onClick={changeLike} />
       )}
       <img src={emojiArr[emoji]} alt="skull" className="ballon" />
     </article>

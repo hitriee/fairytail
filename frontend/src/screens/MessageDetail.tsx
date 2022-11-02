@@ -5,7 +5,6 @@ import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import dummy from '@messageDetail/dummy';
-import wave from '@images/wave.png';
 import '@screens/MessageDetail.scss';
 // import '@styles/_utils.scss';
 

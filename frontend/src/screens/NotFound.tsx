@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {ReactComponent as Intro_logo} from '../assets/images/intro_logo.svg';
+import {ReactComponent as IntroLogo} from '../assets/images/introLogo.svg';
 
 function Intro() {
   return (
     <>
       <div>
-        <Intro_logo className="introLogo" />
+        <IntroLogo className="introLogo" />
         페이지를 찾을 수 없습니다
         <Link to="main">
           <button>go Main</button>

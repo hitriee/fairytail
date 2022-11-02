@@ -1,12 +1,12 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import './MessageCreate.scss';
-import Carousel from '../components/messageCreate/Carousel';
-import Toggle from '../components/messageCreate/Toggle';
-import {HiArrowLeft} from 'react-icons/hi2';
-import Message, {Content} from '../components/messageCreate/Message';
-import useGeolocation from '../apis/useGeolocation';
-import Loading from '../components/loading/Loading';
+import '@screens/MessageCreate.scss';
+import Carousel from '@messageCreate/Carousel';
+import Toggle from '@messageCreate/Toggle';
+import Message, {Content} from '@messageCreate/Message';
+import useGeolocation from '@apis/useGeolocation';
+import Loading from '@components/loading/Loading';
+import NavBar from '@components/common/NavBar';
 
 function MessageCreate() {
   const [loading, setLoading] = useState(false);
@@ -42,11 +42,11 @@ function MessageCreate() {
       {loading ? <Loading /> : null}
 
       <div className="container">
-        <div className="header">
-          <Link to="/main">
-            <HiArrowLeft size="4vh" color="white" />
-          </Link>
-        </div>
+        {/* <div className="header"> */}
+        {/* <Link to="/main"> */}
+        <NavBar />
+        {/* </Link> */}
+        {/* </div> */}
 
         <Carousel onSlideChange={setEmojiNo} />
 

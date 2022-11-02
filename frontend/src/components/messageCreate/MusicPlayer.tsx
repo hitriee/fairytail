@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import './MusicPlayer.scss';
 // HiPlay에서 오류 발생 (가능하다면 다른 아이콘 사용 추천)
 // Invalid ARIA attribute `ariaHidden`. Did you mean `aria-hidden`?
-import {HiPlay, HiPause} from 'react-icons/hi2';
+import {ReactComponent as Play} from '@images/play.svg';
+import {ReactComponent as Pause} from '@images/pause.svg';
 
 type MusicPlayerProps = {
   fileURL: string;
@@ -67,15 +68,15 @@ function MusicPlayer({fileURL}: MusicPlayerProps) {
   return (
     <div className="music-player-container">
       {isPlaying ? (
-        <HiPause
-          size="50%"
+        <Pause
+          // size="50%"
           color="#b49aff"
           onClick={handlePlay}
           className="play-btn"
         />
       ) : (
-        <HiPlay
-          size="50%"
+        <Play
+          // size="50%"
           color="#b49aff"
           onClick={handlePlay}
           className="play-btn"
