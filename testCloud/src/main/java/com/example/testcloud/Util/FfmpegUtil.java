@@ -38,7 +38,20 @@ public class FfmpegUtil{
         executor.createJob(builder).run();
         return true;
     }
-
+    public boolean zip(String path) throws Exception{
+        String osPath = checkOs();
+        FFmpeg ffmpeg = new FFmpeg(osPath +"ffmpeg");
+        FFprobe ffprobe = new FFprobe(osPath + " ffprobe");
+        FFmpegBuilder builder = new FFmpegBuilder()
+                .overrideOutputFiles(true)
+                .setInput(path)
+                .addOutput(path+"_zip.mp4")
+                .setVideoResolution(900, 900)
+                .done();
+        FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
+        executor.createJob(builder).run();
+        return true;
+    }
     public double checkTime(String path) throws Exception{
         String osPath = checkOs();
         FFprobe ffprobe = new FFprobe(osPath + "ffprobe");
