@@ -7,9 +7,30 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
   </head>
   <body>
-    <a-scene vr-mode-ui="enabled: false" cursor="rayOrigin:mouse">
+    <script>
+      AFRAME.registerComponent("handle-click", {
+        schema: {
+          post_id: { type: "number", default: 0 },
+        },
+        init: function () {
+          const data = this.data;
+          const el = this.el;
+          el.addEventListener("click", function () {
+            sendMsgToParent(data.post_id);
+          });
+        },
+      });
+    </script>
+    <a-scene vr-mode-ui="enabled: false">
+      <a-assets>
+        <a-mixin
+          id="bouncy"
+          animation__bounceup="property: position; from: 0 0 0; to: 0 1 0; start-events: loaded, animationcomplete__bouncedown"
+          animation__bouncedown="property: position; from: 0 1 0; to: 0 0 0; start-events: animationcomplete__bouncedown"
+        />
+      </a-assets>
       <a-sky src="./VRBackground.jpg"></a-sky>
-      <a-entity camera="active: true" look-controls />
+      <a-entity camera="active: true" look-controls> </a-entity>
     </a-scene>
     <script src="./IframeVR.js"></script>
   </body>

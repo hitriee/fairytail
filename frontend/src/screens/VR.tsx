@@ -1,21 +1,22 @@
 import './VR.scss';
 import Iframe from 'react-iframe';
 import {useNavigate} from 'react-router';
+import {useEffect} from 'react';
 
 function VR() {
   const navigate = useNavigate();
 
-  function recieveMsgFromChild(ev: MessageEvent<any>) {
-    if (ev.data === 'denied') {
-      navigate(-1);
-    } else if (typeof ev.data === 'object') {
-      console.log('웹펙 오류');
-    } else {
-      navigate(`/message/detail/${ev.data}`);
-    }
-  }
-
-  window.addEventListener('message', recieveMsgFromChild);
+  useEffect(() => {
+    window.addEventListener('message', (ev: MessageEvent<any>) => {
+      if (ev.data === 'denied') {
+        navigate(-1);
+      } else if (typeof ev.data === 'object') {
+        console.log('웹펙 오류');
+      } else {
+        navigate(`/message/detail/${ev.data}`);
+      }
+    });
+  }, []);
 
   return (
     <div className="vr">

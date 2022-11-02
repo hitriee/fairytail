@@ -5,30 +5,17 @@ function sendMsgToParent(msg) {
 function calculateSize(like_cnt) {
   switch (true) {
     case like_cnt >= 100:
-      return 5;
+      return 1.4;
     case like_cnt >= 75:
-      return 4;
+      return 1.32;
     case like_cnt >= 50:
-      return 3;
+      return 1.24;
     case like_cnt >= 25:
-      return 2;
+      return 1.16;
     case like_cnt >= 0:
-      return 1;
+      return 0.8;
   }
 }
-
-AFRAME.registerComponent("handle-click", {
-  schema: {
-    post_id: { default: 0 },
-  },
-  init: function () {
-    const data = this.data;
-    const el = this.el;
-    el.addEventListener("click", function () {
-      sendMsgToParent(data.post_id);
-    });
-  },
-});
 
 function init() {
   // 위치 정보 받아오기
@@ -61,7 +48,7 @@ function init() {
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }
 
-  // 데이터 가져오기
+  // 데이터 가져오기 (최대 100개)
   const data = [
     { like_cnt: 10, emoji_no: 1, post_id: 1 },
     { like_cnt: 10, emoji_no: 1, post_id: 1 },
@@ -170,20 +157,20 @@ function init() {
   const dodes = [];
 
   const dodesPosition = [
-    { x: 0, y: 0, z: 0 }, // 외계인
-    { x: 0, y: 60, z: 15 }, // 곰
-    { x: 35, y: 15, z: 30 }, // 검정하트
-    { x: 0, y: 45, z: 45 }, // 샴페인
-    { x: 45, y: 0, z: 60 }, // 약속
+    { x: 0, y: 0, z: 0 },
+    { x: 35, y: 15, z: 30 },
+    { x: 45, y: 0, z: 60 },
+    { x: 0, y: 60, z: 15 },
+    { x: 0, y: 45, z: 45 },
   ];
 
   dodesPosition.forEach(({ x, y, z }, index) => {
     const dodecahedron = document.createElement("a-entity");
-    dodecahedron.setAttribute("position", { x: 0, y: 1.5 * (index + 1), z: 0 });
+    dodecahedron.setAttribute("position", { x: 0, y: 2, z: 0 });
     dodecahedron.setAttribute("rotation", { x: x, y: y, z: z });
     dodecahedron.setAttribute("layout", {
       type: "dodecahedron",
-      radius: 7 * (index + 1),
+      radius: 7,
     });
     dodes.push(dodecahedron);
     scene.appendChild(dodecahedron);
@@ -206,6 +193,7 @@ function init() {
       alphaTest: 0.5,
     });
     emoji.setAttribute("look-at", "[camera]");
+    emoji.setAttribute("ray-origin", "mouse");
 
     emoji.setAttribute("handle-click", { post_id: post_id });
 
