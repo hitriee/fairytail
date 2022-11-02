@@ -13,7 +13,6 @@ interface itemProps {
 }
 
 function MyMessage({item}: itemProps) {
-  console.log(item.emoji);
   return (
     <div className="myMessage">
       <div className="myMessage-emoji">
