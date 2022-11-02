@@ -40,5 +40,5 @@
       "@fonts/*": ["src/styles/fonts/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "public/background"]
 }
