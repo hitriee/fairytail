@@ -6,22 +6,26 @@
     <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
   </head>
+  <script>
+    AFRAME.registerComponent("handle-click", {
+      schema: {
+        post_id: { type: "number", default: 0 },
+      },
+      init: function () {
+        const data = this.data;
+        const el = this.el;
+        el.addEventListener("click", function () {
+          sendMsgToParent(data.post_id);
+        });
+      },
+    });
+  </script>
   <body>
-    <script>
-      AFRAME.registerComponent("handle-click", {
-        schema: {
-          post_id: { type: "number", default: 0 },
-        },
-        init: function () {
-          const data = this.data;
-          const el = this.el;
-          el.addEventListener("click", function () {
-            sendMsgToParent(data.post_id);
-          });
-        },
-      });
-    </script>
-    <a-scene vr-mode-ui="enabled: false">
+    <a-scene
+      vr-mode-ui="enabled: false"
+      cursor="rayOrigin: mouse"
+      raycaster="objects: .entity"
+    >
       <a-assets>
         <a-mixin
           id="bouncy"
@@ -30,7 +34,7 @@
         />
       </a-assets>
       <a-sky src="./VRBackground.jpg"></a-sky>
-      <a-entity camera="active: true" look-controls> </a-entity>
+      <a-camera position="0 0 0" look-controls></a-camera>
     </a-scene>
     <script src="./IframeVR.js"></script>
   </body>

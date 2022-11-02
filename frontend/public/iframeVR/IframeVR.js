@@ -193,7 +193,7 @@ function init() {
       alphaTest: 0.5,
     });
     emoji.setAttribute("look-at", "[camera]");
-    emoji.setAttribute("ray-origin", "mouse");
+    emoji.className = "entity";
 
     emoji.setAttribute("handle-click", { post_id: post_id });
 
