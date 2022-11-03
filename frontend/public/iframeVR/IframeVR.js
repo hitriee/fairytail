@@ -196,7 +196,7 @@ function init() {
     });
     emoji.setAttribute("material", {
       shader: "flat",
-      src: `../emojis/${emoji_no}.png`,
+      src: `../emojis/${emoji_no}.webp`,
       transparent: true,
       alphaTest: 0.5,
     });
