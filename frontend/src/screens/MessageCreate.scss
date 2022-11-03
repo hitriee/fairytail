@@ -62,16 +62,16 @@ textarea {
   }
 }
 
-@media (max-device-aspect-ratio: 9 / 16) {
-  .container {
-    height: 100vh;
-    width: 100vw;
-  }
-}
+// @media (max-device-aspect-ratio: 9 / 16) {
+//   .container {
+//     height: 100vh;
+//     width: 100vw;
+//   }
+// }
 
-@media (min-device-aspect-ratio: 9 / 16) {
-  .container {
-    height: 100vh;
-    width: 56.25vh;
-  }
-}
+// @media (min-device-aspect-ratio: 9 / 16) {
+//   .container {
+//     height: 100vh;
+//     width: 56.25vh;
+//   }
+// }

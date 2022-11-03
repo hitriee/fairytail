@@ -16,8 +16,12 @@ function init() {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  // estrela : 별
+  // qtdeEstrelas : 별의 수량
+  // noite : 밤
+  // constelacao : 별자리
   var estrela = "";
-  var qtdeEstrelas = 250;
+  var qtdeEstrelas = 500;
   var noite = document.querySelector(".constelacao");
   var widthWindow = window.innerWidth;
   var heightWindow = window.innerHeight;
@@ -43,6 +47,10 @@ function init() {
 
   //meteoros
 
+  // numero : 숫자
+  // Aleatorio : 무작위의;
+  // Meteoro : 유성
+  // carregar : 충전, 로드
   var numeroAleatorio = 5000;
 
   setTimeout(function () {
@@ -51,7 +59,7 @@ function init() {
 
   function carregarMeteoro() {
     setTimeout(carregarMeteoro, numeroAleatorio);
-    numeroAleatorio = getRandomArbitrary(5000, 10000);
+    numeroAleatorio = getRandomArbitrary(5000, 1000);
     var meteoro =
       "<div class='meteoro " + style[getRandomArbitrary(0, 4)] + "'></div>";
     document.getElementsByClassName("chuvaMeteoro")[0].innerHTML = meteoro;

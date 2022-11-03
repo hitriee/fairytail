@@ -8,7 +8,23 @@
   // justify-content: center;
   align-items: center;
   .introLogo {
-    margin-top: 15vh;
+    margin-top: 18vh;
+    height: 28vh;
+    margin-right: 20px;
+  }
+  &-title {
+    color: white;
+    font-family: 'PyeongChangPeace-Light';
+    font-size: 10vh;
+    font-weight: 500;
+    margin-bottom: -2vh;
+    margin-top: 2vh;
+  }
+  &-subTitle {
+    color: white;
+    font-family: 'PretendardVariable';
+    font-size: 100%;
+    font-weight: 500;
   }
 }
 .iframeBackground {
