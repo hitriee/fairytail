@@ -1,7 +1,7 @@
 package com.example.testcloud.Controller;
 
 
-import com.example.testcloud.Service.S3Uploader;
+import com.example.testcloud.Util.S3Util;
 import com.example.testcloud.Util.FfmpegUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ public class S3Controller {
     @Value("${cloud.front.name}")
     private String CLOUD_FRONT_NAME;
 
-    private final S3Uploader s3Uploader;
+    private final S3Util s3Util;
 
     public String osCheck(){
         String osName = System.getProperty("os.name").toLowerCase();
@@ -50,8 +50,8 @@ public class S3Controller {
         ffmpegUtil.makeThumbNail(filePath.getPath());
         File zipFile = new File(rootPath + "/" + fileName + "_zip.mp4");
         File tumbFile = new File(rootPath + "/" + fileName +"_thumbnail.png");
-        s3Uploader.upload(zipFile, "image");
-        s3Uploader.upload(tumbFile, "image");
+        s3Util.upload(zipFile, "image");
+        s3Util.upload(tumbFile, "image");
         String url = CLOUD_FRONT_NAME + "/video" + "/" + filePath.getName();
         filePath.delete();
         resultMap.put("url", url);
@@ -61,14 +61,14 @@ public class S3Controller {
         return new ResponseEntity<>(resultMap, status);
     }
 
-    @PostMapping("audio")
+    @PostMapping("/audio")
     public ResponseEntity<?> createAudio(@RequestParam MultipartFile file) throws Exception{
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         return new ResponseEntity<>(resultMap, status);
     }
 
-    @PostMapping("image")
+    @PostMapping("/image")
     public ResponseEntity<?> createImage(@RequestParam MultipartFile file) throws Exception{
         Map<String, Object> resultMap = new HashMap<>();
         String rootPath = osCheck();
