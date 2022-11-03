@@ -1,14 +1,3 @@
-// #detail {
-//   display: flex;
-// }
-
-// .background {
-//   width: 100%;
-//   height: 100%;
-//   position: absolute;
-//   z-index: -2;
-// }
-
 .wave {
   position: absolute;
   z-index: -1;
@@ -24,29 +13,18 @@
   height: 100%;
   flex-wrap: nowrap;
   #detail {
-    // height: 50%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     background-image: url('../assets/images/wave.png');
     background-size: contain;
     background-repeat: no-repeat;
+    .ignore {
+      width: 100%;
+    }
     // align-items: center;
   }
 }
-
-// .black {
-//   background-color: black;
-//   position: fixed;
-//   box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
-//   z-index: 100;
-// }
-
-// .opacity {
-//   // opacity: 50%;
-//   // background-color: black;
-//   box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
-//   z-index: 100;
-// }
 
 @media (max-device-aspect-ratio: 9 / 16) {
   #detail {

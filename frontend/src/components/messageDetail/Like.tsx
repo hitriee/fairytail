@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import {ReactComponent as HeartRegular} from '@images/heart-regular.svg';
-import {ReactComponent as HeartSolid} from '@images/heart.svg';
+import {ReactComponent as HeartRegular} from '@images/heart.svg';
+// import {ReactComponent as HeartSolid} from '@images/heart-solid.svg';
 import {emojiArr} from '@emojis/index';
 import '@messageDetail/Like.scss';
 
@@ -23,11 +23,11 @@ function Like({count, like, isMine, emoji}: props) {
       <p className="white count">{count}</p>
       {/* <img src={heart} alt="like" /> */}
       {isMine || myLike ? (
-        <HeartRegular className="white icon-medium" onClick={changeLike} />
+        <img src={emojiArr[62]} className="icon-like" onClick={changeLike} />
       ) : (
-        <HeartSolid className="red icon-medium" onClick={changeLike} />
+        <HeartRegular className="white icon-like" onClick={changeLike} />
       )}
-      <img src={emojiArr[emoji]} alt="skull" className="ballon" />
+      <img src={emojiArr[emoji]} alt="balloon" className="balloon" />
     </article>
   );
 }

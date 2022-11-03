@@ -48,16 +48,16 @@ function MoreMenu({
   };
 
   const saveMessage = async () => {
+    close();
     if (type.startsWith('string')) {
       const height = window.innerHeight;
-      html2canvas(detail.current, {width: 520, height}).then(canvas => {
+      html2canvas(detail.current, {height}).then(canvas => {
         saveAs(canvas.toDataURL(), 'fairytail.png');
       });
     } else {
       // content는 url형식
       saveAs(content, 'fairytail.png');
     }
-    close();
   };
   // 신고 팝업
   const reportMessage = () => {

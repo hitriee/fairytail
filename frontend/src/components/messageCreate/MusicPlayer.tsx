@@ -70,14 +70,14 @@ function MusicPlayer({fileURL}: MusicPlayerProps) {
       {isPlaying ? (
         <Pause
           // size="50%"
-          color="#b49aff"
+          fill="#b49aff"
           onClick={handlePlay}
           className="play-btn"
         />
       ) : (
         <Play
           // size="50%"
-          color="#b49aff"
+          fill="#b49aff"
           onClick={handlePlay}
           className="play-btn"
         />

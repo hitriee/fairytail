@@ -6,26 +6,25 @@
   }
   &-title {
     width: 95%;
-    font-size: 150%;
+    font-size: 100%;
     font-weight: 600;
-    padding-bottom: 1%;
     text-align: center;
   }
   &-card {
     position: relative;
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     background-color: white;
     border-radius: 20px;
     &-text {
-      width: 18vw;
-      min-height: 18vw;
+      width: 50%;
+      min-height: 50%;
     }
     &-audio {
-      width: 15vw;
-      min-height: 15vw;
+      width: 30%;
+      min-height: 30%;
     }
   }
   &-content {
@@ -33,23 +32,12 @@
     flex-direction: column;
     align-content: stretch;
     justify-content: center;
-    justify-content: center;
     align-items: center;
-    width: 18vw;
-    padding: 1vw;
-    // &-text {
-    //   // word-break: normal;
-    //   // word-break: break-all;
-    //   // word-break: keep-all;
-    //   // margin: 1.5vw;
-    //   text-overflow: clip;
-    //   line-height: 160%;
-    //   // text-overflow: ellipsis;
-    //   // https://www.funyphp.com/archive/html/12?sfl=mb_id%2C1&stx=webmaster&sst=wr_hit&sod=desc&sop=and
-    // }
+    width: 90%;
+    padding: 5%;
   }
   &-date {
     margin-bottom: 10%;
-    font-size: 100%;
+    font-size: 80%;
   }
 }

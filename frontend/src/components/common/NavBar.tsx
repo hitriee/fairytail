@@ -15,16 +15,12 @@ function NavBar({showMenu, detail}: props) {
   return (
     <>
       <div id="navBar">
-        <ArrowBack
-          onClick={toBack}
-          color="white"
-          className="icon-medium button"
-        />
+        <ArrowBack onClick={toBack} color="white" className="icon-nav button" />
         {detail ? (
           <EllipsisVertical
             onClick={showMenu}
             color="white"
-            className="icon-medium button"
+            className="icon-nav button"
           />
         ) : null}
       </div>
