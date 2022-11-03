@@ -1,8 +1,9 @@
-package com.example.testcloud.Service;
+package com.example.testcloud.Service.Impl;
 
 import com.example.testcloud.DTO.UserDto;
 import com.example.testcloud.Mapper.UserMapper;
 import com.example.testcloud.Repository.UserRepository;
+import com.example.testcloud.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,6 @@
 package com.example.testcloud.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -28,4 +25,6 @@ public class User{
     private Integer status;
     @Column(name = "write_cnt")
     private Integer writeCnt;
+    @Column(name = "max_cnt")
+    private Integer maxCnt;
 }
