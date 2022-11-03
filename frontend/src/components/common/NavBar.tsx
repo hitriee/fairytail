@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router';
 import {ReactComponent as ArrowBack} from '@images/arrow-back-outline.svg';
-import {ReactComponent as EllipsisVertical} from '@images/ellipsis-vertical.svg';
+import {ReactComponent as EllipsisVertical} from '@images/more_4.svg';
 
 import '@common/Common.scss';
 

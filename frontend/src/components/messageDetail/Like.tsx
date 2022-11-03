@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {ReactComponent as HeartRegular} from '@images/heart-regular.svg';
-import {ReactComponent as HeartSolid} from '@images/heart-solid.svg';
+import {ReactComponent as HeartSolid} from '@images/heart.svg';
 import {emojiArr} from '@emojis/index';
 import '@messageDetail/Like.scss';
 
