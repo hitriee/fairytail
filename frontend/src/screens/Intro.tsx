@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './Intro.scss';
-import {ReactComponent as IntroLogo} from '@images/introLogo.svg';
+// import {ReactComponent as IntroLogo} from '@images/introLogo.svg';
+import IntroLogo from '@images/introLogo.png';
 import Iframe from 'react-iframe';
 
 function Intro() {
@@ -13,11 +14,16 @@ function Intro() {
         src="background/Background.html"
         frameBorder={0}
       />
-      <div className="intro">
-        <IntroLogo className="introLogo" />
-        <Link to="main">
-          <button>go Main</button>
-        </Link>
+      <div className="contaier">
+        <div className="intro">
+          {/* <IntroLogo className="introLogo" /> */}
+          <img className="introLogo" src={IntroLogo} />
+          <h1 className="intro-title">동하책</h1>
+          <p className="intro-subTitle">같은 하늘 아래, 우리들의 이야기</p>
+          <Link to="main">
+            <button>go Main</button>
+          </Link>
+        </div>
       </div>
     </>
   );
