@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './MessageList.scss';
-import balloon from '../assets/images/balloon.gif';
+import balloon from '../assets/images/balloon.png';
 import MyMessage from '../components/messageList/MyMessage';
 import items from './items.json';
 import Iframe from 'react-iframe';
@@ -14,9 +14,9 @@ function MessageList() {
   return (
     <>
       <Iframe
-        className="messageBackground"
-        url="Background.html"
-        src="../background/Background.html"
+        className="BackgroundUnMove"
+        url="BackgroundUnMove.html"
+        src="../background/BackgroundUnMove.html"
         frameBorder={0}
       />
       <div className="messageList">
