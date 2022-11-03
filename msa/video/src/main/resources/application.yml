@@ -3,7 +3,7 @@ server: #random port
 
 spring:
   application:
-    name: text-service
+    name: video-service
 
 ###### maria db 설정 관련 추가 #####
 
