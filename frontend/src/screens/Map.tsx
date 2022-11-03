@@ -1,9 +1,39 @@
-import {MapContainer, TileLayer, Marker} from 'react-leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMapEvent,
+  Popup,
+} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import {CustomMarker} from '@map/CustomMarker';
+import {CustomMarker, ClickMarker} from '@map/CustomMarker';
+import {useState} from 'react';
+import './Map.scss';
 
 function Map() {
-  // 지구본에서 받아온 위치 정보
+  // 클릭한 위치
+  const [position, setPosition] = useState({lat: 0, lng: 0});
+
+  function MapClickPosition() {
+    const map = useMapEvent('click', e => {
+      const {lat, lng} = e.latlng;
+      setPosition({lat: lat, lng: lng});
+    });
+    return (
+      <Marker position={position} icon={ClickMarker}>
+        <Popup>
+          <p>선택한 위치는:</p>
+          <p>위도: {position.lat}</p>
+          <p>경도: {position.lng}</p>
+          <p>입니다. 이동해볼까요?</p>
+          <button className="btn">네</button>
+          <button className="btn">아니요</button>
+        </Popup>
+      </Marker>
+    );
+  }
+
+  // 지구본에서 받아온 위치 정보로 처음 지도 center 지정
 
   // 위치 정보에 기반해서 서버로부터 데이터 호출
   const data = [
@@ -41,18 +71,24 @@ function Map() {
 
   // 화면에 뿌리기
   const Markers = (): JSX.Element[] => {
-    const markers = data.map(position => {
-      return <Marker position={position} icon={CustomMarker}></Marker>;
+    const markers = data.map((position, index) => {
+      return <Marker key={index} position={position} icon={CustomMarker} />;
     });
     return markers;
   };
 
   return (
     <MapContainer
+      maxBounds={[
+        [-200, -180],
+        [200, 180],
+      ]}
+      minZoom={2}
       style={{width: '100%', height: '100%'}}
       center={{lat: 35, lng: 127}}
-      zoom={3}
+      zoom={2}
       scrollWheelZoom={true}>
+      <MapClickPosition />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
