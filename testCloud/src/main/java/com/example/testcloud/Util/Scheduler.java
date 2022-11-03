@@ -7,8 +7,4 @@ import org.springframework.scheduling.annotation.Scheduled;
 @SpringBootApplication
 @EnableScheduling
 public class Scheduler {
-    @Scheduled(cron = "10 * * * * *")
-    public void run(){
-
-    }
 }

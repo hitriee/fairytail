@@ -6,12 +6,12 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class S3Util {
     @Value("${cloud.front.name}")
@@ -23,8 +23,8 @@ public class S3Util {
 
     public void upload(File file, String dirName){
         String fileName = dirName+"/"+file.getName();
-        boolean isExistObject = amazonS3Client.doesObjectExist(bucket, fileName);
-        if(isExistObject == true){
+        boolean exist = amazonS3Client.doesObjectExist(bucket, fileName);
+        if(exist == true){
             amazonS3Client.deleteObject(bucket, fileName);
         }
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, file).withCannedAcl(CannedAccessControlList.Private));
@@ -32,9 +32,17 @@ public class S3Util {
 
     public void delete(File file, String dirName){
         String fileName = dirName+"/" + file.getName();
-        boolean isExistObject = amazonS3Client.doesObjectExist(bucket, fileName);
-        if(isExistObject == true){
+        boolean exist = amazonS3Client.doesObjectExist(bucket, fileName);
+        if(exist == true){
             amazonS3Client.deleteObject(bucket, fileName);
         }
+    }
+
+    public void update(String oldFilePath, File file, String dirName){
+        boolean exist = amazonS3Client.doesObjectExist(bucket, oldFilePath);
+        if(exist == true){
+            amazonS3Client.deleteObject(bucket, oldFilePath);
+        }
+        upload(file, dirName);
     }
 }

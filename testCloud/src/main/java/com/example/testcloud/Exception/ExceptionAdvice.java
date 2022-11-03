@@ -11,13 +11,13 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<?> maxSizeEx(){
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("message", "파일이 너무 커요");
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        return new ResponseEntity<>(resultMap, status);
-    }
+//    @ExceptionHandler(MaxUploadSizeExceededException.class)
+//    public ResponseEntity<?> maxSizeEx(){
+//        Map<String, Object> resultMap = new HashMap<>();
+//        resultMap.put("message", "파일이 너무 커요");
+//        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+//        return new ResponseEntity<>(resultMap, status);
+//    }
 
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<?> extest(){

@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +20,7 @@ import javax.persistence.Table;
 public class Post {
     @Id
     @Column(name = "post_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
     @Column(name = "user_id")
     private Integer userId;
