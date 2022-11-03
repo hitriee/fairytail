@@ -1,10 +1,7 @@
 .count {
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-
-.red {
-  color: palevioletred;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: 100%;
 }
 
 .white {
@@ -12,18 +9,18 @@
 }
 
 .icon {
-  &-small {
-    width: 2vw;
-    height: 2vw;
+  &-nav {
+    width: 7%;
+    height: 20%;
   }
-  &-medium {
-    width: 3vw;
-    height: 3vw;
+  &-like {
+    width: 7%;
+    height: 10%;
   }
 }
 
-.ballon {
-  width: 10vw;
+.balloon {
+  width: 20%;
   display: block;
 }
 

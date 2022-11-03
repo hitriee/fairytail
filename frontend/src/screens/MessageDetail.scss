@@ -1,24 +1,41 @@
-.background {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  z-index: -2;
-}
-#detail {
-  width: 30vw;
-  height: 50vh;
-  display: flex;
-  flex-direction: column;
-}
-
 .wave {
   position: absolute;
   z-index: -1;
-  width: 30vw;
-  height: 70vh;
+  width: 100%;
+  height: 70%;
 }
 
 .detail {
   display: flex;
   justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex-wrap: nowrap;
+  #detail {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../assets/images/wave.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    .ignore {
+      width: 100%;
+    }
+    // align-items: center;
+  }
+}
+
+@media (max-device-aspect-ratio: 9 / 16) {
+  #detail {
+    height: 100vh;
+    width: 100vw;
+  }
+}
+
+@media (min-device-aspect-ratio: 9 / 16) {
+  #detail {
+    height: 100vh;
+    width: 56.25vh;
+  }
 }

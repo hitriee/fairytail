@@ -1,48 +1,43 @@
-.card-detail {
-  position: relative;
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  flex-wrap: wrap;
-  background-color: white;
-  border-radius: 10%;
-  &-text {
-    width: 18vw;
-    min-height: 18vw;
+.detail {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  &-audio {
-    width: 15vw;
-    min-height: 15vw;
+  &-title {
+    width: 95%;
+    font-size: 100%;
+    font-weight: 600;
+    text-align: center;
   }
-}
-.like {
-  position: relative;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-content: stretch;
-  justify-content: center;
-  line-height: 200%;
-  justify-content: center;
-  align-items: center;
-  width: 18vw;
-  padding: 1vw;
-  &-text {
-    // word-break: normal;
-    // word-break: break-all;
-    // word-break: keep-all;
-    margin: 1.5vw;
-    text-overflow: clip;
-    // text-overflow: ellipsis;
-    // https://www.funyphp.com/archive/html/12?sfl=mb_id%2C1&stx=webmaster&sst=wr_hit&sod=desc&sop=and
+  &-card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: white;
+    border-radius: 20px;
+    &-text {
+      width: 50%;
+      min-height: 50%;
+    }
+    &-audio {
+      width: 30%;
+      min-height: 30%;
+    }
   }
-}
-.center {
-  text-align: center;
-}
-.date {
-  margin-bottom: 100px;
-  font-size: 12px;
+  &-content {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    padding: 5%;
+  }
+  &-date {
+    margin-bottom: 10%;
+    font-size: 80%;
+  }
 }
