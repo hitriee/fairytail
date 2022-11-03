@@ -52,7 +52,7 @@ public class S3Controller {
         File tumbFile = new File(rootPath + "/" + fileName +"_thumbnail.png");
         s3Uploader.upload(zipFile, "image");
         s3Uploader.upload(tumbFile, "image");
-        String url = CLOUD_FRONT_NAME + "/image" + "/" + filePath.getName();
+        String url = CLOUD_FRONT_NAME + "/video" + "/" + filePath.getName();
         filePath.delete();
         resultMap.put("url", url);
         status = HttpStatus.OK;
@@ -73,6 +73,7 @@ public class S3Controller {
         Map<String, Object> resultMap = new HashMap<>();
         String rootPath = osCheck();
         String fileName = user + "_" + file.getOriginalFilename();
+        File filePath = new File(rootPath + "/" + fileName);
         HttpStatus status = null;
         return new ResponseEntity<>(resultMap, status);
     }
