@@ -156,21 +156,30 @@ function init() {
   const scene = document.querySelector("a-scene");
   const dodes = [];
 
-  const dodesPosition = [
-    { x: 0, y: 0, z: 0 },
-    { x: 35, y: 15, z: 30 },
-    { x: 45, y: 0, z: 60 },
-    { x: 0, y: 60, z: 15 },
-    { x: 0, y: 45, z: 45 },
+  const dodesXYZ = [
+    { px: 0, py: 0, pz: 0, fromxyz: "0 -0.1 0", toxyz: "0 0.1 0" },
+    { px: 35, py: 15, pz: 30, fromxyz: "0.1 0 0", toxyz: "-0.1 0 0" },
+    { px: 45, py: 0, pz: 60, fromxyz: "0 0 0.1", toxyz: "0 0 -0.1" },
+    { px: 0, py: 60, pz: 15, fromxyz: "-0.1 -0.1 0", toxyz: "0 0.1 0" },
+    { px: 15, py: 45, pz: 45, fromxyz: "0 -0.1 0", toxyz: "0 0.1 0.1" },
   ];
 
-  dodesPosition.forEach(({ x, y, z }, index) => {
+  dodesXYZ.forEach(({ px, py, pz, fromxyz, toxyz }, index) => {
     const dodecahedron = document.createElement("a-entity");
-    dodecahedron.setAttribute("position", { x: 0, y: 2, z: 0 });
-    dodecahedron.setAttribute("rotation", { x: x, y: y, z: z });
+    dodecahedron.setAttribute("position", { x: 0, y: index, z: 0 });
+    dodecahedron.setAttribute("rotation", { x: px, y: py, z: pz });
     dodecahedron.setAttribute("layout", {
       type: "dodecahedron",
-      radius: 7,
+      radius: 6 + index * 0.5,
+    });
+    dodecahedron.setAttribute("animation", {
+      property: "position",
+      from: fromxyz,
+      to: toxyz,
+      loop: true,
+      dir: "alternate",
+      dur: 2500,
+      easing: "linear",
     });
     dodes.push(dodecahedron);
     scene.appendChild(dodecahedron);
@@ -188,12 +197,11 @@ function init() {
     emoji.setAttribute("material", {
       shader: "flat",
       src: `../emojis/${emoji_no}.png`,
-      side: "double",
       transparent: true,
       alphaTest: 0.5,
     });
     emoji.setAttribute("look-at", "[camera]");
-    emoji.className = "entity";
+    emoji.className = "emoji";
 
     emoji.setAttribute("handle-click", { post_id: post_id });
 

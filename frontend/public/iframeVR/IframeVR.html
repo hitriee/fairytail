@@ -24,15 +24,8 @@
     <a-scene
       vr-mode-ui="enabled: false"
       cursor="rayOrigin: mouse"
-      raycaster="objects: .entity"
+      raycaster="objects: .emoji"
     >
-      <a-assets>
-        <a-mixin
-          id="bouncy"
-          animation__bounceup="property: position; from: 0 0 0; to: 0 1 0; start-events: loaded, animationcomplete__bouncedown"
-          animation__bouncedown="property: position; from: 0 1 0; to: 0 0 0; start-events: animationcomplete__bouncedown"
-        />
-      </a-assets>
       <a-sky src="./VRBackground.jpg"></a-sky>
       <a-camera position="0 0 0" look-controls></a-camera>
     </a-scene>
