@@ -1,5 +1,6 @@
 import items from '@screens/items.json';
 import MyNotification from '@/components/individual/MyNotification';
+import '@screens/Individual.scss';
 
 function Notifications() {
   return (

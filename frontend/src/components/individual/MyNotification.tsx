@@ -1,19 +1,22 @@
 import {emojiArrStatic} from 'src/assets/emojis';
 import '@individual/MyNotifications.scss';
+import {useNavigate} from 'react-router';
 
 interface itemProps {
   item: {
     id: number;
     title: string;
-    contents: string;
     emoji: number;
-    like: number;
   };
 }
 
 function MyNotification({item}: itemProps) {
+  const navigate = useNavigate();
+  const toDetail = (postId: number) => {
+    return () => navigate(`/message/detail/${postId}`);
+  };
   return (
-    <div className="myNotification">
+    <div className="myNotification" onClick={toDetail(item.id)}>
       <div className="myNotification-emoji">
         <img src={emojiArrStatic[item.emoji]} alt="emojiArrStatic" />
       </div>
