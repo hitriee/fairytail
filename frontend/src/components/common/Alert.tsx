@@ -11,8 +11,8 @@ function Alert({info, open, onConfirmed}: props) {
   return (
     <>
       <main id="alert">
-        <section className={open ? 'modal' : ''}>
-          {open ? (
+        {open ? (
+          <section className="modal">
             <article className="modal-alert">
               <p>{info.title}</p>
               <p>{info.message}</p>
@@ -20,8 +20,8 @@ function Alert({info, open, onConfirmed}: props) {
                 <button onClick={onConfirmed}>확인</button>
               </footer>
             </article>
-          ) : null}
-        </section>
+          </section>
+        ) : null}
       </main>
     </>
   );

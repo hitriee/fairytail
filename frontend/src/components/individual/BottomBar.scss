@@ -1,3 +1,15 @@
+@media (max-device-aspect-ratio: 9 / 16) {
+  #bottomBar {
+    width: 100vw;
+  }
+}
+
+@media (min-device-aspect-ratio: 9 / 16) {
+  #bottomBar {
+    width: 56.25vh;
+  }
+}
+
 #bottomBar {
   display: fixed;
   background-color: rgba($color: grey, $alpha: 0.3);

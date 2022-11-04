@@ -1,61 +1,62 @@
 @media (max-device-aspect-ratio: 9 / 16) {
-  .messageList-container {
+  .individual {
     height: 100vh;
     width: 100vw;
   }
 }
 
 @media (min-device-aspect-ratio: 9 / 16) {
-  .messageList-container {
+  .individual {
     height: 100vh;
     width: 56.25vh;
   }
 }
 
-// #individual {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-.individual {
-  // width: 50%;
+#individual {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
-  position: relative;
-  &-container {
-    height: 60%;
-    width: 80%;
-    overflow-y: scroll;
-    overflow-x: visible;
+  .individual {
     display: flex;
     flex-direction: column;
-    &-list {
-      // background-color: rgba($color: gray, $alpha: 0.3);
-      // padding-top: 1%;
+    align-items: center;
+    // height: 100%;
+    position: relative;
+    // overflow: hidden;
+    &-container {
+      height: 55%;
+      width: 80%;
+      overflow: scroll;
+      // overflow-x: visible;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      // justify-content: center;
+      &-list {
+        // background-color: rgba($color: gray, $alpha: 0.3);
+        // padding-top: 1%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // overflow-y: scroll;
+        // justify-content: center;
+      }
     }
-  }
-  &-icon {
-    margin-top: 2%;
-    margin-bottom: 2%;
-    width: 20%;
-  }
-  &-bottom {
-    position: fixed;
-    bottom: 0;
-  }
-  .delete {
-    color: white;
-    display: block;
-    margin-left: auto;
-    margin-right: 13%;
-    &-parent {
-      display: flex;
+    &-icon {
+      margin-top: 2%;
+      margin-bottom: 2%;
+      width: 20%;
+    }
+    &-bottom {
+      position: fixed;
+      bottom: 0;
+    }
+    .delete {
+      color: white;
+      display: block;
+      margin-left: auto;
+      margin-right: 13%;
+      &-parent {
+        display: flex;
+      }
     }
   }
 }
-// }
