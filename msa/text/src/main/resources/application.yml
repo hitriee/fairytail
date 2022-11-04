@@ -5,9 +5,9 @@ spring:
   application:
     name: text-service
 
-###### maria db 설정 관련 추가 #####
+  ###### maria db 설정 관련 추가 #####
 
-# h2 database setting - 사용하지 않을 시, 주석 처리
+  # h2 database setting - 사용하지 않을 시, 주석 처리
   h2:
     console:
       enabled: true

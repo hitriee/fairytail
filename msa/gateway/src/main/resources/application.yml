@@ -1,0 +1,32 @@
+server:
+    port: 8000
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+
+spring:
+    application:
+        name: gateway-service
+    cloud:
+        gateway:
+            default-filters:  # 전체 적용되는 필터
+                - name: GlobalFilter
+                  args:
+                      baseMessage: Spring Cloud Gateway Global Filter
+                      preLogger: true
+                      postLogger: true
+#        routes: # Eureka client 에 등록할 서비스
+#            - id: user-service
+#              uri: lb://USER-SERVICE
+#              predicates:
+#                - Path=/user/**
+#              filters:
+#                - AddRequestHeader = user-request, user-request-header
+#                - AddResponseHeader = user-response, user-response-header
+#                - CustomFilter # Custom 하여 사용할 filter 등록
+
+
