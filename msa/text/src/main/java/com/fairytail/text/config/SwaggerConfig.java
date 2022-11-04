@@ -1,7 +1,5 @@
 package com.fairytail.text.config;
 
-package com.fairytail.like.config;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -31,7 +29,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Fairy Tail Spring Boot REST API")
                 .version("1.0.0")
-                .description("동하책 Swagger API 명세입니다.")
+                .description("동하책 Swagger API - Text Service 명세입니다.")
                 .build();
     }
 }
