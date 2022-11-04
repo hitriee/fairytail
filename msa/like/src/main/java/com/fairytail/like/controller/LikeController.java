@@ -25,6 +25,4 @@ public class LikeController {
                 env.getProperty("local.server.port"));
     }
 
-
-
 }
