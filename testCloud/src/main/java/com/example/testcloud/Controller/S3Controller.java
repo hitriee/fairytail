@@ -1,6 +1,7 @@
 package com.example.testcloud.Controller;
 
 
+import com.example.testcloud.Util.OsCheckUtil;
 import com.example.testcloud.Util.S3Util;
 import com.example.testcloud.Util.FfmpegUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,29 +21,21 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 public class S3Controller {
-    private String serverPath = System.getProperty("user.dir")+"/media/video" ;
-    private String localPath = System.getProperty("user.dir");
+
     private String user = "test";
     private final FfmpegUtil ffmpegUtil;
+    private final OsCheckUtil osCheckUtil;
     @Value("${cloud.front.name}")
     private String CLOUD_FRONT_NAME;
 
     private final S3Util s3Util;
 
-    public String osCheck(){
-        String osName = System.getProperty("os.name").toLowerCase();
-        if(osName.contains("win")){
-            return localPath;
-        } else{
-            return serverPath;
-        }
-    }
 
     @PostMapping("/video")
     public ResponseEntity<?> createVideo(@RequestParam MultipartFile file) throws Exception {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
-        String rootPath = osCheck();
+        String rootPath = osCheckUtil.osCheck();
         String fileName = user + "_" + file.getOriginalFilename();
         File filePath = new File(rootPath + "/" + fileName);
         file.transferTo(filePath);
@@ -71,7 +64,7 @@ public class S3Controller {
     @PostMapping("/image")
     public ResponseEntity<?> createImage(@RequestParam MultipartFile file) throws Exception{
         Map<String, Object> resultMap = new HashMap<>();
-        String rootPath = osCheck();
+        String rootPath = osCheckUtil.osCheck();
         String fileName = user + "_" + file.getOriginalFilename();
         File filePath = new File(rootPath + "/" + fileName);
         HttpStatus status = null;

@@ -2,6 +2,7 @@ package com.example.testcloud.Controller;
 
 import com.example.testcloud.DTO.PostDto;
 import com.example.testcloud.Service.PostService;
+import com.example.testcloud.Util.OsCheckUtil;
 import com.example.testcloud.Util.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,17 +17,10 @@ import java.util.Map;
 public class PostController {
     private final String OKAY= "SUCCESS";
     private final String FAIL= "FAIL";
-    private String serverPath = System.getProperty("user.dir")+"/media/video" ;
-    private String localPath = System.getProperty("user.dir");
     private final S3Util s3Util;
-    public String osCheck(){
-        String osName = System.getProperty("os.name").toLowerCase();
-        if(osName.contains("win")){
-            return localPath;
-        } else{
-            return serverPath;
-        }
-    }
+
+    private final OsCheckUtil osCheckUtil;
+
     private final PostService postService;
     private static HttpStatus status = null;
 
@@ -37,7 +31,7 @@ public class PostController {
         if(postDto.getType().equals("string")){
             data = postService.createPost(postDto);
         } else{
-            String rootPath= osCheck();
+            String rootPath= osCheckUtil.osCheck();
 //            String fileName =
 //            File newfile = new File(rootPath+"/" + postDto.getFile().getOriginalFilename());
 //            postDto.getFile().transferTo(newfile);
