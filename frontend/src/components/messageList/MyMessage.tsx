@@ -1,9 +1,7 @@
 import React from 'react';
-import {emojiArr} from '../../assets/emojis';
-// import {emojiArrStatic} from '../../assets/emojis';
+// import {emojiArr} from '../../assets/emojis';
 import {emojiArrStatic} from 'src/assets/emojis';
 import './MyMessage.scss';
-import {IoHeartSharp} from 'react-icons/io5';
 
 interface itemProps {
   item: {
