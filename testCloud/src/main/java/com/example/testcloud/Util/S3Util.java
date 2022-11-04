@@ -21,6 +21,10 @@ public class S3Util {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    public String getCloudFrontName() {
+        return cloudFrontName;
+    }
+
     public void upload(File file, String dirName){
         String fileName = dirName+"/"+file.getName();
         boolean exist = amazonS3Client.doesObjectExist(bucket, fileName);
