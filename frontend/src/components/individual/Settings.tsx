@@ -7,6 +7,7 @@ import {bgmList} from '@common/commonFunc';
 import BgmModal from '@individual/BgmModal';
 import InfoModal from '@/components/individual/InfoModal';
 import Confirm from '@common/Confirm';
+import Alert from '@common/Alert';
 
 function Settings() {
   const [permitNoti, setPermitNoti] = useState(true);
@@ -15,6 +16,7 @@ function Settings() {
   const [wantInfo, setWantInfo] = useState(false);
   const [infoType, setInfoType] = useState('');
   const [info, setInfo] = useState<popUp>({title: '', message: ''});
+  const [openAlert, setOpenAlert] = useState(false);
   const [bgm, setBgm] = useState(bgmList[0].bgm);
 
   // 좋아요 알림 변경
@@ -22,16 +24,27 @@ function Settings() {
     setPermitNoti(!permitNoti);
   };
   // 팝업에 뜰 내용 변경
-  const changeInfo = (title: string, message: string) => {
-    return {title, message};
+  const changeInfo = (title: popUp['title'], message: popUp['message']) => {
+    setInfo(() => ({
+      title,
+      message,
+    }));
   };
   // 로그아웃
   const logoutConfirm = () => {
-    setInfo(changeInfo('로그아웃 확인', '정말 로그아웃하시겠어요?'));
+    changeInfo('로그아웃 확인', '정말 로그아웃하시겠어요?');
     setWantLogout(returnTrue);
   };
+  // 로그아웃 요청 백에 보내기
   const logout = () => {
-    console.log('로그아웃 요청');
+    // axios.post('url')
+    // .then(())
+    changeInfo('로그아웃 완료', '정상적으로 로그아웃되었습니다');
+    cancelLogout();
+    setOpenAlert(returnTrue);
+  };
+  const closeAlert = () => {
+    setOpenAlert(returnFalse);
   };
 
   const cancelLogout = () => {
@@ -67,6 +80,7 @@ function Settings() {
         onConfirmed={logout}
         onCancel={cancelLogout}
       />
+      <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
       <BgmModal
         bgm={bgm}
         setBgm={setBgm}
@@ -75,30 +89,33 @@ function Settings() {
       />
       <InfoModal open={wantInfo} onConfirmed={closeInfoModal} type={infoType} />
       <section className="settings-section">
-        <b className="settings-title">애플리케이션</b>
+        <div className="settings-title">애플리케이션</div>
         <br />
         <Toggle
           label="좋아요 알림"
           onClick={changePermit}
-          className="settings-each"
+          labelClass="settings-each"
+          containerClass="settings-between"
         />
         <br />
-        <span className="settings-each" onClick={bgmPopUp}>
-          배경음악
-        </span>
-        <span>현재 배경음악</span>
+        <div className="settings-between" onClick={bgmPopUp}>
+          <div className="settings-each">배경음악</div>
+          <div className="settings-each">현재 배경 음악</div>
+        </div>
       </section>
       <section className="settings-section">
-        <b className="settings-title">계정</b> <br />
-        <span className="settings-each" onClick={logoutConfirm}>
+        <div className="settings-title">계정</div>
+        <br />
+        <div className="settings-each" onClick={logoutConfirm}>
           로그아웃
-        </span>
+        </div>
       </section>
       <section className="settings-section">
-        <b className="settings-title">기타</b> <br />
-        <span className="settings-each" onClick={openLicense}>
-          라이센스
-        </span>
+        <div className="settings-title">기타</div>
+        <br />
+        <div className="settings-each" onClick={openLicense}>
+          라이선스
+        </div>
         <br />
         <span className="settings-each" onClick={openHelp}>
           도움말
