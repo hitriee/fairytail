@@ -1,0 +1,17 @@
+#bottomBar {
+  display: fixed;
+  background-color: rgba($color: grey, $alpha: 0.3);
+  .icon {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: flex;
+    justify-content: space-around;
+    &-each {
+      width: 15%;
+      opacity: 40%;
+    }
+    &-selected {
+      opacity: 100%;
+    }
+  }
+}

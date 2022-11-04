@@ -6,6 +6,7 @@ import {returnTrue, returnFalse} from '@common/commonFunc';
 import Report from '@messageDetail/Report';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
+import {popUp} from '@common/commonFunc';
 import '@common/Common.scss';
 
 interface props {
@@ -16,11 +17,6 @@ interface props {
   type: string;
   content: string;
   close: () => void;
-}
-
-interface popUp {
-  title: string;
-  message: string;
 }
 
 function MoreMenu({

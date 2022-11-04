@@ -1,7 +1,7 @@
 #navBar {
   display: flex;
   justify-content: space-between;
-  margin-top: 2%;
+  // margin-top: 2%;
   width: 100%;
 }
 
@@ -16,10 +16,11 @@
   border-radius: 10px;
 }
 
-#confirm {
-  display: flex;
-  justify-content: center;
-}
+// #confirm {
+//   display: flex;
+//   justify-content: center;
+//   position: absolute;
+// }
 
 #alert {
   display: flex;

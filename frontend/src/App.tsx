@@ -12,8 +12,7 @@ import MessageCreate from '@screens/MessageCreate';
 import MessageDetail from '@screens/MessageDetail';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
-import Settings from '@settings/Settings';
-import Notification from '@settings/Notification';
+import Individual from '@/screens/Individual';
 
 import {
   main,
@@ -44,8 +43,8 @@ function App() {
         <Route path={messageUpdate()} element={<MessageCreate />} />
         <Route path={messageDetail()} element={<MessageDetail />} />
         <Route path={notFound()} element={<NotFound />} />
-        <Route path={settings()} element={<Settings />} />
-        <Route path={notifications()} element={<Notification />} />
+        <Route path={settings()} element={<Individual />} />
+        <Route path={notifications()} element={<Individual />} />
       </Routes>
     </BrowserRouter>
   );
