@@ -52,7 +52,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Boolean deletePost(Integer postId) {
-        Integer res = postRepository.deleteByPostId(postId);
+        Long res = postRepository.deleteByPostId(postId);
         if(res == 0){
             return false;
         } else{
