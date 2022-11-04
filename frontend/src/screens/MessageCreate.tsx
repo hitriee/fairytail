@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
 import Toggle from '@messageCreate/Toggle';
@@ -20,24 +19,23 @@ function MessageCreate() {
   const [isShare, setIsShare] = useState(false);
 
   function handleSubmit() {
-    const location = {lat: 0, lng: 0};
-
     if (navigator.geolocation) {
       setLoading(true);
       navigator.geolocation.getCurrentPosition(position => {
-        location.lat = position.coords.latitude; // 위도
-        location.lng = position.coords.longitude; // 경도
-
-        // 서버 통신
-        const timer = setTimeout(() => {
-          console.log('3초 정지');
-          // setLoading(false);
-        }, 3000);
+        const location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
 
         console.log(emojiNo);
         console.log(content);
         console.log(isShare);
         console.log(location);
+
+        // 서버 통신
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       });
     }
   }
@@ -46,19 +44,17 @@ function MessageCreate() {
     <div className="screen">
       {loading ? <Loading /> : null}
 
-      <div className="container">
-        {/* <div className="header"> */}
-        {/* <Link to="/main"> */}
-        <NavBar />
-        {/* </Link> */}
-        {/* </div> */}
+      <div className="container" style={{backgroundColor: 'black'}}>
+        <div className="message-create-header">
+          <NavBar />
+        </div>
 
         <Carousel onSlideChange={setEmojiNo} />
 
-        <div className="card">
+        <div className="message-create-card">
           <Message mode="create" content={content} setContent={setContent} />
 
-          <div className="save-container">
+          <div className="message-create-save-container">
             <Toggle label="✨ 공개 여부" onClick={setIsShare} />
             <button className="btn" onClick={handleSubmit}>
               등록
