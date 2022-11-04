@@ -29,7 +29,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Fairy Tail Spring Boot REST API")
                 .version("1.0.0")
-                .description("동하책 Swagger API 명세입니다.")
+                .description("동하책 Swagger API - Like Service 명세입니다.")
                 .build();
     }
 }
