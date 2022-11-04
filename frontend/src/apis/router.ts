@@ -1,3 +1,4 @@
+export const BASE_URL = () => 'https://k7c209.p.ssafy.io';
 export const main = () => '/main';
 export const intro = () => '/';
 export const globe = () => '/globe';
