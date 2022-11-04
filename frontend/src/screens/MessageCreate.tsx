@@ -4,7 +4,6 @@ import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
 import Toggle from '@messageCreate/Toggle';
 import Message, {Content} from '@messageCreate/Message';
-import useGeolocation from '@apis/useGeolocation';
 import Loading from '@components/loading/Loading';
 import NavBar from '@components/common/NavBar';
 
@@ -20,21 +19,27 @@ function MessageCreate() {
   });
   const [isShare, setIsShare] = useState(false);
 
-  function useSubmit() {
-    const location = useGeolocation();
+  function handleSubmit() {
+    const location = {lat: 0, lng: 0};
 
-    setLoading(true);
+    if (navigator.geolocation) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition(position => {
+        location.lat = position.coords.latitude; // 위도
+        location.lng = position.coords.longitude; // 경도
 
-    // 서버 통신
-    const timer = setTimeout(() => {
-      console.log('3초 정지');
-      // setLoading(false);
-    }, 3000);
+        // 서버 통신
+        const timer = setTimeout(() => {
+          console.log('3초 정지');
+          // setLoading(false);
+        }, 3000);
 
-    console.log(emojiNo);
-    console.log(content);
-    console.log(isShare);
-    console.log(location);
+        console.log(emojiNo);
+        console.log(content);
+        console.log(isShare);
+        console.log(location);
+      });
+    }
   }
 
   return (
@@ -55,7 +60,7 @@ function MessageCreate() {
 
           <div className="save-container">
             <Toggle label="✨ 공개 여부" onClick={setIsShare} />
-            <button className="btn" onClick={useSubmit}>
+            <button className="btn" onClick={handleSubmit}>
               등록
             </button>
           </div>

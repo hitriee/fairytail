@@ -1,0 +1,21 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 60%;
+  width: 70%;
+  &-section {
+    display: flex;
+    flex-direction: column;
+  }
+  &-title {
+    font-size: 40%;
+  }
+  &-each {
+    font-size: 120%;
+  }
+  &-between {
+    display: flex;
+    justify-content: space-between;
+  }
+}

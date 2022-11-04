@@ -1,6 +1,6 @@
 FROM node:16.18.0-alpine
 
-WORKDIR /var/jenkins_home/workspace/front/frontend
+WORKDIR /app
 COPY . ./
 RUN npm i
 

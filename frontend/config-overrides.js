@@ -6,6 +6,7 @@ module.exports = override(
     "@": path.resolve(__dirname, "src"),
     "@components": path.resolve(__dirname, "src", "components"),
     "@apis": path.resolve(__dirname, "src", "apis"),
+    "@assets": path.resolve(__dirname, "src", "assets"),
     "@bgms": path.resolve(__dirname, "src", "assets", "bgms"),
     "@emojis": path.resolve(__dirname, "src", "assets", "emojis"),
     "@images": path.resolve(__dirname, "src", "assets", "images"),
@@ -29,13 +30,7 @@ module.exports = override(
       "messageDetail"
     ),
     "@messageList": path.resolve(__dirname, "src", "components", "messageList"),
-    "@notification": path.resolve(
-      __dirname,
-      "src",
-      "components",
-      "notification"
-    ),
-    "@settings": path.resolve(__dirname, "src", "components", "settings"),
+    "@individual": path.resolve(__dirname, "src", "components", "individual"),
     "@screens": path.resolve(__dirname, "src", "screens"),
     "@styles": path.resolve(__dirname, "src", "styles"),
     "@fonts": path.resolve(__dirname, "src", "styles", "fonts"),

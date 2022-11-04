@@ -23,7 +23,7 @@ function Like({count, like, isMine, emoji}: props) {
       <p className="white count">{count}</p>
       {/* <img src={heart} alt="like" /> */}
       {isMine || myLike ? (
-        <img src={emojiArr[62]} className="icon-like" onClick={changeLike} />
+        <img src={emojiArr[5]} className="icon-like" onClick={changeLike} />
       ) : (
         <HeartRegular className="white icon-like" onClick={changeLike} />
       )}
