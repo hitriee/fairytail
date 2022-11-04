@@ -29,7 +29,7 @@ export default function Scene({...props}) {
       <color attach="background" args={['#dfd4fb']} />
       <group {...props} dispose={null}>
         <group
-          name="star - 지도"
+          name="star 6"
           position={[824.43, 1105.07, -36.16]}
           rotation={[0, -1.44, 0]}
           scale={0.15}>
@@ -45,7 +45,7 @@ export default function Scene({...props}) {
           />
         </group>
         <group
-          name="star - 풍선"
+          name="star 5"
           position={[671.04, 769.84, 742.93]}
           rotation={[0, -0.98, 0]}
           scale={0.15}>
@@ -61,7 +61,7 @@ export default function Scene({...props}) {
           />
         </group>
         <group
-          name="star - 노트북"
+          name="star 4"
           position={[718.09, 345.08, -92.11]}
           rotation={[0, -1.28, 0]}
           scale={0.15}>
@@ -77,7 +77,7 @@ export default function Scene({...props}) {
           />
         </group>
         <group
-          name="star - 책"
+          name="star 3"
           position={[474.47, 290.78, -524.82]}
           rotation={[0, -0.94, 0]}
           scale={0.15}>
@@ -93,13 +93,28 @@ export default function Scene({...props}) {
           />
         </group>
         <group
-          name="star - 망원경"
-          position={[-155.54, 290.78, -379.54]}
-          rotation={[0, -0.41, 0]}
+          name="star 2"
+          position={[474.47, 290.78, -524.82]}
+          rotation={[0, -0.94, 0]}
           scale={0.15}>
           <mesh
             name="star4"
             geometry={nodes.star4.geometry}
+            material={materials.yellow}
+            castShadow
+            receiveShadow
+            position={[-6.89, -18.18, 0]}
+            scale={3.72}
+          />
+        </group>
+        <group
+          name="star"
+          position={[-155.54, 290.78, -379.54]}
+          rotation={[0, -0.41, 0]}
+          scale={0.15}>
+          <mesh
+            name="star6"
+            geometry={nodes.star6.geometry}
             material={materials.yellow}
             castShadow
             receiveShadow
@@ -160,7 +175,6 @@ export default function Scene({...props}) {
             position={[-228.43, 209.77, 2.25]}
             rotation={[0, 0, 1.15]}
             scale={1.03}
-            onClick={() => moveVR()}
           />
           <group name="baselegs" position={[63, -287.95, 0]} scale={0.75}>
             <mesh
@@ -497,7 +511,6 @@ export default function Scene({...props}) {
                 receiveShadow
                 position={[-22.7, 32.77, 1.79]}
                 rotation={[0, -Math.PI / 2, 0]}
-                onClick={() => moveMessage()}
               />
               <mesh
                 name="Cube 4"
@@ -508,7 +521,6 @@ export default function Scene({...props}) {
                 position={[-0.32, 0.86, 0.42]}
                 rotation={[0, 0, 0]}
                 scale={[0.99, 1.01, 1]}
-                onClick={() => moveMessage()}
               />
               <mesh
                 name="Cube 41"
@@ -519,7 +531,6 @@ export default function Scene({...props}) {
                 position={[-16.68, -0.27, 9.75]}
                 rotation={[0, 0, 0]}
                 scale={[0.99, 1.01, 1]}
-                onClick={() => moveMessage()}
               />
             </group>
           </group>
@@ -1449,8 +1460,9 @@ export default function Scene({...props}) {
           zoom={0.26}
           far={100000}
           near={-100000}
-          position={[-2175.75, 1680.16, 202.65]}
-          rotation={[-0.96, -0.84, -0.82]}
+          position={[-1886.24, 1455.42, 749]}
+          rotation={[-0.52, -0.61, -0.32]}
+          scale={1}
         />
         <hemisphereLight
           name="Default Ambient Light"

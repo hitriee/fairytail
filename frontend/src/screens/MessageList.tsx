@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import './MessageList.scss';
 import balloon from '../assets/images/balloon.png';
 import MyMessage from '../components/messageList/MyMessage';
