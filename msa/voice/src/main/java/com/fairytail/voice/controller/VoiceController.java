@@ -21,7 +21,7 @@ public class VoiceController {
     @GetMapping("/health_check")
     public String status() {
         // Random으로 할당된 포트 번호 받아오기
-        return String.format("Text service is working on port %s!",
+        return String.format("Voice service is working on port %s!",
                 env.getProperty("local.server.port"));
     }
 
