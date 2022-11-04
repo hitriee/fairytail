@@ -1,0 +1,28 @@
+.myNotification {
+  display: flex;
+  // flex-direction: row;
+  box-sizing: border-box;
+  background-color: white;
+  // margin: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  height: 12vh;
+  width: 100%;
+  border-radius: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  &-emoji {
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+  }
+  &-title {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  // &-date {
+  //   font-size: small;
+  // }
+}
