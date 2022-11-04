@@ -1,10 +1,10 @@
-.map-modal {
-  position: absolute;
-  width: 50vw;
-  height: 50vh;
-  left: 0;
-  top: 0;
-  margin: auto;
-  background-color: white;
-  z-index: 2;
+.map-popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
 }

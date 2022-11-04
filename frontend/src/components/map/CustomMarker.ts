@@ -1,21 +1,17 @@
 import L from 'leaflet';
 import customMarker from '@images/CustomMarker.svg';
-import clickMarker from '@images/ClickMarker.webp';
+import {emojiArr} from '@/assets/emojis';
 
-export const CustomMarker = new L.Icon({
+export const CustomMarkerIcon = new L.Icon({
   iconUrl: customMarker,
   iconRetinaUrl: customMarker,
-  shadowUrl: undefined,
-  shadowSize: undefined,
-  shadowAnchor: undefined,
   iconSize: new L.Point(20, 20),
 });
 
-export const ClickMarker = new L.Icon({
-  iconUrl: clickMarker,
-  iconRetinaUrl: clickMarker,
-  shadowUrl: undefined,
-  shadowSize: undefined,
-  shadowAnchor: undefined,
-  iconSize: new L.Point(20, 20),
+export const ClickMarkerIcon = new L.Icon({
+  iconUrl: emojiArr[5],
+  iconRetinaUrl: emojiArr[5],
+  iconAnchor: [15, 15],
+  popupAnchor: [0, -15],
+  iconSize: new L.Point(30, 30),
 });
