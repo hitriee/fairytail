@@ -19,14 +19,16 @@ function Individual() {
         src="../background/BackgroundUnMove.html"
         frameBorder={0}
       />
-      <main className="individual">
+      {/* <main id="individual"> */}
+      <section className="individual">
         <NavBar />
         <img src={isSettings ? gear : bell} className="individual-icon" />
         {isSettings ? <Settings /> : <Notifications />}
         <footer className="individual-bottom">
           <BottomBar type={isSettings} />
         </footer>
-      </main>
+      </section>
+      {/* </main> */}
     </>
   );
 }

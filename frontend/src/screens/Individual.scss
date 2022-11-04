@@ -12,7 +12,12 @@
   }
 }
 
+// #individual {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
 .individual {
+  // width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,6 +35,7 @@
       // padding-top: 1%;
       display: flex;
       flex-direction: column;
+      align-items: center;
       // justify-content: center;
     }
   }
@@ -52,3 +58,4 @@
     }
   }
 }
+// }
