@@ -19,13 +19,15 @@ export function Preview({type, fileURL}: PreviewProps) {
   let preview: any;
 
   if (type.startsWith('string')) {
-    preview = <p className="content-text">{fileURL}</p>;
+    preview = <p className="message-content-text">{fileURL}</p>;
   } else if (type.startsWith('image')) {
-    preview = <img className="content-image" src={fileURL} alt={type} />;
+    preview = (
+      <img className="message-content-image" src={fileURL} alt={type} />
+    );
   } else if (type.startsWith('video')) {
     preview = (
       <video
-        className="content-image"
+        className="message-content-image"
         controls={true}
         autoPlay={true}
         playsInline={true}>
@@ -76,7 +78,6 @@ function Message({mode, content, setContent}: MessageProps) {
   };
 
   const selectNewFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('확인');
     const fileList = e.target.files;
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
@@ -95,9 +96,9 @@ function Message({mode, content, setContent}: MessageProps) {
 
   if (mode === 'create' || mode === 'update') {
     return (
-      <div className="message-container">
+      <div className="message">
         <input
-          className="title"
+          className="message-title"
           placeholder="제목을 입력하세요."
           maxLength={10}
           onChange={e => {
@@ -112,9 +113,9 @@ function Message({mode, content, setContent}: MessageProps) {
         {newFileURL === '' || newType === 'string' ? (
           // create 이거나, type이 text인 글을 update 하는 경우 -> textarea
           <textarea
-            className="content-text"
+            className="message-content-text"
             placeholder="내용을 입력하세요."
-            maxLength={150}
+            maxLength={100}
             rows={10}
             onChange={e => {
               setNewFileURL(e.target.value);
@@ -132,10 +133,10 @@ function Message({mode, content, setContent}: MessageProps) {
         )}
         {!newFile && newFile == null ? (
           <button className="btn" onClick={handleClickFileUpload}>
-            사진 / 영상 / 음성 파일 업로드하기
+            사진 / 영상 / 음성 파일 업로드
           </button>
         ) : (
-          <div className="content-buttons">
+          <div className="message-content-buttons">
             <button className="btn" onClick={handleClickFileUpload}>
               바꾸기
             </button>
