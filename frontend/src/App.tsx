@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import '@/App.scss';
-
+import Loader from '../src/components/room/Loading';
 // route
 import Intro from '@screens/Intro';
 import Main from '@screens/Main';
@@ -32,6 +32,7 @@ import {
 function App() {
   return (
     <BrowserRouter>
+      {/* <Suspense fallback={<Loader />}> */}
       <Routes>
         <Route path={intro()} element={<Intro />} />
         <Route path={main()} element={<Main />} />
@@ -46,6 +47,7 @@ function App() {
         <Route path={settings()} element={<Individual />} />
         <Route path={notifications()} element={<Individual />} />
       </Routes>
+      {/* </Suspense> */}
     </BrowserRouter>
   );
 }

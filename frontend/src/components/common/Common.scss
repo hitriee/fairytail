@@ -1,7 +1,7 @@
 #navBar {
   display: flex;
   justify-content: space-between;
-  // margin-top: 2%;
+  margin-top: 2%;
   width: 100%;
 }
 
@@ -16,11 +16,13 @@
   border-radius: 10px;
 }
 
-// #confirm {
-//   display: flex;
-//   justify-content: center;
-//   position: absolute;
-// }
+#confirm {
+  display: flex;
+  // width: 200%;
+  // position: absolute;
+  position: relative;
+  justify-content: center;
+}
 
 #alert {
   display: flex;
@@ -28,6 +30,7 @@
 }
 
 .modal {
+  // padding: 10%;
   display: flex;
   position: absolute;
   flex-direction: column;
@@ -37,10 +40,12 @@
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
   z-index: 50;
-  width: 25%;
+  width: 80%;
   min-height: 15%;
   &-confirm {
+    color: black;
     height: 10%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

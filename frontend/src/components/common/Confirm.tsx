@@ -12,9 +12,9 @@ interface props {
 function Confirm({info, onConfirmed, onCancel, open}: props) {
   return (
     <>
-      {open ? (
-        <main id="confirm" className="modal">
-          <section>
+      <main id="confirm">
+        {open ? (
+          <section className="modal">
             <article className="modal-confirm">
               <p>{info.title}</p>
               <p>{info.message}</p>
@@ -28,8 +28,8 @@ function Confirm({info, onConfirmed, onCancel, open}: props) {
               </footer>
             </article>
           </section>
-        </main>
-      ) : null}
+        ) : null}
+      </main>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import useSpline from '@splinetool/r3f-spline';
-import {OrthographicCamera} from '@react-three/drei';
+import {PerspectiveCamera} from '@react-three/drei';
 
 //route
 import {
@@ -29,86 +29,6 @@ export default function Scene({...props}) {
       <color attach="background" args={['#dfd4fb']} />
       <group {...props} dispose={null}>
         <group
-          name="star - 지도"
-          position={[824.43, 1105.07, -36.16]}
-          rotation={[0, -1.44, 0]}
-          scale={0.15}>
-          <mesh
-            name="star"
-            geometry={nodes.star.geometry}
-            material={materials.yellow}
-            castShadow
-            receiveShadow
-            position={[-6.89, -18.18, 0]}
-            scale={3.72}
-            onClick={() => moveGlobe()}
-          />
-        </group>
-        <group
-          name="star - 풍선"
-          position={[671.04, 769.84, 742.93]}
-          rotation={[0, -0.98, 0]}
-          scale={0.15}>
-          <mesh
-            name="star1"
-            geometry={nodes.star1.geometry}
-            material={materials.yellow}
-            castShadow
-            receiveShadow
-            position={[-6.89, -18.18, 0]}
-            scale={3.72}
-            onClick={() => moveCreate()}
-          />
-        </group>
-        <group
-          name="star - 노트북"
-          position={[718.09, 345.08, -92.11]}
-          rotation={[0, -1.28, 0]}
-          scale={0.15}>
-          <mesh
-            name="star2"
-            geometry={nodes.star2.geometry}
-            material={materials.yellow}
-            castShadow
-            receiveShadow
-            position={[-6.89, -18.18, 0]}
-            scale={3.72}
-            onClick={() => moveSettings()}
-          />
-        </group>
-        <group
-          name="star - 책"
-          position={[474.47, 290.78, -524.82]}
-          rotation={[0, -0.94, 0]}
-          scale={0.15}>
-          <mesh
-            name="star3"
-            geometry={nodes.star3.geometry}
-            material={materials.yellow}
-            castShadow
-            receiveShadow
-            position={[-6.89, -18.18, 0]}
-            scale={3.72}
-            onClick={() => moveMessage()}
-          />
-        </group>
-        <group
-          name="star - 망원경"
-          position={[-155.54, 290.78, -379.54]}
-          rotation={[0, -0.41, 0]}
-          scale={0.15}>
-          <mesh
-            name="star4"
-            geometry={nodes.star4.geometry}
-            material={materials.yellow}
-            castShadow
-            receiveShadow
-            position={[-6.89, -18.18, 0]}
-            scale={3.72}
-            onClick={() => moveVR()}
-          />
-        </group>
-        <group
           name="풍선"
           position={[719.43, 423.93, 708.08]}
           rotation={[0.15, 0, 0]}
@@ -116,7 +36,7 @@ export default function Scene({...props}) {
           <mesh
             name="cord"
             geometry={nodes.cord.geometry}
-            material={materials['cord Material']}
+            material={materials.Untitled}
             castShadow
             receiveShadow
             position={[-0.09, -106.61, 2.08]}
@@ -127,7 +47,7 @@ export default function Scene({...props}) {
           <mesh
             name="baseballoon"
             geometry={nodes.baseballoon.geometry}
-            material={materials['baseballoon Material']}
+            material={materials.ballon}
             castShadow
             receiveShadow
             position={[4.15, -20.25, 2.36]}
@@ -160,7 +80,6 @@ export default function Scene({...props}) {
             position={[-228.43, 209.77, 2.25]}
             rotation={[0, 0, 1.15]}
             scale={1.03}
-            onClick={() => moveVR()}
           />
           <group name="baselegs" position={[63, -287.95, 0]} scale={0.75}>
             <mesh
@@ -294,7 +213,6 @@ export default function Scene({...props}) {
             position={[63.53, 54.3, -40.51]}
             rotation={[-0.35, 0.15, 1.18]}
             scale={[0.16, 0.16, 0.04]}
-            onClick={() => moveVR()}
           />
           <mesh
             name="screw1"
@@ -305,7 +223,6 @@ export default function Scene({...props}) {
             position={[63.75, 54.79, 42.56]}
             rotation={[0.36, -0.16, 1.18]}
             scale={[0.16, 0.16, 0.04]}
-            onClick={() => moveVR()}
           />
           <mesh
             name="sphericsupport"
@@ -316,7 +233,6 @@ export default function Scene({...props}) {
             position={[53.43, 20.06, 1.7]}
             rotation={[0, 0, 1.15]}
             scale={0.36}
-            onClick={() => moveVR()}
           />
           <mesh
             name="supportpiece"
@@ -327,7 +243,6 @@ export default function Scene({...props}) {
             position={[54.21, 33.99, 1.12]}
             rotation={[0, 0, 1.15]}
             scale={[0.1, 0.3, 0.75]}
-            onClick={() => moveVR()}
           />
           <mesh
             name="littleglass"
@@ -360,7 +275,6 @@ export default function Scene({...props}) {
             position={[166.74, 37.61, 1.47]}
             rotation={[0, 0, 1.15]}
             scale={[0.63, 0.37, 0.63]}
-            onClick={() => moveVR()}
           />
           <mesh
             name="peephole"
@@ -371,7 +285,6 @@ export default function Scene({...props}) {
             position={[308.29, -23.84, 1.1]}
             rotation={[0, 0, 1.15]}
             scale={0.26}
-            onClick={() => moveVR()}
           />
           <mesh
             name="basetelescope"
@@ -416,7 +329,7 @@ export default function Scene({...props}) {
           material={materials['Walls Material']}
           castShadow
           receiveShadow
-          position={[24.17, -331.76, -26.55]}
+          position={[34.17, -321.76, -25.55]}
           rotation={[-1.57, 0, -1.57]}
           scale={0.7}
         />
@@ -1301,7 +1214,7 @@ export default function Scene({...props}) {
           </group>
           <group
             name="지도 게시판"
-            position={[711.32, 377.98, 79.98]}
+            position={[731.28, 377.98, 79.98]}
             rotation={[0, -Math.PI / 2, 0]}
             scale={[0.79, 0.66, 0.07]}>
             <mesh
@@ -1443,14 +1356,15 @@ export default function Scene({...props}) {
             />
           </group>
         </group>
-        <OrthographicCamera
+        <PerspectiveCamera
           name="1"
           makeDefault={true}
-          zoom={0.26}
           far={100000}
-          near={-100000}
-          position={[-2175.75, 1680.16, 202.65]}
-          rotation={[-0.96, -0.84, -0.82]}
+          near={5}
+          fov={45}
+          position={[-3159.13, 1124.43, 3075.51]}
+          rotation={[-0.29, -0.71, -0.2]}
+          scale={1}
         />
         <hemisphereLight
           name="Default Ambient Light"
