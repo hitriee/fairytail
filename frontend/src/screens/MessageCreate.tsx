@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import {useNavigate, useParams} from 'react-router';
 import {Link} from 'react-router-dom';
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
@@ -6,8 +7,18 @@ import Toggle from '@messageCreate/Toggle';
 import Message, {Content} from '@messageCreate/Message';
 import Loading from '@components/loading/Loading';
 import NavBar from '@components/common/NavBar';
+import {notFound} from '@apis/router';
 
 function MessageCreate() {
+  //! update 시 분기 처리 필요 (notFound 페이지로도 이동 처리 필요)
+  // const navigate = useNavigate()
+  // const params = useParams()
+  // const messageId = params.id
+  // const loader = async () => {
+  //   if (!messageId || !parseInt(messageId)) {
+  //     navigate(notFound());
+  //   }
+  // };
   const [loading, setLoading] = useState(false);
 
   const [emojiNo, setEmojiNo] = useState(0);
@@ -18,6 +29,10 @@ function MessageCreate() {
     fileURL: '',
   });
   const [isShare, setIsShare] = useState(false);
+
+  // useEffect(() => {
+  //   loader()
+  // }, [])
 
   function handleSubmit() {
     const location = {lat: 0, lng: 0};

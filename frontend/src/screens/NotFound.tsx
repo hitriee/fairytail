@@ -1,14 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {ReactComponent as IntroLogo} from '../assets/images/introLogo.svg';
+import {ReactComponent as IntroLogo} from '@images/introLogo.svg';
+import '@screens/NotFound.scss';
 
-function Intro() {
+function NotFound() {
   return (
     <>
-      <div>
+      <div className="notFound">
         <IntroLogo className="introLogo" />
         페이지를 찾을 수 없습니다
-        <Link to="main">
+        <Link to="/main">
           <button>go Main</button>
         </Link>
       </div>
@@ -16,4 +17,4 @@ function Intro() {
   );
 }
 
-export default Intro;
+export default NotFound;

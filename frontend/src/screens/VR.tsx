@@ -2,7 +2,8 @@ import './VR.scss';
 import Iframe from 'react-iframe';
 import {useNavigate} from 'react-router';
 import {useEffect} from 'react';
-import NavBar from '@common/NavBar';
+import {toMessageDetail} from '@apis/router';
+// import NavBar from '@common/NavBar';
 
 function VR() {
   const navigate = useNavigate();
@@ -14,14 +15,14 @@ function VR() {
       } else if (typeof ev.data === 'object') {
         console.log('웹펙 오류');
       } else {
-        navigate(`/message/detail/${ev.data}`);
+        navigate(toMessageDetail(ev.data));
       }
     });
   }, []);
 
   return (
     <div className="vr">
-      <NavBar />
+      {/* <NavBar /> */}
       <Iframe
         className="vr-frame"
         url="../iframeVR/IframeVR.html"

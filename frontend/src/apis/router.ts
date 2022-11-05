@@ -19,3 +19,10 @@ export const toMessageDetail = (messageId: string) => {
     return '/404';
   }
 };
+export const toMessageUpdate = (messageId: string) => {
+  if (parseInt(messageId)) {
+    return `/message/update/${messageId}`;
+  } else {
+    return '/404';
+  }
+};
