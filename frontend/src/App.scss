@@ -1,8 +1,11 @@
+@import './styles/_colors.scss';
+
 @font-face {
   font-family: 'PretendardVariable';
   font-style: normal;
   src: url('./styles/fonts/PretendardVariable.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'PyeongChangPeace-Light';
   font-style: normal;
@@ -27,6 +30,8 @@
   box-sizing: border-box;
   font-family: 'PretendardVariable';
   font-weight: 500;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .screen {
@@ -47,14 +52,14 @@
 .btn {
   border: 1px solid #b49aff55;
   background-color: white;
-  color: #b49aff;
+  color: $PURPLE;
   border-radius: 20px;
   padding: 1.75% 5%;
-  font-size: 100%;
+  font-size: 0.9rem;
   cursor: pointer;
 
   &:hover {
     color: white;
-    background-color: #b49aff;
+    background-color: $PURPLE;
   }
 }

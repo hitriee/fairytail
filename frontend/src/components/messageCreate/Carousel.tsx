@@ -1,17 +1,66 @@
-import React, {useState, useEffect, Dispatch, SetStateAction} from 'react';
+import {useState, useEffect, Dispatch, SetStateAction, useRef} from 'react';
 import 'swiper/css';
 import './Carousel.scss';
 import 'swiper/css/effect-coverflow';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {EffectCoverflow} from 'swiper';
+import SwiperCore, {EffectCoverflow} from 'swiper';
 import {debounce} from 'lodash';
 import {emojiArr} from '../../assets/emojis';
+import useLongPress from '@/apis/useLongPress';
 
 type CarouselProps = {
+  emojiNo: number;
   onSlideChange: Dispatch<SetStateAction<number>>;
+  setIsLongClicked: Dispatch<SetStateAction<boolean>>;
 };
 
-function Carousel({onSlideChange}: CarouselProps) {
+type CaroueslImageProps = {
+  item: string;
+  index: number;
+};
+
+function CarouselImage({item, index}: CaroueslImageProps) {
+  const imageRef = useRef<HTMLImageElement>(null);
+  const observerRef = useRef<IntersectionObserver>();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  function onIntersection(
+    entries: IntersectionObserverEntry[],
+    io: IntersectionObserver,
+  ) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        io.unobserve(entry.target);
+        setIsLoaded(true);
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(onIntersection, {
+        threshold: 0.1,
+      });
+    }
+
+    imageRef.current && observerRef.current.observe(imageRef.current);
+  });
+
+  return (
+    <img
+      ref={imageRef}
+      className="emoji"
+      src={isLoaded ? item : ''}
+      alt={`${index}번 이모지`}
+    />
+  );
+}
+
+function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
+  const [swiper, setSwiper] = useState<SwiperCore>();
+
+  const longPress = useLongPress(() => setIsLongClicked(true), 500);
+
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const handleResize = debounce(() => {
@@ -25,20 +74,13 @@ function Carousel({onSlideChange}: CarouselProps) {
     };
   });
 
-  type SwiperImageProps = {
-    item: any;
-    index: number;
-  };
-
-  function SwiperImage({item, index}: SwiperImageProps) {
-    return <img className="emoji" src={item} alt={index.toString()} />;
-  }
-
-  const MemorizedImage = React.memo(SwiperImage);
+  swiper && swiper.slideTo(emojiNo, 300);
 
   return (
     <Swiper
-      speed={1200}
+      mousewheel={true}
+      onSwiper={setSwiper}
+      touchStartPreventDefault={false}
       initialSlide={Math.floor(Math.random() * 76)}
       slideToClickedSlide={true}
       effect={'coverflow'}
@@ -55,8 +97,8 @@ function Carousel({onSlideChange}: CarouselProps) {
       onSlideChange={swiper => onSlideChange(swiper.realIndex)}>
       {emojiArr.map((item, index) => {
         return (
-          <SwiperSlide key={index}>
-            <MemorizedImage item={item} index={index} />
+          <SwiperSlide key={index} {...longPress}>
+            <CarouselImage item={item} index={index} />
           </SwiperSlide>
         );
       })}

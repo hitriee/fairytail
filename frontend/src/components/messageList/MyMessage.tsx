@@ -1,5 +1,5 @@
 import React from 'react';
-import {emojiArr} from '../../assets/emojis';
+import {smallEmojiArr} from '../../assets/emojis';
 import './MyMessage.scss';
 
 interface itemProps {
@@ -16,14 +16,14 @@ function MyMessage({item}: itemProps) {
   return (
     <div className="myMessage">
       <div className="myMessage-emoji">
-        <img src={emojiArr[item.emoji]} alt="emojiArrStatic" />
+        <img src={smallEmojiArr[item.emoji]} alt="smallEmojiArr" />
       </div>
       <div className="myMessage-container">
         <p className="myMessage-container-title">{item.title}</p>
         <span className="myMessage-container-date">{item.contents}</span>
       </div>
       <div className="myMessage-container-like">
-        <img src={emojiArr[5]} alt="emoji" />
+        <img src={smallEmojiArr[5]} alt="emoji" />
         {item.like}
       </div>
     </div>

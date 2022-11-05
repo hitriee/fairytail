@@ -1,13 +1,30 @@
-import {useState} from 'react';
+import {useLayoutEffect, useRef, useState} from 'react';
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
-import Toggle from '@messageCreate/Toggle';
 import Message, {Content} from '@messageCreate/Message';
 import Loading from '@components/loading/Loading';
 import NavBar from '@components/common/NavBar';
+import EmojiGrid from '@/components/messageCreate/EmojiGrid';
+import CheckBox from '@/components/messageCreate/CheckBox';
 
 function MessageCreate() {
+  const screenRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const detectMobileKeybord = () => {
+      if (document.activeElement?.tagName == 'INPUT') {
+        screenRef.current?.scrollIntoView({block: 'end'});
+      }
+    };
+
+    window.addEventListener('resize', detectMobileKeybord);
+
+    return window.removeEventListener('resize', detectMobileKeybord);
+  });
+
   const [loading, setLoading] = useState(false);
+
+  const [isLongClicked, setIsLongClicked] = useState(false);
 
   const [emojiNo, setEmojiNo] = useState(0);
   const [content, setContent] = useState<Content>({
@@ -27,10 +44,9 @@ function MessageCreate() {
           lng: position.coords.longitude,
         };
 
-        console.log(emojiNo);
-        console.log(content);
-        console.log(isShare);
-        console.log(location);
+        // 제목이나 내용이 비어있는지 확인
+
+        // 파일 압축
 
         // 서버 통신
         setTimeout(() => {
@@ -41,26 +57,39 @@ function MessageCreate() {
   }
 
   return (
-    <div className="screen">
+    <div className="screen" ref={screenRef}>
       {loading ? <Loading /> : null}
 
-      <div className="container" style={{backgroundColor: 'black'}}>
+      <div className="container">
         <div className="message-create-header">
           <NavBar />
         </div>
 
-        <Carousel onSlideChange={setEmojiNo} />
+        <Carousel
+          emojiNo={emojiNo}
+          onSlideChange={setEmojiNo}
+          setIsLongClicked={setIsLongClicked}
+        />
 
-        <div className="message-create-card">
-          <Message mode="create" content={content} setContent={setContent} />
-
-          <div className="message-create-save-container">
-            <Toggle label="✨ 공개 여부" onClick={setIsShare} />
-            <button className="btn" onClick={handleSubmit}>
-              등록
-            </button>
+        {isLongClicked ? (
+          <div className="message-create-card">
+            <EmojiGrid
+              setEmojiNo={setEmojiNo}
+              setIsLongClicked={setIsLongClicked}
+            />
           </div>
-        </div>
+        ) : (
+          <div className="message-create-card">
+            <Message mode="create" content={content} setContent={setContent} />
+
+            <div className="message-create-save-container">
+              <CheckBox label="비공개" onClick={setIsShare} />
+              <button className="btn" onClick={handleSubmit}>
+                등록
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
