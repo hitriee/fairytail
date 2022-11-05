@@ -1,6 +1,7 @@
-import {useNavigate} from 'react-router';
+import {useNavigate, useLocation} from 'react-router';
 import {ReactComponent as ArrowBack} from '@images/arrow-back-outline.svg';
 import {ReactComponent as EllipsisVertical} from '@images/more_4.svg';
+import {main, globe, vr, toMessageDetail} from '@apis/router';
 
 import '@common/Common.scss';
 
@@ -11,7 +12,23 @@ interface props {
 
 function NavBar({showMenu, detail}: props) {
   const navigate = useNavigate();
-  const toBack = () => navigate(-1);
+  const location = useLocation();
+  // detail => vr
+  // update => detail
+  // map => globe
+  // vr => map? main? (일단 main으로 설정)
+  const path = location.pathname.split('/');
+  const toBack = () => {
+    if (path[1] === 'map') {
+      navigate(globe());
+    } else if (path[2] === 'detail') {
+      navigate(vr());
+    } else if (path[2] === 'update') {
+      navigate(toMessageDetail(path[3]));
+    } else {
+      navigate(main());
+    }
+  };
   return (
     <>
       <div id="navBar">

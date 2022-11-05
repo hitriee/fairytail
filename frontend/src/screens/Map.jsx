@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import {CustomMarkerIcon} from '@map/CustomMarker';
 import './Map.scss';
 import ClickMarker from '@/components/map/ClickMarker';
+// import NavBar from '@common/NavBar';
 
 function Map() {
   // 지구본에서 받아온 위치 정보로 처음 지도 center 지정
@@ -51,6 +52,7 @@ function Map() {
   };
 
   return (
+    // <>
     <MapContainer
       maxBounds={[
         [-90, -180],
@@ -68,6 +70,7 @@ function Map() {
       {Markers()}
       <ClickMarker />
     </MapContainer>
+    // </>
   );
 }
 

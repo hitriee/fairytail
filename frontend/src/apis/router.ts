@@ -11,3 +11,11 @@ export const messageDetail = () => `/message/detail/:id`;
 export const notFound = () => '/404';
 export const settings = () => '/settings';
 export const notifications = () => '/notifications';
+
+export const toMessageDetail = (messageId: string) => {
+  if (parseInt(messageId)) {
+    return `/message/detail/${messageId}`;
+  } else {
+    return '/404';
+  }
+};

@@ -2,6 +2,7 @@ import './VR.scss';
 import Iframe from 'react-iframe';
 import {useNavigate} from 'react-router';
 import {useEffect} from 'react';
+import NavBar from '@common/NavBar';
 
 function VR() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function VR() {
 
   return (
     <div className="vr">
+      <NavBar />
       <Iframe
         className="vr-frame"
         url="../iframeVR/IframeVR.html"
