@@ -11,7 +11,7 @@
 	<groupId>com.fairytail</groupId>
 	<artifactId>alert</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>alert</name>
+	<name>img</name>
 	<description>API Gateway</description>
 	<properties>
 		<java.version>11</java.version>
