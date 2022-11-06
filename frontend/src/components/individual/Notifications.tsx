@@ -1,25 +1,10 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import items from '@screens/items.json';
 import MyNotification from '@/components/individual/MyNotification';
 import '@screens/Individual.scss';
-import {DndProvider, useDrag, useDrop} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 
 function Notifications() {
   const [newItems, setNewItems] = useState<any[]>(items);
-  // const [{isDragging}, drag, dragPreview] = useDrag(() => ({
-  //   type: 'message',
-  //   collect: monitor => ({
-  //     isDragging: monitor.isDragging(),
-  //   }),
-  // }));
-  // const [{canDrop, isOver}, drop] = useDrop(() => ({
-  //   accept: 'message',
-  //   collect: monitor => ({
-  //     isOver: monitor.isOver(),
-  //     canDrop: monitor.canDrop(),
-  //   }),
-  // }));
   const deleteEach = (index: number) => {
     return () =>
       setNewItems(() => newItems.filter((element, i) => i !== index));
@@ -29,10 +14,40 @@ function Notifications() {
     console.log('하나씩 사라지는 효과');
     console.log('백에 신호 보내기');
   };
+  const moveMessage = (id: number, index: number) => {
+    deleteEach(index);
+    // 백에 삭제 요청
+  };
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log(e);
+  };
+  const onClick = (e: any) => {
+    console.log(e);
+  };
+
+  // drag
+  // const ref = useRef(null!);
+  // const dragComponent = useRef(null!);
+
+  // const getElementIndex = ()
+  // const setDragItemId = {
+  //   grabItem: (index: number) => {
+  //     clcikElId
+  //   }
+  // }
+  // const onDragStart = (e: React.DragEvent<HTMLElement>, index: number) => {
+  //   e.dataTransfer.effectAllowed = 'move'
+  //   setDragItemId.grabItem(index)
+  // };
+  // const onDragEnter = (e: React.DragEvent<HTMLElement>, index: number) => {
+  //   setDragItemId.interSectItem(index)
+  // }
+
   return (
     <>
       {/* <div className="delete-parent"> */}
-      <p className="delete" onClick={deleteAll}>
+      <p className="delete" onClick={deleteAll} draggable>
         전체 삭제
       </p>
       {/* </div> */}
@@ -50,8 +65,16 @@ function Notifications() {
           {newItems.length === 0 ? (
             <div className="white">새 좋아요 알림이 없습니다</div>
           ) : (
-            newItems.map(item => {
-              return <MyNotification key={item.id} item={item} />;
+            newItems.map((item, index) => {
+              return (
+                <MyNotification
+                  item={item}
+                  key={item.id}
+                  deleteEach={deleteEach}
+                  index={index}
+                  // onDragEnd={(e) => dragEndHandler(e)}
+                />
+              );
             })
           )}
         </div>

@@ -108,13 +108,12 @@ function Settings() {
       <section className="settings-section">
         <div className="settings-title">애플리케이션</div>
         <br />
-        <Toggle
-          label="좋아요 알림"
-          onClick={changePermit}
-          labelClass="settings-each"
-          containerClass="settings-between"
-          value={permitNoti}
-        />
+        <div className="settings-between">
+          <div className="settings-each" onClick={changePermit}>
+            좋아요 알림
+          </div>
+          <Toggle label="" onClick={changePermit} value={permitNoti} />
+        </div>
         <br />
         <div className="settings-between">
           <div className="settings-each" onClick={bgmPopUp}>
@@ -123,8 +122,8 @@ function Settings() {
           <Toggle
             label=""
             onClick={changeBgmPermit}
-            labelClass="settings-each"
-            containerClass="settings-between"
+            // labelClass="settings-each"
+            // containerClass="settings-between"
             value={permitBgm}
           />
         </div>

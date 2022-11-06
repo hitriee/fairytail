@@ -4,21 +4,13 @@ import './Toggle.scss';
 type ToggleProps = {
   label: string;
   onClick: Dispatch<SetStateAction<boolean>>;
-  labelClass?: string | undefined;
-  containerClass?: string | undefined;
   value?: boolean;
 };
 
-function Toggle({
-  label,
-  onClick,
-  labelClass,
-  containerClass,
-  value = false,
-}: ToggleProps) {
+function Toggle({label, onClick, value = false}: ToggleProps) {
   return (
-    <div className={`toggle-container ${containerClass}`}>
-      <label htmlFor="toggle" className={`toggle-label ${labelClass}`}>
+    <div className={`toggle-container`}>
+      <label htmlFor="toggle" className={`toggle-label`}>
         {label}
       </label>
       <label className="toggle-background">

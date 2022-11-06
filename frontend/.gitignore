@@ -24,3 +24,5 @@ yarn-error.log*
 
 #firebase
 firebase-config.ts
+firebase-private.json
+

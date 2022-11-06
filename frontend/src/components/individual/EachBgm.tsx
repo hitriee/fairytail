@@ -2,7 +2,7 @@ import {useRef, useState} from 'react';
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
 import {returnTrue, returnFalse} from '@common/commonFunc';
-import {BASE_URL} from '@/apis/router';
+
 interface props {
   element: {title: string; bgm: string};
   index: number;

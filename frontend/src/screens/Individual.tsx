@@ -18,12 +18,19 @@ function Individual() {
         url="BackgroundUnMove.html"
         src="../background/BackgroundUnMove.html"
         frameBorder={0}
+        // styles={{pointerEvents: 'none'}}
       />
       <main id="individual">
         <section className="individual">
           <NavBar />
           <img src={isSettings ? gear : bell} className="individual-icon" />
-          {isSettings ? <Settings /> : <Notifications />}
+          {isSettings ? (
+            <Settings />
+          ) : (
+            // <DndProvider backend={HTML5Backend}>
+            <Notifications />
+            // </DndProvider>
+          )}
           <footer className="individual-bottom">
             <BottomBar type={isSettings} />
           </footer>

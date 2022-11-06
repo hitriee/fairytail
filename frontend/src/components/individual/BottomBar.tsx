@@ -12,8 +12,14 @@ interface props {
 
 function BottomBar({type}: props) {
   const navigate = useNavigate();
-  const toNoti = () => navigate(notifications());
-  const toSettings = () => navigate(settings());
+  const toNoti = () => {
+    console.log(1);
+    navigate(notifications());
+  };
+  const toSettings = () => {
+    navigate(settings());
+    console.log(2);
+  };
   return (
     <>
       <main id="bottomBar">
