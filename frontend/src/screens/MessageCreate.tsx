@@ -1,25 +1,33 @@
-import {useState, useEffect} from 'react';
-import {useNavigate, useParams} from 'react-router';
-import {Link} from 'react-router-dom';
+import {useLayoutEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
-import Toggle from '@messageCreate/Toggle';
 import Message, {Content} from '@messageCreate/Message';
 import Loading from '@components/loading/Loading';
-import NavBar from '@components/common/NavBar';
-import {notFound} from '@apis/router';
+import {ReactComponent as ArrowBack} from '@images/arrow-back-outline.svg';
+import EmojiGrid from '@/components/messageCreate/EmojiGrid';
+import CheckBox from '@/components/messageCreate/CheckBox';
 
 function MessageCreate() {
-  //! update 시 분기 처리 필요 (notFound 페이지로도 이동 처리 필요)
-  // const navigate = useNavigate()
-  // const params = useParams()
-  // const messageId = params.id
-  // const loader = async () => {
-  //   if (!messageId || !parseInt(messageId)) {
-  //     navigate(notFound());
-  //   }
-  // };
+  const navigate = useNavigate();
+
+  const screenRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const detectMobileKeybord = () => {
+      if (document.activeElement?.tagName == 'INPUT') {
+        screenRef.current?.scrollIntoView({block: 'end'});
+      }
+    };
+
+    window.addEventListener('resize', detectMobileKeybord);
+
+    return window.removeEventListener('resize', detectMobileKeybord);
+  });
+
   const [loading, setLoading] = useState(false);
+
+  const [isLongClicked, setIsLongClicked] = useState(false);
 
   const [emojiNo, setEmojiNo] = useState(0);
   const [content, setContent] = useState<Content>({
@@ -35,51 +43,64 @@ function MessageCreate() {
   // }, [])
 
   function handleSubmit() {
-    const location = {lat: 0, lng: 0};
-
     if (navigator.geolocation) {
       setLoading(true);
       navigator.geolocation.getCurrentPosition(position => {
-        location.lat = position.coords.latitude; // 위도
-        location.lng = position.coords.longitude; // 경도
+        const location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+
+        // 제목이나 내용이 비어있는지 확인
+
+        // 파일 압축
 
         // 서버 통신
-        const timer = setTimeout(() => {
-          console.log('3초 정지');
-          // setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
         }, 3000);
-
-        console.log(emojiNo);
-        console.log(content);
-        console.log(isShare);
-        console.log(location);
       });
     }
   }
 
   return (
-    <div className="screen">
+    <div className="screen" ref={screenRef}>
       {loading ? <Loading /> : null}
 
       <div className="container">
-        {/* <div className="header"> */}
-        {/* <Link to="/main"> */}
-        <NavBar />
-        {/* </Link> */}
-        {/* </div> */}
-
-        <Carousel onSlideChange={setEmojiNo} />
-
-        <div className="card">
-          <Message mode="create" content={content} setContent={setContent} />
-
-          <div className="save-container">
-            <Toggle label="✨ 공개 여부" onClick={setIsShare} />
-            <button className="btn" onClick={handleSubmit}>
-              등록
-            </button>
-          </div>
+        <div className="message-create-header">
+          <ArrowBack
+            onClick={() => navigate(-1)}
+            color="white"
+            className="icon-nav button"
+          />
         </div>
+
+        <Carousel
+          emojiNo={emojiNo}
+          onSlideChange={setEmojiNo}
+          setIsLongClicked={setIsLongClicked}
+        />
+
+        {isLongClicked ? (
+          <div className="message-create-card">
+            <EmojiGrid
+              setEmojiNo={setEmojiNo}
+              setIsLongClicked={setIsLongClicked}
+            />
+          </div>
+        ) : (
+          <div className="message-create-card">
+            <Message mode="create" content={content} setContent={setContent} />
+
+            <div className="message-create-save-container">
+              <CheckBox label="비공개" onClick={setIsShare} />
+              <button className="btn" onClick={handleSubmit}>
+                등록
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -67,14 +67,16 @@ function MusicPlayer({fileURL}: MusicPlayerProps) {
     <div className="music-player-container">
       {isPlaying ? (
         <Pause
-          // size="50%"
+          width="70%"
+          height="70%"
           fill="#b49aff"
           onClick={handlePlay}
           className="play-btn"
         />
       ) : (
         <Play
-          // size="50%"
+          width="70%"
+          height="70%"
           fill="#b49aff"
           onClick={handlePlay}
           className="play-btn"

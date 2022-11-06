@@ -5,7 +5,7 @@ import {getAnalytics} from 'firebase/analytics';
 import firebaseConfig from '@/firebase-config';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import '@/App.scss';
-
+import Loader from '../src/components/room/Loading';
 // route
 import Intro from '@screens/Intro';
 import Main from '@screens/Main';
@@ -66,6 +66,7 @@ function App() {
   // console.log(useWindowSize());
   return (
     <BrowserRouter>
+      {/* <Suspense fallback={<Loader />}> */}
       <Routes>
         <Route path={intro()} element={<Intro />} />
         <Route path={main()} element={<Main />} />
@@ -80,6 +81,7 @@ function App() {
         <Route path={settings()} element={<Individual />} />
         <Route path={notifications()} element={<Individual />} />
       </Routes>
+      {/* </Suspense> */}
     </BrowserRouter>
   );
 }
