@@ -1,13 +1,16 @@
 import {useLayoutEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
 import Message, {Content} from '@messageCreate/Message';
 import Loading from '@components/loading/Loading';
-import NavBar from '@components/common/NavBar';
+import {ReactComponent as ArrowBack} from '@images/arrow-back-outline.svg';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import CheckBox from '@/components/messageCreate/CheckBox';
 
 function MessageCreate() {
+  const navigate = useNavigate();
+
   const screenRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -62,7 +65,11 @@ function MessageCreate() {
 
       <div className="container">
         <div className="message-create-header">
-          <NavBar />
+          <ArrowBack
+            onClick={() => navigate(-1)}
+            color="white"
+            className="icon-nav button"
+          />
         </div>
 
         <Carousel
