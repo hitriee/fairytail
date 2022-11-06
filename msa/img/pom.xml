@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fairytail</groupId>
-	<artifactId>alert</artifactId>
+	<artifactId>img</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>img</name>
 	<description>API Gateway</description>
