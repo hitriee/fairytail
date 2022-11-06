@@ -7,6 +7,7 @@ import Loading from '@components/loading/Loading';
 import {ReactComponent as ArrowBack} from '@images/arrow-back-outline.svg';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import CheckBox from '@/components/messageCreate/CheckBox';
+import Compress from '@/components/messageCreate/Compress';
 
 function MessageCreate() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function MessageCreate() {
 
   useLayoutEffect(() => {
     const detectMobileKeybord = () => {
-      if (document.activeElement?.tagName == 'INPUT') {
+      if (document.activeElement?.tagName === 'INPUT') {
         screenRef.current?.scrollIntoView({block: 'end'});
       }
     };
@@ -39,23 +40,41 @@ function MessageCreate() {
   const [isShare, setIsShare] = useState(false);
 
   function handleSubmit() {
-    if (navigator.geolocation) {
-      setLoading(true);
-      navigator.geolocation.getCurrentPosition(position => {
-        const location = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
+    // 제목이나 내용이 비어있는지 확인
+    if (content.title.trim() === '') {
+      alert('제목을 입력해주세요.');
+    } else if (content.type === 'string' && content.fileURL.trim() === '') {
+      alert('내용을 입력해주세요.');
+    } else if (content.type !== 'string' && content.file === null) {
+      alert('파일이 첨부되지 않았습니다.');
+    } else {
+      if (navigator.geolocation) {
+        setLoading(true);
+        navigator.geolocation.getCurrentPosition(position => {
+          const location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
 
-        // 제목이나 내용이 비어있는지 확인
+          // 사진/영상/음성 업로드인 경우 압축
+          if (content.type !== 'string' && content.file !== null) {
+            const compressedFile = Compress(
+              content.file,
+              content.type,
+              content.file.name,
+            );
 
-        // 파일 압축
+            console.log(compressedFile);
+          }
 
-        // 서버 통신
-        setTimeout(() => {
           setLoading(false);
-        }, 3000);
-      });
+
+          // // 서버 통신
+          // setTimeout(() => {
+          //   setLoading(false);
+          // }, 3000);
+        });
+      }
     }
   }
 

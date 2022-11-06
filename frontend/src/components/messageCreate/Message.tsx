@@ -82,15 +82,33 @@ function Message({mode, content, setContent}: MessageProps) {
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
 
-      setNewFile(fileList[0]);
-      setNewFileURL(url);
-      setNewFileType(fileList[0].type);
-      setContent({
-        title: newTitle,
-        type: fileList[0].type,
-        file: fileList[0],
-        fileURL: url,
-      });
+      const file = fileList[0];
+
+      // 용량 10mb 이하인지 확인
+      if (file.size > 10 * 1024 * 1024) {
+        alert('10MB 이하의 파일만 업로드할 수 있습니다.');
+        return;
+      }
+
+      // 음성, 영상, 사진 중 하나인지 확인
+      if (
+        file.type.startsWith('image') ||
+        file.type.startsWith('video') ||
+        file.type.startsWith('audio')
+      ) {
+        setNewFile(file);
+        setNewFileURL(url);
+        setNewFileType(file.type);
+        setContent({
+          title: newTitle,
+          type: file.type,
+          file: file,
+          fileURL: url,
+        });
+      } else {
+        alert('지원하지 않는 파일 형식입니다.');
+        return;
+      }
     }
   };
 

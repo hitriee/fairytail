@@ -1,15 +1,10 @@
 import {smallEmojiArr} from '@/assets/emojis';
 import './EmojiGrid.scss';
-import {useRef, useState, useEffect, Dispatch, SetStateAction} from 'react';
+import {useRef, useEffect, Dispatch, SetStateAction} from 'react';
 
 type EmojiGridProps = {
   setEmojiNo: Dispatch<SetStateAction<number>>;
   setIsLongClicked: Dispatch<SetStateAction<boolean>>;
-};
-
-type EmojiGridItemProps = EmojiGridProps & {
-  item: string;
-  index: number;
 };
 
 function EmojiGrid({setEmojiNo, setIsLongClicked}: EmojiGridProps) {
@@ -31,6 +26,7 @@ function EmojiGrid({setEmojiNo, setIsLongClicked}: EmojiGridProps) {
       {smallEmojiArr.map((item, index) => {
         return (
           <img
+            key={index}
             className="emojigrid-item"
             src={item}
             alt={`${index}번 이모지`}
