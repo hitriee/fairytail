@@ -14,48 +14,6 @@ type CarouselProps = {
   setIsLongClicked: Dispatch<SetStateAction<boolean>>;
 };
 
-type CaroueslImageProps = {
-  item: string;
-  index: number;
-};
-
-function CarouselImage({item, index}: CaroueslImageProps) {
-  const imageRef = useRef<HTMLImageElement>(null);
-  const observerRef = useRef<IntersectionObserver>();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  function onIntersection(
-    entries: IntersectionObserverEntry[],
-    io: IntersectionObserver,
-  ) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        io.unobserve(entry.target);
-        setIsLoaded(true);
-      }
-    });
-  }
-
-  useEffect(() => {
-    if (!observerRef.current) {
-      observerRef.current = new IntersectionObserver(onIntersection, {
-        threshold: 0.1,
-      });
-    }
-
-    imageRef.current && observerRef.current.observe(imageRef.current);
-  });
-
-  return (
-    <img
-      ref={imageRef}
-      className="emoji"
-      src={isLoaded ? item : ''}
-      alt={`${index}번 이모지`}
-    />
-  );
-}
-
 function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
   const [swiper, setSwiper] = useState<SwiperCore>();
 
@@ -78,6 +36,7 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
 
   return (
     <Swiper
+      autoHeight={true}
       mousewheel={true}
       onSwiper={setSwiper}
       touchStartPreventDefault={false}
@@ -98,7 +57,7 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
       {emojiArr.map((item, index) => {
         return (
           <SwiperSlide key={index} {...longPress}>
-            <CarouselImage item={item} index={index} />
+            <img className="emoji" src={item} alt={`${index}번 이모지`} />
           </SwiperSlide>
         );
       })}
