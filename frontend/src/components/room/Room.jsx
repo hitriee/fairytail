@@ -6,8 +6,6 @@ import './Room.scss';
 import Scene from './Scene';
 
 function Room() {
-  const [isLoading, setIsLoading] = useState(true);
-
   const Loader = () => {
     const {active, progress, errors, item, loaded, total} = useProgress();
     return <Html center>{progress} % loaded</Html>;
@@ -16,10 +14,10 @@ function Room() {
   return (
     <>
       <Canvas shadows flat linear className="room">
-        <Suspense fallback={<Loader />}>
-          <Scene setSize={{width: 100, height: 100}} />
-          <OrbitControls />
-        </Suspense>
+        {/* <Suspense fallback={null}> */}
+        <Scene setSize={{width: 100, height: 100}} />
+        <OrbitControls />
+        {/* </Suspense> */}
       </Canvas>
     </>
   );

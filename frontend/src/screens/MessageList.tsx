@@ -3,8 +3,15 @@ import balloon from '../assets/images/balloon.png';
 import MyMessage from '../components/messageList/MyMessage';
 import items from './items.json';
 import Iframe from 'react-iframe';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
+import NavBar from '@/components/common/NavBar';
 
 function MessageList() {
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
+  console.log(isLoading);
+
   // const [items, setItems] = useState([]);
 
   // useEffect(() => {
@@ -14,11 +21,14 @@ function MessageList() {
     <>
       <Iframe
         className="BackgroundUnMove"
-        url="BackgroundUnMove.html"
-        src="../background/BackgroundUnMove.html"
+        url="Background.html"
+        src="../background/Background.html"
         frameBorder={0}
       />
       <div className="messageList">
+        <div className="navbarContainer">
+          <NavBar />
+        </div>
         <div className="messageList-container">
           <div className="messageList-container-info">
             <img
