@@ -60,7 +60,7 @@ function MessageCreate() {
   }
 
   return (
-    <div className="screen" ref={screenRef}>
+    <div id="message-create" className="screen" ref={screenRef}>
       {loading ? <Loading /> : null}
 
       <div className="container">

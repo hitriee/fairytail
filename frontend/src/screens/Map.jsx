@@ -1,10 +1,21 @@
-import {MapContainer, TileLayer, Marker} from 'react-leaflet';
+import {useNavigate} from 'react-router-dom';
+import {MapContainer, TileLayer, Marker, useMap} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import {CustomMarkerIcon} from '@map/CustomMarker';
 import './Map.scss';
 import ClickMarker from '@/components/map/ClickMarker';
+import {useState} from 'react';
+
+function generateRandomFloat(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 function Map() {
+  const navigate = useNavigate();
+
+  const [isClicked, setIsClicked] = useState(false);
+  const [position, setPosition] = useState({lat: -999, lng: -999});
+
   // 지구본에서 받아온 위치 정보로 처음 지도 center 지정
   const center = {lat: 35, lng: 127};
 
@@ -51,23 +62,56 @@ function Map() {
   };
 
   return (
-    <MapContainer
-      maxBounds={[
-        [-90, -180],
-        [90, 180],
-      ]}
-      minZoom={2}
-      style={{width: '100%', height: '100%'}}
-      center={center}
-      zoom={5}
-      scrollWheelZoom={true}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {Markers()}
-      <ClickMarker />
-    </MapContainer>
+    <div className="screen">
+      <div className="leaflet-bottom leaflet-left">
+        <div className="leaflet-control-zoom leaflet-bar leaflet-control map-navbar">
+          <a
+            className="leaflet-control-zoom-in map-navbar-a"
+            role="button"
+            onClick={() => navigate(-1)}>
+            <span className="map-navbar-span">←</span>
+          </a>
+        </div>
+      </div>
+      <div className="leaflet-top leaflet-right">
+        <div className="leaflet-control-zoom leaflet-bar leaflet-control map-navbar">
+          <a
+            className="leaflet-control-zoom-in map-navbar-a"
+            role="button"
+            onClick={() => {
+              setPosition({
+                lat: generateRandomFloat(-90, 90),
+                lng: generateRandomFloat(-180, 180),
+              });
+              setIsClicked(true);
+            }}>
+            <span className="map-navbar-span">🔀</span>
+          </a>
+        </div>
+      </div>
+      <MapContainer
+        maxBounds={[
+          [-90, -180],
+          [90, 180],
+        ]}
+        minZoom={2}
+        style={{width: '100%', height: '100%'}}
+        center={center}
+        zoom={7}
+        scrollWheelZoom={true}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {Markers()}
+        <ClickMarker
+          isClicked={isClicked}
+          setIsClicked={setIsClicked}
+          position={position}
+          setPosition={setPosition}
+        />
+      </MapContainer>
+    </div>
   );
 }
 
