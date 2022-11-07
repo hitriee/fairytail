@@ -1,3 +1,4 @@
+spring.profiles.include : oauth
 server: #random port
   port: 0
 
@@ -8,32 +9,50 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
+
   ###### maria db 설정 관련 추가 #####
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    #    username: sa
+    #    password: null
+
+# TODO: maria db 사용 시 변경 필요 - 주소, username, password 변경
+#    url: jdbc://mariadb://
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    username: root
+#    password: k209
+
+  jpa:
+    open-in-view: true
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
 
   # h2 database setting - 사용하지 않을 시, 주석 처리
   h2:
     console:
       enabled: true
-      settings:
-        web-allow-others: true
       path: /h2-console
 
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-#    username: sa
-#    password: null
 
 # Eureka client 등록 (Naming server에 service 등록) - 추후 microservices 연결 시 변경 필요
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-    register-with-eureka: false   # client 등록 시, true로 값 변경 필요
-    fetch-registry: false         # client 등록 시, true로 값 변경 필요
+    fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
+    register-with-eureka: true       # client 등록 시, true로 세팅
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka   # eureka 서버 주소로 변경 필요
+      # TODO: eureka 서버 주소로 변경 필요
+      defaultZone: http://127.0.0.1:8761/eureka
 
 # application.yml 에 저장된 값을 읽어 REST API를 테스트하기 위한 dummy data
 greeting:
   message: Welcome to the FairyTail!
+
+logging:
+  level:
+    com.fairytail.user: DEBUG

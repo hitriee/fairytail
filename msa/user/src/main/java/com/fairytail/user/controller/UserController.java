@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @Api(value = "user", tags = {"swagger", "v1", "api"})
 @RestController
-@RequestMapping("/user")
-@RequiredArgsConstructor
 public class UserController {
 
-    private final Environment env;
+    @Resource
+    private Environment env;
 
     @ApiOperation(value = "Service 상태 체크", notes = "User Service 상태 체크를 위한 API 입니다.")
     /** Service 상태 체크 (삭제 금지!) */
