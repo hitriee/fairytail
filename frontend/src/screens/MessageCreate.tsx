@@ -7,8 +7,12 @@ import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import CheckBox from '@/components/messageCreate/CheckBox';
 import Compress from '@/components/messageCreate/Compress';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 function MessageCreate() {
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
   const screenRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {

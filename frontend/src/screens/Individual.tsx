@@ -7,8 +7,13 @@ import {useLocation} from 'react-router';
 import NavBar from '@common/NavBar';
 import bell from '@images/bell.png';
 import gear from '@images/gear.png';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 function Individual() {
+  // recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
   const location = useLocation();
   const isSettings = location.pathname === '/settings';
   return (
