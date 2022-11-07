@@ -1,16 +1,23 @@
-import {useState, useRef, Fragment} from 'react';
-import {useParams} from 'react-router';
+import {useState, useRef, useEffect} from 'react';
+import {useNavigate, useParams} from 'react-router';
 import NavBar from '@common/NavBar';
 import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import dummy from '@messageDetail/dummy';
+import {notFound} from '@apis/router';
 import '@screens/MessageDetail.scss';
 
 function MessageDetail() {
   const detail = useRef(null!);
   const params = useParams();
+  const navigate = useNavigate();
   const messageId = params.id;
+  const loader = async () => {
+    if (!messageId || !parseInt(messageId)) {
+      navigate(notFound());
+    }
+  };
 
   // 현재 사용자 정보
   const myId = 1;
@@ -29,10 +36,17 @@ function MessageDetail() {
   let day: number | string = date.getDate();
   if (day < 10) day = '0' + day;
   const modifiedDate = () => `${date.getFullYear()}-${month}-${day}`;
+  useEffect(() => {
+    loader();
+  }, []);
+  const changeBackground = () => {
+    const number = 11;
+    return `detail background${number}`;
+  };
 
   return (
-    <div className="detail">
-      <main id="detail" onClick={hiddenMenu} ref={detail}>
+    <div className={changeBackground()} ref={detail}>
+      <main id="detail" onClick={hiddenMenu}>
         <div data-html2canvas-ignore="true" className="ignore">
           <NavBar showMenu={showMenu} detail={detail} />
           <MoreMenu

@@ -7,6 +7,7 @@ import Report from '@messageDetail/Report';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import {popUp} from '@common/commonFunc';
+import {toMessageUpdate} from '@/apis/router';
 import '@common/Common.scss';
 
 interface props {
@@ -63,8 +64,10 @@ function MoreMenu({
   };
   // 수정 페이지로 이동
   const toEdit = () => {
-    navigate(`/message/update/${messageId}`);
-    close();
+    if (messageId) {
+      navigate(toMessageUpdate(messageId));
+      close();
+    }
   };
   // 삭제 확인
   const onDelete = () => {

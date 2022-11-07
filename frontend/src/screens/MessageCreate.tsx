@@ -36,6 +36,10 @@ function MessageCreate() {
   });
   const [isShare, setIsShare] = useState(false);
 
+  // useEffect(() => {
+  //   loader()
+  // }, [])
+
   function handleSubmit() {
     // 제목이나 내용이 비어있는지 확인
     if (content.title.trim() === '') {
