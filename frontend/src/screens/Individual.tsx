@@ -7,10 +7,11 @@ import {useLocation} from 'react-router';
 import NavBar from '@common/NavBar';
 import bell from '@images/bell.png';
 import gear from '@images/gear.png';
+import {settings} from '@apis/router';
 
 function Individual() {
   const location = useLocation();
-  const isSettings = location.pathname === '/settings';
+  const isSettings = location.pathname === settings();
   return (
     <>
       <Iframe
@@ -24,13 +25,7 @@ function Individual() {
         <section className="individual">
           <NavBar />
           <img src={isSettings ? gear : bell} className="individual-icon" />
-          {isSettings ? (
-            <Settings />
-          ) : (
-            // <DndProvider backend={HTML5Backend}>
-            <Notifications />
-            // </DndProvider>
-          )}
+          {isSettings ? <Settings /> : <Notifications />}
           <footer className="individual-bottom">
             <BottomBar type={isSettings} />
           </footer>

@@ -2,8 +2,7 @@ import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
 import {emojiArr} from 'src/assets/emojis';
 import '@individual/MyNotifications.scss';
 import {useNavigate} from 'react-router';
-import {moveMessagePortToContext} from 'worker_threads';
-import {returnFalse, returnTrue} from '@common/commonFunc';
+import {toMessageDetail} from '@apis/router';
 
 interface itemProps {
   item: {
@@ -12,19 +11,19 @@ interface itemProps {
     emoji: number;
   };
   index: number;
+  isEmpty: boolean;
   deleteEach: (index: number) => void;
 }
 
-function MyNotification({item, index, deleteEach}: itemProps) {
+function MyNotification({item, index, deleteEach, isEmpty}: itemProps) {
   const ref = useRef<HTMLDivElement>(null!);
   const navigate = useNavigate();
   const [originPos, setOriginPos] = useState({x: 0, y: 0});
-  // const [clientPos, setClientPos] = useState({x: 0, y: 0});
-  // const [deleted, setDeleted] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const {id, title, emoji} = item;
   const toDetail = (postId: number) => {
-    return () => navigate(`/message/detail/${postId}`);
+    return () => navigate(toMessageDetail(postId));
   };
   const shortTitle = () => {
     if (title.length >= 5) {
@@ -35,76 +34,82 @@ function MyNotification({item, index, deleteEach}: itemProps) {
   };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
+    const {current} = ref;
     const img = new Image();
     e.dataTransfer?.setDragImage(img, 0, 0);
-    e.dataTransfer.effectAllowed = 'move'; // 크롬의그린 +아이콘 제거
-    const originPosTemp = {...originPos};
-    originPosTemp['x'] = target.offsetLeft;
-    originPosTemp['y'] = target.offsetTop;
-    setOriginPos(originPosTemp); //드래그 시작할때 드래그 전 위치값을 저장
-
-    // const clientPosTemp = {...clientPos};
-    // clientPosTemp['x'] = target.offsetLeft;
-    // clientPosTemp['y'] = target.offsetTop;
-    // setClientPos(clientPosTemp);
-
+    e.dataTransfer.effectAllowed = 'move';
+    const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
+    setOriginPos(() => originPosTemp);
     setIsGrabbing(true);
   };
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    (e.target as HTMLDivElement).style.marginLeft = `${e.clientX * 0.3}px`;
-    console.log(e.clientX);
-    // const clientPosTemp = {...clientPos};
-    // clientPosTemp['x'] = e.clientX;
-    // clientPosTemp['y'] = e.clientY;
-    // setClientPos(clientPosTemp);
+    (ref.current as HTMLDivElement as HTMLDivElement).style.marginLeft = `${
+      e.clientX * 0.4
+    }px`;
   };
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsGrabbing(false);
     e.dataTransfer.dropEffect = 'move';
-    const target = e.target as HTMLDivElement;
-
-    if (target.offsetWidth / 2 < e.clientX * 0.3) {
+    const {current} = ref;
+    if ((current.offsetLeft + current.offsetWidth) / 2 < e.clientX * 0.4) {
+      setDeleted(true);
       console.log(true);
-      // setDeleted(true);
       deleteEach(index);
     } else {
-      (e.target as HTMLDivElement).style.marginLeft = `0px`;
+      (ref.current as HTMLDivElement).style.marginLeft = `0`;
+      setDeleted(false);
       console.log(false);
-      // setDeleted(false);
     }
   };
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     const {current} = ref;
-    const originPosTemp = {...originPos};
-    originPosTemp['x'] = current.offsetLeft;
-    originPosTemp['y'] = current.offsetTop;
-    setOriginPos(originPosTemp);
-    console.dir(current);
+    const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
+    setOriginPos(() => originPosTemp);
+    setIsGrabbing(true);
   };
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const {current} = ref;
-    e.preventDefault();
-    (ref.current as HTMLDivElement).style.marginLeft = `${
-      current.clientLeft * 0.3
-    }px`;
-    console.log(current.clientLeft);
-
-    console.log('touch move');
-    console.log(e);
+    (
+      ref.current as HTMLDivElement
+    ).style.marginLeft = `${e.changedTouches[0].clientX}px`;
   };
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    console.log('touch end');
-    console.log(e);
+    e.preventDefault();
+    setIsGrabbing(false);
+    const {current} = ref;
+    if (
+      (current.offsetLeft + current.offsetWidth) / 2 <
+      e.changedTouches[0].clientX
+    ) {
+      setDeleted(true);
+      // console.log(true);
+      deleteEach(index);
+    } else {
+      (ref.current as HTMLDivElement).style.marginLeft = '0';
+      // console.log(false);
+      setDeleted(false);
+    }
   };
+  const dynamicClass = () => {
+    let result = 'myNotification';
+    if (isGrabbing) {
+      result += ' grabbed';
+    }
+    if (deleted) {
+      result += ' deleted';
+    }
+    return result;
+  };
+  // useEffect(() => {
+  //   dynamicClass();
+  // }, [isGrabbing, deleted]);
 
   return (
     <>
       <div
         ref={ref}
-        className={isGrabbing ? 'myNotification grabbed' : 'myNotification'}
+        className={dynamicClass()}
         draggable
         onClick={toDetail(id)}
         onDragStart={handleDragStart}
