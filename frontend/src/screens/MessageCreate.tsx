@@ -7,6 +7,8 @@ import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import CheckBox from '@/components/messageCreate/CheckBox';
 import Compress from '@/components/messageCreate/Compress';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 // 내용 타입 정의
 export type Content = {
@@ -17,6 +19,9 @@ export type Content = {
 
 function MessageCreate() {
   // 모바일 가상 키보드 고려한 스크롤 이동
+
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
   const screenRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {

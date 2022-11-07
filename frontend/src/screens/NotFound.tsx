@@ -2,8 +2,14 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {ReactComponent as IntroLogo} from '@images/introLogo.svg';
 import '@screens/NotFound.scss';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 function NotFound() {
+  // recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
+  console.log(isLoading);
   return (
     <>
       <div className="notFound">

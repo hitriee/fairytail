@@ -51,22 +51,22 @@ function init() {
   // Aleatorio : 무작위의;
   // Meteoro : 유성
   // carregar : 충전, 로드
-  var numeroAleatorio = 5000;
+  // var numeroAleatorio = 5000;
 
-  setTimeout(function () {
-    carregarMeteoro();
-  }, numeroAleatorio);
+  // setTimeout(function () {
+  //   carregarMeteoro();
+  // }, numeroAleatorio);
 
-  function carregarMeteoro() {
-    setTimeout(carregarMeteoro, numeroAleatorio);
-    numeroAleatorio = getRandomArbitrary(5000, 1000);
-    var meteoro =
-      "<div class='meteoro " + style[getRandomArbitrary(0, 4)] + "'></div>";
-    document.getElementsByClassName("chuvaMeteoro")[0].innerHTML = meteoro;
-    setTimeout(function () {
-      document.getElementsByClassName("chuvaMeteoro")[0].innerHTML = "";
-    }, 1000);
-  }
+  // function carregarMeteoro() {
+  //   setTimeout(carregarMeteoro, numeroAleatorio);
+  //   numeroAleatorio = getRandomArbitrary(5000, 1000);
+  //   var meteoro =
+  //     "<div class='meteoro " + style[getRandomArbitrary(0, 4)] + "'></div>";
+  //   document.getElementsByClassName("chuvaMeteoro")[0].innerHTML = meteoro;
+  //   setTimeout(function () {
+  //     document.getElementsByClassName("chuvaMeteoro")[0].innerHTML = "";
+  //   }, 1000);
+  // }
 }
 
 window.onload = init;
