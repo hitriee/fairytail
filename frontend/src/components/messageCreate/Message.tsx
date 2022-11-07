@@ -1,14 +1,8 @@
+import {Content} from '@/screens/MessageCreate';
 import React, {useRef, useState, Dispatch, SetStateAction} from 'react';
 import '../../screens/MessageCreate.scss';
 import './Message.scss';
 import MusicPlayer from './MusicPlayer';
-
-export type Content = {
-  title: string;
-  type: number; // 0: text, 1: image, 2: video, 3: audio
-  file: File | null; // create, update 경우에 사용
-  fileURL: string; // text의 경우 내용, 나머지의 경우 경로
-};
 
 type PreviewProps = {
   type: number;
@@ -44,15 +38,13 @@ export function Preview({type, fileURL}: PreviewProps) {
 }
 
 type MessageProps = {
-  mode: string;
   content: Content;
   setContent: Dispatch<SetStateAction<Content>>;
 };
 
-function Message({mode, content, setContent}: MessageProps) {
+function Message({content, setContent}: MessageProps) {
   const newFileRef = useRef<HTMLInputElement>(null);
 
-  const [newTitle, setNewTitle] = useState(content.title);
   const [newFile, setNewFile] = useState(content.file);
   const [newFileURL, setNewFileURL] = useState(content.fileURL);
   const [newFileType, setNewFileType] = useState(content.type);
@@ -70,7 +62,6 @@ function Message({mode, content, setContent}: MessageProps) {
     setNewFileURL('');
     setNewFileType(0);
     setContent({
-      title: newTitle,
       type: 0,
       file: null,
       fileURL: '',
@@ -107,7 +98,6 @@ function Message({mode, content, setContent}: MessageProps) {
         setNewFileURL(url);
         setNewFileType(fileTypeNo);
         setContent({
-          title: newTitle,
           type: fileTypeNo,
           file: file,
           fileURL: url,
@@ -119,82 +109,52 @@ function Message({mode, content, setContent}: MessageProps) {
     }
   };
 
-  if (mode === 'create' || mode === 'update') {
-    return (
-      <div className="message">
-        <input
-          className="message-title"
-          placeholder="제목을 입력하세요."
-          maxLength={10}
+  return (
+    <div className="message">
+      {newFileURL === '' || newFileType === 0 ? (
+        // create 이거나, type이 text인 글을 update 하는 경우 -> textarea
+        <textarea
+          className="message-content-text"
+          placeholder="내용을 입력하세요."
+          maxLength={100}
+          rows={10}
           onChange={e => {
-            setNewTitle(e.target.value);
+            setNewFileURL(e.target.value);
             setContent(prev => {
-              prev.title = e.target.value;
+              prev.type = 0;
+              prev.file = null;
+              prev.fileURL = e.target.value;
               return prev;
             });
           }}
-          defaultValue={content.title}
         />
-        {newFileURL === '' || newFileType === 0 ? (
-          // create 이거나, type이 text인 글을 update 하는 경우 -> textarea
-          <textarea
-            className="message-content-text"
-            placeholder="내용을 입력하세요."
-            maxLength={100}
-            rows={10}
-            onChange={e => {
-              setNewFileURL(e.target.value);
-              setContent(prev => {
-                prev.type = 0;
-                prev.file = null;
-                prev.fileURL = e.target.value;
-                return prev;
-              });
-            }}
-            defaultValue={typeof content.file === 'string' ? content.file : ''}
-          />
-        ) : (
-          <Preview type={newFileType} fileURL={newFileURL} />
-        )}
-        {!newFile && newFile == null ? (
+      ) : (
+        <Preview type={newFileType} fileURL={newFileURL} />
+      )}
+      {!newFile && newFile == null ? (
+        <button className="btn" onClick={handleClickFileUpload}>
+          사진 / 영상 / 음성 파일 업로드
+        </button>
+      ) : (
+        <div className="message-content-buttons">
           <button className="btn" onClick={handleClickFileUpload}>
-            사진 / 영상 / 음성 파일 업로드
+            바꾸기
           </button>
-        ) : (
-          <div className="message-content-buttons">
-            <button className="btn" onClick={handleClickFileUpload}>
-              바꾸기
-            </button>
-            <button className="btn" onClick={cancleNewFile}>
-              취소
-            </button>
-          </div>
-        )}
+          <button className="btn" onClick={cancleNewFile}>
+            취소
+          </button>
+        </div>
+      )}
 
-        <input
-          style={{display: 'none'}}
-          type="file"
-          accept="*"
-          ref={newFileRef}
-          onChange={selectNewFile}
-        />
-      </div>
-    );
-  } else if (mode === 'read') {
-    return (
-      <div>
-        <div className="title">{content ? content.title : null}</div>
-        <Preview type={content.type} fileURL={content.fileURL} />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        잘못된 접근입니다. mode의 값은 "create", "read", "update" 중 하나여야
-        합니다.
-      </div>
-    );
-  }
+      <input
+        style={{display: 'none'}}
+        type="file"
+        accept="*"
+        ref={newFileRef}
+        onChange={selectNewFile}
+      />
+    </div>
+  );
 }
 
 export default Message;

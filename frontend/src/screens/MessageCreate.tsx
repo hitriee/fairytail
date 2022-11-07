@@ -1,14 +1,22 @@
 import {useLayoutEffect, useRef, useState} from 'react';
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
-import Message, {Content} from '@messageCreate/Message';
+import Message from '@messageCreate/Message';
 import Loading from '@components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import CheckBox from '@/components/messageCreate/CheckBox';
 import Compress from '@/components/messageCreate/Compress';
 
+// 내용 타입 정의
+export type Content = {
+  type: number; // 0: text, 1: image, 2: video, 3: audio
+  file: File | null; // create 경우에 사용
+  fileURL: string; // text의 경우 내용, 나머지의 경우 경로
+};
+
 function MessageCreate() {
+  // 모바일 가상 키보드 고려한 스크롤 이동
   const screenRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -23,26 +31,26 @@ function MessageCreate() {
     return window.removeEventListener('resize', detectMobileKeybord);
   });
 
+  // 파일 전송 중 보여주는 로딩
   const [loading, setLoading] = useState(false);
 
+  // 이모지 길게 클릭했는지 확인
   const [isLongClicked, setIsLongClicked] = useState(false);
 
+  // 풍선 등록에 필요한 정보
   const [emojiNo, setEmojiNo] = useState(0);
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState<Content>({
-    title: '',
     type: 0,
     file: null,
     fileURL: '',
   });
   const [isShare, setIsShare] = useState(false);
 
-  // useEffect(() => {
-  //   loader()
-  // }, [])
-
+  // 풍선 등록
   function handleSubmit() {
     // 제목이나 내용이 비어있는지 확인
-    if (content.title.trim() === '') {
+    if (title.trim() === '') {
       alert('제목을 입력해주세요.');
     } else if (content.type === 0 && content.fileURL.trim() === '') {
       alert('내용을 입력해주세요.');
@@ -101,7 +109,16 @@ function MessageCreate() {
           </div>
         ) : (
           <div className="message-create-card">
-            <Message mode="create" content={content} setContent={setContent} />
+            <input
+              className="message-create-card-title"
+              placeholder="제목을 입력하세요."
+              maxLength={10}
+              onChange={e => {
+                setTitle(e.target.value);
+              }}
+            />
+
+            <Message content={content} setContent={setContent} />
 
             <div className="message-create-save-container">
               <CheckBox label="비공개" onClick={setIsShare} />

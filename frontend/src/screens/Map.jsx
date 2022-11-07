@@ -18,7 +18,7 @@ function generateRandomFloat(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function SetCenter({center}: {center: {lat: Number, lng: Number}}) {
+function SetCenter({center}) {
   const map = useMap();
 
   useEffect(() => {
