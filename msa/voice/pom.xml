@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fairytail</groupId>
-	<artifactId>alert</artifactId>
+	<artifactId>voice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>alert</name>
+	<name>voice</name>
 	<description>API Gateway</description>
 	<properties>
 		<java.version>11</java.version>

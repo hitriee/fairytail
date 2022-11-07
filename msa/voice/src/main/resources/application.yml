@@ -1,6 +1,7 @@
 server: #random port
-  port: 0
-
+  port: 8085
+  servlet:
+    context-path: /api/voice
 spring:
   application:
     name: voice-service
