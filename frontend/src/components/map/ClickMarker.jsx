@@ -3,12 +3,13 @@ import {Marker, Popup, useMap, useMapEvent} from 'react-leaflet';
 import {ClickMarkerIcon} from './CustomMarker';
 import {useNavigate} from 'react-router';
 import './ClickMarker.scss';
+import axios from 'axios';
 
-function ClickMarker() {
+function ClickMarker({isClicked, setIsClicked, position, setPosition}) {
   const navigate = useNavigate();
 
-  const [isClicked, setIsClicked] = useState(false);
-  const [position, setPosition] = useState({lat: -999, lng: -999});
+  const [place, setPlace] = useState('');
+
   const [refReady, setRefReady] = useState(false);
   let popupRef = useRef();
 
@@ -23,6 +24,15 @@ function ClickMarker() {
   useEffect(() => {
     if (refReady && isClicked) {
       popupRef.openOn(map);
+
+      axios
+        .get(
+          `https://nominatim.openstreetmap.org/reverse?lat=${position.lat}&lon=${position.lng}&format=json&zoom=10`,
+        )
+        .then(response => {
+          setPlace(response.data.display_name);
+          map.flyTo(position, map.getZoom());
+        });
     }
   }, [refReady, map, position]);
 
@@ -34,10 +44,13 @@ function ClickMarker() {
           setRefReady(true);
         }}>
         <div className="clickmarker-popup">
-          <div className="clickmarker-popup-title">선택한 위치</div>
-          <div className="clickmarker-popup-content ">위도: {position.lat}</div>
-          <div className="clickmarker-popup-content ">경도: {position.lng}</div>
-          <button className="btn" onClick={() => navigate(`/vr`)}>
+          <div className="clickmarker-popup-title">여기는</div>
+          <div className="clickmarker-popup-content">
+            {place ? place : '알려지지 않은 곳'} 입니다.
+          </div>
+          <button
+            className="btn"
+            onClick={() => navigate('/vr', {state: {position: position}})}>
             보러가기
           </button>
         </div>

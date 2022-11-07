@@ -25,7 +25,7 @@ export default function Scene({...props}) {
   const moveMessage = () => navigate(messageList());
   const moveCreate = () => navigate(messageCreate());
   const moveSettings = () => navigate(settings());
-  // args={['blue']}
+
   return (
     <>
       <color attach="background" args={['#dfd4fb']} />

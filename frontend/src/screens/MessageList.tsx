@@ -1,13 +1,15 @@
-import './MessageList.scss';
-import balloon from '../assets/images/balloon.png';
-import MyMessage from '../components/messageList/MyMessage';
-import items from './items.json';
+import React, {useEffect, useState} from 'react';
+import '@screens/MessageList.scss';
+import balloon from '@images/balloon.png';
+import MyMessage from '@messageList/MyMessage';
+import items from '@screens/items.json';
 import Iframe from 'react-iframe';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '../apis/Recoil';
 import NavBar from '@/components/common/NavBar';
 
 function MessageList() {
+  // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
   console.log(isLoading);

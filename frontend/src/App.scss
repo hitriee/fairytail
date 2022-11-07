@@ -1,12 +1,21 @@
+@import './styles/_colors.scss';
+
 @font-face {
-  font-family: 'PretendardVariable';
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
+  font-weight: 400;
   font-style: normal;
-  src: url('./styles/fonts/PretendardVariable.ttf') format('truetype');
+  font-display: swap;
 }
+
 @font-face {
   font-family: 'PyeongChangPeace-Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Light.woff2')
+    format('woff2');
+  font-weight: 300;
   font-style: normal;
-  src: url('./styles/fonts/PyeongChangPeace-Light.ttf') format('truetype');
+  font-display: swap;
 }
 
 @media (max-device-aspect-ratio: 9 / 16) {
@@ -25,6 +34,41 @@
 
 * {
   box-sizing: border-box;
-  font-family: 'PretendardVariable';
-  font-weight: 500;
+  font-family: 'Pretendard-Regular';
+  font-weight: 300;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.screen {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+}
+
+.btn {
+  border: 1px solid #b49aff55;
+  background-color: white;
+  color: $PURPLE;
+  border-radius: 20px;
+  padding: 2% 5%;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: $PURPLE;
+  }
 }

@@ -5,34 +5,36 @@ import MusicPlayer from './MusicPlayer';
 
 export type Content = {
   title: string;
-  type: string; // text, image, video, audio
+  type: number; // 0: text, 1: image, 2: video, 3: audio
   file: File | null; // create, update 경우에 사용
   fileURL: string; // text의 경우 내용, 나머지의 경우 경로
 };
 
 type PreviewProps = {
-  type: string;
+  type: number;
   fileURL: string;
 };
 
 export function Preview({type, fileURL}: PreviewProps) {
   let preview: any;
 
-  if (type.startsWith('string')) {
-    preview = <p className="content-text">{fileURL}</p>;
-  } else if (type.startsWith('image')) {
-    preview = <img className="content-image" src={fileURL} alt={type} />;
-  } else if (type.startsWith('video')) {
+  if (type === 0) {
+    preview = <p className="message-content-text">{fileURL}</p>;
+  } else if (type === 1) {
+    preview = (
+      <img className="message-content-image" src={fileURL} alt="사진" />
+    );
+  } else if (type === 2) {
     preview = (
       <video
-        className="content-image"
+        className="message-content-image"
         controls={true}
         autoPlay={true}
         playsInline={true}>
         <source src={fileURL} />
       </video>
     );
-  } else if (type.startsWith('audio')) {
+  } else if (type === 3) {
     preview = <MusicPlayer fileURL={fileURL} />;
   } else {
     preview = <div>업로드할 수 없는 파일 형식입니다. 다시 시도해주세요.</div>;
@@ -53,7 +55,7 @@ function Message({mode, content, setContent}: MessageProps) {
   const [newTitle, setNewTitle] = useState(content.title);
   const [newFile, setNewFile] = useState(content.file);
   const [newFileURL, setNewFileURL] = useState(content.fileURL);
-  const [newType, setNewFileType] = useState(content.type);
+  const [newFileType, setNewFileType] = useState(content.type);
 
   const handleClickFileUpload = () => {
     newFileRef.current?.click();
@@ -66,38 +68,62 @@ function Message({mode, content, setContent}: MessageProps) {
 
     setNewFile(null);
     setNewFileURL('');
-    setNewFileType('string');
+    setNewFileType(0);
     setContent({
       title: newTitle,
-      type: 'string',
+      type: 0,
       file: null,
       fileURL: '',
     });
   };
 
   const selectNewFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('확인');
     const fileList = e.target.files;
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
 
-      setNewFile(fileList[0]);
-      setNewFileURL(url);
-      setNewFileType(fileList[0].type);
-      setContent({
-        title: newTitle,
-        type: fileList[0].type,
-        file: fileList[0],
-        fileURL: url,
-      });
+      const file = fileList[0];
+
+      // 용량 10mb 이하인지 확인
+      if (file.size > 10 * 1024 * 1024) {
+        alert('10MB 이하의 파일만 업로드할 수 있습니다.');
+        return;
+      }
+
+      // 음성, 영상, 사진 중 하나인지 확인
+      if (
+        file.type.startsWith('image') ||
+        file.type.startsWith('video') ||
+        file.type.startsWith('audio')
+      ) {
+        let fileTypeNo = 1;
+        if (file.type.startsWith('video')) {
+          fileTypeNo = 2;
+        } else if (file.type.startsWith('audio')) {
+          fileTypeNo = 3;
+        }
+
+        setNewFile(file);
+        setNewFileURL(url);
+        setNewFileType(fileTypeNo);
+        setContent({
+          title: newTitle,
+          type: fileTypeNo,
+          file: file,
+          fileURL: url,
+        });
+      } else {
+        alert('지원하지 않는 파일 형식입니다.');
+        return;
+      }
     }
   };
 
   if (mode === 'create' || mode === 'update') {
     return (
-      <div className="message-container">
+      <div className="message">
         <input
-          className="title"
+          className="message-title"
           placeholder="제목을 입력하세요."
           maxLength={10}
           onChange={e => {
@@ -109,17 +135,17 @@ function Message({mode, content, setContent}: MessageProps) {
           }}
           defaultValue={content.title}
         />
-        {newFileURL === '' || newType === 'string' ? (
+        {newFileURL === '' || newFileType === 0 ? (
           // create 이거나, type이 text인 글을 update 하는 경우 -> textarea
           <textarea
-            className="content-text"
+            className="message-content-text"
             placeholder="내용을 입력하세요."
-            maxLength={150}
+            maxLength={100}
             rows={10}
             onChange={e => {
               setNewFileURL(e.target.value);
               setContent(prev => {
-                prev.type = 'string';
+                prev.type = 0;
                 prev.file = null;
                 prev.fileURL = e.target.value;
                 return prev;
@@ -128,14 +154,14 @@ function Message({mode, content, setContent}: MessageProps) {
             defaultValue={typeof content.file === 'string' ? content.file : ''}
           />
         ) : (
-          <Preview type={newType} fileURL={newFileURL} />
+          <Preview type={newFileType} fileURL={newFileURL} />
         )}
         {!newFile && newFile == null ? (
           <button className="btn" onClick={handleClickFileUpload}>
-            사진 / 영상 / 음성 파일 업로드하기
+            사진 / 영상 / 음성 파일 업로드
           </button>
         ) : (
-          <div className="content-buttons">
+          <div className="message-content-buttons">
             <button className="btn" onClick={handleClickFileUpload}>
               바꾸기
             </button>

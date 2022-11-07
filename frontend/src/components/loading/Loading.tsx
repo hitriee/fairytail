@@ -29,7 +29,7 @@ function Loading() {
   return (
     <>
       <div className="loading-background">
-        <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" />
+        {/* <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" /> */}
         <p className="loading-message">{letter[rand(0, 11)]}</p>
       </div>
     </>

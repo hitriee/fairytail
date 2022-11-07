@@ -1,47 +1,36 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
-import "./Carousel.scss";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow } from "swiper";
-import { debounce } from "lodash";
-import { emojiArr } from "../../assets/emojis";
+import {useState, Dispatch, SetStateAction} from 'react';
+import 'swiper/css';
+import './Carousel.scss';
+import 'swiper/css/effect-coverflow';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import SwiperCore, {EffectCoverflow} from 'swiper';
+import {emojiArr} from '../../assets/emojis';
+import useLongPress from '@/apis/useLongPress';
 
 type CarouselProps = {
+  emojiNo: number;
   onSlideChange: Dispatch<SetStateAction<number>>;
+  setIsLongClicked: Dispatch<SetStateAction<boolean>>;
 };
 
-function Carousel({ onSlideChange }: CarouselProps) {
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
+function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
+  const [swiper, setSwiper] = useState<SwiperCore>();
 
-  const handleResize = debounce(() => {
-    setWindowSize(window.innerWidth);
-  }, 10);
+  const longPress = useLongPress(() => setIsLongClicked(true), 500);
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  type SwiperImageProps = {
-    item: any;
-    index: number;
-  };
-
-  function SwiperImage({ item, index }: SwiperImageProps) {
-    return <img className="emoji" src={item} alt={index.toString()} />;
-  }
-
-  const MemorizedImage = React.memo(SwiperImage);
+  swiper && swiper.slideTo(emojiNo, 300);
 
   return (
     <Swiper
-      effect={"coverflow"}
-      slidesPerView={2.2}
+      autoHeight={true}
+      mousewheel={true}
+      onSwiper={setSwiper}
+      touchStartPreventDefault={false}
+      initialSlide={Math.floor(Math.random() * 76)}
+      slideToClickedSlide={true}
+      effect={'coverflow'}
+      slidesPerView={2}
       centeredSlides={true}
-      grabCursor={true}
       coverflowEffect={{
         rotate: 0,
         stretch: 0,
@@ -50,12 +39,11 @@ function Carousel({ onSlideChange }: CarouselProps) {
         slideShadows: false,
       }}
       modules={[EffectCoverflow]}
-      onSlideChange={(swiper) => onSlideChange(swiper.realIndex)}
-    >
+      onSlideChange={swiper => onSlideChange(swiper.realIndex)}>
       {emojiArr.map((item, index) => {
         return (
-          <SwiperSlide key={index}>
-            <MemorizedImage item={item} index={index} />
+          <SwiperSlide key={index} {...longPress}>
+            <img className="emoji" src={item} alt={`${index}번 이모지`} />
           </SwiperSlide>
         );
       })}

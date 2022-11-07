@@ -7,6 +7,7 @@ import Report from '@messageDetail/Report';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import {popUp} from '@common/commonFunc';
+import {toMessageUpdate} from '@/apis/router';
 import '@common/Common.scss';
 
 interface props {
@@ -14,7 +15,7 @@ interface props {
   isMine: boolean;
   detail: any;
   messageId: string | undefined;
-  type: string;
+  type: number;
   content: string;
   close: () => void;
 }
@@ -45,7 +46,7 @@ function MoreMenu({
 
   const saveMessage = async () => {
     close();
-    if (type.startsWith('string')) {
+    if (type === 0) {
       const height = window.innerHeight;
       html2canvas(detail.current, {height}).then(canvas => {
         saveAs(canvas.toDataURL(), 'fairytail.png');
@@ -63,8 +64,10 @@ function MoreMenu({
   };
   // 수정 페이지로 이동
   const toEdit = () => {
-    navigate(`/message/update/${messageId}`);
-    close();
+    if (messageId) {
+      navigate(toMessageUpdate(messageId));
+      close();
+    }
   };
   // 삭제 확인
   const onDelete = () => {

@@ -4,15 +4,15 @@ import '@messageDetail/Content.scss';
 interface props {
   title: string;
   content: string;
-  type: string;
+  type: number;
   date: string;
 }
 
 function Content({title, content, type, date}: props) {
   const findClass = () => {
-    if (type.startsWith('string')) {
+    if (type === 0) {
       return 'detail-card detail-card-text';
-    } else if (type.startsWith('audio')) {
+    } else if (type === 3) {
       return 'detail-card detail-card-audio';
     } else {
       return '';
