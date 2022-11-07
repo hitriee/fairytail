@@ -5,9 +5,11 @@ import '@screens/Individual.scss';
 
 function Notifications() {
   const [newItems, setNewItems] = useState<any[]>(items);
+  const ref = useRef<any>();
   const deleteEach = (index: number) => {
-    return () =>
-      setNewItems(() => newItems.filter((element, i) => i !== index));
+    // 임시
+    setNewItems(() => newItems.filter((element, i) => i !== index));
+    // 백에 삭제 요청
   };
   const deleteAll = () => {
     setNewItems(() => []);
@@ -19,48 +21,13 @@ function Notifications() {
     // 백에 삭제 요청
   };
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log(e);
-  };
-  const onClick = (e: any) => {
-    console.log(e);
-  };
-
-  // drag
-  // const ref = useRef(null!);
-  // const dragComponent = useRef(null!);
-
-  // const getElementIndex = ()
-  // const setDragItemId = {
-  //   grabItem: (index: number) => {
-  //     clcikElId
-  //   }
-  // }
-  // const onDragStart = (e: React.DragEvent<HTMLElement>, index: number) => {
-  //   e.dataTransfer.effectAllowed = 'move'
-  //   setDragItemId.grabItem(index)
-  // };
-  // const onDragEnter = (e: React.DragEvent<HTMLElement>, index: number) => {
-  //   setDragItemId.interSectItem(index)
-  // }
-
   return (
     <>
       {/* <div className="delete-parent"> */}
-      <p className="delete" onClick={deleteAll} draggable>
+      <p className="delete" onClick={deleteAll}>
         전체 삭제
       </p>
-      {/* </div> */}
-      {/* <div ref={dragPreview} style={{opacity: isDragging ? 0.5 : 1}}>
-        <div role="Handle" ref={drag} />
-      </div>
-      <div
-        ref={drop}
-        role={'Dustbin'}
-        style={{backgroundColor: isOver ? 'red' : 'white'}}>
-        {canDrop ? 'Release to drop' : 'Drag a box here'}
-      </div> */}
-      <div className="individual-container">
+      <div className="individual-container" ref={ref}>
         <div className="individual-container-list">
           {newItems.length === 0 ? (
             <div className="white">새 좋아요 알림이 없습니다</div>
@@ -72,7 +39,6 @@ function Notifications() {
                   key={item.id}
                   deleteEach={deleteEach}
                   index={index}
-                  // onDragEnd={(e) => dragEndHandler(e)}
                 />
               );
             })

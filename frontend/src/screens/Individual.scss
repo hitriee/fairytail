@@ -30,8 +30,9 @@
     &-container {
       height: 55%;
       width: 80%;
-      overflow: scroll;
+      overflow-y: scroll;
       // overflow-x: visible;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       &-list {
@@ -40,8 +41,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        // overflow-y: scroll;
         // justify-content: center;
+        transition: transfrom 200ms ease 0s;
       }
     }
     &-icon {
