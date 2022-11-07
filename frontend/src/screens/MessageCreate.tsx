@@ -91,9 +91,7 @@ function MessageCreate() {
     <div className="screen" ref={screenRef}>
       {loading ? <Loading /> : null}
 
-      <div
-        className="container message-create-container"
-        style={{backgroundColor: '#000000'}}>
+      <div className="container message-create-container">
         <MoveToBack path="/main" />
 
         <Carousel
