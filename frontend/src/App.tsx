@@ -50,6 +50,7 @@ function App() {
             <Route path={notFound()} element={<NotFound />} />
             <Route path={settings()} element={<Individual />} />
             <Route path={notifications()} element={<Individual />} />
+            {/* <Route path="/loading" element={<Loading />} /> */}
           </Routes>
         </Suspense>
       </RecoilRoot>

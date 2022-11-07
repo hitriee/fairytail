@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-import Room from '../components/room/Room';
+import Room from '../components/main/Room';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '../apis/Recoil';
 
