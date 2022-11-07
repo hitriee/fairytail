@@ -9,20 +9,33 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
-
 ###### maria db 설정 관련 추가 #####
 
-# h2 database setting - 사용하지 않을 시, 주석 처리
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
 
+#  h2:
+#    console:
+#      enabled: true
+#      settings:
+#        web-allow-others: true
+#      path: /h2-console
+
+  # mariaDB database setting
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/img
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  # 최대 파일 사이즈
+  servlet:
+    multipart:
+      max-request-size: 5MB
+      max-file-size: 5MB
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
 #    username: sa
 #    password: null
 
@@ -39,3 +52,19 @@ eureka:
 # application.yml 에 저장된 값을 읽어 REST API를 테스트하기 위한 dummy data
 greeting:
   message: Welcome to the FairyTail!
+
+#AWS Setting
+cloud:
+  aws:
+    credentials:
+      access-key: ${cloud.aws.credentials.access-key}
+      secret-key: ${cloud.aws.credentials.secret-key}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: dongsim
+  front:
+    name: ${cloud.front.name}
+
