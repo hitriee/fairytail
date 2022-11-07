@@ -70,6 +70,12 @@ function MessageCreate() {
             lng: position.coords.longitude,
           };
 
+          console.log(title);
+          console.log(isShare);
+          console.log(emojiNo);
+          console.log(content);
+          console.log(location);
+
           // 사진/영상/음성 업로드인 경우 압축
           if (content.type !== 0 && content.file !== null) {
             const compressedFile = Compress(
@@ -106,7 +112,7 @@ function MessageCreate() {
         />
 
         {isLongClicked ? (
-          <div className="message-create-card">
+          <div className="message-create-emojis">
             <EmojiGrid
               setEmojiNo={setEmojiNo}
               setIsLongClicked={setIsLongClicked}
