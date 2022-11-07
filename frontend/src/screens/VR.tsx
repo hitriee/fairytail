@@ -3,6 +3,7 @@ import Iframe from 'react-iframe';
 import {useNavigate, useLocation} from 'react-router';
 import {useEffect, useState} from 'react';
 import Loading from '@/components/loading/Loading';
+import MoveToBack from '@/components/common/MoveToBack';
 
 type RouteState = {
   state: {
@@ -16,7 +17,22 @@ type RouteState = {
 function VR() {
   // 받은 위치 정보로 서버에 데이터 요청
   const {state} = useLocation() as RouteState;
-  const location = state.position;
+
+  let location = {};
+
+  // 받은 위치 정보가 없을 경우, 현재 위치 탐색
+  if (state === null) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        location = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        };
+      });
+    }
+  } else {
+    location = state.position;
+  }
 
   // 자식에 데이터 전달
   useEffect(() => {
@@ -48,6 +64,9 @@ function VR() {
   return (
     <div className="vr">
       {isLoaded ? null : <Loading />}
+
+      <MoveToBack path="-1" />
+
       <Iframe
         className="vr-frame"
         url="../iframeVR/IframeVR.html"

@@ -6,7 +6,7 @@ interface data {
     like: boolean,
     date: Date,
     author: number,
-    type: string,
+    type: number,
     emoji_no: number,
   ];
 }
@@ -18,7 +18,7 @@ const dummy: data['list'][] = [
     true,
     new Date(),
     0,
-    'string',
+    0,
     1,
   ],
   [
@@ -28,7 +28,7 @@ const dummy: data['list'][] = [
     false,
     new Date(),
     1,
-    'string',
+    0,
     2,
   ],
   [
@@ -38,11 +38,11 @@ const dummy: data['list'][] = [
     true,
     new Date(),
     0,
-    'image',
+    1,
     3,
   ],
-  ['제목입니다', '@assets/test/test.mp4', 12, true, new Date(), 2, 'video', 4],
-  ['제목입니다', '@assets/test/test.m4a', 12, true, new Date(), 3, 'audio', 5],
+  ['제목입니다', '@assets/test/test.mp4', 12, true, new Date(), 2, 2, 4],
+  ['제목입니다', '@assets/test/test.m4a', 12, true, new Date(), 3, 3, 5],
 ];
 
 export default dummy;

@@ -14,7 +14,7 @@ interface props {
   isMine: boolean;
   detail: any;
   messageId: string | undefined;
-  type: string;
+  type: number;
   content: string;
   close: () => void;
 }
@@ -45,7 +45,7 @@ function MoreMenu({
 
   const saveMessage = async () => {
     close();
-    if (type.startsWith('string')) {
+    if (type === 0) {
       const height = window.innerHeight;
       html2canvas(detail.current, {height}).then(canvas => {
         saveAs(canvas.toDataURL(), 'fairytail.png');
