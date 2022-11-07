@@ -34,19 +34,22 @@ public class S3Util {
         return cloudFrontName + "/" + fileName;
     }
 
-    public void delete(File file, String dirName){
-        String fileName = dirName+"/" + file.getName();
-        boolean exist = amazonS3Client.doesObjectExist(bucket, fileName);
+    public Boolean delete(String oldFilePath){
+        boolean exist = amazonS3Client.doesObjectExist(bucket, oldFilePath);
         if(exist == true){
-            amazonS3Client.deleteObject(bucket, fileName);
+            amazonS3Client.deleteObject(bucket, oldFilePath);
+            return true;
+        } else{
+            return false;
         }
     }
 
-    public void update(String oldFilePath, File file, String dirName){
+    public String update(String oldFilePath, File file, String dirName){
         boolean exist = amazonS3Client.doesObjectExist(bucket, oldFilePath);
         if(exist == true){
             amazonS3Client.deleteObject(bucket, oldFilePath);
         }
-        upload(file, dirName);
+        String url = upload(file, dirName);
+        return url;
     }
 }
