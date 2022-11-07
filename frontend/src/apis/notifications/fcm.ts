@@ -28,7 +28,7 @@ getToken(messaging, {
     // ...
   });
 
-//포그라운드 메시지 수신
+//포그라운드 메시지 수신 (콘솔 출력)
 onMessage(messaging, payload => {
   console.log('Message received. ', payload);
   // ...

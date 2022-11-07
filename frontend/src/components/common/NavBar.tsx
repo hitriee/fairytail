@@ -22,7 +22,7 @@ function NavBar({showMenu, detail}: props) {
     if (path[1] === 'map') {
       navigate(globe());
     } else if (path[2] === 'detail') {
-      navigate(vr());
+      navigate(-1);
     } else if (path[2] === 'update') {
       navigate(toMessageDetail(path[3]));
     } else {
