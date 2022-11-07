@@ -1,0 +1,43 @@
+.detail {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-title {
+    width: 100%;
+    font-size: 2.5vh;
+    font-weight: 600;
+    text-align: center;
+  }
+  &-card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: white;
+    border-radius: 20px;
+    &-text {
+      width: 50%;
+      min-height: 50%;
+    }
+    &-audio {
+      width: 30%;
+      min-height: 30%;
+    }
+  }
+  &-content {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    padding: 5%;
+  }
+  &-date {
+    margin-bottom: 10%;
+    font-size: 1.7vh;
+  }
+}

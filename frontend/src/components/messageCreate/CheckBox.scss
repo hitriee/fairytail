@@ -1,0 +1,30 @@
+@import '@/styles/_colors.scss';
+
+.checkbox {
+  &-label {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}
+
+#checkbox-input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 5%;
+  border-radius: 100%;
+  border: 1px solid $PURPLE;
+  cursor: pointer;
+  appearance: none;
+  transition: background 0.5s;
+
+  &:checked {
+    background: $PURPLE;
+    border: none;
+  }
+}

@@ -1,0 +1,32 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 60%;
+  width: 70%;
+  &-section {
+    display: flex;
+    flex-direction: column;
+  }
+  &-title {
+    font-size: 50%;
+  }
+  &-each {
+    font-size: 120%;
+    cursor: pointer;
+  }
+  &-between {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.bgm {
+  &-title {
+    display: block;
+    height: 10%;
+  }
+  &-hidden {
+    visibility: hidden;
+  }
+}

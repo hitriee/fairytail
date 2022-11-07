@@ -1,0 +1,36 @@
+.message-create {
+  &-header {
+    position: absolute;
+    left: 6%;
+    top: 4%;
+    z-index: 2;
+  }
+
+  &-card {
+    height: 60%;
+    width: 80%;
+    padding: 5%;
+    background-color: #ffffff;
+    box-shadow: inset -5px 0px 4px rgba(91, 91, 91, 0.5);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-save-container {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+input,
+textarea {
+  border: 0;
+  text-align: center;
+  resize: none;
+  outline: none;
+}

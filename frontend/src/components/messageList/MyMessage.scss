@@ -1,0 +1,48 @@
+.myMessage {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  background-color: white;
+  margin: 3%;
+  height: 12vh;
+  border-radius: 20px;
+
+  &-emoji {
+    display: flex;
+    flex-basis: 1;
+    justify-content: center;
+    align-items: center;
+    img {
+      // width: 150%;
+      height: 80%;
+      margin-left: 30%;
+    }
+  }
+  &-container {
+    flex-basis: 100rem;
+    margin-left: 5%;
+
+    &-title {
+      display: block;
+      font-weight: 1000;
+      font-size: 100%;
+      width: 100%;
+      margin-bottom: 2%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &-date {
+      font-size: small;
+    }
+    &-like {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      margin: 2%;
+      img {
+        height: 35%;
+      }
+    }
+  }
+}

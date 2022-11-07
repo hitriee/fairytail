@@ -1,0 +1,38 @@
+.message {
+  width: 95%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  &-title {
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 3px solid #cccccc;
+    padding: 5% 0;
+  }
+
+  &-content {
+    &-text {
+      width: 100%;
+      height: 75%;
+      padding-top: 3%;
+      font-size: 1.25rem;
+      word-break: break-all;
+      line-height: 1.65rem;
+    }
+    &-image {
+      max-height: 75%;
+      max-width: 100%;
+      padding: 3%;
+      border-radius: 20px;
+    }
+    &-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+}

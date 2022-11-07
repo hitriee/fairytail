@@ -1,0 +1,37 @@
+.map {
+  &-random {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white !important;
+    border-radius: 4px;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    position: absolute;
+    z-index: 999;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f4f4f4 !important;
+    }
+
+    img {
+      width: 0.9rem;
+      height: 0.9rem;
+    }
+  }
+
+  &-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      margin: 0;
+    }
+  }
+}

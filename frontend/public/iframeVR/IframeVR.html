@@ -1,0 +1,169 @@
+<html>
+  <head>
+    <title>VR</title>
+    <meta charset="UTF-8" />
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+  </head>
+  <script>
+    AFRAME.registerComponent("handle-click", {
+      schema: {
+        post_id: { type: "number", default: 0 },
+      },
+      init: function () {
+        const post_id = this.data.post_id;
+
+        this.el.addEventListener("click", function () {
+          // 읽은 글 목록 가져오기
+          const readJson = localStorage.getItem("read");
+          let readArr = [];
+          if (readJson != null) {
+            readArr = JSON.parse(readJson);
+          }
+
+          // 게시글 번호가 읽은 글 목록에 없다면 추가
+
+          if (!readArr?.includes(post_id)) {
+            readArr?.push(post_id);
+            localStorage.setItem("read", JSON.stringify(readArr));
+          }
+
+          // 부모로 게시글 번호 전송
+          window.parent.postMessage(post_id, "*");
+        });
+      },
+    });
+
+    AFRAME.registerComponent("handle-move", {
+      init: function () {
+        const post_id = this.data.post_id;
+
+        this.el.addEventListener("click", function () {
+          window.parent.postMessage("create", "*");
+        });
+      },
+    });
+
+    AFRAME.registerComponent("limit-distance", {
+      init: function () {},
+      tick: function () {
+        if (this.el.object3D.position.x > 4) {
+          this.el.object3D.position.x = 4;
+        }
+        if (this.el.object3D.position.x < -4) {
+          this.el.object3D.position.x = -4;
+        }
+        if (this.el.object3D.position.z > 4) {
+          this.el.object3D.position.z = 4;
+        }
+        if (this.el.object3D.position.z < -4) {
+          this.el.object3D.position.z = -4;
+        }
+      },
+    });
+  </script>
+  <body>
+    <a-scene
+      vr-mode-ui="enabled: false"
+      cursor="rayOrigin: mouse; fuseTimeout: 0"
+      raycaster="objects: .emoji, .move"
+    >
+      <a-assets>
+        <img id="emoji0" src="../emojis_small/0.webp" />
+        <img id="emoji1" src="../emojis_small/1.webp" />
+        <img id="emoji2" src="../emojis_small/2.webp" />
+        <img id="emoji3" src="../emojis_small/3.webp" />
+        <img id="emoji4" src="../emojis_small/4.webp" />
+        <img id="emoji5" src="../emojis_small/5.webp" />
+        <img id="emoji6" src="../emojis_small/6.webp" />
+        <img id="emoji7" src="../emojis_small/7.webp" />
+        <img id="emoji8" src="../emojis_small/8.webp" />
+        <img id="emoji9" src="../emojis_small/9.webp" />
+        <img id="emoji10" src="../emojis_small/10.webp" />
+        <img id="emoji11" src="../emojis_small/11.webp" />
+        <img id="emoji12" src="../emojis_small/12.webp" />
+        <img id="emoji13" src="../emojis_small/13.webp" />
+        <img id="emoji14" src="../emojis_small/14.webp" />
+        <img id="emoji15" src="../emojis_small/15.webp" />
+        <img id="emoji16" src="../emojis_small/16.webp" />
+        <img id="emoji17" src="../emojis_small/17.webp" />
+        <img id="emoji18" src="../emojis_small/18.webp" />
+        <img id="emoji19" src="../emojis_small/19.webp" />
+        <img id="emoji20" src="../emojis_small/20.webp" />
+        <img id="emoji21" src="../emojis_small/21.webp" />
+        <img id="emoji22" src="../emojis_small/22.webp" />
+        <img id="emoji23" src="../emojis_small/23.webp" />
+        <img id="emoji24" src="../emojis_small/24.webp" />
+        <img id="emoji25" src="../emojis_small/25.webp" />
+        <img id="emoji26" src="../emojis_small/26.webp" />
+        <img id="emoji27" src="../emojis_small/27.webp" />
+        <img id="emoji28" src="../emojis_small/28.webp" />
+        <img id="emoji29" src="../emojis_small/29.webp" />
+        <img id="emoji30" src="../emojis_small/30.webp" />
+        <img id="emoji31" src="../emojis_small/31.webp" />
+        <img id="emoji32" src="../emojis_small/32.webp" />
+        <img id="emoji33" src="../emojis_small/33.webp" />
+        <img id="emoji34" src="../emojis_small/34.webp" />
+        <img id="emoji35" src="../emojis_small/35.webp" />
+        <img id="emoji36" src="../emojis_small/36.webp" />
+        <img id="emoji37" src="../emojis_small/37.webp" />
+        <img id="emoji38" src="../emojis_small/38.webp" />
+        <img id="emoji39" src="../emojis_small/39.webp" />
+        <img id="emoji40" src="../emojis_small/40.webp" />
+        <img id="emoji41" src="../emojis_small/41.webp" />
+        <img id="emoji42" src="../emojis_small/42.webp" />
+        <img id="emoji43" src="../emojis_small/43.webp" />
+        <img id="emoji44" src="../emojis_small/44.webp" />
+        <img id="emoji45" src="../emojis_small/45.webp" />
+        <img id="emoji46" src="../emojis_small/46.webp" />
+        <img id="emoji47" src="../emojis_small/47.webp" />
+        <img id="emoji48" src="../emojis_small/48.webp" />
+        <img id="emoji49" src="../emojis_small/49.webp" />
+        <img id="emoji50" src="../emojis_small/50.webp" />
+        <img id="emoji51" src="../emojis_small/51.webp" />
+        <img id="emoji52" src="../emojis_small/52.webp" />
+        <img id="emoji53" src="../emojis_small/53.webp" />
+        <img id="emoji54" src="../emojis_small/54.webp" />
+        <img id="emoji55" src="../emojis_small/55.webp" />
+        <img id="emoji56" src="../emojis_small/56.webp" />
+        <img id="emoji57" src="../emojis_small/57.webp" />
+        <img id="emoji58" src="../emojis_small/58.webp" />
+        <img id="emoji59" src="../emojis_small/59.webp" />
+        <img id="emoji60" src="../emojis_small/60.webp" />
+        <img id="emoji61" src="../emojis_small/61.webp" />
+        <img id="emoji62" src="../emojis_small/62.webp" />
+        <img id="emoji63" src="../emojis_small/63.webp" />
+        <img id="emoji64" src="../emojis_small/64.webp" />
+        <img id="emoji65" src="../emojis_small/65.webp" />
+        <img id="emoji66" src="../emojis_small/66.webp" />
+        <img id="emoji67" src="../emojis_small/67.webp" />
+        <img id="emoji68" src="../emojis_small/68.webp" />
+        <img id="emoji69" src="../emojis_small/69.webp" />
+        <img id="emoji70" src="../emojis_small/70.webp" />
+        <img id="emoji71" src="../emojis_small/71.webp" />
+        <img id="emoji72" src="../emojis_small/72.webp" />
+        <img id="emoji73" src="../emojis_small/73.webp" />
+        <img id="emoji74" src="../emojis_small/74.webp" />
+        <img id="emoji75" src="../emojis_small/75.webp" />
+
+        <audio id="fuse-sound" src="./VREffect.mp3"></audio>
+
+        <a-asset-item
+          id="font"
+          src="../fonts/PyeongChangPeace-Light.ttf"
+        ></a-asset-item>
+      </a-assets>
+
+      <a-sky radius="7" src="./VRBackground.jpg"></a-sky>
+
+      <a-camera limit-distance position="0 0 0" look-controls wasd-controls>
+        <a-cursor fuse="true" fuse-timeout="100000000000"></a-cursor>
+      </a-camera>
+    </a-scene>
+    <script src="./IframeVR.js"></script>
+  </body>
+</html>

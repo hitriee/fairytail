@@ -1,0 +1,31 @@
+.count {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: 1.5vh;
+}
+
+.white {
+  color: white;
+}
+
+.icon {
+  &-nav {
+    width: 7%;
+    // height: 20%;
+  }
+  &-like {
+    width: 7%;
+    height: 10%;
+  }
+}
+
+.balloon {
+  width: 20%;
+  display: block;
+}
+
+.etc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
