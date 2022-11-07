@@ -91,7 +91,9 @@ function MessageCreate() {
     <div className="screen" ref={screenRef}>
       {loading ? <Loading /> : null}
 
-      <div className="container">
+      <div
+        className="container message-create-container"
+        style={{backgroundColor: '#000000'}}>
         <MoveToBack path="/main" />
 
         <Carousel
@@ -107,27 +109,25 @@ function MessageCreate() {
               setIsLongClicked={setIsLongClicked}
             />
           </div>
-        ) : (
-          <div className="message-create-card">
-            <input
-              className="message-create-card-title"
-              placeholder="제목을 입력하세요."
-              maxLength={10}
-              onChange={e => {
-                setTitle(e.target.value);
-              }}
-            />
+        ) : null}
 
-            <Message content={content} setContent={setContent} />
+        <input
+          className="message-create-title"
+          placeholder="제목을 입력하세요."
+          maxLength={10}
+          onChange={e => {
+            setTitle(e.target.value);
+          }}
+        />
 
-            <div className="message-create-save-container">
-              <CheckBox label="비공개" onClick={setIsShare} />
-              <button className="btn" onClick={handleSubmit}>
-                등록
-              </button>
-            </div>
-          </div>
-        )}
+        <Message content={content} setContent={setContent} />
+
+        <div className="message-create-save-container">
+          <CheckBox label="비공개" onClick={setIsShare} />
+          <button className="btn" onClick={handleSubmit}>
+            등록
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,10 @@
+@import '@styles/_colors.scss';
+
 .message-create {
+  &-container {
+    padding: 4% 0;
+  }
+
   &-header {
     position: absolute;
     left: 6%;
@@ -7,6 +13,8 @@
   }
 
   &-card {
+    position: absolute;
+    bottom: 5%;
     height: 60%;
     width: 80%;
     padding: 5%;
@@ -17,19 +25,23 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+  }
 
-    &-title {
-      width: 100%;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
+  &-title {
+    width: 100%;
+    font-size: 1.75rem;
+    font-weight: 700;
+    background-color: transparent;
+    color: $WHITE;
+    padding: 2% 0;
   }
 
   &-save-container {
-    width: 90%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 2%;
   }
 }
 
