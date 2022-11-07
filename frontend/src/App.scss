@@ -43,10 +43,6 @@
   -webkit-tap-highlight-color: transparent !important;
 }
 
-img {
-  pointer-events: none;
-}
-
 .screen {
   display: flex;
   justify-content: center;
@@ -67,7 +63,7 @@ img {
   background-color: white;
   color: $PURPLE;
   border-radius: 20px;
-  padding: 1.75% 5%;
+  padding: 2% 5%;
   font-size: 0.9rem;
   cursor: pointer;
 

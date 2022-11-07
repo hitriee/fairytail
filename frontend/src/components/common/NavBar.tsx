@@ -1,5 +1,5 @@
+import {ReactComponent as ArrowBack} from '@images/arrowBack.svg';
 import {useNavigate, useLocation} from 'react-router';
-import {ReactComponent as ArrowBack} from '@images/arrow-back-outline.svg';
 import {ReactComponent as EllipsisVertical} from '@images/more_4.svg';
 import {main, globe, vr, toMessageDetail} from '@apis/router';
 

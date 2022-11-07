@@ -5,13 +5,13 @@ import {emojiArr} from '@/assets/emojis';
 export const CustomMarkerIcon = new L.Icon({
   iconUrl: customMarker,
   iconRetinaUrl: customMarker,
-  iconSize: new L.Point(20, 20),
+  iconSize: new L.Point(15, 15),
 });
 
 export const ClickMarkerIcon = new L.Icon({
   iconUrl: emojiArr[5],
   iconRetinaUrl: emojiArr[5],
-  iconAnchor: [15, 15],
-  popupAnchor: [0, -15],
-  iconSize: new L.Point(30, 30),
+  iconAnchor: [12.5, 12.5],
+  popupAnchor: [0, -12.5],
+  iconSize: new L.Point(25, 25),
 });

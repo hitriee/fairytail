@@ -38,6 +38,16 @@
       },
     });
 
+    AFRAME.registerComponent("handle-move", {
+      init: function () {
+        const post_id = this.data.post_id;
+
+        this.el.addEventListener("click", function () {
+          window.parent.postMessage("create", "*");
+        });
+      },
+    });
+
     AFRAME.registerComponent("limit-distance", {
       init: function () {},
       tick: function () {
@@ -60,7 +70,7 @@
     <a-scene
       vr-mode-ui="enabled: false"
       cursor="rayOrigin: mouse; fuseTimeout: 0"
-      raycaster="objects: .emoji"
+      raycaster="objects: .emoji, .move"
     >
       <a-assets>
         <img id="emoji0" src="../emojis_small/0.webp" />
@@ -147,11 +157,13 @@
           src="../fonts/PyeongChangPeace-Light.ttf"
         ></a-asset-item>
       </a-assets>
+
       <a-sky radius="7" src="./VRBackground.jpg"></a-sky>
+
       <a-camera limit-distance position="0 0 0" look-controls wasd-controls>
         <a-cursor fuse="true" fuse-timeout="100000000000"></a-cursor>
       </a-camera>
     </a-scene>
-    <script src="./IframeVR.js" type="module"></script>
+    <script src="./IframeVR.js"></script>
   </body>
 </html>
