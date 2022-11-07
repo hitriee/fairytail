@@ -9,13 +9,24 @@
     flex-direction: column;
   }
   &-title {
-    font-size: 40%;
+    font-size: 50%;
   }
   &-each {
     font-size: 120%;
+    cursor: pointer;
   }
   &-between {
     display: flex;
     justify-content: space-between;
+  }
+}
+
+.bgm {
+  &-title {
+    display: block;
+    height: 10%;
+  }
+  &-hidden {
+    visibility: hidden;
   }
 }

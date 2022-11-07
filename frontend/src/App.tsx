@@ -1,4 +1,5 @@
-import React, {Suspense} from 'react';
+// import React, {useEffect, useState} from 'react';
+import '@/apis/notifications/fcm';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import '@/App.scss';
 import Loader from '../src/components/room/Loading';
@@ -30,6 +31,32 @@ import {
 } from '@apis/router';
 
 function App() {
+  // function useWindowSize() {
+  //   const [windowSize, setWindowSize] = useState({
+  //     width: 0,
+  //     height: 0,
+  //   });
+  //   useEffect(() => {
+  //     function handleResize() {
+  //       setWindowSize({
+  //         width: window.innerWidth,
+  //         height: window.innerHeight,
+  //       });
+  //       if (window.innerWidth / window.innerHeight < 9 / 16) {
+  //         window.innerWidth = (window.innerHeight * 9) / 16;
+  //         setWindowSize({
+  //           width: window.innerWidth,
+  //           height: window.innerHeight,
+  //         });
+  //       }
+  //     }
+  //     window.addEventListener('resize', handleResize);
+  //     handleResize();
+  //     return () => window.removeEventListener('resize', handleResize);
+  //   }, []);
+  //   return windowSize;
+  // }
+  // console.log(useWindowSize());
   return (
     <BrowserRouter>
       {/* <Suspense fallback={<Loader />}> */}

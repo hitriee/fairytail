@@ -38,6 +38,10 @@ function MessageCreate() {
   });
   const [isShare, setIsShare] = useState(false);
 
+  // useEffect(() => {
+  //   loader()
+  // }, [])
+
   function handleSubmit() {
     if (navigator.geolocation) {
       setLoading(true);

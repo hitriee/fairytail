@@ -1,8 +1,10 @@
-import './MessageList.scss';
-import balloon from '../assets/images/balloon.png';
-import MyMessage from '../components/messageList/MyMessage';
-import items from './items.json';
+import React, {useEffect, useState} from 'react';
+import '@screens/MessageList.scss';
+import balloon from '@images/balloon.png';
+import MyMessage from '@messageList/MyMessage';
+import items from '@screens/items.json';
 import Iframe from 'react-iframe';
+import NavBar from '@common/NavBar';
 
 function MessageList() {
   // const [items, setItems] = useState([]);
@@ -19,6 +21,7 @@ function MessageList() {
         frameBorder={0}
       />
       <div className="messageList">
+        <NavBar />
         <div className="messageList-container">
           <div className="messageList-container-info">
             <img
