@@ -1,5 +1,5 @@
 // import React, {useEffect, useState} from 'react';
-import '@apis/notifications/fcm';
+import '@/apis/notifications/fcm';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import '@/App.scss';
 import Loader from '../src/components/room/Loading';
