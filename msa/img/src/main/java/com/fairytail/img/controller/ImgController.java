@@ -11,15 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(value = "img", tags = {"swagger", "v1", "api"})
+@Api(value = "img")
 @RestController
 @RequiredArgsConstructor
 public class ImgController {
 
-    private final Environment env;
+    @Resource
+    private Environment env;
     private final String OKAY= "SUCCESS";
     private final String FAIL= "FAIL";
     private final S3Util s3Util;
