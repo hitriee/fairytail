@@ -29,7 +29,7 @@ public class ImgController {
     private static HttpStatus status = null;
 
     private static Map<String, Object> resultMap = null;
-    @ApiOperation(value = "Service 상태 체크", notes = "Image Service 상태 체크를 위한 API 입니다.")
+    @ApiOper    ation(value = "Service 상태 체크", notes = "Image Service 상태 체크를 위한 API 입니다.")
     /** Service 상태 체크 (삭제 금지!) */
     @GetMapping("/health_check")
     public String status() {
