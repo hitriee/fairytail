@@ -114,4 +114,21 @@ public class TextController {
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
+
+    @ApiOperation(value = "모든 메시지 위치 데이터 조회", notes = "모든 텍스트 메시지의 위도, 경도 데이터가 반환됩니다.")
+    @GetMapping("/map")
+    public ResponseEntity<HashMap<String, Object>> getMapTextList() {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<TextMapResponse> responseVoList = new ArrayList<>();
+
+        List<TextDto> responseDtoList = textService.getAllTextList();
+        responseDtoList.forEach(v -> {
+            responseVoList.add(modelMapper.map(v, TextMapResponse.class));
+        });
+
+        resultMap.put("data", responseVoList);
+        resultMap.put("message", SUCCESS);
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
 }

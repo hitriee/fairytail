@@ -89,4 +89,16 @@ public class TextServiceImpl implements TextService {
         return responseDtoList;
     }
 
+    @Override
+    public List<TextDto> getAllTextList() {
+        List<TextEntity> textEntityList = textRepository.findAll();
+        List<TextDto> responseDtoList = new ArrayList<>();
+
+        textEntityList.forEach(v -> {
+            responseDtoList.add(modelMapper.map(v, TextDto.class));
+        });
+
+        return responseDtoList;
+    }
+
 }

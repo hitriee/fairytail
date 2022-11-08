@@ -15,4 +15,6 @@ public interface TextService {
 
     List<TextDetailDto> getVrTextList(Float curLat, Float curLng);
 
+    List<TextDto> getAllTextList();
+
 }
