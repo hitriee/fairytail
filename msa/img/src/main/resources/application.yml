@@ -1,4 +1,3 @@
-spring.profiles.include: auth
 
 # Eureka client 등록 (Naming server에 service 등록) - 추후 microservices 연결 시 변경 필요
 eureka:
@@ -37,4 +36,30 @@ spring:
     properties:
       hibernate:
         show_sql: true
+
+######################인증 관련 부분 ####################################3
+
+  ###### maria db 설정 관련 추가 #####
+  # mariaDB database setting
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/img
+    username: dongsim
+    password: dongsim12!
+
+
+#AWS Setting
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA53SHLUJHOQ6RSHMJ
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: dongsim
+  front:
+    name: dh8s0t53692ft.cloudfront.net
 
