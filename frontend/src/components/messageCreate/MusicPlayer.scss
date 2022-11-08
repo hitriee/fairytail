@@ -1,6 +1,6 @@
 .music-player-container {
-  width: 90%;
-  height: 75%;
+  width: 95%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -20,9 +20,9 @@
 
 .track {
   width: 90%;
-  height: 2vh;
+  height: 40%;
   position: relative;
-  border-radius: 1rem;
+  border-radius: 15px;
   overflow: hidden;
   background: linear-gradient(to right, #b49aff, #001459);
 }
@@ -52,8 +52,9 @@
 }
 
 .time-container {
-  width: 100%;
+  width: 97%;
+  padding-top: 2%;
   display: flex;
   justify-content: space-between;
-  font-size: 1.7vh;
+  font-size: 0.9rem;
 }

@@ -1,9 +1,9 @@
 // 프로젝트 버전 확인
 importScripts(
-  "https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"
+  "https://www.gstatic.com/firebasejs/9.13.0/firebase-app-compat.js"
 );
 importScripts(
-  "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"
+  "https://www.gstatic.com/firebasejs/9.13.0/firebase-messaging-compat.js"
 );
 
 const config = {
@@ -19,23 +19,58 @@ const config = {
 // 추가로 databaseURL 넣을 수 있음
 
 // Initialize Firebase
-firebase.initializeApp(config);
+const app = firebase.initializeApp(config);
 
-const messaging = firebase.messaging();
+const messaging = firebase.messaging(app);
 
 //백그라운드 서비스워커 설정
-messaging.onBackgroundMessage(messaging, (payload) => {
+messaging.onBackgroundMessage((payload) => {
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
   );
-
-  // Customize notification here
-  const notificationTitle = "Background Message Title";
-  const notificationOptions = {
-    body: payload,
-    icon: "/logo192.png",
-  };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  if (Notification.permission === "granted") {
+    // 알림 설정
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+      body: payload,
+      requireInteraction: true,
+      // icon: "./logo192.png", // web
+      // badge: "./logo192.png", // 모바일에서만 - 권장 크기 72px
+      // actions: [
+      //   {
+      //     action: "coffee-action",
+      //     title: "coffee",
+      //   },
+      // ],
+    };
+    // console.log(notificationTitle, notificationOptions);
+    self.registration.showNotification(notificationTitle, notificationOptions);
+  }
 });
+
+// 알림 클릭 시 option (어떤 페이지로 redirect 시킬지)
+
+// import request from 'request'
+
+// const option = {
+// 	method: 'GET',
+// 	url: 'https://fcm.googleapis.com/fcm/send',
+// 	json: {
+// 		'to': '',
+// 		'notification': {
+// 			'title': 'hello',
+// 			'body': 'world!',
+// 			'click_action': 'url', //이 부분에 원하는 url을 넣습니다.
+// 		}
+// 	},
+// 	headers: {
+// 		'Content-Type': 'application/json',
+// 		'Authorization': 'key'
+// 	}
+// }
+
+// request(option, (err, res, body) => {
+// 	if(err) console.log(err); //에러가 발생할 경우 에러를 출력
+// 	else console.log(body); //제대로 요청이 되었을 경우 response의 데이터를 출력
+// })

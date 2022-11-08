@@ -1,4 +1,4 @@
-import close from '@images/x-22.svg';
+import close from '@images/close.svg';
 import '@individual/SettingsModal.scss';
 interface props {
   open: boolean;

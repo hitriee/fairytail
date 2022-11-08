@@ -1,10 +1,9 @@
-import {useState, useEffect, Dispatch, SetStateAction, useRef} from 'react';
+import {useState, Dispatch, SetStateAction} from 'react';
 import 'swiper/css';
 import './Carousel.scss';
 import 'swiper/css/effect-coverflow';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import SwiperCore, {EffectCoverflow} from 'swiper';
-import {debounce} from 'lodash';
 import {emojiArr} from '../../assets/emojis';
 import useLongPress from '@/apis/useLongPress';
 
@@ -18,19 +17,6 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
   const [swiper, setSwiper] = useState<SwiperCore>();
 
   const longPress = useLongPress(() => setIsLongClicked(true), 500);
-
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
-
-  const handleResize = debounce(() => {
-    setWindowSize(window.innerWidth);
-  }, 10);
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  });
 
   swiper && swiper.slideTo(emojiNo, 300);
 

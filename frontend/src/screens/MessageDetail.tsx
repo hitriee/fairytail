@@ -1,14 +1,21 @@
 import {useState, useRef, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router';
-import NavBar from '@common/NavBar';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '@apis/Recoil';
+import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
 import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
+import MoveToBack from '@common/MoveToBack';
 import dummy from '@messageDetail/dummy';
 import {notFound} from '@apis/router';
 import '@screens/MessageDetail.scss';
 
 function MessageDetail() {
+  //recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
+
   const detail = useRef(null!);
   const params = useParams();
   const navigate = useNavigate();
@@ -22,8 +29,17 @@ function MessageDetail() {
   // 현재 사용자 정보
   const myId = 1;
   const index = 1;
-  const [title, content, like_cnt, is_like, date, user_id, type, emoji_no] =
-    dummy[index];
+  const [
+    title,
+    content,
+    like_cnt,
+    is_like,
+    date,
+    user_id,
+    type,
+    emoji_no,
+    status,
+  ] = dummy[index];
   const isMine = user_id === myId;
   const [more, setMore] = useState(false);
 
@@ -47,8 +63,16 @@ function MessageDetail() {
   return (
     <div className={changeBackground()} ref={detail}>
       <main id="detail" onClick={hiddenMenu}>
-        <div data-html2canvas-ignore="true" className="ignore">
-          <NavBar showMenu={showMenu} detail={detail} />
+        <section data-html2canvas-ignore="true" className="ignore">
+          <MoveToBack path="" />
+          <div id="detail-nav-more">
+            <EllipsisVertical
+              width="30"
+              height="30"
+              onClick={showMenu}
+              color="white"
+            />
+          </div>
           <MoreMenu
             open={more}
             isMine={isMine}
@@ -57,8 +81,9 @@ function MessageDetail() {
             type={type}
             content={content}
             close={hiddenMenu}
+            status={status}
           />
-        </div>
+        </section>
         <section className="core">
           <Content
             title={title}

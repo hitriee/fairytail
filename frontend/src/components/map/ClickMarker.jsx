@@ -27,11 +27,11 @@ function ClickMarker({isClicked, setIsClicked, position, setPosition}) {
 
       axios
         .get(
-          `https://nominatim.openstreetmap.org/reverse?lat=${position.lat}&lon=${position.lng}&format=json&zoom=5`,
+          `https://nominatim.openstreetmap.org/reverse?lat=${position.lat}&lon=${position.lng}&format=json&zoom=10`,
         )
         .then(response => {
           setPlace(response.data.display_name);
-          map.flyTo(position, 7);
+          map.flyTo(position, map.getZoom());
         });
     }
   }, [refReady, map, position]);

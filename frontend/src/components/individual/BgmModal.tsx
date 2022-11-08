@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import close from '@images/x-22.svg';
+import close from '@images/close.svg';
 import EachBgm from '@individual/EachBgm';
 import {bgmList} from '@common/commonFunc';
 import '@individual/SettingsModal.scss';

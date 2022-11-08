@@ -4,12 +4,17 @@ import Notifications from '@individual/Notifications';
 import Settings from '@individual/Settings';
 import BottomBar from '@individual/BottomBar';
 import {useLocation} from 'react-router';
-import NavBar from '@common/NavBar';
+import MoveToBack from '@common/MoveToBack';
 import bell from '@images/bell.png';
 import gear from '@images/gear.png';
-import {settings} from '@apis/router';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '@apis/Recoil';
+import {main, settings} from '@apis/router';
 
 function Individual() {
+  // recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
   const location = useLocation();
   const isSettings = location.pathname === settings();
   return (
@@ -23,7 +28,7 @@ function Individual() {
       />
       <main id="individual">
         <section className="individual">
-          <NavBar />
+          <MoveToBack path={main()} />
           <img src={isSettings ? gear : bell} className="individual-icon" />
           {isSettings ? <Settings /> : <Notifications />}
           <footer className="individual-bottom">
