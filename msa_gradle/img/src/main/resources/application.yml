@@ -1,0 +1,33 @@
+spring.profiles.include : setting
+
+server:
+  port: 9091
+#server: #random port
+#  port: 0
+
+spring:
+  application:
+    name: img
+  # Swagger 2.6.* 버전 이후 Path matching 에러 발생 - 해결법
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+# Eureka client 등록 (Naming server에 service 등록) - 추후 microservice 연결 시 주석 해제
+#eureka:
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#  client:
+#    fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
+#    register-with-eureka: true       # client 등록 시, true로 세팅
+#    service-url:
+#      # TODO: eureka 서버 주소로 변경 필요
+#      defaultZone: http://localhost:8761/eureka
+
+# application.yml 에 저장된 값을 읽어 REST API를 테스트하기 위한 dummy data
+greeting:
+  message: Welcome to the FairyTail!
+
+logging:
+  level:
+    com.fairytail: DEBUG

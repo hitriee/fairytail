@@ -1,5 +1,7 @@
 server: #random port
-  port: 0
+  port: 8083
+  servlet:
+    context-path: /text
 
 spring:
   application:
@@ -7,23 +9,36 @@ spring:
 
   # Swagger 2.6.* 버전 이후 Path matching 에러 발생 - 해결법
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: ant_path_matcher
-  ###### maria db 설정 관련 추가 #####
 
-  # h2 database setting - 사용하지 않을 시, 주석 처리
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
-
+  # mariadb database setting
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-#    username: sa
-#    password: null
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/text?useSSL=false&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    username: dongsim
+    password: dongsim12!
+
+  # jpa setting
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    livereload:
+      enabled: true
+
+# logging setting
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+    sql: debug
 
 # Eureka client 등록 (Naming server에 service 등록) - 추후 microservices 연결 시 변경 필요
 eureka:

@@ -1,0 +1,31 @@
+# Application Auth 와 관련한 인증 정보가 들어감
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            # Todo: 인증 정보 - EC2 서버에 올린 후 변경 필요
+            client-id: 917328640404-mdeookpsdnm9eg11p70t6vdovbtft8cj.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/user
+    username: dongsim
+    password: dongsim12!
+
+    jpa:
+      open-in-view: false
+      generate-ddl: true
+      show-sql: true
+      hibernate:
+        ddl-auto: create-drop
+
+# Token expiration 관련 설정
+token:
+  expiration_time: 86400000     # 토큰 유효기간 - 하루 (86400000 Milliseconds)
+  secret: dongsim_c209
+
