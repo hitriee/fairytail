@@ -37,6 +37,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // registrationId: 현재 로그인 진행 중인 서비스
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
         // OAUth2 로그인 진행 시 필드가 되는 값 - 구글의 기본 코드는 "sub", 네이버/카카오 지원 X - Primary Key
         String userNameAttributeName = userRequest.getClientRegistration()
                                                     .getProviderDetails()

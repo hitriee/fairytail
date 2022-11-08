@@ -38,15 +38,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Optional<UserEntity> user = userRepository.findByEmail(email);
 
         // JWT - access token 만들기
-        String token = null;
+        String token = "";
         if(!user.isEmpty()) {
             token = Jwts.builder()
                     .setSubject(email)
                     .setExpiration(new Date(System.currentTimeMillis() +
                             Long.parseLong(env.getProperty("token.expiration_time"))))
                     .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret")).compact();
-        } else {
-            token = "";
         }
 
         response.addHeader("token", token);
