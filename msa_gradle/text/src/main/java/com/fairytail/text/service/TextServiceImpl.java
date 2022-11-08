@@ -74,4 +74,19 @@ public class TextServiceImpl implements TextService {
         return responseDtoList;
     }
 
+    @Override
+    public List<TextDetailDto> getVrTextList(Float curLat, Float curLng) {
+        List<TextEntity> textEntityList = textRepository.findAllVrMessage(curLat, curLng);
+        List<TextDetailDto> responseDtoList = new ArrayList<>();
+
+        textEntityList.forEach(v -> {
+            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
+            Integer likeCnt = likeRepository.countAllByPost(v);
+            textDetailDto.setLikeCnt(likeCnt);
+            responseDtoList.add(textDetailDto);
+        });
+
+        return responseDtoList;
+    }
+
 }

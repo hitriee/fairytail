@@ -17,4 +17,6 @@ public class TextListResponse {
 
     private Integer likeCnt;
 
+    private Integer type;
+
 }

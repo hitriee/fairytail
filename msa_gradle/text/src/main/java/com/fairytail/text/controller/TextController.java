@@ -81,13 +81,30 @@ public class TextController {
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
 
-    @ApiOperation(value = "내가 등록한 메시지 리스트", notes = "해당 user가 작성한 메시지의 목록이 반환됩니다.")
+    @ApiOperation(value = "내가 등록한 메시지 조회", notes = "해당 user가 작성한 텍스트 메시지의 목록이 반환됩니다.")
     @GetMapping("/mylist/{user_id}")
     public ResponseEntity<HashMap<String, Object>> getMyTextList(@PathVariable("user_id") Long userId) {
         HashMap<String, Object> resultMap = new HashMap<>();
         List<TextListResponse> responseVoList = new ArrayList<>();
 
         List<TextDetailDto> responseDtoList = textService.getMyTextList(userId);
+        responseDtoList.forEach(v -> {
+            responseVoList.add(modelMapper.map(v, TextListResponse.class));
+        });
+
+        resultMap.put("data", responseVoList);
+        resultMap.put("message", SUCCESS);
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
+
+    @ApiOperation(value = "주변 메시지 조회", notes = "위도, 경도 0.01 이내 텍스트 메시지의 목록이 최신순으로 반환됩니다.")
+    @GetMapping("/vr")
+    public ResponseEntity<HashMap<String, Object>> getVrTextList(@RequestParam("lat") Float curLat, @RequestParam("lng") Float curLng) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<TextListResponse> responseVoList = new ArrayList<>();
+
+        List<TextDetailDto> responseDtoList = textService.getVrTextList(curLat, curLng);
         responseDtoList.forEach(v -> {
             responseVoList.add(modelMapper.map(v, TextListResponse.class));
         });

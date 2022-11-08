@@ -13,4 +13,6 @@ public interface TextService {
 
     List<TextDetailDto> getMyTextList(Long userId);
 
+    List<TextDetailDto> getVrTextList(Float curLat, Float curLng);
+
 }
