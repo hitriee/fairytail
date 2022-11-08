@@ -59,16 +59,17 @@
 }
 
 .btn {
-  border: 1px solid #00145950;
   background-color: white;
-  color: $NAVY;
-  border-radius: 15px;
-  padding: 1.25% 3.5%;
-  font-size: 0.9rem;
+  color: $PURPLE-2;
+  border-radius: 20px;
+  padding: 0.8vh 2.5vh;
+  font-size: 2.5vh;
   cursor: pointer;
+  border: 1px solid #a07dff32;
+  box-shadow: inset -2px -2px 3px #9292927b;
 
   &:hover {
     color: white;
-    background-color: $NAVY;
+    background-color: $PURPLE-2;
   }
 }
