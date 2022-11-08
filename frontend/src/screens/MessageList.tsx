@@ -14,19 +14,14 @@ function MessageList() {
   setIsLoading(true);
   console.log(isLoading);
 
-  // const [items, setItems] = useState([]);
-
-  // useEffect(() => {
-  //   setItems({data});
-  // }, []);
   return (
     <>
-      <Iframe
+      {/* <Iframe
         className="BackgroundUnMove"
         url="Background.html"
         src="../background/Background.html"
         frameBorder={0}
-      />
+      /> */}
       <div className="messageList">
         <div className="navbarContainer">
           <NavBar />

@@ -11,7 +11,7 @@ function Loading() {
   const letter = [
     '당신이 잠들면 나도 잘게요',
     '넌 해도 돼, 내가 달이 되지 뭐',
-    '더 좋은 나를위해 날을위해',
+    '더 좋은 나를 위해, 날을 위해',
     '오늘 밤에도 별이 바람에 스치운다',
     '앓고 닳아도 아름답도록',
     '화내지 말고 환해지기로 해요',
@@ -29,7 +29,7 @@ function Loading() {
   return (
     <>
       <div className="loading-background">
-        {/* <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" /> */}
+        <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" />
         <p className="loading-message">{letter[rand(0, 11)]}</p>
       </div>
     </>
