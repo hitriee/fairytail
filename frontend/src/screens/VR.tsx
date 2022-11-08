@@ -4,6 +4,8 @@ import {useNavigate, useLocation} from 'react-router';
 import {useEffect, useState} from 'react';
 import Loading from '@/components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 type RouteState = {
   state: {
@@ -15,6 +17,9 @@ type RouteState = {
 };
 
 function VR() {
+  // recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
   // 받은 위치 정보로 서버에 데이터 요청
   const {state} = useLocation() as RouteState;
 

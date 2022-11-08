@@ -13,6 +13,8 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import shuffle from '@images/shuffle.svg';
 import MoveToBack from '@/components/common/MoveToBack';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 function generateRandomFloat(min, max) {
   return Math.random() * (max - min) + min;
@@ -29,6 +31,9 @@ function SetCenter({center}) {
 }
 
 function Map() {
+  // recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
   // 클릭 시 팝업 표시, 해당 위치 좌표값
   const [isClicked, setIsClicked] = useState(false);
   const [position, setPosition] = useState({lat: -999, lng: -999});

@@ -7,8 +7,14 @@ import Like from '@messageDetail/Like';
 import dummy from '@messageDetail/dummy';
 import {notFound} from '@apis/router';
 import '@screens/MessageDetail.scss';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 function MessageDetail() {
+  //recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
+
   const detail = useRef(null!);
   const params = useParams();
   const navigate = useNavigate();

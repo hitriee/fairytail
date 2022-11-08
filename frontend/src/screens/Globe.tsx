@@ -6,12 +6,24 @@ import {useNavigate} from 'react-router';
 import {map} from '@apis/router';
 import NavBar from '@common/NavBar';
 import '@screens/Globe.scss';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 function Globe() {
+  // recoil
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
+
+  if (isLoading) {
+    setIsLoading(false);
+  }
+
   const navigate = useNavigate();
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
+
   const toMap = () => navigate(map());
+
   const onResize = () => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);

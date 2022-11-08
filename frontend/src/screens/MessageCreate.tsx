@@ -7,6 +7,8 @@ import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import CheckBox from '@/components/messageCreate/CheckBox';
 import Compress from '@/components/messageCreate/Compress';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '../apis/Recoil';
 
 // 내용 타입 정의
 export type Content = {
@@ -17,6 +19,9 @@ export type Content = {
 
 function MessageCreate() {
   // 모바일 가상 키보드 고려한 스크롤 이동
+
+  const [isLoading, setIsLoading] = useRecoilState(loadingState);
+  setIsLoading(true);
   const screenRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -65,6 +70,12 @@ function MessageCreate() {
             lng: position.coords.longitude,
           };
 
+          console.log(title);
+          console.log(isShare);
+          console.log(emojiNo);
+          console.log(content);
+          console.log(location);
+
           // 사진/영상/음성 업로드인 경우 압축
           if (content.type !== 0 && content.file !== null) {
             const compressedFile = Compress(
@@ -91,7 +102,7 @@ function MessageCreate() {
     <div className="screen" ref={screenRef}>
       {loading ? <Loading /> : null}
 
-      <div className="container">
+      <div className="container message-create-container">
         <MoveToBack path="/main" />
 
         <Carousel
@@ -101,33 +112,31 @@ function MessageCreate() {
         />
 
         {isLongClicked ? (
-          <div className="message-create-card">
+          <div className="message-create-emojis">
             <EmojiGrid
               setEmojiNo={setEmojiNo}
               setIsLongClicked={setIsLongClicked}
             />
           </div>
-        ) : (
-          <div className="message-create-card">
-            <input
-              className="message-create-card-title"
-              placeholder="제목을 입력하세요."
-              maxLength={10}
-              onChange={e => {
-                setTitle(e.target.value);
-              }}
-            />
+        ) : null}
 
-            <Message content={content} setContent={setContent} />
+        <input
+          className="message-create-title"
+          placeholder="제목을 입력하세요."
+          maxLength={10}
+          onChange={e => {
+            setTitle(e.target.value);
+          }}
+        />
 
-            <div className="message-create-save-container">
-              <CheckBox label="비공개" onClick={setIsShare} />
-              <button className="btn" onClick={handleSubmit}>
-                등록
-              </button>
-            </div>
-          </div>
-        )}
+        <Message content={content} setContent={setContent} />
+
+        <div className="message-create-save-container">
+          <CheckBox label="비공개" onClick={setIsShare} />
+          <button className="btn" onClick={handleSubmit}>
+            등록
+          </button>
+        </div>
       </div>
     </div>
   );
