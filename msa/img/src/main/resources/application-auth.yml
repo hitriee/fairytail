@@ -1,11 +1,12 @@
 
   ###### maria db 설정 관련 추가 #####
   # mariaDB database setting
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/img
-    username: dongsim
-    password: dongsim12!
+spring:
+    datasource:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mariadb://k7c209.p.ssafy.io:3306/img
+      username: dongsim
+      password: dongsim12!
 
 
 #AWS Setting
