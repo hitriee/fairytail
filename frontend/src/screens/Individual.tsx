@@ -4,11 +4,12 @@ import Notifications from '@individual/Notifications';
 import Settings from '@individual/Settings';
 import BottomBar from '@individual/BottomBar';
 import {useLocation} from 'react-router';
-import NavBar from '@common/NavBar';
+import MoveToBack from '@common/MoveToBack';
 import bell from '@images/bell.png';
 import gear from '@images/gear.png';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
+import {loadingState} from '@apis/Recoil';
+import {main} from '@apis/router';
 
 function Individual() {
   // recoil
@@ -27,15 +28,9 @@ function Individual() {
       />
       <main id="individual">
         <section className="individual">
-          <NavBar />
+          <MoveToBack path={main()} />
           <img src={isSettings ? gear : bell} className="individual-icon" />
-          {isSettings ? (
-            <Settings />
-          ) : (
-            // <DndProvider backend={HTML5Backend}>
-            <Notifications />
-            // </DndProvider>
-          )}
+          {isSettings ? <Settings /> : <Notifications />}
           <footer className="individual-bottom">
             <BottomBar type={isSettings} />
           </footer>

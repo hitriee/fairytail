@@ -5,14 +5,14 @@ import MyMessage from '@messageList/MyMessage';
 import items from '@screens/items.json';
 import Iframe from 'react-iframe';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
-import NavBar from '@/components/common/NavBar';
+import {loadingState} from '@apis/Recoil';
+import MoveToBack from '@/components/common/MoveToBack';
+import {main} from '@apis/router';
 
 function MessageList() {
   // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
-  console.log(isLoading);
 
   return (
     <>
@@ -24,15 +24,16 @@ function MessageList() {
       /> */}
       <div className="messageList">
         <div className="navbarContainer">
-          <NavBar />
+          <MoveToBack path={main()} />
         </div>
         <div className="messageList-container">
           <div className="messageList-container-info">
-            <img
+            내 이야기
+            {/* <img
               className="messageList-container-info-balloon"
               src={balloon}
               alt="balloon"
-            />
+            /> */}
           </div>
           <div className="messageList-container-list">
             {items.length === 0 && (

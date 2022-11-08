@@ -2,21 +2,19 @@
 
 .checkbox {
   &-label {
-    width: 30%;
-    height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     cursor: pointer;
     font-size: 1rem;
-    cursor: pointer;
+
+    color: white;
   }
 }
 
 #checkbox-input {
+  margin-left: 1rem;
   width: 1.1rem;
   height: 1.1rem;
-  margin-top: 5%;
   border-radius: 100%;
   border: 1px solid $PURPLE;
   cursor: pointer;

@@ -1,5 +1,6 @@
 import React from 'react';
 import {smallEmojiArr} from '../../assets/emojis';
+import {ReactComponent as Heart} from '@images/heart-solid.svg';
 import './MyMessage.scss';
 
 interface itemProps {
@@ -23,7 +24,8 @@ function MyMessage({item}: itemProps) {
         <span className="myMessage-container-date">{item.contents}</span>
       </div>
       <div className="myMessage-container-like">
-        <img src={smallEmojiArr[5]} alt="emoji" />
+        {/* <img src={Heart} alt="emoji" /> */}
+        <Heart className="myMessage-container-like-heart" />
         {item.like}
       </div>
     </div>
