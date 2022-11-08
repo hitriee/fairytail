@@ -1,0 +1,39 @@
+# Eureka client 등록 (Naming server에 service 등록) - 추후 microservices 연결 시 변경 필요
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: false   # client 등록 시, true로 값 변경 필요
+    fetch-registry: false         # client 등록 시, true로 값 변경 필요
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka   # eureka 서버 주소로 변경 필요
+
+# application.yml 에 저장된 값을 읽어 REST API를 테스트하기 위한 dummy data
+greeting:
+  message: Welcome to the FairyTail!
+
+server: #random port
+  port: 8083
+  servlet:
+    context-path: /img
+spring:
+  application:
+    name: img-service
+  # Swagger 2.6.* 버전 이후 Path matching 에러 발생 - 해결법
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+  servlet:
+    multipart:
+      max-request-size: 5MB
+      max-file-size: 5MB
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+  profiles:
+    include: auth
+
