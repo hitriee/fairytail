@@ -1,19 +1,15 @@
-package com.fairytail.text.dto;
+package com.fairytail.text.vo;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class TextDto {
-
-    private Long postId;
+public class TextResponse extends TextIdResponse {
 
     private Long userId;
 
     private String url;
-
-    private Integer type;
 
     private String title;
 
