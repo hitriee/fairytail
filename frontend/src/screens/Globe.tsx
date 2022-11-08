@@ -14,10 +14,6 @@ function Globe() {
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
 
-  if (isLoading) {
-    setIsLoading(false);
-  }
-
   const navigate = useNavigate();
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
