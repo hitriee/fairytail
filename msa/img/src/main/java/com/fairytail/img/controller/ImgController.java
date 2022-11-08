@@ -29,7 +29,7 @@ public class ImgController {
     private static HttpStatus status = null;
 
     private static Map<String, Object> resultMap = null;
-    @ApiOper    ation(value = "Service 상태 체크", notes = "Image Service 상태 체크를 위한 API 입니다.")
+    @ApiOperation(value = "Service 상태 체크", notes = "Image Service 상태 체크를 위한 API 입니다.")
     /** Service 상태 체크 (삭제 금지!) */
     @GetMapping("/health_check")
     public String status() {
@@ -38,6 +38,9 @@ public class ImgController {
                 env.getProperty("local.server.port"));
     }
 
+    /**
+     * 이미지 게시글 생성 
+     */
     @PostMapping("/post")
     public ResponseEntity<?> createImg(ImgDto imgDto) throws Exception{
         resultMap = new HashMap<>();
@@ -54,6 +57,12 @@ public class ImgController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    /**
+     *
+     * @param postId
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/post/{postId}")
     public ResponseEntity<?> readImg(@PathVariable Long postId) throws Exception{
         resultMap = new HashMap<>();
@@ -70,6 +79,12 @@ public class ImgController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    /**
+     *
+     * @param imgDto
+     * @return
+     * @throws Exception
+     */
     @PutMapping("/post")
     public ResponseEntity<?> putImg(ImgDto imgDto) throws Exception{
         resultMap = new HashMap<>();
@@ -86,6 +101,12 @@ public class ImgController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    /**
+     *
+     * @param postId
+     * @return
+     * @throws Exception
+     */
     @DeleteMapping("/post/{postId}")
     public ResponseEntity<?> deleteImg(@PathVariable Long postId) throws Exception{
         resultMap = new HashMap<>();
@@ -98,6 +119,28 @@ public class ImgController {
             resultMap.put("message", FAIL);
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    /**
+     * 좌표를 받아서 근처 글 리스트를 최신 순으로 25개 조회
+     */
+    @GetMapping("post/list/latest")
+    public ResponseEntity<?> readImgListLatest(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
+        resultMap = new HashMap<>();
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
+        resultMap.put("lat", lat);
+        resultMap.put("lng", lng);
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    /**
+     * 좌표를 받아서 근처 글 리스트를 좋아요 순으로 25개 조회
+     */
+    @GetMapping("post/list/like")
+    public ResponseEntity<?> readImgListLike(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
+        resultMap = new HashMap<>();
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
         return new ResponseEntity<>(resultMap, status);
     }
 }
