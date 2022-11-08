@@ -6,9 +6,10 @@ import Loading from '@components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import CheckBox from '@/components/messageCreate/CheckBox';
-import Compress from '@/components/messageCreate/Compress';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '../apis/Recoil';
+import Toggle from '@/components/messageCreate/Toggle';
+import axios from 'axios';
 
 // 내용 타입 정의
 export type Content = {
@@ -70,26 +71,34 @@ function MessageCreate() {
             lng: position.coords.longitude,
           };
 
-          console.log(title);
-          console.log(isShare);
           console.log(emojiNo);
+          console.log(title);
           console.log(content);
           console.log(location);
+          console.log(isShare);
 
-          console.log(content.file);
-          console.log(content.fileURL);
+          // 서버 통신, type에 따라 보내는 url 달라짐
+          const formData = new FormData();
+          formData.append('emojiNo', emojiNo.toString());
+          formData.append('title', title);
+          formData.append('type', content.type.toString());
+          formData.append('file', content.file as Blob);
+          formData.append('content', content.fileURL);
+          formData.append('lat', location.lat.toString());
+          formData.append('lng', location.lng.toString());
+          formData.append('status', isShare ? '0' : '1');
 
-          // 사진/영상/음성 업로드인 경우 압축
-          if (content.type !== 0 && content.file !== null) {
-            const compressedFile = Compress(content.fileURL);
-          }
+          axios({
+            method: 'post',
+            url: 'url',
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: localStorage.getItem('access_token'),
+            },
+          });
 
           setLoading(false);
-
-          // // 서버 통신, type에 따라 보내는 url 달라짐
-          // setTimeout(() => {
-          //   setLoading(false);
-          // }, 3000);
         });
       }
     }
@@ -107,31 +116,34 @@ function MessageCreate() {
           setIsLongClicked={setIsLongClicked}
         />
 
-        {isLongClicked ? (
-          <div className="message-create-emojis">
+        <div className="message-create-card">
+          {isLongClicked ? (
             <EmojiGrid
               setEmojiNo={setEmojiNo}
               setIsLongClicked={setIsLongClicked}
             />
-          </div>
-        ) : null}
+          ) : (
+            <>
+              <input
+                className="message-create-title"
+                placeholder="제목을 입력하세요."
+                maxLength={10}
+                onChange={e => {
+                  setTitle(e.target.value);
+                }}
+              />
 
-        <input
-          className="message-create-title"
-          placeholder="제목을 입력하세요."
-          maxLength={10}
-          onChange={e => {
-            setTitle(e.target.value);
-          }}
-        />
+              <Message content={content} setContent={setContent} />
 
-        <Message content={content} setContent={setContent} />
-
-        <div className="message-create-save-container">
-          <CheckBox label="비공개" onClick={setIsShare} />
-          <button className="btn" onClick={handleSubmit}>
-            등록
-          </button>
+              <div className="message-create-save-container">
+                {/* <CheckBox label="비공개" onClick={setIsShare} /> */}
+                <Toggle label="비공개" onClick={setIsShare} value={isShare} />
+                <button className="btn" onClick={handleSubmit}>
+                  등록
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -1,11 +1,13 @@
 @import '@styles/_colors.scss';
 
 .message-create-content {
-  width: 85%;
-  height: 55%;
+  width: 100%;
+  height: 80%;
   padding: 4%;
+  margin: 3% 0;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
   box-shadow: inset -5px -5px 8px #4747477b;
@@ -13,7 +15,7 @@
 
   &-navbar {
     width: 100%;
-    height: 11%;
+    height: 12%;
     padding: 0 2%;
     display: flex;
     cursor: pointer;
@@ -31,9 +33,9 @@
   }
 
   &-container {
-    width: 100%;
-    height: 90%;
-    padding: 5%;
+    width: 95%;
+    height: 87.5%;
+    padding-top: 3%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
