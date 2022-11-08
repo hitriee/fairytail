@@ -25,16 +25,17 @@
     &-title {
       display: block;
       font-weight: 1000;
-      font-size: 120%;
+      font-size: 2.5vh;
       margin-bottom: 2vh;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     &-date {
-      font-size: small;
+      font-size: 2vh;
     }
     &-like {
+      font-size: 2vh;
       display: flex;
       flex-direction: row;
       align-items: flex-end;

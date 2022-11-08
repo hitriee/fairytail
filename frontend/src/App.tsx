@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, lazy} from 'react';
 import '@/apis/notifications/fcm';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import '@/App.scss';
@@ -8,7 +8,8 @@ import Intro from '@screens/Intro';
 import Main from '@screens/Main';
 import Globe from '@screens/Globe';
 import Map from '@screens/Map';
-import MessageList from '@screens/MessageList';
+// lazy loading으로 대체
+// import MessageList from '@screens/MessageList';
 import MessageCreate from '@screens/MessageCreate';
 import MessageDetail from '@screens/MessageDetail';
 import VR from '@screens/VR';
@@ -33,33 +34,9 @@ import {
 //recoil
 import {RecoilRoot} from 'recoil';
 
+const MessageList = lazy(() => import('@screens/MessageList'));
+
 function App() {
-  // function useWindowSize() {
-  //   const [windowSize, setWindowSize] = useState({
-  //     width: 0,
-  //     height: 0,
-  //   });
-  //   useEffect(() => {
-  //     function handleResize() {
-  //       setWindowSize({
-  //         width: window.innerWidth,
-  //         height: window.innerHeight,
-  //       });
-  //       if (window.innerWidth / window.innerHeight < 9 / 16) {
-  //         window.innerWidth = (window.innerHeight * 9) / 16;
-  //         setWindowSize({
-  //           width: window.innerWidth,
-  //           height: window.innerHeight,
-  //         });
-  //       }
-  //     }
-  //     window.addEventListener('resize', handleResize);
-  //     handleResize();
-  //     return () => window.removeEventListener('resize', handleResize);
-  //   }, []);
-  //   return windowSize;
-  // }
-  // console.log(useWindowSize());
   return (
     <BrowserRouter>
       <RecoilRoot>
@@ -77,7 +54,6 @@ function App() {
             <Route path={notFound()} element={<NotFound />} />
             <Route path={settings()} element={<Individual />} />
             <Route path={notifications()} element={<Individual />} />
-            {/* <Route path="/loading" element={<Loading />} /> */}
           </Routes>
         </Suspense>
       </RecoilRoot>
