@@ -8,6 +8,7 @@ interface data {
     author: number,
     type: number,
     emoji_no: number,
+    status: number,
   ];
 }
 const dummy: data['list'][] = [
@@ -20,6 +21,7 @@ const dummy: data['list'][] = [
     0,
     0,
     1,
+    0,
   ],
   [
     'Lorem ipsum dolor metus.',
@@ -30,6 +32,7 @@ const dummy: data['list'][] = [
     1,
     0,
     2,
+    1,
   ],
   [
     '제목입니다',
@@ -40,9 +43,10 @@ const dummy: data['list'][] = [
     0,
     1,
     3,
+    0,
   ],
-  ['제목입니다', '@assets/test/test.mp4', 12, true, new Date(), 2, 2, 4],
-  ['제목입니다', '@assets/test/test.m4a', 12, true, new Date(), 3, 3, 5],
+  ['제목입니다', '@assets/test/test.mp4', 12, true, new Date(), 2, 2, 4, 0],
+  ['제목입니다', '@assets/test/test.m4a', 12, true, new Date(), 3, 3, 5, 1],
 ];
 
 export default dummy;

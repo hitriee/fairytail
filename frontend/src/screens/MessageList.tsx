@@ -5,8 +5,9 @@ import MyMessage from '@messageList/MyMessage';
 import items from '@screens/items.json';
 import Iframe from 'react-iframe';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
-import NavBar from '@/components/common/NavBar';
+import {loadingState} from '@apis/Recoil';
+import MoveToBack from '@/components/common/MoveToBack';
+import {main} from '@apis/router';
 
 function MessageList() {
   // recoil
@@ -29,7 +30,7 @@ function MessageList() {
       />
       <div className="messageList">
         <div className="navbarContainer">
-          <NavBar />
+          <MoveToBack path={main()} />
         </div>
         <div className="messageList-container">
           <div className="messageList-container-info">

@@ -18,6 +18,7 @@ interface props {
   type: number;
   content: string;
   close: () => void;
+  status: number;
 }
 
 function MoreMenu({
@@ -28,6 +29,7 @@ function MoreMenu({
   type,
   content,
   close,
+  status,
 }: props) {
   const navigate = useNavigate();
   const [info, setInfo] = useState({title: '', message: ''});
@@ -35,6 +37,7 @@ function MoreMenu({
   const [openReport, setReport] = useState(false);
   const [openAlert, setAlert] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [newStatus, setNewStatus] = useState(status);
 
   // info 값 변경
   const changeInfo = (title: popUp['title'], message: popUp['message']) => {
@@ -62,12 +65,24 @@ function MoreMenu({
     console.log('신고 페이지로');
     console.log('back에 요청 - axios');
   };
-  // 수정 페이지로 이동
-  const toEdit = () => {
-    if (messageId) {
-      navigate(toMessageUpdate(messageId));
-      close();
-    }
+  // 메시지 상태(공개, 비공개) 설정
+  // const toEdit = () => {
+  //   if (messageId) {
+  //     navigate(toMessageUpdate(messageId));
+  //     close();
+  //   }
+  // };
+  const presentStatus = (statusNum: number) =>
+    statusNum === 0 ? '공개' : '비공개';
+  const changeStatus = () => {
+    // 백에 변경 요청 보내기
+    setNewStatus(prev => 1 - prev);
+    // 변경되었음을 알림
+    changeInfo(
+      '공개 여부 변경 확인',
+      `작성한 메시지가 ${presentStatus(1 - newStatus)}로 변경되었습니다`,
+    );
+    setAlert(returnTrue);
   };
   // 삭제 확인
   const onDelete = () => {
@@ -112,8 +127,10 @@ function MoreMenu({
           <main id="menu">
             {isMine ? (
               <>
-                <article className="button button-not center" onClick={toEdit}>
-                  수정
+                <article
+                  className="button button-not center"
+                  onClick={changeStatus}>
+                  {`${presentStatus(1 - newStatus)}로 변경`}
                 </article>
                 <article
                   className="button button-not center"
