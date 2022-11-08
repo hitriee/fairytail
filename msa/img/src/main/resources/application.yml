@@ -15,7 +15,7 @@ greeting:
   message: Welcome to the FairyTail!
 
 server: #random port
-  port: 8083
+  port: 8086
   servlet:
     context-path: /img
 spring:
