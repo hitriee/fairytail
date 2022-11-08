@@ -1,15 +1,13 @@
 import {createFFmpeg, fetchFile} from '@ffmpeg/ffmpeg';
 
-async function Compress(file: File, type: string, name: string) {
-  const nameArr = name.split('.');
-
+async function Compress(file: File, type: number, name: string) {
   let targetExtension;
 
-  if (type.startsWith('image')) {
+  if (type === 1) {
     targetExtension = 'webp';
-  } else if (type.startsWith('video')) {
+  } else if (type === 2) {
     targetExtension = 'mp4';
-  } else if (type.startsWith('audio')) {
+  } else if (type === 3) {
     targetExtension = 'mp3';
   }
 

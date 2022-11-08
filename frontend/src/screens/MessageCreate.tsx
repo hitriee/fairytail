@@ -80,7 +80,7 @@ function MessageCreate() {
           if (content.type !== 0 && content.file !== null) {
             const compressedFile = Compress(
               content.file,
-              content.file.type,
+              content.type,
               content.file.name,
             );
 
@@ -102,9 +102,8 @@ function MessageCreate() {
     <div className="screen" ref={screenRef}>
       {loading ? <Loading /> : null}
 
+      <MoveToBack path="/main" />
       <div className="container message-create-container">
-        <MoveToBack path="/main" />
-
         <Carousel
           emojiNo={emojiNo}
           onSlideChange={setEmojiNo}
