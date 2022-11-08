@@ -1,3 +1,5 @@
+spring.profiles.include: 'auth'
+
 server:
     port: 8000
 
@@ -11,14 +13,46 @@ eureka:
 spring:
     application:
         name: gateway-service
+
     cloud:
-        gateway:
-            default-filters:  # 전체 적용되는 필터
-                - name: GlobalFilter
-                  args:
-                      baseMessage: Spring Cloud Gateway Global Filter
-                      preLogger: true
-                      postLogger: true
+      gateway:
+        routes:
+            - id: user
+              uri: lb://USER
+              predicates: # 전제 조건
+                  - Path=/user/health_check
+              filters:
+                  - RewritePath=/user/(?<segment>.*), /$\{segment}
+# ms 등록 시 주석 해제
+#            - id: img
+#              uri: lb://IMG
+#              predicates: # 전제 조건
+#                  - Path=/img/**
+#              filters:
+#                  - RewritePath=/img/(?<segment>.*), /$\{segment}
+#              filters:
+#                  - RemoveRequestHeader=Cookie
+#                  - RewritePath=/user/(?<segment>.*), /$\{segment}
+#                  - AuthorizationHeaderFilter
+#            - id: user
+#              uri: lb://USER
+#              predicates: # 전제 조건
+#                  - Path=/user/login
+#              filters:
+#                  - RemoveRequestHeader=Cookie
+#                  - RewritePath=/user/(?<segment>.*), /$\{segment}
+
+# ! 참고사항
+# 1. Eureka에 filter를 등록하는 방법 - global filter
+#        gateway:
+#            default-filters:  # 전체 적용되는 필터
+#                - name: GlobalFilter
+#                  args:
+#                      baseMessage: Spring Cloud Gateway Global Filter
+#                      preLogger: true
+#                      postLogger: true
+# -----------------------------------------------------------------------------
+# 2. Eureka에 Client를 등록하는 방법
 #        routes: # Eureka client 에 등록할 서비스
 #            - id: user-service
 #              uri: lb://USER-SERVICE
