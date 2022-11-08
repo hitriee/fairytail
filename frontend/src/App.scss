@@ -59,16 +59,16 @@
 }
 
 .btn {
-  border: 1px solid #b49aff55;
+  border: 1px solid #00145950;
   background-color: white;
-  color: $PURPLE;
-  border-radius: 20px;
-  padding: 2% 5%;
+  color: $NAVY;
+  border-radius: 15px;
+  padding: 1.25% 3.5%;
   font-size: 0.9rem;
   cursor: pointer;
 
   &:hover {
     color: white;
-    background-color: $PURPLE;
+    background-color: $NAVY;
   }
 }
