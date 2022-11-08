@@ -516,6 +516,7 @@ export default function Scene({...props}) {
                 receiveShadow
                 position={[-22.7, 32.77, 1.79]}
                 rotation={[0, -Math.PI / 2, 0]}
+                onClick={() => moveMessage()}
               />
               <mesh
                 name="Cube 4"
@@ -526,6 +527,7 @@ export default function Scene({...props}) {
                 position={[-0.32, 0.86, 0.42]}
                 rotation={[0, 0, 0]}
                 scale={[0.99, 1.01, 1]}
+                onClick={() => moveMessage()}
               />
               <mesh
                 name="Cube 41"
@@ -536,6 +538,7 @@ export default function Scene({...props}) {
                 position={[-16.68, -0.27, 9.75]}
                 rotation={[0, 0, 0]}
                 scale={[0.99, 1.01, 1]}
+                onClick={() => moveMessage()}
               />
             </group>
           </group>

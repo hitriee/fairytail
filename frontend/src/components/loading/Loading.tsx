@@ -1,7 +1,7 @@
 import React from 'react';
 import './Loading.scss';
 import {emojiArr} from '../../assets/emojis';
-
+import introLogo from '../../assets/images/introLogo.png';
 // '빛나고, 예쁘고, 계속 보고싶고, 너한테 제일 어울리는말 별',
 // '달빛에도 향이 있다면 이 밤은 너의 향으로 가득 찼다',
 // '과거를 후회하는 동안 오늘도 과거가 되었다',
@@ -11,7 +11,7 @@ function Loading() {
   const letter = [
     '당신이 잠들면 나도 잘게요',
     '넌 해도 돼, 내가 달이 되지 뭐',
-    '더 좋은 나를위해 날을위해',
+    '더 좋은 나를 위해, 날을 위해',
     '오늘 밤에도 별이 바람에 스치운다',
     '앓고 닳아도 아름답도록',
     '화내지 말고 환해지기로 해요',
@@ -29,7 +29,8 @@ function Loading() {
   return (
     <>
       <div className="loading-background">
-        {/* <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" /> */}
+        {/* <img className="loading-image" src={emojiArr[67]} alt="로딩 이미지" /> */}
+        <img className="loading-image" src={introLogo} alt="로딩 이미지" />
         <p className="loading-message">{letter[rand(0, 11)]}</p>
       </div>
     </>
