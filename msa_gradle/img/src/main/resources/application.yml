@@ -2,6 +2,8 @@ spring.profiles.include : setting
 
 server:
   port: 9091
+  servlet:
+    context-path: /img
 #server: #random port
 #  port: 0
 
