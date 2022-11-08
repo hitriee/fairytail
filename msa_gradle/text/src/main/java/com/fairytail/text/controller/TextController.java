@@ -4,10 +4,7 @@ import com.fairytail.text.dto.TextDetailDto;
 import com.fairytail.text.dto.TextDto;
 import com.fairytail.text.service.TextService;
 import com.fairytail.text.util.BadWordsUtils;
-import com.fairytail.text.vo.TextDetailResponse;
-import com.fairytail.text.vo.TextIdRequest;
-import com.fairytail.text.vo.TextIdResponse;
-import com.fairytail.text.vo.TextRequest;
+import com.fairytail.text.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Api(value = "text")
 @RestController
@@ -43,12 +42,12 @@ public class TextController {
                 env.getProperty("local.server.port"));
     }
 
-    @ApiOperation(value = "텍스트 메시지 상세조회", notes = "요청이 성공하면 텍스트 상세정보가 반환됩니다.")
-    @GetMapping("/{post_id}")
+    @ApiOperation(value = "텍스트 메시지 상세조회", notes = "해당 post_id에 해당하는 메시지의 상세 정보가 반환됩니다.")
+    @GetMapping("/detail/{post_id}")
     public ResponseEntity<HashMap<String, Object>> getTextDetail(@PathVariable("post_id") Long postId) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
-        TextDetailDto responseDto = textService.getTextDetail(postId);
+        TextDetailDto responseDto = textService.getTextDetail(postId, 2L);
         TextDetailResponse responseVo = modelMapper.map(responseDto, TextDetailResponse.class);
 
         resultMap.put("data", responseVo);
@@ -74,9 +73,27 @@ public class TextController {
         else { // 금지어가 없을 경우
             TextDto responseDto = textService.saveText(requestDto); // DB에 저장
             TextIdResponse responseVo = modelMapper.map(responseDto, TextIdResponse.class);
+
             resultMap.put("data", responseVo);
             resultMap.put("message", SUCCESS);
         }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
+
+    @ApiOperation(value = "내가 등록한 메시지 리스트", notes = "해당 user가 작성한 메시지의 목록이 반환됩니다.")
+    @GetMapping("/mylist/{user_id}")
+    public ResponseEntity<HashMap<String, Object>> getMyTextList(@PathVariable("user_id") Long userId) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<TextListResponse> responseVoList = new ArrayList<>();
+
+        List<TextDetailDto> responseDtoList = textService.getMyTextList(userId);
+        responseDtoList.forEach(v -> {
+            responseVoList.add(modelMapper.map(v, TextListResponse.class));
+        });
+
+        resultMap.put("data", responseVoList);
+        resultMap.put("message", SUCCESS);
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }

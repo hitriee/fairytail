@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,7 +28,7 @@ public class TextServiceImpl implements TextService {
         TextEntity requestEntity = modelMapper.map(textDto, TextEntity.class);
 
         // 나머지 필요한 값들 지정해주기 (userId와 dayType은 임시로!!)
-        requestEntity.setUserId(0L);
+        requestEntity.setUserId(1L);
         requestEntity.setDate(LocalDateTime.now());
         requestEntity.setDayType(0);
 
@@ -36,7 +38,7 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    public TextDetailDto getTextDetail(Long postId) {
+    public TextDetailDto getTextDetail(Long postId, Long userId) {
         Optional<TextEntity> selectedTextEntity = textRepository.findById(postId);
         TextDetailDto responseDto = null;
 
@@ -44,7 +46,7 @@ public class TextServiceImpl implements TextService {
             responseDto = modelMapper.map(selectedTextEntity.get(), TextDetailDto.class);
             Integer likeCnt = likeRepository.countAllByPost(selectedTextEntity.get());
             // userId 임의로 넣음!! -> 나중에 꼭 User 객체로 바꿔주기
-            Boolean isLike = likeRepository.existsByPostAndUserId(selectedTextEntity.get(), 2L);
+            Boolean isLike = likeRepository.existsByPostAndUserId(selectedTextEntity.get(), userId);
 
             responseDto.setLikeCnt(likeCnt);
             responseDto.setIsLike(isLike);
@@ -56,5 +58,20 @@ public class TextServiceImpl implements TextService {
         return responseDto;
     }
 
-    
+    @Override
+    public List<TextDetailDto> getMyTextList(Long userId) {
+        // userId 임의로 넣음!! -> 나중에 꼭 User 객체로 바꿔주기
+        List<TextEntity> textEntityList = textRepository.findAllByUserId(userId);
+        List<TextDetailDto> responseDtoList = new ArrayList<>();
+
+        textEntityList.forEach(v -> {
+            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
+            Integer likeCnt = likeRepository.countAllByPost(v);
+            textDetailDto.setLikeCnt(likeCnt);
+            responseDtoList.add(textDetailDto);
+        });
+
+        return responseDtoList;
+    }
+
 }
