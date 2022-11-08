@@ -2,12 +2,14 @@ package com.fairytail.text.jpa;
 
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@DynamicInsert
 @Table(name = "post")
 public class TextEntity {
 
@@ -44,7 +46,7 @@ public class TextEntity {
     @Column(nullable = false, unique = false)
     private Float lng;
 
-    @Column(name = "report_cnt", nullable = false, unique = false)
+    @Column(name = "report_cnt", unique = false)
     @ColumnDefault("0")
     private Integer reportCnt;
 

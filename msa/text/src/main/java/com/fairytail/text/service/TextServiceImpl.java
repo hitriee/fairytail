@@ -3,28 +3,30 @@ package com.fairytail.text.service;
 import com.fairytail.text.dto.TextDto;
 import com.fairytail.text.jpa.TextEntity;
 import com.fairytail.text.jpa.TextRepository;
-import com.fairytail.text.mapper.TextMapper;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class TextServiceImpl implements TextService {
 
-    private final TextMapper textMapper;
-
+    private final ModelMapper modelMapper;
     private final TextRepository textRepository;
 
     @Override
     public TextDto saveText(TextDto textDto) {
-        TextEntity textEntity = textMapper.DtoToEntity(textDto);
+        TextEntity requestEntity = modelMapper.map(textDto, TextEntity.class);
 
-        textEntity.setUserId(0L);
+        // 나머지 필요한 값들 지정해주기 (userId와 dayType은 임시로!!)
+        requestEntity.setUserId(0L);
+        requestEntity.setDate(LocalDateTime.now());
+        requestEntity.setDayType(0);
 
-        TextEntity resultEntity = textRepository.save(textEntity);
+        TextEntity responseEntity = textRepository.save(requestEntity);
 
-
-
-        return textMapper.EntityToDto(resultEntity);
+        return modelMapper.map(responseEntity, TextDto.class);
     }
 }
