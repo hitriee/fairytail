@@ -2,7 +2,7 @@
 
 .message-create {
   &-container {
-    padding: 4% 0;
+    padding: 2% 0;
   }
 
   &-header {
@@ -29,15 +29,15 @@
 
   &-title {
     width: 100%;
-    font-size: 1.75rem;
+    font-size: 4vh;
     font-weight: 700;
     background-color: transparent;
     color: $WHITE;
-    padding: 2% 0;
+    padding-bottom: 2%;
   }
 
   &-save-container {
-    width: 80%;
+    width: 85%;
     display: flex;
     justify-content: space-between;
     align-items: center;

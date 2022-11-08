@@ -108,15 +108,15 @@ function Message({content, setContent}: MessageProps) {
       <div className="message-create-content-navbar">
         {newFileType === 0 ? (
           <TextFillIcon
-            fill="#001459"
+            fill="#a07dff"
             viewBox="0 0 45 50"
             width="40"
             height="40"
-            className="message-create-content-navbaritem"
+            className="message-create-content-navbaritem message-create-content-navbaritem-fill"
           />
         ) : (
           <TextIcon
-            fill="#001459"
+            fill="#dbdbdb"
             viewBox="0 0 45 50"
             width="40"
             height="40"
@@ -126,15 +126,15 @@ function Message({content, setContent}: MessageProps) {
         )}
         {newFileType === 1 ? (
           <ImageFillIcon
-            fill="#001459"
+            fill="#a07dff"
             viewBox="0 0 45 50"
             width="40"
             height="40"
-            className="message-create-content-navbaritem"
+            className="message-create-content-navbaritem  message-create-content-navbaritem-fill"
           />
         ) : (
           <ImageIcon
-            fill="#001459"
+            fill="#dbdbdb"
             viewBox="0 0 45 50"
             width="40"
             height="40"
@@ -144,15 +144,15 @@ function Message({content, setContent}: MessageProps) {
         )}
         {newFileType === 2 ? (
           <VideoFillIcon
-            fill="#001459"
+            fill="#a07dff"
             viewBox="0 0 45 50"
             width="40"
             height="40"
-            className="message-create-content-navbaritem"
+            className="message-create-content-navbaritem  message-create-content-navbaritem-fill"
           />
         ) : (
           <VideoIcon
-            fill="#001459"
+            fill="#dbdbdb"
             viewBox="0 0 45 50"
             width="40"
             height="40"
@@ -162,15 +162,15 @@ function Message({content, setContent}: MessageProps) {
         )}
         {newFileType === 3 ? (
           <AudioFillIcon
-            fill="#001459"
+            fill="#a07dff"
             viewBox="0 0 45 50"
             width="40"
             height="40"
-            className="message-create-content-navbaritem"
+            className="message-create-content-navbaritem  message-create-content-navbaritem-fill"
           />
         ) : (
           <AudioIcon
-            fill="#001459"
+            fill="#dbdbdb"
             viewBox="0 0 45 50"
             width="40"
             height="40"
