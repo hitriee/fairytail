@@ -5,25 +5,19 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class TextResponse extends TextIdResponse {
-
-    private Long userId;
-
-    private String url;
+public class TextDetailResponse extends TextIdResponse {
 
     private String title;
+
+    private Long userId;
 
     private Integer emojiNo;
 
     private String content;
 
-    private Integer status;
+    private Integer likeCnt;
 
-    private Float lat;
-
-    private Float lng;
-
-    private Integer reportCnt;
+    private Boolean isLike;
 
     private LocalDateTime date;
 

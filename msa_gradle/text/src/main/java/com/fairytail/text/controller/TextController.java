@@ -1,8 +1,11 @@
 package com.fairytail.text.controller;
 
+import com.fairytail.text.dto.TextDetailDto;
 import com.fairytail.text.dto.TextDto;
 import com.fairytail.text.service.TextService;
 import com.fairytail.text.util.BadWordsUtils;
+import com.fairytail.text.vo.TextDetailResponse;
+import com.fairytail.text.vo.TextIdRequest;
 import com.fairytail.text.vo.TextIdResponse;
 import com.fairytail.text.vo.TextRequest;
 import io.swagger.annotations.Api;
@@ -40,7 +43,19 @@ public class TextController {
                 env.getProperty("local.server.port"));
     }
 
-//    public ResponseEntity<>
+    @ApiOperation(value = "텍스트 메시지 상세조회", notes = "요청이 성공하면 텍스트 상세정보가 반환됩니다.")
+    @GetMapping("/{post_id}")
+    public ResponseEntity<HashMap<String, Object>> getTextDetail(@PathVariable("post_id") Long postId) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        TextDetailDto responseDto = textService.getTextDetail(postId);
+        TextDetailResponse responseVo = modelMapper.map(responseDto, TextDetailResponse.class);
+
+        resultMap.put("data", responseVo);
+        resultMap.put("message", SUCCESS);
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
 
     @ApiOperation(value = "텍스트 메시지 등록", notes = "요청이 성공하면 등록된 메시지의 아이디와 타입 번호가 반환됩니다.")
     @PostMapping
