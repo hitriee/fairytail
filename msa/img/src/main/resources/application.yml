@@ -1,7 +1,7 @@
 server: #random port
   port: 8083
   servlet:
-    context-path: /api/img
+    context-path: /img
 spring:
   application:
     name: img-service
