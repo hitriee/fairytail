@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://k7c209.p.ssafy.io:3306/img
-    username: dongsim
-    password: dongsim12!
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
     jpa:
       open-in-view: false
@@ -11,3 +11,16 @@ spring:
       show-sql: true
       hibernate:
         ddl-auto: create-drop
+cloud:
+  aws:
+    credentials:
+      access-key: ${cloud.aws.credentials.access-key}
+      secret-key: ${cloud.aws.credentials.secret-key}
+    s3:
+      bucket:dongsim
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+  front:
+    name: ${cloud.front.name}
