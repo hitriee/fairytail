@@ -13,10 +13,6 @@ function Globe() {
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
 
-  if (isLoading) {
-    setIsLoading(false);
-  }
-
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
 
