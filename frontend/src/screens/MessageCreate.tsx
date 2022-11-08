@@ -76,15 +76,12 @@ function MessageCreate() {
           console.log(content);
           console.log(location);
 
+          console.log(content.file);
+          console.log(content.fileURL);
+
           // 사진/영상/음성 업로드인 경우 압축
           if (content.type !== 0 && content.file !== null) {
-            const compressedFile = Compress(
-              content.file,
-              content.type,
-              content.file.name,
-            );
-
-            console.log(compressedFile);
+            const compressedFile = Compress(content.fileURL);
           }
 
           setLoading(false);

@@ -161,7 +161,11 @@
       <a-sky radius="7" src="./VRBackground.jpg"></a-sky>
 
       <a-camera limit-distance position="0 0 0" look-controls wasd-controls>
-        <a-cursor fuse="true" fuse-timeout="100000000000"></a-cursor>
+        <a-cursor
+          fuse="true"
+          fuse-timeout="100000000000"
+          material="color: #f6ff00"
+        ></a-cursor>
       </a-camera>
     </a-scene>
     <script src="./IframeVR.js"></script>
