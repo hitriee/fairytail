@@ -23,8 +23,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://k7c209.p.ssafy.io:3306/img
-    username: ${spring.datasource.username}
-    password: ${spring.datasource.password}
+    username: ${datasource.username}
+    password: ${datasource.password}
   # 최대 파일 사이즈
   servlet:
     multipart:
@@ -57,8 +57,8 @@ greeting:
 cloud:
   aws:
     credentials:
-      access-key: ${cloud.aws.credentials.access-key}
-      secret-key: ${cloud.aws.credentials.secret-key}
+      access-key: ${aws.credentials.access-key}
+      secret-key: ${aws.credentials.secret-key}
     region:
       static: ap-northeast-2
     stack:
@@ -66,5 +66,5 @@ cloud:
     s3:
       bucket: dongsim
   front:
-    name: ${cloud.front.name}
+    name: ${front.name}
 
