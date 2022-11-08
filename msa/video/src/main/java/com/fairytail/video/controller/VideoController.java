@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "video", tags = {"swagger", "v1", "api"})
+import javax.annotation.Resource;
+
+@Api(value = "video")
 @RestController
 @RequestMapping("/video")
 @RequiredArgsConstructor
 public class VideoController {
 
-    private final Environment env;
+    @Resource
+    private Environment env;
 
     @ApiOperation(value = "Service 상태 체크", notes = "Video Service 상태 체크를 위한 API 입니다.")
     /** Service 상태 체크 (삭제 금지!) */
