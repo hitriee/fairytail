@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -29,10 +31,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Resource
     private Environment env;
     private final UserRepository userRepository;
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        OAuth2User oAuth2User = (OAuth2User) (DefaultOAuth2User) authentication.getPrincipal();
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
         String email = oAuth2User.getAttributes().get("email").toString();
         Optional<UserEntity> user = userRepository.findByEmail(email);
@@ -47,8 +50,23 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret")).compact();
         }
 
-        response.addHeader("token", token);
-        response.addHeader("userId", String.valueOf(user.get().getId()));
-        log.info("token----------------------" + token);
+        String url = "http://localhost:3000";
+
+        String uri = UriComponentsBuilder.fromUriString(url)
+                .queryParam("accessToken", token)
+                .queryParam("userId", user.get().getId())
+                .build().toUriString();
+
+        if (response.isCommitted()) {
+           log.debug(
+                    "Response has already been committed. Unable to redirect to "
+                            + url);
+            return;
+        }
+
+        redirectStrategy.sendRedirect(request, response, uri);
+//        response.addHeader("token", token);
+//        response.addHeader("userId", String.valueOf(user.get().getId()));
+//        log.info("token----------------------" + token);
     }
 }

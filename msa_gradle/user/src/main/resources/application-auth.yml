@@ -7,8 +7,8 @@ spring:
         registration:
           google:
             # Todo: 인증 정보 - EC2 서버에 올린 후 변경 필요
-            client-id: 917328640404-mdeookpsdnm9eg11p70t6vdovbtft8cj.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 145385812517-8m23ghdjpogjee38qsvimvdnlt3vq1am.apps.googleusercontent.com
+            client-secret: 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
             scope: profile, email
 
   datasource:
