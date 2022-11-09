@@ -16,11 +16,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @RequiredArgsConstructor
 public class ImgServiceImpl implements ImgService {
-
-    private final ModelMapper modelMapper;
     private final ImgRepository imgRepository;
 
     private final S3Util s3Util;
@@ -30,6 +29,7 @@ public class ImgServiceImpl implements ImgService {
     private String dirName = "image";
     @Override
     public ImgDto createImg(ImgDto imgDto) throws IOException {
+        ModelMapper modelMapper = new ModelMapper();
         ImgDto data = null;
         ImgEntity img = modelMapper.map(imgDto, ImgEntity.class);
         Long maxIdx = imgRepository.getMaxId() + 1;
@@ -46,6 +46,7 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public ImgDto readImg(Long postId) {
+        ModelMapper modelMapper = new ModelMapper();
         ImgDto data = null;
         Optional<ImgEntity> optionalImg = imgRepository.findByPostId(postId);
         if(optionalImg.isPresent()){
@@ -57,6 +58,7 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public ImgDto putImg(ImgDto imgDto) throws IOException{
+        ModelMapper modelMapper = new ModelMapper();
         ImgDto data = null;
         Optional<ImgEntity> optionalImg = imgRepository.findByPostId(imgDto.getPostId());
         if(optionalImg.isPresent()){
@@ -87,6 +89,7 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public List<ImgDto> readImgListLatest(Double lat, Double lng) throws Exception {
+        ModelMapper modelMapper = new ModelMapper();
         List<ImgEntity> list = imgRepository.findListLatest(lat, lng);
         List<ImgDto> data = null;
         if(list != null){
@@ -105,6 +108,7 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public List<ImgDto> readMyImgList(Long userId) throws Exception {
+        ModelMapper modelMapper = new ModelMapper();
         List<ImgEntity> list = imgRepository.findByUserIdOrderByDateDesc(userId);
         List<ImgDto> data = null;
         if(list != null){

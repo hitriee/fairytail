@@ -7,7 +7,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+@Component
 public class S3Config {
 
     @Value("${cloud.aws.region.static}")
@@ -18,7 +20,7 @@ public class S3Config {
     private String secretKey;
 
     @Bean
-    public AmazonS3 amazonS3(){
+    public AmazonS3 amazonS3Client(){
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         return AmazonS3ClientBuilder
                 .standard()

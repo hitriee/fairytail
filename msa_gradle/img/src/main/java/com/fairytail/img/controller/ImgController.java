@@ -1,7 +1,6 @@
 package com.fairytail.img.controller;
 
 import com.fairytail.img.dto.ImgDto;
-import com.fairytail.img.jpa.ImgEntity;
 import com.fairytail.img.service.ImgService;
 import com.fairytail.img.util.S3Util;
 import com.fairytail.img.vo.ResponseImg;
@@ -32,8 +31,6 @@ public class ImgController {
     private final S3Util s3Util;
     private final ImgService imgService;
     private static HttpStatus status = null;
-
-    private final ModelMapper modelMapper;
 
     private static Map<String, Object> resultMap = null;
 
@@ -68,6 +65,7 @@ public class ImgController {
      */
     @GetMapping("/post/{postId}")
     public ResponseEntity<?> readImg(@PathVariable Long postId) throws Exception{
+        ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         ImgDto res = imgService.readImg(postId);
@@ -87,6 +85,7 @@ public class ImgController {
      */
     @PutMapping("/post")
     public ResponseEntity<?> putImg(ImgDto imgDto) throws Exception{
+        ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         ImgDto res = imgService.putImg(imgDto);
@@ -123,6 +122,7 @@ public class ImgController {
      */
     @GetMapping("post/list/latest")
     public ResponseEntity<?> readImgListLatest(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
+        ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         List<ImgDto> res = imgService.readImgListLatest(lat, lng);
@@ -156,6 +156,7 @@ public class ImgController {
      */
     @GetMapping("/post/list/{userId}")
     public ResponseEntity<?> readMyImgList(@PathVariable Long userId) throws Exception{
+        ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         List<ImgDto> res = imgService.readMyImgList(userId);

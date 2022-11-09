@@ -21,6 +21,6 @@ public interface ImgRepository extends JpaRepository<ImgEntity, Long> {
     @Query(value = "select * from ImgEntity i where i.lat=:lat and i.lng=:lng order by i.date desc limit 25", nativeQuery = true)
     List<ImgEntity> findListLatest(Double lat, Double lng);
 
-    List<ImgEntity> findTop25ByLatAndLngOrderByDateDesc();
+    List<ImgEntity> findTop25ByLatAndLngOrderByDateDesc(Double lat, Double lng);
     List<ImgEntity> findByUserIdOrderByDateDesc(Long userId);
 }
