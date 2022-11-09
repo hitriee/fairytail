@@ -124,7 +124,6 @@ function MessageCreate() {
             setTitle(e.target.value);
           }}
         />
-
         <Message content={content} setContent={setContent} />
 
         <div className="message-create-save-container">
