@@ -50,11 +50,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret")).compact();
         }
 
-        String url = "http://localhost:3000";
+        String url = "http://localhost:3000/main";
 
         String uri = UriComponentsBuilder.fromUriString(url)
-                .queryParam("accessToken", token)
-                .queryParam("userId", user.get().getId())
+//                .queryParam("accessToken", token)
+//                .queryParam("userId", user.get().getId())
                 .build().toUriString();
 
         if (response.isCommitted()) {
