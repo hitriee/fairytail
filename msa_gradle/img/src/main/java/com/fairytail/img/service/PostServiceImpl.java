@@ -3,10 +3,8 @@ package com.fairytail.img.service;
 
 import com.fairytail.img.dto.PostDto;
 import com.fairytail.img.dto.PostLikeDto;
-import com.fairytail.img.jpa.PostEntity;
-import com.fairytail.img.jpa.PostLikeEntity;
-import com.fairytail.img.jpa.PostLikeRepository;
-import com.fairytail.img.jpa.PostRepository;
+import com.fairytail.img.dto.PostReportDto;
+import com.fairytail.img.jpa.*;
 import com.fairytail.img.util.MainUtil;
 import com.fairytail.img.util.S3Util;
 import lombok.RequiredArgsConstructor;
@@ -26,18 +24,20 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostLikeRepository postLikeRepository;
 
+    private final PostReportRepository postReportRepository;
+
     private final S3Util s3Util;
 
     private final MainUtil mainUtil;
 
     private String dirName = "image";
     @Override
-    public PostDto createPost(PostDto postDto) throws IOException {
+    public PostDto createPost(PostDto dto) throws IOException {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
-        PostEntity img = modelMapper.map(postDto, PostEntity.class);
+        PostEntity img = modelMapper.map(dto, PostEntity.class);
         Long maxIdx = postRepository.getMaxId() + 1;
-        MultipartFile file = postDto.getFile();
+        MultipartFile file = dto.getFile();
         File filePath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename());
         file.transferTo(filePath);
         String url = s3Util.upload(filePath, dirName);
@@ -52,22 +52,22 @@ public class PostServiceImpl implements PostService {
     public PostDto readPost(Long postId) {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
-        Optional<PostEntity> optionalImg = postRepository.findByPostId(postId);
-        if(optionalImg.isPresent()){
-            PostEntity post = optionalImg.get();
+        Optional<PostEntity> optional = postRepository.findByPostId(postId);
+        if(optional.isPresent()){
+            PostEntity post = optional.get();
             data = modelMapper.map(post, PostDto.class);
         }
         return data;
     }
 
     @Override
-    public PostDto putPost(PostDto postDto) throws IOException{
+    public PostDto putPost(PostDto dto) throws IOException{
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
-        Optional<PostEntity> optionalImg = postRepository.findByPostId(postDto.getPostId());
-        if(optionalImg.isPresent()){
-            PostEntity post = optionalImg.get();
-            post.setStatus(postDto.getStatus());
+        Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+        if(optional.isPresent()){
+            PostEntity post = optional.get();
+            post.setStatus(dto.getStatus());
             postRepository.save(post);
             data = modelMapper.map(post, PostDto.class);
         }
@@ -77,9 +77,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Boolean deletePost(Long postId) {
         Boolean data = false;
-        Optional<PostEntity> optionalImg = postRepository.findByPostId(postId);
-        if(optionalImg.isPresent()){
-            PostEntity post = optionalImg.get();
+        Optional<PostEntity> optional = postRepository.findByPostId(postId);
+        if(optional.isPresent()){
+            PostEntity post = optional.get();
             String url = post.getUrl();
             String oldPath = mainUtil.urlToFilePath(url);
             s3Util.delete(oldPath);
@@ -125,15 +125,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto createPostLike(PostLikeDto postLikeDto) throws Exception {
+    public PostDto createLike(PostLikeDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
-        PostLikeEntity postLike = modelMapper.map(postLikeDto, PostLikeEntity.class);
+        PostLikeEntity postLike = modelMapper.map(dto, PostLikeEntity.class);
         postLikeRepository.save(postLike);
-        Optional<PostEntity> optionalPost = postRepository.findByPostId(postLikeDto.getPostId());
-        if(optionalPost.isPresent()){
-            PostEntity post = optionalPost.get();
-            Long count = postLikeRepository.countByPostId(postLikeDto.getPostId());
+        Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+        if(optional.isPresent()){
+            PostEntity post = optional.get();
+            Long count = postLikeRepository.countByPostId(dto.getPostId());
             post.setLikeCnt(count);
             postRepository.save(post);
             data = modelMapper.map(post, PostDto.class);
@@ -142,17 +142,51 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto deletePostLike(PostLikeDto postLikeDto) throws Exception {
+    public PostDto deletePostLike(PostLikeDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
-        Long res = postLikeRepository.deleteByPostIdAndUserId(postLikeDto.getPostId(), postLikeDto.getUserId());
+        Long res = postLikeRepository.deleteByPostIdAndUserId(dto.getPostId(), dto.getUserId());
         if(res >= 0){
-            Optional<PostEntity> optionalPost = postRepository.findByPostId(postLikeDto.getPostId());
-            if(optionalPost.isPresent()){
-                PostEntity post = optionalPost.get();
+            Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+            if(optional.isPresent()){
+                PostEntity post = optional.get();
                 data = modelMapper.map(post, PostDto.class);
             }
         }
         return data;
     }
+
+    @Override
+    public Boolean createReport(PostReportDto dto) throws Exception {
+        ModelMapper modelMapper = new ModelMapper();
+        Optional<PostReportEntity> optional = postReportRepository.findByPostIdAndUserId(dto.getPostId(), dto.getUserId());
+        if (optional.isPresent()){
+            return false;
+        } else{
+            PostReportEntity postReport = modelMapper.map(dto, PostReportEntity.class);
+            postReportRepository.save(postReport);
+            Optional<PostEntity> optionalPost = postRepository.findByPostId(dto.getPostId());
+            if(optionalPost.isPresent()){
+                PostEntity post = optionalPost.get();
+                post.setReportCnt(post.getReportCnt() + 1);
+                postRepository.save(post);
+                changeStatus(post);
+                return true;
+            } else{
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public Boolean changeStatus(PostEntity post) throws Exception {
+        Integer reportCnt =  post.getReportCnt();
+        if(reportCnt >= 5){
+            post.setStatus(2);
+            postRepository.save(post);
+            return true;
+        }
+        return false;
+    }
+
 }

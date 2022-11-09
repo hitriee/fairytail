@@ -2,6 +2,8 @@ package com.fairytail.img.service;
 
 import com.fairytail.img.dto.PostDto;
 import com.fairytail.img.dto.PostLikeDto;
+import com.fairytail.img.dto.PostReportDto;
+import com.fairytail.img.jpa.PostEntity;
 
 import java.util.List;
 
@@ -16,8 +18,11 @@ public interface PostService {
     List<PostDto> readPostListLike(Double lat, Double lng) throws Exception;
     List<PostDto> readMyPostList(Long userId) throws Exception;
 
-    PostDto createPostLike(PostLikeDto postLikeDto) throws Exception;
+    PostDto createLike(PostLikeDto postLikeDto) throws Exception;
 
     PostDto deletePostLike(PostLikeDto postLikeDto) throws Exception;
 
+    Boolean createReport(PostReportDto postReportDto) throws Exception;
+
+    Boolean changeStatus(PostEntity post)throws Exception;
 }
