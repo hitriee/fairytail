@@ -61,4 +61,7 @@ public class TextEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<LikeEntity> likeList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<ReportEntity> reportList = new ArrayList<>();
+
 }
