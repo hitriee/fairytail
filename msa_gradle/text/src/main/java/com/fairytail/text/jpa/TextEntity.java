@@ -6,6 +6,8 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -55,5 +57,8 @@ public class TextEntity {
 
     @Column(name = "day_type", nullable = false, unique = false)
     private Integer dayType;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<LikeEntity> likeList = new ArrayList<>();
 
 }

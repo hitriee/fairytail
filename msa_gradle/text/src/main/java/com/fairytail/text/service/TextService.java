@@ -17,4 +17,6 @@ public interface TextService {
 
     List<TextDto> getAllTextList();
 
+    Integer deleteText(Long postId);
+
 }

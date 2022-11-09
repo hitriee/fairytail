@@ -101,4 +101,17 @@ public class TextServiceImpl implements TextService {
         return responseDtoList;
     }
 
+    @Override
+    public Integer deleteText(Long postId) {
+        Optional<TextEntity> selectedTextEntity = textRepository.findById(postId);
+
+        if (selectedTextEntity.isPresent()) {
+            textRepository.delete(selectedTextEntity.get());
+            return 1; // 삭제 성공 시 1 반환
+        }
+
+        return 0; // 삭제 실패 시 0 반환
+    }
+
+
 }

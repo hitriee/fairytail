@@ -131,4 +131,22 @@ public class TextController {
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
+
+    @ApiOperation(value = "텍스트 메시지 삭제", notes = "해당 post_id에 해당하는 텍스트 메시지가 삭제됩니다.")
+    @DeleteMapping("/{post_id}")
+    public ResponseEntity<HashMap<String, Object>> deleteText(@PathVariable("post_id") Long postId) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        Integer result = textService.deleteText(postId);
+
+        if (result == 1) resultMap.put("message", SUCCESS);
+        else resultMap.put("message", FAIL);
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
+
+
+
+
+
 }
