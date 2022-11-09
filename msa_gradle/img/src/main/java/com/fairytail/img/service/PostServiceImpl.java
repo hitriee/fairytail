@@ -130,12 +130,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto createLike(PostLikeDto dto) throws Exception {
+    public Boolean createLike(PostLikeDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-        PostDto data = null;
         Optional<PostLikeEntity> optionalLike = postLikeRepository.findByPostIdAndUserId(dto.getPostId(), dto.getUserId());
         if(optionalLike.isPresent()){
-            return null;
+            PostLikeEntity like = optionalLike.get();
+            postLikeRepository.delete(like);
+            Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+            if(optional.isPresent()){
+                PostEntity post = optional.get();
+                Long count = postLikeRepository.countByPostId(dto.getPostId());
+                post.setLikeCnt(count);
+                postRepository.save(post);
+            }
+            return false;
         } else{
             PostLikeEntity postLike = modelMapper.map(dto, PostLikeEntity.class);
             postLikeRepository.save(postLike);
@@ -145,10 +153,9 @@ public class PostServiceImpl implements PostService {
                 Long count = postLikeRepository.countByPostId(dto.getPostId());
                 post.setLikeCnt(count);
                 postRepository.save(post);
-                data = modelMapper.map(post, PostDto.class);
             }
+            return true;
         }
-        return data;
     }
 
     @Override

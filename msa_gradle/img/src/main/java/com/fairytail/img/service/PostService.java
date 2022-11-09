@@ -19,7 +19,7 @@ public interface PostService {
     List<PostDto> readPostListLike(Double lat, Double lng) throws Exception;
     List<PostDto> readMyPostList(Long userId) throws Exception;
 
-    PostDto createLike(PostLikeDto postLikeDto) throws Exception;
+    Boolean createLike(PostLikeDto postLikeDto) throws Exception;
 
     PostDto deletePostLike(PostLikeDto postLikeDto) throws Exception;
 
