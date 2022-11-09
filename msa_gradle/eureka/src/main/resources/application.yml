@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: eurekaserver
+    name: eureka
 
 # Eureka 클라이언트로 등록하지는 않는다.
 eureka:
