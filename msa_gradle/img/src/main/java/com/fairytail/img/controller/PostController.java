@@ -69,12 +69,12 @@ public class PostController {
      *이미지 게시글 상세 조회
      */
     @ApiOperation(value = "이미지 게시글 상세 조회", notes = "이미지 게시글 상세 조회 API 입니다.")
-    @GetMapping("/post/{postId}")
-    public ResponseEntity<?> readPost(@PathVariable Long postId) throws Exception{
+    @GetMapping("/post")
+    public ResponseEntity<?> readPost(@RequestParam Long postId, @RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostDto res = postService.readPost(postId);
+        PostDto res = postService.readPost(postId, userId);
         ResponsePost data = null;
         if(res != null){
             data = modelMapper.map(res, ResponsePost.class);
@@ -158,6 +158,7 @@ public class PostController {
     /**
      * 좌표를 받아서 근처 글 리스트를 좋아요 순으로 25개 조회
      */
+    @ApiOperation(value = "근처 이미지 게시글 좋아요 순 리스트 조회", notes = "근처 이미지 게시글 좋아요 순 리스트 조회 API 입니다.")
     @GetMapping("post/list/like")
     public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
         resultMap = new HashMap<>();
@@ -189,7 +190,7 @@ public class PostController {
         }
         return new ResponseEntity<>(resultMap, status);
     }
-
+    @ApiOperation(value = "게시글 좋아요 누르기", notes = "내 이미지 게시글 최신순 리스트 조회 API 입니다.")
     @PostMapping("/post/like")
     public ResponseEntity<?> createLike(PostLikeDto dto) throws Exception{
         ModelMapper modelMapper = new ModelMapper();

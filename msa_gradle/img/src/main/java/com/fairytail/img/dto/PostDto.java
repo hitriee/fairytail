@@ -26,4 +26,5 @@ public class PostDto {
     private Integer status;
     private MultipartFile file;
     private Integer likeCnt;
+    private Boolean isLike;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PostService {
     PostDto createPost(PostDto postDto) throws Exception;
-    PostDto readPost(Long postId) throws Exception;
+    PostDto readPost(Long postId, Long userId) throws Exception;
     PostDto putPost(PostPutDto postDto) throws Exception;
     Boolean deletePost(Long postId) throws Exception;
 

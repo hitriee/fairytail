@@ -18,4 +18,5 @@ public class ResponsePost {
     private LocalDateTime date;
     private Integer status;
     private Integer likeCnt;
+    private Boolean isLike;
 }

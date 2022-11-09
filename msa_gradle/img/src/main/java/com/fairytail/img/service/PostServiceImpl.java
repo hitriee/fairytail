@@ -52,13 +52,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto readPost(Long postId) {
+    public PostDto readPost(Long postId, Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
         Optional<PostEntity> optional = postRepository.findByPostId(postId);
         if(optional.isPresent()){
             PostEntity post = optional.get();
             data = modelMapper.map(post, PostDto.class);
+            Boolean isLike = checkLike(postId, userId);
+            data.setIsLike(isLike);
         }
         return data;
     }
@@ -198,4 +200,12 @@ public class PostServiceImpl implements PostService {
         return false;
     }
 
+    public Boolean checkLike(Long userId, Long postId) throws Exception{
+        Optional<PostLikeEntity> optional = postLikeRepository.findByPostIdAndUserId(userId, postId);
+        if (optional.isPresent()){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }
