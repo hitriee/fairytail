@@ -14,4 +14,6 @@ public interface ImgService {
     List<ImgDto> readImgListLatest(Double lat, Double lng) throws Exception;
     List<ImgDto> readImgListLike(Double lat, Double lng) throws Exception;
 
+    List<ImgDto> readMyImgList(Long userId) throws Exception;
+
 }

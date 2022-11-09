@@ -102,4 +102,17 @@ public class ImgServiceImpl implements ImgService {
     public List<ImgDto> readImgListLike(Double lat, Double lng) throws Exception {
         return null;
     }
+
+    @Override
+    public List<ImgDto> readMyImgList(Long userId) throws Exception {
+        List<ImgEntity> list = imgRepository.findByUserIdOrderByDateDesc(userId);
+        List<ImgDto> data = null;
+        if(list != null){
+            for (ImgEntity l :list){
+                ImgDto insert = modelMapper.map(l, ImgDto.class);
+                data.add(insert);
+            }
+        }
+        return data;
+    }
 }
