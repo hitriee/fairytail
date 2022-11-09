@@ -8,7 +8,7 @@ eureka:
         register-with-eureka: true
         fetch-registry: true
         service-url:
-            defaultZone: https://k7c209.p.ssafy.io:8761
+            defaultZone: http://k7c209.p.ssafy.io:8761
 
 spring:
     application:
