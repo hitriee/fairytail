@@ -51,12 +51,26 @@ function MoreMenu({
     close();
     if (type === 0) {
       const height = window.innerHeight;
-      html2canvas(detail.current, {height}).then(canvas => {
-        saveAs(canvas.toDataURL(), 'fairytail.png');
+      const width = window.innerWidth;
+
+      let x = 0;
+      let resultWidth = width;
+
+      if (width / height > 9 / 16) {
+        resultWidth = (height * 56.25) / 100;
+        x = (width - resultWidth) / 2;
+      }
+
+      html2canvas(detail.current, {
+        x: x,
+        width: resultWidth,
+        height: height,
+      }).then(canvas => {
+        saveAs(canvas.toDataURL(), `fairytail_${messageId}.png`);
       });
     } else {
       // content는 url형식
-      saveAs(content, 'fairytail.png');
+      saveAs(content, `fairytail_${messageId}.png`);
     }
   };
   // 신고 팝업

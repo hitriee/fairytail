@@ -24,6 +24,7 @@ function Like({count, like, isMine, emoji}: LikeProps) {
 
   return (
     <article className="like">
+      <img src={emojiArr[emoji]} alt="풍선 이모지" className="like-balloon" />
       <div className="like-container">
         {isMine || myLike ? (
           <HeartSolid className="like-icon" onClick={changeLike} fill="red" />
@@ -36,7 +37,6 @@ function Like({count, like, isMine, emoji}: LikeProps) {
         )}
         <p className="like-count">{count}</p>
       </div>
-      <img src={emojiArr[emoji]} alt="풍선 이모지" className="like-balloon" />
     </article>
   );
 }

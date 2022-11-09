@@ -46,8 +46,9 @@ function MessageDetail() {
     date: new Date(),
     user_id: 0,
     type: 0,
-    emoji_no: 1,
+    emoji_no: 15,
     status: 0,
+    background: 1,
   };
 
   // 현재 사용자가 작성한 게시글인지 확인
@@ -73,7 +74,7 @@ function MessageDetail() {
 
   return (
     <div
-      className={`screen background${data.emoji_no}`}
+      className={`screen background${data.background}`}
       ref={messageDetailRef}
       onClick={hiddenMenu}>
       <main id="container">

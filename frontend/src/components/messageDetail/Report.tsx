@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import Alert from '@common/Alert';
 import {returnTrue, returnFalse} from '@common/commonFunc';
 import '@common/Common.scss';
-import {ReactComponent as ArrowDropDown} from '@images/arrowDropDown.svg';
+import SelectBox from '../common/SelectBox';
 
 interface ReportProps {
   open: boolean;
@@ -10,15 +10,16 @@ interface ReportProps {
 }
 
 function Report({onCancel, open}: ReportProps) {
-  // select 보여주기 여부
-  const [showSelect, setShowSelect] = useState(false);
+  // 선택한 신고 유형
+  const [reportType, setReportType] = useState(-1);
 
   const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.addEventListener('mousedown', ({target}) => {
       if (reportRef.current && !reportRef.current.contains(target as Node)) {
-        // onCancel();
+        setReportType(-1);
+        onCancel();
       }
     });
   });
@@ -51,31 +52,11 @@ function Report({onCancel, open}: ReportProps) {
         <div className="modal" ref={reportRef}>
           <p className="modal-title">신고</p>
 
-          {/* select */}
-          <div
-            className="modal-select-toggle"
-            onClick={() => setShowSelect(prev => !prev)}>
-            신고 유형
-            <ArrowDropDown
-              fill="#a07dff"
-              viewBox="0 0 45 45"
-              width="30"
-              height="30"
-            />
-          </div>
-          {showSelect ? (
-            <ul className="modal-select-box">
-              {options.map((option: string, index) => (
-                <li className="modal-select-li" key={option}>
-                  <button
-                    className="modal-select-option"
-                    onClick={() => console.log(index)}>
-                    {option}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+          <SelectBox
+            reportType={reportType}
+            setReportType={setReportType}
+            options={options}
+          />
 
           <textarea
             className="modal-textarea"
