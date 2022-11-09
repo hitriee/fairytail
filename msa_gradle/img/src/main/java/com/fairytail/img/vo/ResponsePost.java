@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ResponseImg {
+public class ResponsePost {
     private Long postId;
     private Integer userId;
     private Integer type;

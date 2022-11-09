@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "img")
 @DynamicInsert
 @DynamicUpdate
-public class ImgEntity {
+public class PostEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class ImgEntity {
 
     /** 컬럼 추가할 때, 삭제 후 알맞게 변경해주세요. 설정 필요 */
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
     private Integer type;
     private String url;
     private String title;
@@ -34,4 +34,7 @@ public class ImgEntity {
     @Column(name = "report_cnt")
     private Integer reportCnt;
     private LocalDateTime date;
+
+    @Column(name = "like_cnt")
+    private Long likeCnt;
 }

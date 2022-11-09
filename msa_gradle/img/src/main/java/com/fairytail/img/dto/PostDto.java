@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImgDto {
+public class PostDto {
     private Long postId;
-    private Integer userId;
+    private Long userId;
     private Integer type;
     private String url;
     private String title;
@@ -25,4 +25,5 @@ public class ImgDto {
     private LocalDateTime date;
     private Integer status;
     private MultipartFile file;
+    private Long likeCnt;
 }

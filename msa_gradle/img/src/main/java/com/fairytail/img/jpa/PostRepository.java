@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ImgRepository extends JpaRepository<ImgEntity, Long> {
-    @Query(value = "select max(i.postId) from ImgEntity i")
+public interface PostRepository extends JpaRepository<PostEntity, Long> {
+    @Query(value = "select max(i.postId) from PostEntity i")
     Long getMaxId();
 
-    Optional<ImgEntity> findByPostId(Long postId);
+    Optional<PostEntity> findByPostId(Long postId);
 
     @Transactional
     Long deleteByPostId(Long postId);
 
     @Query(value = "select * from ImgEntity i where i.lat=:lat and i.lng=:lng order by i.date desc limit 25", nativeQuery = true)
-    List<ImgEntity> findListLatest(Double lat, Double lng);
+    List<PostEntity> findListLatest(Double lat, Double lng);
 
-    List<ImgEntity> findTop25ByLatAndLngOrderByDateDesc(Double lat, Double lng);
-    List<ImgEntity> findByUserIdOrderByDateDesc(Long userId);
+    List<PostEntity> findTop25ByLatAndLngOrderByDateDesc(Double lat, Double lng);
+    List<PostEntity> findByUserIdOrderByDateDesc(Long userId);
 }
