@@ -55,6 +55,7 @@
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.75) 0 0 0 9999px;
   z-index: 1000;
+  color: black;
 
   &-title {
     font-size: 3vh;
@@ -87,4 +88,8 @@
     resize: none;
     overflow: hidden;
   }
+}
+
+.white {
+  color: white;
 }

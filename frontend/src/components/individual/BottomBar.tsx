@@ -12,32 +12,38 @@ interface props {
 
 function BottomBar({type}: props) {
   const navigate = useNavigate();
+
   const toNoti = () => {
-    console.log(1);
     navigate(notifications());
   };
+
   const toSettings = () => {
     navigate(settings());
-    console.log(2);
   };
+
   return (
-    <>
-      <main id="bottomBar">
-        <section className="box" />
-        <section className="icon">
-          <img
-            src={bell}
-            onClick={toNoti}
-            className={type ? 'icon-each' : 'icon-each icon-selected'}
-          />
-          <img
-            src={gear}
-            onClick={toSettings}
-            className={type ? 'icon-each icon-selected' : 'icon-each'}
-          />
-        </section>
-      </main>
-    </>
+    <main className="bottomBar">
+      <div className="bottomBar-icon" onClick={toNoti}>
+        <img
+          src={bell}
+          className={
+            type
+              ? 'bottomBar-icon-each'
+              : 'bottomBar-icon-each bottomBar-icon-selected'
+          }
+        />
+      </div>
+      <div className="bottomBar-icon" onClick={toSettings}>
+        <img
+          src={gear}
+          className={
+            type
+              ? 'bottomBar-icon-each bottomBar-icon-selected'
+              : 'bottomBar-icon-each'
+          }
+        />
+      </div>
+    </main>
   );
 }
 

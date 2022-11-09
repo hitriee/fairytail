@@ -1,9 +1,10 @@
 .detail {
   &-container {
-    width: 90%;
-    height: fit-content;
+    width: 100%;
+    height: 56vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -18,7 +19,6 @@
     width: 90%;
     height: 45vh;
     padding: 1.5vh;
-    margin: 1.5vh 0;
     display: flex;
     flex-direction: column;
     align-content: stretch;

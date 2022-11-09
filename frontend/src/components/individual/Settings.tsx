@@ -23,9 +23,15 @@ function Settings() {
   const [permitBgm, setPermitBgm] = useState(true);
 
   // 좋아요 알림 변경
-  const changePermit = () => {
+  const changePermitNoti = () => {
     setPermitNoti(!permitNoti);
   };
+
+  // 배경음악 변경
+  const changePermitBgm = () => {
+    setPermitBgm(!permitBgm);
+  };
+
   // 팝업에 뜰 내용 변경
   const changeInfo = (title: popUp['title'], message: popUp['message']) => {
     setInfo(() => ({
@@ -35,14 +41,14 @@ function Settings() {
   };
   // 로그아웃
   const logoutConfirm = () => {
-    changeInfo('로그아웃 확인', '정말 로그아웃하시겠어요?');
+    changeInfo('확인', '정말 로그아웃하시겠어요?');
     setWantLogout(returnTrue);
   };
   // 로그아웃 요청 백에 보내기
   const logout = () => {
     // axios.post('url')
     // .then(())
-    changeInfo('로그아웃 완료', '정상적으로 로그아웃되었습니다');
+    changeInfo('완료', '정상적으로 로그아웃되었습니다.');
     cancelLogout();
     setOpenAlert(returnTrue);
   };
@@ -91,62 +97,74 @@ function Settings() {
 
   return (
     <main className="white settings">
+      {/* 애플리케이션 */}
+      <section className="settings-section">
+        <div className="settings-title">애플리케이션</div>
+        <div className="settings-between">
+          <div className="settings-each" onClick={changePermitNoti}>
+            좋아요 알림
+          </div>
+          <Toggle label="" onClick={setPermitNoti} value={permitNoti} />
+        </div>
+        <div className="settings-between">
+          <div className="settings-each">
+            <div onClick={changePermitBgm}>배경음악</div>
+            <div
+              className={permitBgm ? 'bgm-title' : 'bgm-hidden'}
+              onClick={bgmPopUp}>
+              {bgm || 'bgm'}
+            </div>
+          </div>
+          <Toggle label="" onClick={setPermitBgm} value={permitBgm} />
+        </div>
+      </section>
+
+      {/* 계정 */}
+      <section className="settings-section">
+        <div className="settings-title">계정</div>
+        <div
+          className="settings-each settings-margin-bottom"
+          onClick={logoutConfirm}>
+          로그아웃
+        </div>
+      </section>
+
+      {/* 기타 */}
+      <section className="settings-section">
+        <div className="settings-title">기타</div>
+        <div
+          className="settings-each settings-margin-bottom"
+          onClick={openInfoModal('license')}>
+          라이선스
+        </div>
+        <span
+          className="settings-each settings-margin-bottom"
+          onClick={openInfoModal('help')}>
+          도움말
+        </span>
+      </section>
+
+      {/* 로그아웃 확인 */}
       <Confirm
         info={info}
         open={wantLogout}
         onConfirmed={logout}
         onCancel={cancelLogout}
       />
+
+      {/* 로그아웃 완료 */}
       <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
+
+      {/* 배경음악 목록 */}
       <BgmModal
         bgm={bgm}
         setBgm={setBgm}
         open={selectBgm}
         onCancel={closeBgmPopUp}
       />
+
+      {/* 라이선스, 도움말 모달 */}
       <InfoModal open={wantInfo} onConfirmed={closeInfoModal} type={infoType} />
-      <section className="settings-section">
-        <div className="settings-title">애플리케이션</div>
-        <br />
-        <div className="settings-between">
-          <div className="settings-each" onClick={changePermit}>
-            좋아요 알림
-          </div>
-          <Toggle label="" onClick={changePermit} value={permitNoti} />
-        </div>
-        <br />
-        <div className="settings-between">
-          <div className="settings-each" onClick={bgmPopUp}>
-            배경음악
-          </div>
-          <Toggle
-            label=""
-            onClick={changeBgmPermit}
-            // labelClass="settings-each"
-            // containerClass="settings-between"
-            value={permitBgm}
-          />
-        </div>
-        <div className={bgm ? 'bgm-title' : 'bgm-hidden'}>{bgm || 'bgm'}</div>
-      </section>
-      <section className="settings-section">
-        <div className="settings-title">계정</div>
-        <br />
-        <div className="settings-each" onClick={logoutConfirm}>
-          로그아웃
-        </div>
-      </section>
-      <section className="settings-section">
-        <div className="settings-title">기타</div>
-        <br />
-        <div className="settings-each" onClick={openInfoModal('license')}>
-          라이선스
-        </div>
-        <br />
-        <span className="settings-each" onClick={openInfoModal('help')}>
-          도움말
-        </span>
-      </section>
     </main>
   );
 }

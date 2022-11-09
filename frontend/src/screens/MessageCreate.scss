@@ -2,10 +2,12 @@
 
 .message-create {
   &-card {
-    height: 64.5vh;
+    height: 63vh;
     width: 85%;
+    margin: auto;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -15,6 +17,7 @@
     font-weight: 700;
     background-color: transparent;
     color: $WHITE;
+    padding: 0;
 
     &::placeholder {
       color: $GRAY-DB;
