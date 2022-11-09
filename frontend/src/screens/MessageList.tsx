@@ -13,32 +13,27 @@ function MessageList() {
   // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
-  console.log(isLoading);
 
-  // const [items, setItems] = useState([]);
-
-  // useEffect(() => {
-  //   setItems({data});
-  // }, []);
   return (
     <>
-      <Iframe
+      {/* <Iframe
         className="BackgroundUnMove"
         url="Background.html"
         src="../background/Background.html"
         frameBorder={0}
-      />
+      /> */}
       <div className="messageList">
         <div className="navbarContainer">
           <MoveToBack path={main()} />
         </div>
         <div className="messageList-container">
           <div className="messageList-container-info">
-            <img
+            내 이야기
+            {/* <img
               className="messageList-container-info-balloon"
               src={balloon}
               alt="balloon"
-            />
+            /> */}
           </div>
           <div className="messageList-container-list">
             {items.length === 0 && (

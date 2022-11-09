@@ -22,8 +22,6 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
 
   return (
     <Swiper
-      autoHeight={true}
-      mousewheel={true}
       onSwiper={setSwiper}
       touchStartPreventDefault={false}
       initialSlide={Math.floor(Math.random() * 76)}

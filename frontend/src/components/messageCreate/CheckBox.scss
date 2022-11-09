@@ -5,16 +5,16 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 2.5vh;
 
     color: white;
   }
 }
 
 #checkbox-input {
-  margin-left: 1rem;
-  width: 1.1rem;
-  height: 1.1rem;
+  margin-left: 1.5vh;
+  width: 2vh;
+  height: 2vh;
   border-radius: 100%;
   border: 1px solid $PURPLE;
   cursor: pointer;

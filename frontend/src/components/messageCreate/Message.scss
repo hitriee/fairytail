@@ -3,32 +3,37 @@
 .message-create-content {
   width: 85%;
   height: 55%;
-  padding: 3%;
+  padding: 4%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
-  box-shadow: inset -5px 0px 4px #00145932;
+  box-shadow: inset -5px -5px 8px #4747477b;
   border-radius: 15px;
 
   &-navbar {
     width: 100%;
-    padding: 2%;
+    height: 11%;
+    padding: 0 2%;
     display: flex;
     cursor: pointer;
   }
 
   &-navbaritem {
     flex: 1;
+    height: auto;
+    padding-bottom: 1%;
+    border-bottom: 3px solid #dbdbdb;
+
+    &-fill {
+      border-bottom: 3px solid $PURPLE-2;
+    }
   }
 
   &-container {
     width: 100%;
-    height: 85%;
+    height: 90%;
     padding: 5%;
-    background-color: #0014590f;
-    box-shadow: inset 0px 0px 10px #00145919;
-    border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -38,10 +43,11 @@
   &-text {
     width: 100%;
     height: 100%;
-    font-size: 1.25rem;
+    font-size: 2.7vh;
     word-break: break-all;
-    line-height: 1.75rem;
+    line-height: 3.5vh;
     background-color: transparent;
+    text-align: start;
   }
 
   &-upload {
@@ -54,9 +60,9 @@
 
     span {
       text-align: center;
-      line-height: 1.75rem;
-      font-size: 1.25rem;
-      color: $NAVY;
+      line-height: 3.5vh;
+      font-size: 2.7vh;
+      color: $GRAY-61;
     }
   }
 
