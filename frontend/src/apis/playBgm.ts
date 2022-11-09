@@ -2,7 +2,7 @@ import {atom, selector} from 'recoil';
 
 export const playingState = atom({
   key: 'playingState',
-  default: true,
+  default: false,
 });
 
 // export const changeOnPlay = selector({

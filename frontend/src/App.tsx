@@ -46,23 +46,18 @@ import {playingState} from '@apis/playBgm';
 function App() {
   initToken();
   useEffect(initMessage, []);
-  const [onPlay, setOnPlay] = useRecoilState(playingState);
-  const ref = useRef<HTMLAudioElement>(null!);
-  // useEffect(() => {
-
-  // })
-  // const handlePlay = () => {
-  //   if (onPlay) {
-  //     ref.current && ref.current.pause();
-  //   } else {
-  //     ref.current && ref.current.play();
-  //   }
-  //   setOnPlay(prev => !prev);
-  // };
-  // const recoilPlay = useRecoilValue(playingState);
-  // useEffect(() => {
-  //   setOnPlay(recoilPlay);
-  // }, [recoilPlay]);
+  const [onPlay, setOnPlay] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null!);
+  const recoilPlay = useRecoilValue(playingState);
+  const handlePlay = () => {
+    if (onPlay) {
+      audioRef.current && audioRef.current.pause();
+    } else {
+      audioRef.current && audioRef.current.play();
+    }
+    setOnPlay(prev => !prev);
+  };
+  useEffect(handlePlay, [recoilPlay]);
 
   return (
     <>
@@ -87,7 +82,7 @@ function App() {
         </Suspense>
         {/* </RecoilRoot> */}
       </BrowserRouter>
-      {onPlay ? <audio autoPlay loop src={bgm} /> : null}
+      <audio autoPlay loop src={bgm} ref={audioRef} />
     </>
   );
 }

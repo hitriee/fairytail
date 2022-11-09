@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useSpline from '@splinetool/r3f-spline';
 import {OrthographicCamera} from '@react-three/drei';
@@ -14,6 +14,7 @@ import {
 } from '../../apis/router.ts';
 import {useRecoilState} from 'recoil';
 import {playingState} from '@/apis/playBgm';
+import {use} from '@/apis/notifications/server/notice';
 
 export default function Scene({...props}) {
   const {nodes, materials} = useSpline(
@@ -29,6 +30,11 @@ export default function Scene({...props}) {
   const moveSettings = () => navigate(settings());
 
   const [onPlay, setOnPlay] = useRecoilState(playingState);
+  const changeOnPlay = () => {
+    setOnPlay(prev => !prev);
+    console.log(onPlay);
+  };
+  // useEffect(changeOnPlay, []);
 
   return (
     <>
@@ -1255,7 +1261,7 @@ export default function Scene({...props}) {
               position={[-1.37, -178.62, 13.24]}
               rotation={[0, 0.04, 0.16]}
               scale={[1, 1, 0.86]}
-              onClick={() => setOnPlay(!onPlay)}
+              onClick={changeOnPlay}
             />
             <mesh
               name="Shape 4"
@@ -1264,7 +1270,7 @@ export default function Scene({...props}) {
               castShadow
               receiveShadow
               position={[-27.71, -266.66, 4.48]}
-              onClick={() => setOnPlay(!onPlay)}
+              onClick={changeOnPlay}
             />
             <mesh
               name="Shape 3"
@@ -1275,7 +1281,7 @@ export default function Scene({...props}) {
               position={[-25.83, -106.07, 3.57]}
               rotation={[0, 0, 0]}
               scale={1}
-              onClick={() => setOnPlay(!onPlay)}
+              onClick={changeOnPlay}
             />
             <mesh
               name="Shape 2"

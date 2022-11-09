@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const noticeCtrl = require('../controller/noticeCtrl');
+// const express = require('express');
+// const router = express.Router();
+// const noticeCtrl = require('../controller/noticeCtrl');
 
-router.get('/send', noticeCtrl.pushNotice);
+// router.get('/send', noticeCtrl.pushNotice);
 
-module.exports = router;
+// module.exports = router;
