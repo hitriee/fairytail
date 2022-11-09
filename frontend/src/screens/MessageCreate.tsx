@@ -5,7 +5,6 @@ import Message from '@messageCreate/Message';
 import Loading from '@components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
-import CheckBox from '@/components/messageCreate/CheckBox';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '../apis/Recoil';
 import Toggle from '@/components/messageCreate/Toggle';
@@ -105,11 +104,11 @@ function MessageCreate() {
   }
 
   return (
-    <div className="screen" ref={screenRef}>
+    <div className="screen messageList" ref={screenRef}>
       {loading ? <Loading /> : null}
 
       <MoveToBack path="/main" />
-      <div className="container message-create-container">
+      <div className="container">
         <Carousel
           emojiNo={emojiNo}
           onSlideChange={setEmojiNo}
@@ -136,7 +135,6 @@ function MessageCreate() {
               <Message content={content} setContent={setContent} />
 
               <div className="message-create-save-container">
-                {/* <CheckBox label="비공개" onClick={setIsShare} /> */}
                 <Toggle label="비공개" onClick={setIsShare} value={isShare} />
                 <button className="btn" onClick={handleSubmit}>
                   등록

@@ -1,31 +1,29 @@
-.count {
-  margin-top: 2%;
-  margin-bottom: 2%;
-  font-size: 1.5vh;
-}
-
-.white {
-  color: white;
-}
-
-.icon {
-  &-nav {
-    width: 7%;
-    // height: 20%;
-  }
-  &-like {
-    width: 7%;
-    // height: 10%;
-  }
-}
-
-.balloon {
-  width: 20%;
-  display: block;
-}
-
-.etc {
+.like {
+  height: 30vh;
+  padding-top: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-icon {
+    height: 3.5vh;
+    margin-right: 2vh;
+    cursor: pointer;
+  }
+
+  &-count {
+    margin: 0;
+    font-size: 2.5vh;
+    color: white;
+  }
+
+  &-balloon {
+    height: 25vh;
+  }
 }

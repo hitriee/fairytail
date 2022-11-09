@@ -1,32 +1,27 @@
-import {Preview} from '@components/messageCreate/Message';
+import Preview from '@messageCreate/Preview';
 import '@messageDetail/Content.scss';
-// import '@styles/_common.scss';
-interface props {
+
+interface ContentProps {
   title: string;
   content: string;
   type: number;
   date: string;
+  status: number;
 }
 
-function Content({title, content, type, date}: props) {
-  const findClass = () => {
-    if (type === 0) {
-      return 'detail-card detail-card-text';
-    } else if (type === 3) {
-      return 'detail-card detail-card-audio';
-    } else {
-      return '';
-    }
-  };
+const statusArr = ['공개', '비공개', '차단'];
+
+function Content({title, content, type, date, status}: ContentProps) {
   return (
     <article className="detail-container">
-      <p className="center white detail-title">{title}</p>
-      <div className={findClass()}>
-        <div className="detail-content">
-          <Preview type={type} fileURL={content} />
-        </div>
+      <p className="detail-title">{title}</p>
+      <div className="detail-content">
+        <Preview type={type} fileURL={content} />
       </div>
-      <p className="detail-date white">{date}</p>
+      <div className="detail-bottom-container">
+        <span className="detail-date">{date}</span>
+        <span className="detail-date">{statusArr[status]}</span>
+      </div>
     </article>
   );
 }
