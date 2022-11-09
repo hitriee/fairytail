@@ -4,6 +4,7 @@ import com.fairytail.user.jpa.UserEntity;
 import com.fairytail.user.jpa.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.env.Environment;
@@ -20,7 +21,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -42,19 +46,22 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         // JWT - access token 만들기
         String token = "";
-        if(!user.isEmpty()) {
+        Key key = Keys.hmacShaKeyFor(Objects.requireNonNull(env.getProperty("token.secret")).getBytes(StandardCharsets.UTF_8));
+
+        if(user.isPresent()) {
             token = Jwts.builder()
                     .setSubject(email)
                     .setExpiration(new Date(System.currentTimeMillis() +
-                            Long.parseLong(env.getProperty("token.expiration_time"))))
-                    .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret")).compact();
+                            Long.parseLong(Objects.requireNonNull(env.getProperty("token.expiration_time")))))
+                    .signWith(key, SignatureAlgorithm.HS256)
+                    .compact();
         }
 
         String url = "http://localhost:3000/main";
 
         String uri = UriComponentsBuilder.fromUriString(url)
-//                .queryParam("accessToken", token)
-//                .queryParam("userId", user.get().getId())
+                .queryParam("accessToken", token)
+                .queryParam("userId", user.map(UserEntity::getId).orElse(null))
                 .build().toUriString();
 
         log.debug("*********************************************** JWT Token created.");
@@ -66,7 +73,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             return;
         }
 
-        response.addHeader("hello", "hello");
         redirectStrategy.sendRedirect(request, response, uri);
 //        response.addHeader("token", token);
 //        response.addHeader("userId", String.valueOf(user.get().getId()));
