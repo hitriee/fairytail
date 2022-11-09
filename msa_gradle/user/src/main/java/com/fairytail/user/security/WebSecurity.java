@@ -11,7 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-
 public class WebSecurity extends WebSecurityConfigurerAdapter  {
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -41,7 +40,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter  {
                 .and()
                 .successHandler(oAuth2SuccessHandler);  // JWT - access token을 발행한다. 따로 refresh 토큰을 발급하지는 않고 단일 access token만을 사용한다.
 
-        /** TODO: h2 데이터베이스 조회 시, 프레임 엑스박스 현상 - 추후 삭제 예정 */
-        http.headers().frameOptions().disable();
+        /** h2 데이터베이스 조회 시, 프레임 엑스박스 현상 해결 - 삭제
+        http.headers().frameOptions().disable(); */
     }
 }
