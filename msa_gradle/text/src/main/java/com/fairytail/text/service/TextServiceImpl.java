@@ -24,14 +24,13 @@ public class TextServiceImpl implements TextService {
     private final LikeRepository likeRepository;
 
     @Override
-    public TextDto saveText(TextDto textDto) {
-        TextEntity requestEntity = modelMapper.map(textDto, TextEntity.class);
+    public TextDto saveText(TextDto requestDto) {
+        /** 나머지 필요한 값들 지정해주기 (userId와 dayType은 임시로!!) */
+        requestDto.setUserId(1L);
+        requestDto.setDate(LocalDateTime.now());
+        requestDto.setDayType(0);
 
-        // 나머지 필요한 값들 지정해주기 (userId와 dayType은 임시로!!)
-        requestEntity.setUserId(1L);
-        requestEntity.setDate(LocalDateTime.now());
-        requestEntity.setDayType(0);
-
+        TextEntity requestEntity = modelMapper.map(requestDto, TextEntity.class);
         TextEntity responseEntity = textRepository.save(requestEntity);
 
         return modelMapper.map(responseEntity, TextDto.class);
@@ -52,7 +51,7 @@ public class TextServiceImpl implements TextService {
             responseDto.setIsLike(isLike);
         }
         else {
-            // textEntity 없을 경우 에러처리
+            /** textEntity 없을 경우 예외처리 */
         }
 
         return responseDto;
@@ -111,6 +110,26 @@ public class TextServiceImpl implements TextService {
         }
 
         return 0; // 삭제 실패 시 0 반환
+    }
+
+    @Override
+    public TextDetailDto updateTextStatus(TextDetailDto requestDto) {
+        Optional<TextEntity> selectedTextEntity = textRepository.findById(requestDto.getPostId());
+        TextEntity requestEntity = null;
+        TextEntity responseEntity = null;
+
+        if (selectedTextEntity.isPresent()) {
+            requestEntity = selectedTextEntity.get();
+            requestEntity.setStatus(requestDto.getStatus());
+            responseEntity = textRepository.save(requestEntity);
+        }
+        else {
+            /** textEntity 없을 경우 예외처리 */
+        }
+
+        TextDetailDto responseDto = modelMapper.map(responseEntity, TextDetailDto.class);
+
+        return responseDto;
     }
 
 

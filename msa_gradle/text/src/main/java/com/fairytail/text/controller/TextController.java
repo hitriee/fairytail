@@ -145,6 +145,21 @@ public class TextController {
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
 
+    @ApiOperation(value = "텍스트 메시지 상태 변경", notes = "해당 post_id에 해당하는 메시지의 상태를 변경합니다.")
+    @PostMapping("/status")
+    public ResponseEntity<HashMap<String, Object>> updateTextStatus(@RequestBody TextStatusRequest requestVo) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        TextDetailDto requestDto = modelMapper.map(requestVo, TextDetailDto.class);
+        TextDetailDto responseDto = textService.updateTextStatus(requestDto);
+        TextDetailResponse responseVo = modelMapper.map(responseDto, TextDetailResponse.class);
+
+        resultMap.put("data", responseVo);
+        resultMap.put("message", SUCCESS);
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
+
 
 
 

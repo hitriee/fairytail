@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TextService {
 
-    TextDto saveText(TextDto textDto);
+    TextDto saveText(TextDto requestDto);
 
     TextDetailDto getTextDetail(Long postId, Long userId);
 
@@ -18,5 +18,7 @@ public interface TextService {
     List<TextDto> getAllTextList();
 
     Integer deleteText(Long postId);
+
+    TextDetailDto updateTextStatus(TextDetailDto requestDto);
 
 }
