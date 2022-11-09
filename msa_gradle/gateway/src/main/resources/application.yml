@@ -20,8 +20,8 @@ spring:
             - id: user
               uri: lb://USER
               predicates: # 전제 조건
-                  - Path=/user/health_check
-              filters:
-                  - RewritePath=/user/(?<segment>.*), /$\{segment}
+                  - Path=http://k7c209.p.ssafy.io:9096/health_check
+#              filters:
+#                  - RewritePath=/user/(?<segment>.*), /$\{segment}
 
 
