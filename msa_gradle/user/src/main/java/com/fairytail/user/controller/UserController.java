@@ -15,7 +15,6 @@ public class UserController {
     @Resource
     private Environment env;
 
-
     @ApiOperation(value = "Service 상태 체크", notes = "User Service 상태 체크를 위한 API 입니다.")
     /** Service 상태 체크 (삭제 금지!) */
     @GetMapping("/health_check")

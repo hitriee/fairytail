@@ -57,6 +57,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 //                .queryParam("userId", user.get().getId())
                 .build().toUriString();
 
+        log.debug("*********************************************** JWT Token created.");
+
         if (response.isCommitted()) {
            log.debug(
                     "Response has already been committed. Unable to redirect to "
