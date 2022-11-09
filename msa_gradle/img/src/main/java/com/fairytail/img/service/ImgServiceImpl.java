@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -82,5 +83,23 @@ public class ImgServiceImpl implements ImgService {
             }
         }
         return data;
+    }
+
+    @Override
+    public List<ImgDto> readImgListLatest(Double lat, Double lng) throws Exception {
+        List<ImgEntity> list = imgRepository.findListLatest(lat, lng);
+        List<ImgDto> data = null;
+        if(list != null){
+            for (ImgEntity l: list) {
+                ImgDto insert = modelMapper.map(l, ImgDto.class);
+                data.add(insert);
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public List<ImgDto> readImgListLike(Double lat, Double lng) throws Exception {
+        return null;
     }
 }

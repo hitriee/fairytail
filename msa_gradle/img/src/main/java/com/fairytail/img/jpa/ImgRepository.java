@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,4 +17,7 @@ public interface ImgRepository extends JpaRepository<ImgEntity, Long> {
 
     @Transactional
     Long deleteByPostId(Long postId);
+
+    @Query(value = "select * from ImgEntity i where i.lat=:lat and i.lng=:lng order by i.date desc limit 25", nativeQuery = true)
+    List<ImgEntity> findListLatest(Double lat, Double lng);
 }
