@@ -19,6 +19,7 @@ import java.util.Optional;
 public class TextServiceImpl implements TextService {
 
     private final ModelMapper modelMapper;
+
     private final TextRepository textRepository;
 
     private final LikeRepository likeRepository;

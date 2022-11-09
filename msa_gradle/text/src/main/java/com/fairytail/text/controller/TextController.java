@@ -137,9 +137,9 @@ public class TextController {
     public ResponseEntity<HashMap<String, Object>> deleteText(@PathVariable("post_id") Long postId) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
-        Integer result = textService.deleteText(postId);
+        Integer response = textService.deleteText(postId);
 
-        if (result == 1) resultMap.put("message", SUCCESS);
+        if (response == 1) resultMap.put("message", SUCCESS);
         else resultMap.put("message", FAIL);
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
