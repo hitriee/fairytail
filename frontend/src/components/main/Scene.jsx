@@ -12,6 +12,8 @@ import {
   messageCreate,
   settings,
 } from '../../apis/router.ts';
+import {useRecoilState} from 'recoil';
+import {playingState} from '@/apis/playBgm';
 
 export default function Scene({...props}) {
   const {nodes, materials} = useSpline(
@@ -25,6 +27,8 @@ export default function Scene({...props}) {
   const moveMessage = () => navigate(messageList());
   const moveCreate = () => navigate(messageCreate());
   const moveSettings = () => navigate(settings());
+
+  const [onPlay, setOnPlay] = useRecoilState(playingState);
 
   return (
     <>
@@ -1251,6 +1255,7 @@ export default function Scene({...props}) {
               position={[-1.37, -178.62, 13.24]}
               rotation={[0, 0.04, 0.16]}
               scale={[1, 1, 0.86]}
+              onClick={() => setOnPlay(!onPlay)}
             />
             <mesh
               name="Shape 4"
@@ -1259,6 +1264,7 @@ export default function Scene({...props}) {
               castShadow
               receiveShadow
               position={[-27.71, -266.66, 4.48]}
+              onClick={() => setOnPlay(!onPlay)}
             />
             <mesh
               name="Shape 3"
@@ -1269,6 +1275,7 @@ export default function Scene({...props}) {
               position={[-25.83, -106.07, 3.57]}
               rotation={[0, 0, 0]}
               scale={1}
+              onClick={() => setOnPlay(!onPlay)}
             />
             <mesh
               name="Shape 2"
@@ -1277,6 +1284,7 @@ export default function Scene({...props}) {
               castShadow
               receiveShadow
               position={[-82, -132.42, -38.9]}
+              onClick={() => setOnPlay(!onPlay)}
             />
           </group>
           <group

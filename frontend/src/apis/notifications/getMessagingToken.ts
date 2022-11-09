@@ -4,7 +4,6 @@ import initMessage from './foregroundMessaging';
 
 const messaging = getMessaging(app);
 
-//토큰값 얻기
 export const initToken = async () => {
   const token = getToken(messaging, {
     vapidKey: process.env.REACT_APP_VAPID_KEY,

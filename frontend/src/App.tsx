@@ -5,8 +5,10 @@ import {
 } from '@apis/notifications/getMessagingToken';
 import initMessage from '@apis/notifications/foregroundMessaging';
 
-import React, {Suspense, useEffect} from 'react';
+import React, {Suspense, useEffect, useState, useRef} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import bgm from '@bgms/silver_waves.mp3';
+
 import '@/App.scss';
 
 import Loading from '@components/loading/Loading';
@@ -23,7 +25,7 @@ import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
 
 //recoil
-import {RecoilRoot} from 'recoil';
+import {useRecoilValue, RecoilRoot, useRecoilState} from 'recoil';
 // router
 import {
   main,
@@ -39,14 +41,33 @@ import {
   settings,
   notifications,
 } from '@apis/router';
+import {playingState} from '@apis/playBgm';
 
 function App() {
   initToken();
   useEffect(initMessage, []);
+  const [onPlay, setOnPlay] = useRecoilState(playingState);
+  const ref = useRef<HTMLAudioElement>(null!);
+  // useEffect(() => {
+
+  // })
+  // const handlePlay = () => {
+  //   if (onPlay) {
+  //     ref.current && ref.current.pause();
+  //   } else {
+  //     ref.current && ref.current.play();
+  //   }
+  //   setOnPlay(prev => !prev);
+  // };
+  // const recoilPlay = useRecoilValue(playingState);
+  // useEffect(() => {
+  //   setOnPlay(recoilPlay);
+  // }, [recoilPlay]);
 
   return (
-    <BrowserRouter>
-      <RecoilRoot>
+    <>
+      <BrowserRouter>
+        {/* <RecoilRoot> */}
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path={intro()} element={<Intro />} />
@@ -64,8 +85,10 @@ function App() {
             {/* <Route path="/loading" element={<Loading />} /> */}
           </Routes>
         </Suspense>
-      </RecoilRoot>
-    </BrowserRouter>
+        {/* </RecoilRoot> */}
+      </BrowserRouter>
+      {onPlay ? <audio autoPlay loop src={bgm} /> : null}
+    </>
   );
 }
 export default App;

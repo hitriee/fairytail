@@ -16,11 +16,7 @@ const config = {
   measurementId: "G-9K68TDR453",
 };
 
-// 추가로 databaseURL 넣을 수 있음
-
-// Initialize Firebase
 const app = firebase.initializeApp(config);
-
 const messaging = firebase.messaging(app);
 
 //백그라운드 서비스워커 설정
@@ -44,7 +40,6 @@ messaging.onBackgroundMessage((payload) => {
       //   },
       // ],
     };
-    // console.log(notificationTitle, notificationOptions);
     self.registration.showNotification(notificationTitle, notificationOptions);
   }
 });

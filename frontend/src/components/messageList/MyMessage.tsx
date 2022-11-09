@@ -1,6 +1,6 @@
 import React from 'react';
 import {smallEmojiArr} from '../../assets/emojis';
-import {ReactComponent as Heart} from '@images/heart-solid.svg';
+import {ReactComponent as Heart} from '@images/heartFilled.svg';
 import './MyMessage.scss';
 
 interface itemProps {
