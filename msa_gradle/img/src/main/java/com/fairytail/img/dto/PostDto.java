@@ -25,5 +25,5 @@ public class PostDto {
     private LocalDateTime date;
     private Integer status;
     private MultipartFile file;
-    private Long likeCnt;
+    private Integer likeCnt;
 }
