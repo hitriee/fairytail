@@ -64,6 +64,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             return;
         }
 
+        response.addHeader("hello", "hello");
         redirectStrategy.sendRedirect(request, response, uri);
 //        response.addHeader("token", token);
 //        response.addHeader("userId", String.valueOf(user.get().getId()));
