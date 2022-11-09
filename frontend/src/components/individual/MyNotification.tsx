@@ -41,24 +41,18 @@ function MyNotification({item, index, deleteEach}: itemProps) {
   };
 
   return (
-    <>
-      <div
-        className="myNotification"
-        draggable
-        onClick={toDetail(id)}
-        onDragStart={handleDragStart}>
-        <img
-          src={emojiArr[emoji]}
-          alt="emoji"
-          className="myNotification-emoji"
-        />
-        <p>
-          익명의 작가가 당신의 이야기 <br />
-          <span className="myNotification-title">{shortTitle()}</span>을
-          좋아합니다
-        </p>
-      </div>
-    </>
+    <div
+      className="myNotification"
+      draggable
+      onClick={toDetail(id)}
+      onDragStart={handleDragStart}>
+      <img src={emojiArr[emoji]} alt="emoji" className="myNotification-emoji" />
+      <p className="myNotification-message">
+        익명의 작가가 당신의 이야기 <br />
+        <span className="myNotification-title">{shortTitle()}</span>을
+        좋아합니다.
+      </p>
+    </div>
   );
 }
 

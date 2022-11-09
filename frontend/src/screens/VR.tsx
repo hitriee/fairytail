@@ -20,6 +20,7 @@ function VR() {
   // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
+
   // 받은 위치 정보로 서버에 데이터 요청
   const {state} = useLocation() as RouteState;
 
@@ -57,7 +58,7 @@ function VR() {
       navigate('/message/create');
     } else if (typeof ev.data === 'number') {
       setPostId(ev.data);
-      navigate(`/message/detail/${postId}`);
+      navigate(`/message/detail/${ev.data}`);
     }
   };
 
@@ -76,7 +77,7 @@ function VR() {
         className="vr-frame"
         url="../iframeVR/IframeVR.html"
         frameBorder={0}
-        onLoad={() => setTimeout(() => setIsLoaded(true), 1500)}
+        onLoad={() => setIsLoaded(true)}
       />
     </div>
   );

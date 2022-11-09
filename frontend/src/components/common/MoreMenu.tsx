@@ -10,7 +10,7 @@ import {popUp} from '@common/commonFunc';
 import {toMessageUpdate} from '@/apis/router';
 import '@common/Common.scss';
 
-interface props {
+interface MoreMenuProps {
   open: boolean;
   isMine: boolean;
   detail: any;
@@ -30,7 +30,7 @@ function MoreMenu({
   content,
   close,
   status,
-}: props) {
+}: MoreMenuProps) {
   const navigate = useNavigate();
   const [info, setInfo] = useState({title: '', message: ''});
   const [openConfirm, setConfirm] = useState(false);
@@ -51,12 +51,26 @@ function MoreMenu({
     close();
     if (type === 0) {
       const height = window.innerHeight;
-      html2canvas(detail.current, {height}).then(canvas => {
-        saveAs(canvas.toDataURL(), 'fairytail.png');
+      const width = window.innerWidth;
+
+      let x = 0;
+      let resultWidth = width;
+
+      if (width / height > 9 / 16) {
+        resultWidth = (height * 56.25) / 100;
+        x = (width - resultWidth) / 2;
+      }
+
+      html2canvas(detail.current, {
+        x: x,
+        width: resultWidth,
+        height: height,
+      }).then(canvas => {
+        saveAs(canvas.toDataURL(), `fairytail_${messageId}.png`);
       });
     } else {
       // content는 url형식
-      saveAs(content, 'fairytail.png');
+      saveAs(content, `fairytail_${messageId}.png`);
     }
   };
   // 신고 팝업
@@ -79,14 +93,14 @@ function MoreMenu({
     setNewStatus(prev => 1 - prev);
     // 변경되었음을 알림
     changeInfo(
-      '공개 여부 변경 확인',
-      `작성한 메시지가 ${presentStatus(1 - newStatus)}로 변경되었습니다`,
+      '완료',
+      `작성한 메시지가\n${presentStatus(1 - newStatus)}로 변경되었습니다.`,
     );
     setAlert(returnTrue);
   };
   // 삭제 확인
   const onDelete = () => {
-    changeInfo('삭제 확인', '정말 이 글을 삭제하시겠습니까?');
+    changeInfo('확인', '정말 삭제하시겠습니까?');
     setConfirm(returnTrue);
     close();
   };
@@ -113,7 +127,7 @@ function MoreMenu({
     setDeleted(returnTrue);
     // axios.delete('url')
     // .then(())
-    changeInfo('삭제 확인', '글이 정상적으로 삭제되었습니다');
+    changeInfo('완료', '글이 정상적으로 삭제되었습니다');
     setAlert(returnTrue);
     setConfirm(returnFalse);
     // 동기로 처리
@@ -122,44 +136,42 @@ function MoreMenu({
 
   return (
     <>
-      <div className="right">
-        {open ? (
-          <main id="menu">
-            {isMine ? (
-              <>
-                <article
-                  className="button button-not center"
-                  onClick={changeStatus}>
-                  {`${presentStatus(1 - newStatus)}로 변경`}
-                </article>
-                <article
-                  className="button button-not center"
-                  onClick={onDelete}>
-                  삭제
-                </article>
-              </>
-            ) : (
-              <>
-                <article
-                  className="button button-not center"
-                  onClick={reportMessage}>
-                  신고
-                </article>
-              </>
-            )}
-            <article className="button button-not center" onClick={saveMessage}>
-              저장
-            </article>
-          </main>
-        ) : null}
-      </div>
+      {open ? (
+        <main id="menu">
+          {isMine ? (
+            <>
+              <article className="button" onClick={changeStatus}>
+                {`${presentStatus(1 - newStatus)}로 변경`}
+              </article>
+              <article className="button" onClick={onDelete}>
+                삭제
+              </article>
+            </>
+          ) : (
+            <>
+              <article className="button" onClick={reportMessage}>
+                신고
+              </article>
+            </>
+          )}
+          <article className="button" onClick={saveMessage}>
+            저장
+          </article>
+        </main>
+      ) : null}
+
+      {/* 공개 여부 변경 모달 */}
+      <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
+
+      {/* 삭제 확인 모달 */}
       <Confirm
         info={info}
         onConfirmed={deleteMessage}
         onCancel={onCancel}
         open={openConfirm}
       />
-      <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
+
+      {/* 신고 모달 */}
       <Report onCancel={onReportCancel} open={openReport} />
     </>
   );

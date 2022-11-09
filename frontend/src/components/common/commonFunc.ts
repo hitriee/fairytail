@@ -11,4 +11,16 @@ export interface popUp {
 export const bgmList = [
   {title: 'slow motion', bgm: slowmotion},
   {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
+  {title: 'silver waves', bgm: silverWaves},
 ];

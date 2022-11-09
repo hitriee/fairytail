@@ -2,7 +2,6 @@ import {Content} from '@/screens/MessageCreate';
 import React, {useRef, useState, Dispatch, SetStateAction} from 'react';
 import '../../screens/MessageCreate.scss';
 import './Message.scss';
-import MusicPlayer from './MusicPlayer';
 import {ReactComponent as ImageIcon} from '@images/image.svg';
 import {ReactComponent as ImageFillIcon} from '@images/imageFill.svg';
 import {ReactComponent as VideoIcon} from '@images/video.svg';
@@ -11,34 +10,7 @@ import {ReactComponent as AudioIcon} from '@images/audio.svg';
 import {ReactComponent as AudioFillIcon} from '@images/audioFill.svg';
 import {ReactComponent as TextIcon} from '@images/text.svg';
 import {ReactComponent as TextFillIcon} from '@images/textFill.svg';
-
-type PreviewProps = {
-  type: number;
-  fileURL: string;
-};
-
-export function Preview({type, fileURL}: PreviewProps) {
-  let preview: any;
-
-  if (type === 1) {
-    preview = (
-      <img className="message-create-content-image" src={fileURL} alt="사진" />
-    );
-  } else if (type === 2) {
-    preview = (
-      <video
-        className="message-create-content-image"
-        controls={true}
-        playsInline={true}>
-        <source src={fileURL} />
-      </video>
-    );
-  } else if (type === 3) {
-    preview = <MusicPlayer fileURL={fileURL} />;
-  }
-
-  return preview;
-}
+import Preview from '@messageCreate/Preview';
 
 const fileTypeArr = ['', 'image', 'video', 'audio'];
 const fileTypeKoArr = ['', '사진', '영상', '음성'];

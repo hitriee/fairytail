@@ -9,7 +9,7 @@ type ToggleProps = {
 
 function Toggle({label, onClick, value = false}: ToggleProps) {
   return (
-    <div className={`toggle-container`}>
+    <div className={`toggle-container`} onClick={() => onClick(prev => !prev)}>
       <label htmlFor="toggle" className={`toggle-label`}>
         {label}
       </label>
