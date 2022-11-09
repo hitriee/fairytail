@@ -17,4 +17,5 @@ public class ResponsePost {
     private Double lng;
     private LocalDateTime date;
     private Integer status;
+    private Integer likeCnt;
 }

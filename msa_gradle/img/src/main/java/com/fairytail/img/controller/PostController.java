@@ -2,6 +2,7 @@ package com.fairytail.img.controller;
 
 import com.fairytail.img.dto.PostDto;
 import com.fairytail.img.dto.PostLikeDto;
+import com.fairytail.img.dto.PostPutDto;
 import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.service.PostService;
 import com.fairytail.img.util.S3Util;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +75,10 @@ public class PostController {
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostDto res = postService.readPost(postId);
-        ResponsePost data = modelMapper.map(res, ResponsePost.class);
+        ResponsePost data = null;
+        if(res != null){
+            data = modelMapper.map(res, ResponsePost.class);
+        }
         if(data != null){
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
@@ -89,12 +94,15 @@ public class PostController {
      */
     @ApiOperation(value = "이미지 게시글 공개 여부 수정", notes = "이미지 게시글 공개 여부 수정 API 입니다.")
     @PutMapping("/post")
-    public ResponseEntity<?> putPost(PostDto dto) throws Exception{
+    public ResponseEntity<?> putPost(PostPutDto dto) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostDto res = postService.putPost(dto);
-        ResponsePost data = modelMapper.map(res, ResponsePost.class);
+        ResponsePost data = null;
+        if(res != null){
+            data = modelMapper.map(res, ResponsePost.class);
+        }
         if(res != null){
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
@@ -133,7 +141,7 @@ public class PostController {
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         List<PostDto> res = postService.readPostListLatest(lat, lng);
-        List<ResponsePostList> data = null;
+        List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r:res) {
             ResponsePostList d = modelMapper.map(r, ResponsePostList.class);
             data.add(d);
@@ -161,14 +169,14 @@ public class PostController {
     /**
      *
      */
-    @ApiOperation(value = "내 이미지 게시글 리스트 조회", notes = "근처 이미지 게시글 최신순 리스트 조회 API 입니다.")
+    @ApiOperation(value = "내 이미지 게시글 리스트 조회", notes = "내 이미지 게시글 최신순 리스트 조회 API 입니다.")
     @GetMapping("/post/list/{userId}")
     public ResponseEntity<?> readMyPostList(@PathVariable Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         List<PostDto> res = postService.readMyPostList(userId);
-        List<ResponsePostList> data = null;
+        List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r:res) {
             ResponsePostList d = modelMapper.map(r, ResponsePostList.class);
             data.add(d);
@@ -188,7 +196,10 @@ public class PostController {
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostDto res = postService.createLike(dto);
-        ResponsePost data = modelMapper.map(res, ResponsePost.class);
+        ResponsePost data = null;
+        if (res != null){
+            data = modelMapper.map(res, ResponsePost.class);
+        }
         if(data != null){
            resultMap.put("data", data);
            resultMap.put("message", OKAY);
@@ -200,7 +211,6 @@ public class PostController {
 
     @PostMapping("/post/report")
     public ResponseEntity<?> createReport(PostReportDto dto) throws Exception{
-        ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         Boolean res = postService.createReport(dto);

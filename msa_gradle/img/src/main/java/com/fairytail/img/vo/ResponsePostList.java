@@ -2,6 +2,8 @@ package com.fairytail.img.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ResponsePostList {
     private Long postId;
@@ -9,4 +11,5 @@ public class ResponsePostList {
     private String title;
     private Integer likeCnt;
     private Integer emojiNo;
+    private LocalDateTime date;
 }

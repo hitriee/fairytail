@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     @Transactional
     Long deleteByPostId(Long postId);
 
-    @Query(value = "select * from ImgEntity i where i.lat=:lat and i.lng=:lng order by i.date desc limit 25", nativeQuery = true)
+    @Query(value = "select * from PostEntity p where lat=:lat and lng=:lng order by date desc limit 25", nativeQuery = true)
     List<PostEntity> findListLatest(Double lat, Double lng);
 
     List<PostEntity> findTop25ByLatAndLngOrderByDateDesc(Double lat, Double lng);

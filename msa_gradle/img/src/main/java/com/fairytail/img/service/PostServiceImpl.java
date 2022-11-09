@@ -3,17 +3,20 @@ package com.fairytail.img.service;
 
 import com.fairytail.img.dto.PostDto;
 import com.fairytail.img.dto.PostLikeDto;
+import com.fairytail.img.dto.PostPutDto;
 import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.jpa.*;
 import com.fairytail.img.util.MainUtil;
 import com.fairytail.img.util.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +64,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto putPost(PostDto dto) throws IOException{
+    public PostDto putPost(PostPutDto dto) throws IOException{
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
         Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
@@ -94,8 +97,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> readPostListLatest(Double lat, Double lng) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-        List<PostEntity> list = postRepository.findListLatest(lat, lng);
-        List<PostDto> data = null;
+        List<PostEntity> list = postRepository.findTop25ByLatAndLngOrderByDateDesc(lat, lng);
+        List<PostDto> data = new ArrayList<>();
         if(list != null){
             for (PostEntity l: list) {
                 PostDto insert = modelMapper.map(l, PostDto.class);
@@ -114,7 +117,7 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> readMyPostList(Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         List<PostEntity> list = postRepository.findByUserIdOrderByDateDesc(userId);
-        List<PostDto> data = null;
+        List<PostDto> data = new ArrayList<>();
         if(list != null){
             for (PostEntity l :list){
                 PostDto insert = modelMapper.map(l, PostDto.class);
@@ -128,15 +131,20 @@ public class PostServiceImpl implements PostService {
     public PostDto createLike(PostLikeDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
-        PostLikeEntity postLike = modelMapper.map(dto, PostLikeEntity.class);
-        postLikeRepository.save(postLike);
-        Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
-        if(optional.isPresent()){
-            PostEntity post = optional.get();
-            Long count = postLikeRepository.countByPostId(dto.getPostId());
-            post.setLikeCnt(count);
-            postRepository.save(post);
-            data = modelMapper.map(post, PostDto.class);
+        Optional<PostLikeEntity> optionalLike = postLikeRepository.findByPostIdAndUserId(dto.getPostId(), dto.getUserId());
+        if(optionalLike.isPresent()){
+            return null;
+        } else{
+            PostLikeEntity postLike = modelMapper.map(dto, PostLikeEntity.class);
+            postLikeRepository.save(postLike);
+            Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+            if(optional.isPresent()){
+                PostEntity post = optional.get();
+                Long count = postLikeRepository.countByPostId(dto.getPostId());
+                post.setLikeCnt(count);
+                postRepository.save(post);
+                data = modelMapper.map(post, PostDto.class);
+            }
         }
         return data;
     }
@@ -159,6 +167,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Boolean createReport(PostReportDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         Optional<PostReportEntity> optional = postReportRepository.findByPostIdAndUserId(dto.getPostId(), dto.getUserId());
         if (optional.isPresent()){
             return false;
