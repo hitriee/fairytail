@@ -18,8 +18,8 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-    fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
-    register-with-eureka: true       # client 등록 시, true로 세팅
+    fetch-registry: false    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
+    register-with-eureka: false       # client 등록 시, true로 세팅
     service-url:
       # TODO: eureka 서버 주소로 변경 필요
       defaultZone: http://k7c209.p.ssafy.io:8761/
