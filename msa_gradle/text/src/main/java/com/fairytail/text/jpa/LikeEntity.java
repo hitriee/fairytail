@@ -1,5 +1,7 @@
 package com.fairytail.text.jpa;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ public class LikeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postId")
+    @JsonBackReference
     private TextEntity post;
 
     // 현재 매핑 안된 상태!! 임시로 user_id 넣어서 테스트할 것

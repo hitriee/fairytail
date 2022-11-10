@@ -8,6 +8,7 @@ import com.fairytail.text.jpa.TextRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class LikeServiceImpl implements LikeService {
     private final LikeRepository likeRepository;
 
     @Override
+    @Transactional
     public Integer updateTextLike(LikeDto requestDto) {
         Optional<TextEntity> selectedTextEntity = textRepository.findById(requestDto.getPostId());
         TextEntity textEntity = null;
@@ -33,9 +35,14 @@ public class LikeServiceImpl implements LikeService {
             if (requestDto.getIsLike()) { // 좋아요 눌렀을 때 요청 처리 -> like 테이블에 데이터 생성
                 requestDto.setWriterId(textEntity.getUserId());
 
+                // like 테이블에 데이터 추가
                 LikeEntity likeEntity = modelMapper.map(requestDto, LikeEntity.class);
                 likeEntity.setPost(textEntity);
                 likeRepository.save(likeEntity);
+
+                // post 테이블의 like_cnt 1 증가
+                textEntity.setLikeCnt(textEntity.getLikeCnt() + 1);
+                textRepository.save(textEntity);
 
                 response = 1;
             }
@@ -44,7 +51,13 @@ public class LikeServiceImpl implements LikeService {
                 Optional<LikeEntity> selectedLikeEntity = likeRepository.findByPostAndUserId(textEntity, requestDto.getUserId());
 
                 if (selectedLikeEntity.isPresent()) {
+                    // like 테이블의 데이터 삭제
                     likeRepository.delete(selectedLikeEntity.get());
+
+                    // post 테이블의 like_cnt 1 감소
+                    textEntity.setLikeCnt(textEntity.getLikeCnt() - 1);
+                    textRepository.save(textEntity);
+
                     response = 0;
                 }
                 else {

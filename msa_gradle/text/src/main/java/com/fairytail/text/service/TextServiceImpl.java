@@ -44,11 +44,11 @@ public class TextServiceImpl implements TextService {
 
         if (selectedTextEntity.isPresent()) {
             responseDto = modelMapper.map(selectedTextEntity.get(), TextDetailDto.class);
-            Integer likeCnt = likeRepository.countAllByPost(selectedTextEntity.get());
+//            Integer likeCnt = likeRepository.countAllByPost(selectedTextEntity.get());
             // userId 임의로 넣음!! -> 나중에 꼭 User 객체로 바꿔주기
             Boolean isLike = likeRepository.existsByPostAndUserId(selectedTextEntity.get(), userId);
 
-            responseDto.setLikeCnt(likeCnt);
+//            responseDto.setLikeCnt(likeCnt);
             responseDto.setIsLike(isLike);
         }
         else {
@@ -65,10 +65,11 @@ public class TextServiceImpl implements TextService {
         List<TextDetailDto> responseDtoList = new ArrayList<>();
 
         textEntityList.forEach(v -> {
-            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
-            Integer likeCnt = likeRepository.countAllByPost(v);
-            textDetailDto.setLikeCnt(likeCnt);
-            responseDtoList.add(textDetailDto);
+//            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
+//            Integer likeCnt = likeRepository.countAllByPost(v);
+//            textDetailDto.setLikeCnt(likeCnt);
+//            responseDtoList.add(textDetailDto);
+            responseDtoList.add(modelMapper.map(v, TextDetailDto.class));
         });
 
         return responseDtoList;
@@ -88,10 +89,11 @@ public class TextServiceImpl implements TextService {
         List<TextDetailDto> responseDtoList = new ArrayList<>();
 
         textEntityList.forEach(v -> {
-            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
-            Integer likeCnt = likeRepository.countAllByPost(v);
-            textDetailDto.setLikeCnt(likeCnt);
-            responseDtoList.add(textDetailDto);
+//            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
+//            Integer likeCnt = likeRepository.countAllByPost(v);
+//            textDetailDto.setLikeCnt(likeCnt);
+//            responseDtoList.add(textDetailDto);
+            responseDtoList.add(modelMapper.map(v, TextDetailDto.class));
         });
 
         return responseDtoList;
