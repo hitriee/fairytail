@@ -35,7 +35,7 @@ public class PostServiceImpl implements PostService {
 
     private final FfmpegUtil ffmpegUtil;
 
-    private String dirName = "image";
+    private String dirName = "video";
     @Override
     public PostDto createPost(PostDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
