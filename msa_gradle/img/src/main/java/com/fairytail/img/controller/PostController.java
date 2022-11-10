@@ -231,10 +231,10 @@ public class PostController {
         PostReportDto dto = modelMapper.map(req, PostReportDto.class);
         Boolean res = postService.createReport(dto);
         if(res){
-            resultMap.put("message", OKAY);
+            resultMap.put("message", "신고가 성공했습니다.");
             status = HttpStatus.OK;
         } else{
-            resultMap.put("message", FAIL);
+            resultMap.put("message", "이미 신고했습니다.");
         }
         return new ResponseEntity<>(resultMap, status);
     }

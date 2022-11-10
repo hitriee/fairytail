@@ -21,4 +21,6 @@ public class PostReportEntity {
     private Long postId;
     @Column(name = "user_id")
     private Long userId;
+    private Integer type;
+    private String content;
 }
