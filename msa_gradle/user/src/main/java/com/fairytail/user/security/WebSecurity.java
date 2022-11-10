@@ -48,5 +48,4 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
         /** h2 데이터베이스 조회 시, 프레임 엑스박스 현상 해결 - 삭제
         http.headers().frameOptions().disable(); */
     }
-
 }
