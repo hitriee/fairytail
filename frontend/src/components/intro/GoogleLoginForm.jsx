@@ -37,7 +37,7 @@ function GoogleLoginForm() {
           href="https://k7c209.p.ssafy.io/user/oauth2/authorization/google"
           class="btn btn-success active"
           role="button">
-          Google Login
+          Google Login..
         </a>
       </button>
     </div>
