@@ -29,8 +29,13 @@ public class UserController {
     }
 
     @ApiOperation(value = "Token 체크", notes = "토큰 체크를 위한 API 입니다.")
-    @GetMapping
+    @PostMapping
     public String tokenCheck(HttpServletRequest request) {
+        return request.getHeader("Authorization");
+    }
+
+    @GetMapping
+    public String tokenCheck2(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 
