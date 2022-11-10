@@ -19,6 +19,9 @@ public class S3Config {
     @Value("${cloud.aws.credentials.secret-key}")
     private String secretKey;
 
+    /**
+     * 지역, 인증키를 받아서 s3 API 객체를 빌드하여 리턴 받는 메서드
+     */
     @Bean
     public AmazonS3 amazonS3Client(){
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);

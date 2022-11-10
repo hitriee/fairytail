@@ -32,7 +32,6 @@ public class PostController {
     private Environment env;
     private final String OKAY= "SUCCESS";
     private final String FAIL= "FAIL";
-    private final S3Util s3Util;
     private final PostService postService;
     private static HttpStatus status = null;
 
@@ -55,9 +54,9 @@ public class PostController {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostDto dto = modelMapper.map(req, PostDto.class);
-        PostDto data = postService.createPost(dto);
-        if(data != null){
+        PostDto dto = modelMapper.map(req, PostDto.class); //dto에 맵핑
+        PostDto data = postService.createPost(dto); //서비스 실행
+        if(data != null){ //데이터가 null이 아니면 성공
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
