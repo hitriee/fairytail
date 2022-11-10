@@ -24,6 +24,9 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
 
         http.httpBasic().disable()
                 .csrf().disable();
+
+        http.cors()
+                .configurationSource(corsConfigurationSource());
         // session 정보를 따로 저장하지 않음 - 토큰으로 관리하기 위함
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
