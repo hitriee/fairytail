@@ -23,6 +23,7 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.httpBasic().disable()
+                .cors().disable()
                 .csrf().disable();
         // session 정보를 따로 저장하지 않음 - 토큰으로 관리하기 위함
         http.sessionManagement()
@@ -30,7 +31,6 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
 
         // 모든 요청에 관한 허가 - 권한 허가
         http.authorizeRequests()
-                .requestMatchers(request -> CorsUtils.isPreFlightRequest(request)).permitAll()
                 .anyRequest().permitAll();
 //                .hasIpAddress("")   TODO: 통과시키고 싶은 IP 주소 - 내부 IP만 접근 가능하도록 추후 설정 필요
 
