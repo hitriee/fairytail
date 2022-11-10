@@ -1,7 +1,6 @@
 package com.fairytail.img.controller;
 
 import com.fairytail.img.dto.PostDto;
-import com.fairytail.img.dto.PostLikeDto;
 import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.service.PostService;
 import com.fairytail.img.util.S3Util;
@@ -26,6 +25,7 @@ import java.util.Map;
 @CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/message")
 public class PostController {
 
     @Resource
@@ -50,7 +50,7 @@ public class PostController {
      * 이미지 게시글 생성
      */
     @ApiOperation(value = "이미지 게시글 생성", notes = "이미지 게시글 생성 API 입니다.")
-    @PostMapping("/post")
+    @PostMapping
     public ResponseEntity<?> createPost(RequestPost req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
@@ -71,7 +71,7 @@ public class PostController {
      *이미지 게시글 상세 조회
      */
     @ApiOperation(value = "이미지 게시글 상세 조회", notes = "이미지 게시글 상세 조회 API 입니다.")
-    @GetMapping("/post")
+    @GetMapping("/detail")
     public ResponseEntity<?> readPost(@RequestParam Long postId, @RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
@@ -95,7 +95,7 @@ public class PostController {
      * 이미지 게시글 공개 여부 수정
      */
     @ApiOperation(value = "이미지 게시글 공개 여부 수정", notes = "이미지 게시글 공개 여부 수정 API 입니다.")
-    @PutMapping("/post")
+    @PostMapping("status")
     public ResponseEntity<?> putPost(RequestPostPut req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
@@ -120,7 +120,7 @@ public class PostController {
      *
      */
     @ApiOperation(value = "이미지 게시글 삭제", notes = "이미지 게시글 삭제 API 입니다.")
-    @DeleteMapping("/post/{postId}")
+    @DeleteMapping("/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable Long postId) throws Exception{
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -138,7 +138,7 @@ public class PostController {
      * 좌표를 받아서 근처 글 리스트를 최신 순으로 25개 조회
      */
     @ApiOperation(value = "근처 이미지 게시글 최신순 리스트 조회", notes = "근처 이미지 게시글 최신순 리스트 조회 API 입니다.")
-    @GetMapping("post/list/latest")
+    @GetMapping("/vr/latest")
     public ResponseEntity<?> readPostListLatest(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
@@ -164,7 +164,7 @@ public class PostController {
      * 좌표를 받아서 근처 글 리스트를 좋아요 순으로 25개 조회
      */
     @ApiOperation(value = "근처 이미지 게시글 좋아요 순 리스트 조회", notes = "근처 이미지 게시글 좋아요 순 리스트 조회 API 입니다.")
-    @GetMapping("post/list/like")
+    @GetMapping("/vr/like")
     public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
@@ -191,7 +191,7 @@ public class PostController {
      *
      */
     @ApiOperation(value = "내 이미지 게시글 리스트 조회", notes = "내 이미지 게시글 최신순 리스트 조회 API 입니다.")
-    @GetMapping("/post/list/{userId}")
+    @GetMapping("/mylist/{userId}")
     public ResponseEntity<?> readMyPostList(@PathVariable Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
@@ -212,39 +212,6 @@ public class PostController {
         }
         return new ResponseEntity<>(resultMap, status);
     }
-    @ApiOperation(value = "게시글 좋아요 누르기", notes = "게시글 좋아요 누르기 API 입니다. 성공 시 좋아요 성공, 좋아요 취소 성공 메시지 출력")
-    @PostMapping("/post/like")
-    public ResponseEntity<?> createLike(RequestPostLike req) throws Exception{
-        ModelMapper modelMapper = new ModelMapper();
-        resultMap = new HashMap<>();
-        status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostLikeDto dto = modelMapper.map(req, PostLikeDto.class);
-        Boolean res = postService.createLike(dto);
-        if(res){
-            status = HttpStatus.OK;
-            resultMap.put("message", "좋아요 성공");
-        } else{
-            status = HttpStatus.OK;
-            resultMap.put("message", "좋아요 취소 성공");
-        }
-        return new ResponseEntity<>(resultMap, status);
-    }
-    @ApiOperation(value = "게시글 신고 기능", notes = "게시글 신고 기능")
-    @PostMapping("/post/report")
-    public ResponseEntity<?> createReport(RequestReport req) throws Exception{
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        resultMap = new HashMap<>();
-        status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostReportDto dto = modelMapper.map(req, PostReportDto.class);
-        Boolean res = postService.createReport(dto);
-        if(res){
-            resultMap.put("message", "신고가 성공했습니다.");
-            status = HttpStatus.OK;
-        } else{
-            resultMap.put("message", "이미 신고했습니다.");
-            status = HttpStatus.OK;
-        }
-        return new ResponseEntity<>(resultMap, status);
-    }
+
+
 }
