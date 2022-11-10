@@ -23,7 +23,6 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public Integer updateTextLike(LikeDto requestDto) {
-        /** userId 나중에 User 객체로 바꿔주기!! */
         Optional<TextEntity> selectedTextEntity = textRepository.findById(requestDto.getPostId());
         TextEntity textEntity = null;
         Integer response = null;
@@ -41,6 +40,7 @@ public class LikeServiceImpl implements LikeService {
                 response = 1;
             }
             else { // 좋아요 해제했을 때 요청 처리 -> like 테이블의 데이터 삭제
+                /** userId 나중에 User 객체로 바꿔주기!! */
                 Optional<LikeEntity> selectedLikeEntity = likeRepository.findByPostAndUserId(textEntity, requestDto.getUserId());
 
                 if (selectedLikeEntity.isPresent()) {

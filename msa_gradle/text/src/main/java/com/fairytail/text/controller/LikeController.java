@@ -30,9 +30,6 @@ public class LikeController {
 
     private final LikeService likeService;
 
-    private final String SUCCESS = "SUCCESS";
-    private final String FAIL = "FAIL";
-
     @ApiOperation(value = "좋아요 여부 변경", notes = "특정 유저의 특정 텍스트 메시지 좋아요 여부를 변경합니다.")
     @PostMapping
     public ResponseEntity<HashMap<String, Object>> updateTextLike(@RequestBody LikeRequest requestVo) {
