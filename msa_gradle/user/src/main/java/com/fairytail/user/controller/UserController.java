@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Token 체크", notes = "토큰 체크를 위한 API 입니다.")
-    @PostMapping
+    @GetMapping
     public String tokenCheck(HttpRequest request) {
         return request.headers().toString();
     }
