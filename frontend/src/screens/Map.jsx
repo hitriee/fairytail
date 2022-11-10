@@ -10,11 +10,11 @@ import {CustomMarkerIcon} from '@map/CustomMarker';
 import './Map.scss';
 import ClickMarker from '@/components/map/ClickMarker';
 import {useEffect, useState} from 'react';
-import axios from 'axios';
 import shuffle from '@images/shuffle.svg';
 import MoveToBack from '@/components/common/MoveToBack';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '../apis/Recoil';
+import {getMessageMap} from '@apis/map';
 
 function generateRandomFloat(min, max) {
   return Math.random() * (max - min) + min;
@@ -34,6 +34,7 @@ function Map() {
   // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
+
   // 클릭 시 팝업 표시, 해당 위치 좌표값
   const [isClicked, setIsClicked] = useState(false);
   const [position, setPosition] = useState({lat: -999, lng: -999});
@@ -45,7 +46,7 @@ function Map() {
   useEffect(() => {
     // 현재 위치 받아오기
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
+      navigator.geolocation.getCurrentPosition(async pos => {
         setCenter({
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
@@ -54,22 +55,15 @@ function Map() {
     }
 
     // 서버에서 데이터 받아오기
-    if (data !== []) {
-      axios
-        .get(
-          'http://www.randomnumberapi.com/api/v1.0/random?min=-90&max=90&count=100',
-        )
-        .then(response => {
-          const res = response.data;
-          const temp = [];
-
-          for (let i = 0; i < 100; i += 2) {
-            temp.push({lat: res[i], lng: res[i + 1]});
-          }
-
-          setData(temp);
-        });
-    }
+    // for (let i = 0; i < 4; i++) {
+    getMessageMap(0, center)
+      .then(res => {
+        setData(prev => prev.concat(res.data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // }
   }, []);
 
   // 화면에 뿌리기
