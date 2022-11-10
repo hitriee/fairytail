@@ -1,7 +1,6 @@
 package com.fairytail.user.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,8 +9,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "https://k7c209.p.ssafy.io", "https://k7c2091.p.ssafy.io")
-                .allowedMethods("GET", "POST")
+                .allowedOrigins("http://localhost:3000\", \"https://k7c209.p.ssafy.io", "https://k7c2091.p.ssafy.io")
                 .maxAge(3600);
     }
 }

@@ -14,6 +14,7 @@ import java.net.http.HttpRequest;
 
 @Api(value = "user")
 @RestController
+@CrossOrigin("*")
 public class UserController {
 
     @Resource
