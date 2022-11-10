@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Intro.scss';
 // import {ReactComponent as IntroLogo} from '@images/introLogo.svg';
+import GoogleLoginForm from '@/components/intro/GoogleLoginForm';
 import IntroLogo from '@images/introLogo.png';
 import Iframe from 'react-iframe';
 
@@ -23,6 +24,7 @@ function Intro() {
           <Link to="main">
             <button>go Main</button>
           </Link>
+          <GoogleLoginForm />
         </div>
       </div>
     </>
