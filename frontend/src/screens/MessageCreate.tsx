@@ -28,15 +28,18 @@ function MessageCreate() {
   const screenRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const detectMobileKeybord = () => {
-      if (document.activeElement?.tagName === 'INPUT') {
+    const detectMobileKeyboard = () => {
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
+      ) {
         screenRef.current?.scrollIntoView({block: 'end'});
       }
     };
 
-    window.addEventListener('resize', detectMobileKeybord);
+    window.addEventListener('resize', detectMobileKeyboard);
 
-    return window.removeEventListener('resize', detectMobileKeybord);
+    return window.removeEventListener('resize', detectMobileKeyboard);
   });
 
   // 디테일 페이지로 이동
@@ -148,13 +151,13 @@ function MessageCreate() {
   }
 
   return (
-    <div className="screen messageList">
+    <div className="screen messageList" ref={screenRef}>
       {spinner ? (
         <Spinner message={spinnerMessage} spinnerStop={spinnerStop} />
       ) : null}
 
       <MoveToBack path="/main" />
-      <div className="container" ref={screenRef}>
+      <div className="container">
         <Carousel
           emojiNo={emojiNo}
           onSlideChange={setEmojiNo}
