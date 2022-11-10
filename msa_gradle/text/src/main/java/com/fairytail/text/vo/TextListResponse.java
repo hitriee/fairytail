@@ -19,4 +19,6 @@ public class TextListResponse {
 
     private Integer type;
 
+    private Integer status;
+
 }

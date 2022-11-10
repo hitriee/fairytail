@@ -91,7 +91,7 @@ public class TextServiceImpl implements TextService {
 
     @Override
     public List<TextDto> getAllTextList() {
-        List<TextEntity> textEntityList = textRepository.findAll();
+        List<TextEntity> textEntityList = textRepository.findAllByStatus(0); // 공개인 글(status: 0)만 조회
         List<TextDto> responseDtoList = new ArrayList<>();
 
         textEntityList.forEach(v -> {
