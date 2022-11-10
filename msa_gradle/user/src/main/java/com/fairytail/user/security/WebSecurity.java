@@ -7,6 +7,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +30,7 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
 
         // 모든 요청에 관한 허가 - 권한 허가
         http.authorizeRequests()
+                .requestMatchers(request -> CorsUtils.isPreFlightRequest(request)).permitAll()
                 .anyRequest().permitAll();
 //                .hasIpAddress("")   TODO: 통과시키고 싶은 IP 주소 - 내부 IP만 접근 가능하도록 추후 설정 필요
 
@@ -42,5 +47,18 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
 
         /** h2 데이터베이스 조회 시, 프레임 엑스박스 현상 해결 - 삭제
         http.headers().frameOptions().disable(); */
+    }
+
+
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setMaxAge(3600L); //preflight 결과를 1시간동안 캐시에 저장
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 }
