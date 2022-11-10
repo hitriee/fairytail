@@ -23,4 +23,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
 
     List<PostEntity> findTop25ByLatAndLngOrderByDateDesc(Double lat, Double lng);
     List<PostEntity> findByUserIdOrderByDateDesc(Long userId);
+
+    List<PostEntity> findTop25ByLatAndLngOrderByLikeCntDesc(Double lat, Double lng);
 }

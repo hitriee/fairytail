@@ -3,7 +3,6 @@ package com.fairytail.img.service;
 
 import com.fairytail.img.dto.PostDto;
 import com.fairytail.img.dto.PostLikeDto;
-import com.fairytail.img.dto.PostPutDto;
 import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.jpa.*;
 import com.fairytail.img.util.MainUtil;
@@ -66,7 +65,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto putPost(PostPutDto dto) throws IOException{
+    public PostDto putPost(PostDto dto) throws IOException{
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
         Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
@@ -112,7 +111,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> readPostListLike(Double lat, Double lng) throws Exception {
-        return null;
+        ModelMapper modelMapper = new ModelMapper();
+        List<PostEntity> list = postRepository.findTop25ByLatAndLngOrderByLikeCntDesc(lat, lng);
+        List<PostDto> data = new ArrayList<>();
+        if(list != null){
+            for (PostEntity l: list) {
+                PostDto insert = modelMapper.map(l, PostDto.class);
+                data.add(insert);
+            }
+        }
+        return data;
     }
 
     @Override
