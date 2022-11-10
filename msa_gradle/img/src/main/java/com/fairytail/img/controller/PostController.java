@@ -24,6 +24,7 @@ import java.util.Map;
 @Api(value = "img")
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class PostController {
 
     @Resource
@@ -159,7 +160,7 @@ public class PostController {
     /**
      * 좌표를 받아서 근처 글 리스트를 좋아요 순으로 25개 조회
      */
-    @ApiOperation(value = "근처 이미지 게시글 좋아요 순 리스트 조회(미구현)", notes = "근처 이미지 게시글 좋아요 순 리스트 조회 API 입니다.")
+    @ApiOperation(value = "근처 이미지 게시글 좋아요 순 리스트 조회", notes = "근처 이미지 게시글 좋아요 순 리스트 조회 API 입니다.")
     @GetMapping("post/list/like")
     public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
@@ -223,9 +224,11 @@ public class PostController {
     }
     @ApiOperation(value = "게시글 신고 기능 아직 덜 구현", notes = "")
     @PostMapping("/post/report")
-    public ResponseEntity<?> createReport(PostReportDto dto) throws Exception{
+    public ResponseEntity<?> createReport(RequestReport req) throws Exception{
+        ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
+        PostReportDto dto = modelMapper.map(req, PostReportDto.class);
         Boolean res = postService.createReport(dto);
         if(res){
             resultMap.put("message", OKAY);
