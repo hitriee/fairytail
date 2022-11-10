@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ public class LikeController {
     @PostMapping
     public ResponseEntity<?> createLike(RequestPostLike req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostLikeDto dto = modelMapper.map(req, PostLikeDto.class);
