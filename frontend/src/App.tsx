@@ -3,9 +3,8 @@ import {
   initToken,
   requestPermission,
 } from '@apis/notifications/getMessagingToken';
-import InitMessage from '@apis/notifications/foregroundMessaging';
 
-import React, {Suspense, useEffect, useState, useRef} from 'react';
+import {Suspense, useEffect, useState, useRef} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import bgm from '@bgms/silver_waves.mp3';
 
@@ -25,7 +24,7 @@ import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
 
 //recoil
-import {useRecoilValue, RecoilRoot, useRecoilState} from 'recoil';
+import {useRecoilValue} from 'recoil';
 // router
 import {
   main,

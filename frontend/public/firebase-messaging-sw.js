@@ -17,7 +17,9 @@ const config = {
 };
 
 const app = firebase.initializeApp(config);
-const messaging = firebase.messaging(app);
+const messaging = firebase.messaging();
+// console.log(app);
+// console.log(app.messaging);
 
 //백그라운드 서비스워커 설정
 messaging.onBackgroundMessage((payload) => {
@@ -27,45 +29,21 @@ messaging.onBackgroundMessage((payload) => {
   );
   if (Notification.permission === "granted") {
     // 알림 설정
-    const notificationTitle = payload.notification.title;
+    const title = payload.notification;
+    const shortTitle = () => {
+      if (title.length >= 6) {
+        return `${title.slice(0, 6)}...`;
+      } else {
+        return title;
+      }
+    };
+    const notificationTitle = `익명의 작가가 당신의 이야기 ${shortTitle()}을(를) 좋아합니다`;
     const notificationOptions = {
       body: "",
+      icon: "./logo192.png", // web
       requireInteraction: true,
-      // icon: "./logo192.png", // web
-      // badge: "./logo192.png", // 모바일에서만 - 권장 크기 72px
-      // actions: [
-      //   {
-      //     action: "coffee-action",
-      //     title: "coffee",
-      //   },
-      // ],
+      badge: "./logo192.png", // 모바일에서만 - 권장 크기 72px
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
   }
 });
-
-// 알림 클릭 시 option (어떤 페이지로 redirect 시킬지)
-
-// import request from 'request'
-
-// const option = {
-// 	method: 'GET',
-// 	url: 'https://fcm.googleapis.com/fcm/send',
-// 	json: {
-// 		'to': '',
-// 		'notification': {
-// 			'title': 'hello',
-// 			'body': 'world!',
-// 			'click_action': 'url', //이 부분에 원하는 url을 넣습니다.
-// 		}
-// 	},
-// 	headers: {
-// 		'Content-Type': 'application/json',
-// 		'Authorization': 'key'
-// 	}
-// }
-
-// request(option, (err, res, body) => {
-// 	if(err) console.log(err); //에러가 발생할 경우 에러를 출력
-// 	else console.log(body); //제대로 요청이 되었을 경우 response의 데이터를 출력
-// })
