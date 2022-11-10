@@ -5,10 +5,7 @@ import com.fairytail.img.dto.PostLikeDto;
 import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.service.PostService;
 import com.fairytail.img.util.S3Util;
-import com.fairytail.img.vo.RequestPost;
-import com.fairytail.img.vo.RequestPostPut;
-import com.fairytail.img.vo.ResponsePost;
-import com.fairytail.img.vo.ResponsePostList;
+import com.fairytail.img.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -209,10 +206,11 @@ public class PostController {
     }
     @ApiOperation(value = "게시글 좋아요 누르기", notes = "게시글 좋아요 누르기 API 입니다. 성공 시 좋아요 성공, 좋아요 취소 성공 메시지 출력")
     @PostMapping("/post/like")
-    public ResponseEntity<?> createLike(PostLikeDto dto) throws Exception{
+    public ResponseEntity<?> createLike(RequestPostLike req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
+        PostLikeDto dto = modelMapper.map(req, PostLikeDto.class);
         Boolean res = postService.createLike(dto);
         if(res){
             status = HttpStatus.OK;
