@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 @Api(value = "img")
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class PostController {
 
     @Resource
@@ -222,7 +222,7 @@ public class PostController {
         }
         return new ResponseEntity<>(resultMap, status);
     }
-    @ApiOperation(value = "게시글 신고 기능 아직 덜 구현", notes = "")
+    @ApiOperation(value = "게시글 신고 기능", notes = "게시글 신고 기능")
     @PostMapping("/post/report")
     public ResponseEntity<?> createReport(RequestReport req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
