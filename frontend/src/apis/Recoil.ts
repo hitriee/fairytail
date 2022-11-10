@@ -1,8 +1,8 @@
 import {atom} from 'recoil';
 
 export const loadingState = atom({
-  key: 'loadingState', // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  key: 'loadingState',
+  default: false,
 });
 
 export const playingState = atom({
@@ -14,8 +14,3 @@ export const likeModalState = atom({
   key: 'likeModalState',
   default: false,
 });
-
-// export const likeInfoState = atom({
-//   key: 'likeInfoState',
-//   default: {id: 0, title: '', emoji: 0},
-// });

@@ -31,7 +31,7 @@ function BgmModal({bgm, open, setBgm, onCancel}: BgmModalProps) {
           <div className="bgm-list">
             {bgmList.map((element, index) => (
               <EachBgm
-                key={element.title}
+                key={`${element.title}-${index}`}
                 element={element}
                 index={index}
                 newBgm={newBgm}

@@ -23,11 +23,11 @@ function EachBgm({element, index, newBgm, changeBgm}: EachBgmProps) {
   const {title, bgm} = element;
   const [onPlay, setOnPlay] = useState(false);
   const playBgm = () => {
-    setOnBgmPlay(false);
+    setOnBgmPlay(returnFalse);
     if (onPlay) {
-      audioRef.current && audioRef.current.pause();
-    } else {
       audioRef.current && audioRef.current.play();
+    } else {
+      audioRef.current && audioRef.current.pause();
     }
   };
 

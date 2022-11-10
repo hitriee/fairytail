@@ -24,7 +24,7 @@ import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
 
 //recoil
-import {useRecoilValue} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 // router
 import {
   main,
@@ -44,21 +44,20 @@ import {playingState} from '@apis/Recoil';
 
 function App() {
   initToken();
-  const [onPlay, setOnPlay] = useState(false);
+  const [onPlay, setOnPlay] = useRecoilState(playingState);
   const audioRef = useRef<HTMLAudioElement>(null!);
-  const recoilPlay = useRecoilValue(playingState);
   const handlePlay = () => {
     if (onPlay) {
-      audioRef.current && audioRef.current.pause();
-    } else {
       audioRef.current && audioRef.current.play();
+    } else {
+      audioRef.current && audioRef.current.pause();
     }
     setOnPlay(prev => !prev);
   };
-  useEffect(handlePlay, [recoilPlay]);
   useEffect(() => {
     audioRef.current.volume = 0.4;
   }, []);
+  useEffect(handlePlay, [onPlay]);
 
   return (
     <>
@@ -84,7 +83,7 @@ function App() {
         </Suspense>
         {/* </RecoilRoot> */}
       </BrowserRouter>
-      <audio autoPlay loop src={bgm} ref={audioRef} />
+      <audio autoPlay={onPlay} loop={onPlay} src={bgm} ref={audioRef} />
     </>
   );
 }
