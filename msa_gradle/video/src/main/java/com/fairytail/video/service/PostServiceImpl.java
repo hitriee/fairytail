@@ -5,6 +5,7 @@ import com.fairytail.video.dto.PostDto;
 import com.fairytail.video.dto.PostLikeDto;
 import com.fairytail.video.dto.PostReportDto;
 import com.fairytail.video.jpa.*;
+import com.fairytail.video.util.FfmpegUtil;
 import com.fairytail.video.util.MainUtil;
 import com.fairytail.video.util.S3Util;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,11 @@ public class PostServiceImpl implements PostService {
 
     private final MainUtil mainUtil;
 
+    private final FfmpegUtil ffmpegUtil;
+
     private String dirName = "image";
     @Override
-    public PostDto createPost(PostDto dto) throws IOException {
+    public PostDto createPost(PostDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
         PostEntity img = modelMapper.map(dto, PostEntity.class);
@@ -42,6 +45,8 @@ public class PostServiceImpl implements PostService {
         MultipartFile file = dto.getFile();
         File filePath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename());
         file.transferTo(filePath);
+        ffmpegUtil.makeThumbNail(filePath.getPath());
+        File ThumbPath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename() + "_thumbnail.png");
         String url = s3Util.upload(filePath, dirName);
         img.setUrl(url);
         postRepository.save(img);

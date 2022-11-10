@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "img")
+@Api(value = "video")
 @CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
@@ -148,10 +148,11 @@ public class PostController {
             data.add(insert);
         }
         if(!data.isEmpty()){
-            resultMap.put("data", res);
+            resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else{
+            resultMap.put("data", data);
             resultMap.put("message", FAIL);
             status = HttpStatus.OK;
         }
@@ -174,10 +175,11 @@ public class PostController {
             data.add(insert);
         }
         if (!data.isEmpty()){
-            resultMap.put("data", res);
+            resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else{
+            resultMap.put("data", data);
             resultMap.put("message", FAIL);
             status = HttpStatus.OK;
         }
@@ -205,6 +207,7 @@ public class PostController {
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else {
+            resultMap.put("data", data);
             resultMap.put("message", FAIL);
             status = HttpStatus.OK;
         }

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-@Api(value = "img")
+@Api(value = "report")
 @CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
