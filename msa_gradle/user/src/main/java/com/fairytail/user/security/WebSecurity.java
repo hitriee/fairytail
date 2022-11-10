@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class WebSecurity extends WebSecurityConfigurerAdapter  {
+public class WebSecurity extends  WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
