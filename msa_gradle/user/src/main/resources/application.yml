@@ -18,8 +18,7 @@ spring:
 # Eureka client 등록 (Naming server에 service 등록) - 추후 microservices 연결 시 변경 필요
 eureka:
   instance:
-    home-page-url: http://k7c209.p.ssafy.io:9096
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    instance-id:  https://k7c209.p.ssafy.io/user
   client:
     fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
     register-with-eureka: true     # client 등록 시, true로 세팅

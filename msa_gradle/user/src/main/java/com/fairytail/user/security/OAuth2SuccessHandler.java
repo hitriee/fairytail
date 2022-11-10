@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     .compact();
         }
 
-        String url = "http://localhost:3000/main";
+        String url = "http://localhost:3000/process";
 
         String uri = UriComponentsBuilder.fromUriString(url)
 //                .queryParam("accessToken", token)
