@@ -24,9 +24,6 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
 
         http.httpBasic().disable()
                 .csrf().disable();
-
-        http.cors()
-                .configurationSource(corsConfigurationSource());
         // session 정보를 따로 저장하지 않음 - 토큰으로 관리하기 위함
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -52,16 +49,4 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable(); */
     }
 
-
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setMaxAge(3600L); //preflight 결과를 1시간동안 캐시에 저장
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
-    }
 }
