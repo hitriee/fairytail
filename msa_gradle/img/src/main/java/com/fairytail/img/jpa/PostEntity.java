@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "img")
+@Table(name = "post")
 @DynamicInsert
 @DynamicUpdate
 public class PostEntity {
