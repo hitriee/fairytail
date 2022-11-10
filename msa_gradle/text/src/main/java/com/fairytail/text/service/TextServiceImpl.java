@@ -75,8 +75,16 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    public List<TextDetailDto> getVrTextList(Float curLat, Float curLng) {
-        List<TextEntity> textEntityList = textRepository.findAllVrMessage(curLat, curLng);
+    public List<TextDetailDto> getVrTextList(Double curLat, Double curLng, String orderBy) {
+        List<TextEntity> textEntityList = null;
+
+        if (orderBy.equals("latest")) { // 최신순으로 정렬
+            textEntityList = textRepository.findAllVrMessageLatest(curLat, curLng);
+        }
+        else if (orderBy.equals("like")) { // 좋아요순으로 정렬
+            textEntityList = textRepository.findAllVrMessageLike(curLat, curLng);
+        }
+
         List<TextDetailDto> responseDtoList = new ArrayList<>();
 
         textEntityList.forEach(v -> {

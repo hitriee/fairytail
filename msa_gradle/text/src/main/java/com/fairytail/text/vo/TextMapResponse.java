@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class TextMapResponse {
 
-    private Float lat;
+    private Double lat;
 
-    private Float lng;
+    private Double lng;
 
 }

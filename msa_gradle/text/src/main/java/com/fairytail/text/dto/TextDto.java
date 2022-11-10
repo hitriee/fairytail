@@ -23,9 +23,9 @@ public class TextDto {
 
     private Integer status;
 
-    private Float lat;
+    private Double lat;
 
-    private Float lng;
+    private Double lng;
 
     private Integer reportCnt;
 

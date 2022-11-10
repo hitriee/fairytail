@@ -13,9 +13,9 @@ public class TextRequest {
 
     private String content;
 
-    private Float lat;
+    private Double lat;
 
-    private Float lng;
+    private Double lng;
 
     private Integer status;
 

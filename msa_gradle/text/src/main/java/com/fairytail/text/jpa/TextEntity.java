@@ -43,10 +43,10 @@ public class TextEntity {
     private Integer status;
 
     @Column(nullable = false, unique = false)
-    private Float lat;
+    private Double lat;
 
     @Column(nullable = false, unique = false)
-    private Float lng;
+    private Double lng;
 
     @Column(name = "report_cnt", unique = false)
     @ColumnDefault("0")
@@ -57,6 +57,10 @@ public class TextEntity {
 
     @Column(name = "day_type", nullable = false, unique = false)
     private Integer dayType;
+
+    @Column(name = "like_cnt", unique = false)
+    @ColumnDefault("0")
+    private Integer likeCnt;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<LikeEntity> likeList = new ArrayList<>();
