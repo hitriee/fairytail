@@ -2,7 +2,9 @@ package com.fairytail.user.security;
 
 import com.fairytail.user.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -48,6 +50,12 @@ public class WebSecurity extends  WebSecurityConfigurerAdapter {
 
         /** h2 데이터베이스 조회 시, 프레임 엑스박스 현상 해결 - 삭제
         http.headers().frameOptions().disable(); */
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     public CorsConfigurationSource corsConfigurationSource() {
