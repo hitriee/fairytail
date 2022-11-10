@@ -21,7 +21,14 @@ spring:
     open-in-view: true
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    livereload:
+      enabled: true
 
 # Token expiration 관련 설정
 token:
