@@ -60,8 +60,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String url = "http://localhost:3000/process";
 
         String uri = UriComponentsBuilder.fromUriString(url)
-//                .queryParam("accessToken", token)
-//                .queryParam("userId", user.map(UserEntity::getId).orElse(null))
+                .queryParam("accessToken", token)
+                .queryParam("userId", user.map(UserEntity::getId).orElse(null))
                 .build().toUriString();
 
         log.debug("*********************************************** JWT Token created.");
@@ -74,8 +74,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         }
 
 
-        response.addHeader("token", token);
-        response.addHeader("userId", String.valueOf(user.get().getId()));
+//        response.addHeader("token", token);
+//        response.addHeader("userId", String.valueOf(user.get().getId()));
         log.info("token----------------------" + token);
         redirectStrategy.sendRedirect(request, response, uri);
     }
