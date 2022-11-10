@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MainUtil {
-    private String serverPath = System.getProperty("user.dir")+"/media/image" ;
+    private String serverPath = System.getProperty("user.dir")+"/media/video" ;
     private String localPath = System.getProperty("user.dir")+"/";
 
     public String osCheck(){
