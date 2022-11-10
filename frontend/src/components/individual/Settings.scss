@@ -1,32 +1,54 @@
+@import '@styles/_colors.scss';
+
 .settings {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  height: 60%;
-  width: 70%;
+  width: 90%;
+  margin: auto;
+
   &-section {
     display: flex;
     flex-direction: column;
+    margin-bottom: 5vh;
   }
+
   &-title {
-    font-size: 50%;
+    font-size: 2vh;
+    margin-bottom: 1vh;
+    color: $GRAY-BF;
   }
-  &-each {
-    font-size: 120%;
-    cursor: pointer;
-  }
+
   &-between {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+  }
+
+  &-each {
+    flex: 1;
+    font-size: 2.6vh;
+    cursor: pointer;
+
+    div {
+      padding-right: auto;
+    }
+  }
+
+  &-margin-bottom {
+    margin-bottom: 2vh;
   }
 }
 
 .bgm {
   &-title {
     display: block;
-    height: 10%;
+    font-size: 2vh;
+    color: $PURPLE;
+    padding-top: 0.5vh;
   }
+
   &-hidden {
-    visibility: hidden;
+    display: none;
   }
 }

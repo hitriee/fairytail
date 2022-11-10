@@ -1,0 +1,46 @@
+@import '@styles/_colors.scss';
+
+.select {
+  position: relative;
+  width: 100%;
+  margin-top: 2vh;
+
+  &-toggle {
+    display: flex;
+    align-items: center;
+    border: 1px solid $GRAY-BF;
+    border-radius: 15px;
+
+    span {
+      flex: 7;
+      padding: 0.75vh 0;
+      padding-left: 1.5vh;
+      font-size: 2vh;
+    }
+
+    &-icon {
+      flex: 1;
+    }
+  }
+
+  &-ul {
+    position: absolute;
+    top: 3vh;
+    padding: 0;
+    left: 0;
+    list-style: none;
+    width: 100%;
+    border: 1px solid $GRAY-BF;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: white;
+    font-size: 2vh;
+  }
+
+  &-li {
+    padding: 1.3vh 1.2vh;
+    &:hover {
+      background-color: aliceblue;
+    }
+  }
+}

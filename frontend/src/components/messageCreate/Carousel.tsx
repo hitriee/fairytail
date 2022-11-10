@@ -1,4 +1,4 @@
-import {useState, Dispatch, SetStateAction} from 'react';
+import {useState, Dispatch, SetStateAction, useEffect} from 'react';
 import 'swiper/css';
 import './Carousel.scss';
 import 'swiper/css/effect-coverflow';
@@ -18,7 +18,9 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
 
   const longPress = useLongPress(() => setIsLongClicked(true), 500);
 
-  swiper && swiper.slideTo(emojiNo, 300);
+  useEffect(() => {
+    swiper && swiper.slideTo(emojiNo, 0);
+  }, [emojiNo]);
 
   return (
     <Swiper

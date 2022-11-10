@@ -1,30 +1,30 @@
 .myNotification {
-  display: flex;
-  // flex-direction: row;
-  box-sizing: border-box;
-  background-color: white;
-  // margin: 3%;
-  margin-top: 3%;
-  margin-bottom: 3%;
-  height: 12vh;
-  // height: %;
   width: 100%;
-  border-radius: 20px;
-  justify-content: space-evenly;
+  height: 10vh;
+  padding: 0 2vh;
+  margin: 1.5vh 0;
+  display: flex;
   align-items: center;
-  // z-index: 100;
+  background-color: white;
+  border-radius: 15px;
+
   &-emoji {
     justify-content: center;
     align-items: center;
-    height: 60%;
+    height: 7vh;
+    margin-right: 2vh;
   }
+
+  &-message {
+    font-size: 2vh;
+    line-height: 3vh;
+    margin: 0;
+  }
+
   &-title {
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  // &-date {
-  //   font-size: small;
-  // }
 }
