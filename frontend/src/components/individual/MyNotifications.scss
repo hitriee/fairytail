@@ -15,17 +15,22 @@
   &-emoji {
     justify-content: center;
     align-items: center;
-    height: 60%;
+    height: 7vh;
+    margin-right: 2vh;
   }
+
+  &-message {
+    font-size: 2vh;
+    line-height: 3vh;
+    margin: 0;
+  }
+
   &-title {
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  // &-date {
-  //   font-size: small;
-  // }
 }
 
 .grabbed {

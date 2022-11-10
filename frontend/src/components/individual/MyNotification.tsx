@@ -10,12 +10,11 @@ interface itemProps {
     title: string;
     emoji: number;
   };
-  index: number;
-  isEmpty: boolean;
-  deleteEach: (index: number) => void;
+  index?: number;
+  deleteEach?: (index: number) => void;
 }
 
-function MyNotification({item, index, deleteEach, isEmpty}: itemProps) {
+function MyNotification({item, index, deleteEach}: itemProps) {
   const ref = useRef<HTMLDivElement>(null!);
   const navigate = useNavigate();
   const [originPos, setOriginPos] = useState({x: 0, y: 0});
@@ -56,7 +55,9 @@ function MyNotification({item, index, deleteEach, isEmpty}: itemProps) {
     if ((current.offsetLeft + current.offsetWidth) / 2 < e.clientX * 0.4) {
       setDeleted(true);
       console.log(true);
-      deleteEach(index);
+      if (deleteEach && index) {
+        deleteEach(index);
+      }
     } else {
       (ref.current as HTMLDivElement).style.marginLeft = `0`;
       setDeleted(false);
@@ -84,7 +85,9 @@ function MyNotification({item, index, deleteEach, isEmpty}: itemProps) {
     ) {
       setDeleted(true);
       // console.log(true);
-      deleteEach(index);
+      if (deleteEach && index) {
+        deleteEach(index);
+      }
     } else {
       (ref.current as HTMLDivElement).style.marginLeft = '0';
       // console.log(false);

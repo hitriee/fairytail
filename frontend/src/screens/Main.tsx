@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import Room from '../components/main/Room';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
+import {loadingState} from '@apis/Recoil';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 let prePath = '';
 
@@ -15,6 +16,7 @@ function Main() {
   }
   return (
     <>
+      <InitMessage />
       <Room />
     </>
   );

@@ -49,7 +49,7 @@ function ClickMarker({isClicked, setIsClicked, position, setPosition}) {
             {place ? place : '알려지지 않은 곳'} 입니다.
           </div>
           <button
-            className="btn"
+            className="btn clickmarker-popup-btn"
             onClick={() => navigate('/vr', {state: {position: position}})}>
             보러가기
           </button>

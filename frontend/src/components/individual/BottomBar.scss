@@ -1,28 +1,22 @@
-@media (max-device-aspect-ratio: 9 / 16) {
-  #bottomBar {
-    width: 100vw;
-  }
-}
+.bottomBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 
-@media (min-device-aspect-ratio: 9 / 16) {
-  #bottomBar {
-    width: 56.25vh;
-  }
-}
-
-#bottomBar {
-  display: fixed;
-  background-color: rgba($color: grey, $alpha: 0.3);
-  .icon {
-    padding-top: 5%;
-    padding-bottom: 5%;
+  &-icon {
+    flex: 1;
+    height: 10vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    padding: auto;
+    cursor: pointer;
+
     &-each {
-      width: 15%;
+      width: 25%;
       opacity: 40%;
-      cursor: pointer;
     }
+
     &-selected {
       opacity: 100%;
     }

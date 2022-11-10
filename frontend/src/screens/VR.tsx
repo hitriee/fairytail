@@ -5,7 +5,8 @@ import {useEffect, useState} from 'react';
 import Loading from '@/components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
+import {loadingState} from '@apis/Recoil';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 type RouteState = {
   state: {
@@ -20,6 +21,7 @@ function VR() {
   // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
+
   // 받은 위치 정보로 서버에 데이터 요청
   const {state} = useLocation() as RouteState;
 
@@ -57,7 +59,7 @@ function VR() {
       navigate('/message/create');
     } else if (typeof ev.data === 'number') {
       setPostId(ev.data);
-      navigate(`/message/detail/${postId}`);
+      navigate(`/message/detail/${ev.data}`);
     }
   };
 
@@ -67,18 +69,21 @@ function VR() {
   }, [postId]);
 
   return (
-    <div className="vr">
-      {isLoaded ? null : <Loading />}
+    <>
+      <InitMessage />
+      <div className="vr">
+        {isLoaded ? null : <Loading />}
 
-      <MoveToBack path="-1" />
+        <MoveToBack path="-1" />
 
-      <Iframe
-        className="vr-frame"
-        url="../iframeVR/IframeVR.html"
-        frameBorder={0}
-        onLoad={() => setTimeout(() => setIsLoaded(true), 1500)}
-      />
-    </div>
+        <Iframe
+          className="vr-frame"
+          url="../iframeVR/IframeVR.html"
+          frameBorder={0}
+          onLoad={() => setIsLoaded(true)}
+        />
+      </div>
+    </>
   );
 }
 

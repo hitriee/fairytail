@@ -8,13 +8,14 @@ import {
 import 'leaflet/dist/leaflet.css';
 import {CustomMarkerIcon} from '@map/CustomMarker';
 import './Map.scss';
-import ClickMarker from '@/components/map/ClickMarker';
+import ClickMarker from '@map/ClickMarker';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import shuffle from '@images/shuffle.svg';
-import MoveToBack from '@/components/common/MoveToBack';
+import MoveToBack from '@common/MoveToBack';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
+import {loadingState} from '@apis/Recoil';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 function generateRandomFloat(min, max) {
   return Math.random() * (max - min) + min;
@@ -81,45 +82,48 @@ function Map() {
   };
 
   return (
-    <div className="screen">
-      <MoveToBack path="/main" color="black" />
-      <div
-        className="map-random"
-        onClick={() => {
-          setPosition({
-            lat: generateRandomFloat(-90, 90),
-            lng: generateRandomFloat(-180, 180),
-          });
-          setIsClicked(true);
-        }}>
-        <img src={shuffle} alt="랜덤 위치 선정 버튼" />
+    <>
+      <InitMessage />
+      <div className="screen">
+        <MoveToBack path="/main" color="black" />
+        <div
+          className="map-random"
+          onClick={() => {
+            setPosition({
+              lat: generateRandomFloat(-90, 90),
+              lng: generateRandomFloat(-180, 180),
+            });
+            setIsClicked(true);
+          }}>
+          <img src={shuffle} alt="랜덤 위치 선정 버튼" />
+        </div>
+        <MapContainer
+          zoomControl={false}
+          maxBounds={[
+            [-90, -180],
+            [90, 180],
+          ]}
+          minZoom={2}
+          style={{width: '100%', height: '100%'}}
+          center={center}
+          zoom={7}
+          scrollWheelZoom={true}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {data ? Markers() : null}
+          <ClickMarker
+            isClicked={isClicked}
+            setIsClicked={setIsClicked}
+            position={position}
+            setPosition={setPosition}
+          />
+          <ZoomControl position="bottomright" />
+          <SetCenter center={center} />
+        </MapContainer>
       </div>
-      <MapContainer
-        zoomControl={false}
-        maxBounds={[
-          [-90, -180],
-          [90, 180],
-        ]}
-        minZoom={2}
-        style={{width: '100%', height: '100%'}}
-        center={center}
-        zoom={7}
-        scrollWheelZoom={true}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {data ? Markers() : null}
-        <ClickMarker
-          isClicked={isClicked}
-          setIsClicked={setIsClicked}
-          position={position}
-          setPosition={setPosition}
-        />
-        <ZoomControl position="bottomright" />
-        <SetCenter center={center} />
-      </MapContainer>
-    </div>
+    </>
   );
 }
 

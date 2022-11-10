@@ -3,7 +3,7 @@ import {
   initToken,
   requestPermission,
 } from '@apis/notifications/getMessagingToken';
-import initMessage from '@apis/notifications/foregroundMessaging';
+import InitMessage from '@apis/notifications/foregroundMessaging';
 
 import React, {Suspense, useEffect, useState, useRef} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
@@ -41,11 +41,10 @@ import {
   settings,
   notifications,
 } from '@apis/router';
-import {playingState} from '@apis/playBgm';
+import {playingState} from '@apis/Recoil';
 
 function App() {
   initToken();
-  useEffect(initMessage, []);
   const [onPlay, setOnPlay] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null!);
   const recoilPlay = useRecoilValue(playingState);
@@ -58,9 +57,13 @@ function App() {
     setOnPlay(prev => !prev);
   };
   useEffect(handlePlay, [recoilPlay]);
+  useEffect(() => {
+    audioRef.current.volume = 0.4;
+  }, []);
 
   return (
     <>
+      {/* <InitMessage /> */}
       <BrowserRouter>
         {/* <RecoilRoot> */}
         <Suspense fallback={<Loading />}>

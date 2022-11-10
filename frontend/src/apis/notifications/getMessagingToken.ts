@@ -1,6 +1,5 @@
 import {getMessaging, getToken} from 'firebase/messaging';
-import app from '@apis/notifications/firebase-config';
-import initMessage from './foregroundMessaging';
+import app from '@apis/notifications/firebaseConfig';
 
 const messaging = getMessaging(app);
 

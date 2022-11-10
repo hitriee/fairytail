@@ -12,9 +12,10 @@ import {
   messageCreate,
   settings,
 } from '../../apis/router.ts';
+
+// recoil
 import {useRecoilState} from 'recoil';
-import {playingState} from '@/apis/playBgm';
-import {use} from '@/apis/notifications/server/notice';
+import {playingState} from '@apis/Recoil';
 
 export default function Scene({...props}) {
   const {nodes, materials} = useSpline(

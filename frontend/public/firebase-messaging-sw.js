@@ -29,7 +29,7 @@ messaging.onBackgroundMessage((payload) => {
     // 알림 설정
     const notificationTitle = payload.notification.title;
     const notificationOptions = {
-      body: payload,
+      body: "",
       requireInteraction: true,
       // icon: "./logo192.png", // web
       // badge: "./logo192.png", // 모바일에서만 - 권장 크기 72px

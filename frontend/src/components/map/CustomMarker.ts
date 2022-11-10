@@ -1,11 +1,13 @@
 import L from 'leaflet';
 import customMarker from '@images/CustomMarker.svg';
 import {emojiArr} from '@/assets/emojis';
+import './CustomMarker.scss';
 
 export const CustomMarkerIcon = new L.Icon({
   iconUrl: customMarker,
   iconRetinaUrl: customMarker,
   iconSize: new L.Point(15, 15),
+  className: 'custom-marker',
 });
 
 export const ClickMarkerIcon = new L.Icon({
