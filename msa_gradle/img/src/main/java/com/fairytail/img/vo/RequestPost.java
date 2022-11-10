@@ -13,4 +13,5 @@ public class RequestPost {
     private Double lng;
     private Integer status;
     private MultipartFile file;
+    private Integer emojiNo;
 }
