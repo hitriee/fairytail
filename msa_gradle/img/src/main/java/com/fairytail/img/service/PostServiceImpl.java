@@ -98,7 +98,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> readPostListLatest(Double lat, Double lng) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-        List<PostEntity> list = postRepository.findTop25ByLatAndLngOrderByDateDesc(lat, lng);
+        List<PostEntity> list = postRepository.findTop25ByLatAndLngAndStatusOrderByDateDesc(lat, lng, 0);
         List<PostDto> data = new ArrayList<>();
         if(list != null){
             for (PostEntity l: list) {
@@ -112,7 +112,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> readPostListLike(Double lat, Double lng) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-        List<PostEntity> list = postRepository.findTop25ByLatAndLngOrderByLikeCntDesc(lat, lng);
+        List<PostEntity> list = postRepository.findTop25ByLatAndLngAndStatusOrderByLikeCntDesc(lat, lng, 0);
         List<PostDto> data = new ArrayList<>();
         if(list != null){
             for (PostEntity l: list) {

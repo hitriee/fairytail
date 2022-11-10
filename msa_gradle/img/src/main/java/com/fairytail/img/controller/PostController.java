@@ -152,8 +152,10 @@ public class PostController {
         if(!data.isEmpty()){
             resultMap.put("data", res);
             resultMap.put("message", OKAY);
+            status = HttpStatus.OK;
         } else{
             resultMap.put("message", FAIL);
+            status = HttpStatus.OK;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -176,8 +178,10 @@ public class PostController {
         if (!data.isEmpty()){
             resultMap.put("data", res);
             resultMap.put("message", OKAY);
+            status = HttpStatus.OK;
         } else{
             resultMap.put("message", FAIL);
+            status = HttpStatus.OK;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -193,16 +197,18 @@ public class PostController {
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         List<PostDto> res = postService.readMyPostList(userId);
-        List<ResponsePostList> data = new ArrayList<>();
+        List<ResponseMyList> data = new ArrayList<>();
         for (PostDto r:res) {
-            ResponsePostList d = modelMapper.map(r, ResponsePostList.class);
+            ResponseMyList d = modelMapper.map(r, ResponseMyList.class);
             data.add(d);
         }
-        if(data != null && !data.isEmpty()){
+        if(!data.isEmpty()){
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
+            status = HttpStatus.OK;
         } else {
             resultMap.put("message", FAIL);
+            status = HttpStatus.OK;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -237,6 +243,7 @@ public class PostController {
             status = HttpStatus.OK;
         } else{
             resultMap.put("message", "이미 신고했습니다.");
+            status = HttpStatus.OK;
         }
         return new ResponseEntity<>(resultMap, status);
     }

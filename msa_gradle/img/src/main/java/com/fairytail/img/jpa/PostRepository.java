@@ -21,8 +21,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     @Query(value = "select * from PostEntity p where lat=:lat and lng=:lng order by date desc limit 25", nativeQuery = true)
     List<PostEntity> findListLatest(Double lat, Double lng);
 
-    List<PostEntity> findTop25ByLatAndLngOrderByDateDesc(Double lat, Double lng);
+    List<PostEntity> findTop25ByLatAndLngAndStatusOrderByDateDesc(Double lat, Double lng, Integer status);
     List<PostEntity> findByUserIdOrderByDateDesc(Long userId);
 
-    List<PostEntity> findTop25ByLatAndLngOrderByLikeCntDesc(Double lat, Double lng);
+    List<PostEntity> findTop25ByLatAndLngAndStatusOrderByLikeCntDesc(Double lat, Double lng, Integer status);
 }
