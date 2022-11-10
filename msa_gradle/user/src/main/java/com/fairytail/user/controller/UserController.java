@@ -3,6 +3,7 @@ package com.fairytail.user.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +11,7 @@ import javax.annotation.Resource;
 
 @Api(value = "user")
 @RestController
+@CrossOrigin("*")
 public class UserController {
 
     @Resource
