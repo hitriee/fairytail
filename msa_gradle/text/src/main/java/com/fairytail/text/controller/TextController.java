@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/message")
+@CrossOrigin("*")
 public class TextController {
     @Resource
     private Environment env;
