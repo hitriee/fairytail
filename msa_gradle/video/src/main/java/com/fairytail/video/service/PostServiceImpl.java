@@ -91,7 +91,9 @@ public class PostServiceImpl implements PostService {
             PostEntity post = optional.get();
             String url = post.getUrl();
             String oldPath = mainUtil.urlToFilePath(url);
-            s3Util.delete(oldPath);
+            if(oldPath != null){
+                s3Util.delete(oldPath);
+            }
             Long res = postRepository.deleteByPostId(post.getPostId());
             if(res != 0){
                 data = true;
