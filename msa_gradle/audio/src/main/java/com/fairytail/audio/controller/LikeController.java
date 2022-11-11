@@ -39,10 +39,10 @@ public class LikeController {
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostLikeDto dto = modelMapper.map(req, PostLikeDto.class); //req를 dto에 맵핑
         Boolean res = postService.createLike(dto); //좋아요 서비스 실행 true면 좋아요가 눌리고 false면 좋아요 취소
-        if(res){
+        if(res){//res true면 좋아요 누르기
             status = HttpStatus.OK;
             resultMap.put("message", "좋아요 성공");
-        } else{
+        } else{ //res false면 좋아요 취소 누르기
             status = HttpStatus.OK;
             resultMap.put("message", "좋아요 취소 성공");
         }

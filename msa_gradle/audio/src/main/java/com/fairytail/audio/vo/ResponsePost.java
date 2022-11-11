@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 게시글 리스폰스
+ */
 @Data
 public class ResponsePost {
     private Long postId;

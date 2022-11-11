@@ -186,7 +186,7 @@ public class PostController {
 
 
     /**
-     *
+     * 내 게시글 최신순 조회
      */
     @ApiOperation(value = "내 게시글 리스트 조회", notes = "내 게시글 최신순 리스트 조회 API 입니다.")
     @GetMapping("/mylist/{userId}")
@@ -212,6 +212,9 @@ public class PostController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    /**
+     * 전체 게시글 좌표 조회
+     */
     @GetMapping("/map")
     public ResponseEntity<?> readAll() throws Exception{
         ModelMapper modelMapper = new ModelMapper();
