@@ -34,10 +34,10 @@ function GoogleLoginForm() {
     <div>
       <button type="button">
         <a
-          href="https://k7c209.p.ssafy.io/user/oauth2/authorization/google"
-          class="btn btn-success active"
+          href="http://k7c209.p.ssafy.io:9096/user/oauth2/authorization/google"
+          // href="https://k7c2091.p.ssafy.io/user/oauth2/authorize/google?redirect_uri=https://k7c209.p.ssafy.io/user/login/oauth2/code/google"
           role="button">
-          Google Login..
+          Google Login
         </a>
       </button>
     </div>

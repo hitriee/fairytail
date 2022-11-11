@@ -5,6 +5,7 @@ import '@/App.scss';
 import Loading from '../src/components/loading/Loading';
 // route
 import Intro from '@screens/Intro';
+import Process from '@screens/Process';
 import Main from '@screens/Main';
 import Globe from '@screens/Globe';
 import Map from '@screens/Map';
@@ -19,6 +20,7 @@ import Individual from '@/screens/Individual';
 import {
   main,
   intro,
+  process,
   globe,
   map,
   vr,
@@ -43,6 +45,7 @@ function App() {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path={intro()} element={<Intro />} />
+            <Route path={process()} element={<Process />} />
             <Route path={main()} element={<Main />} />
             <Route path={globe()} element={<Globe />} />
             <Route path={map()} element={<Map />} />
