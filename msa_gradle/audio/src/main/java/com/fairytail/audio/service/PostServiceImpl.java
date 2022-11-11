@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,10 @@ public class PostServiceImpl implements PostService {
         file.transferTo(filePath);
         String url = s3Util.upload(filePath, dirName);
         img.setUrl(url);
+        LocalDateTime now = LocalDateTime.now();
+        Integer hour =  now.getHour();
+        Integer dayType = mainUtil.checkTime(hour);
+        img.setDayType(dayType);
         postRepository.save(img);
         data = modelMapper.map(img, PostDto.class);
         filePath.delete();
