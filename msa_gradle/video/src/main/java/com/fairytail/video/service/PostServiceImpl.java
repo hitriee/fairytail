@@ -9,6 +9,7 @@ import com.fairytail.video.util.FfmpegUtil;
 import com.fairytail.video.util.MainUtil;
 import com.fairytail.video.util.S3Util;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +51,10 @@ public class PostServiceImpl implements PostService {
         File ThumbPath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename() + "_thumbnail.png");
         String url = s3Util.upload(filePath, dirName);
         img.setUrl(url);
+        LocalDateTime now = LocalDateTime.now();
+        Integer hour =  now.getHour();
+        Integer dayType = mainUtil.checkTime(hour);
+        img.setDayType(dayType);
         postRepository.save(img);
         data = modelMapper.map(img, PostDto.class);
         filePath.delete();
