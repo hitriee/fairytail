@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 
+/**
+ * S3 업로드, 관련 유틸
+ */
 @Component
 @RequiredArgsConstructor
 public class S3Util {

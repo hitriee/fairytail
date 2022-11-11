@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class S3Config {
 
-    @Value("${cloud.aws.region.static}")
+    @Value("${cloud.aws.region.static}") //properties에서 받음
     private String region;
-    @Value("${cloud.aws.credentials.access-key}")
+    @Value("${cloud.aws.credentials.access-key}") //properties에서 받음
     private String accessKey;
-    @Value("${cloud.aws.credentials.secret-key}")
+    @Value("${cloud.aws.credentials.secret-key}") //properties에서 받음
     private String secretKey;
 
     @Bean

@@ -2,6 +2,9 @@ package com.fairytail.video.util;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * 서버 로컬 경로체크, url에서 s3경로 체크, 작성 시간 day_type 뽑는 유틸
+ */
 @Component
 public class MainUtil {
     private String serverPath = System.getProperty("user.dir")+"/media/video" ;

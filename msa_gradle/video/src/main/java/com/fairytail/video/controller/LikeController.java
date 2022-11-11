@@ -42,15 +42,15 @@ public class LikeController {
     @PostMapping
     public ResponseEntity<?> createLike(RequestPostLike req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT); //mapper에서 오류가 생기면 정책을 설정
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostLikeDto dto = modelMapper.map(req, PostLikeDto.class);
-        Boolean res = postService.createLike(dto);
-        if(res){
+        PostLikeDto dto = modelMapper.map(req, PostLikeDto.class); //req -> dto 매핑
+        Boolean res = postService.createLike(dto); //좋아요 누르기 서비스 실행 후 결과 res에 받기
+        if(res){ //res가 true면 좋아요를 누르는 것
             status = HttpStatus.OK;
             resultMap.put("message", "좋아요 성공");
-        } else{
+        } else{ //res false면 좋아요를 취소 하는 것
             status = HttpStatus.OK;
             resultMap.put("message", "좋아요 취소 성공");
         }

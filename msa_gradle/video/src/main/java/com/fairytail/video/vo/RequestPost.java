@@ -3,6 +3,9 @@ package com.fairytail.video.vo;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 게시글 리퀘스트
+ */
 @Data
 public class RequestPost {
     private Long userId;

@@ -30,7 +30,6 @@ public class PostController {
     private Environment env;
     private final String OKAY= "SUCCESS";
     private final String FAIL= "FAIL";
-    private final S3Util s3Util;
     private final PostService postService;
     private static HttpStatus status = null;
 
@@ -53,13 +52,13 @@ public class PostController {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostDto dto = modelMapper.map(req, PostDto.class);
-        PostDto data = postService.createPost(dto);
-        if(data != null){
+        PostDto dto = modelMapper.map(req, PostDto.class); //req에서 dto로 매핑
+        PostDto data = postService.createPost(dto); //서비스 결과를 data로 받아오기
+        if(data != null){ //dto에 데이터가 있으면 성공
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else{
+        } else{ //없으면 실패
             resultMap.put("message", FAIL);
         }
         return new ResponseEntity<>(resultMap, status);
@@ -74,16 +73,16 @@ public class PostController {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostDto res = postService.readPost(postId, userId);
+        PostDto res = postService.readPost(postId, userId); //서비스 결과를 res에 받아오기
         ResponsePost data = null;
-        if(res != null){
-            data = modelMapper.map(res, ResponsePost.class);
+        if(res != null){ //res가 있으면
+            data = modelMapper.map(res, ResponsePost.class); //data로 매핑
         }
-        if(data != null){
+        if(data != null){ //data가 널이 아니면 성공
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else{
+        } else{//실패
             resultMap.put("message", FAIL);
         }
         return new ResponseEntity<>(resultMap, status);
@@ -97,14 +96,14 @@ public class PostController {
     public ResponseEntity<?> putPost(RequestPostPut req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
-        PostDto dto = modelMapper.map(req, PostDto.class);
+        PostDto dto = modelMapper.map(req, PostDto.class); //req -> dto 매핑
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostDto res = postService.putPost(dto);
+        PostDto res = postService.putPost(dto); //서비스 결과를 res에 받기
         ResponsePost data = null;
         if(res != null){
-            data = modelMapper.map(res, ResponsePost.class);
+            data = modelMapper.map(res, ResponsePost.class); //res에 값이 있으면 res -> data 매핑
         }
-        if(res != null){
+        if(data != null){
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
@@ -141,17 +140,17 @@ public class PostController {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readPostListLatest(lat, lng);
+        List<PostDto> res = postService.readPostListLatest(lat, lng); //서비스 실행 후 결과를 res 리스트로
         List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r:res) {
-            ResponsePostList insert = modelMapper.map(r, ResponsePostList.class);
+            ResponsePostList insert = modelMapper.map(r, ResponsePostList.class); //res만큼 data에 add
             data.add(insert);
         }
-        if(!data.isEmpty()){
+        if(!data.isEmpty()){ //data가 있으면 성공메시지와 data
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else{
+        } else{ //data가 없으면 성공 메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
             status = HttpStatus.OK;
@@ -168,17 +167,17 @@ public class PostController {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readPostListLike(lat, lng);
+        List<PostDto> res = postService.readPostListLike(lat, lng); //서비스 결과를 res 리스트로
         List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r : res){
-            ResponsePostList insert = modelMapper.map(r, ResponsePostList.class);
+            ResponsePostList insert = modelMapper.map(r, ResponsePostList.class); //res가 있으면 매핑
             data.add(insert);
         }
-        if (!data.isEmpty()){
+        if (!data.isEmpty()){ //data가 있으면 성공 메시지와 data
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else{
+        } else{ //data가 비어있으면 실패메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
             status = HttpStatus.OK;
@@ -196,17 +195,17 @@ public class PostController {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readMyPostList(userId);
+        List<PostDto> res = postService.readMyPostList(userId); //서비스 결과를 res 리스트로
         List<ResponseMyList> data = new ArrayList<>();
         for (PostDto r:res) {
-            ResponseMyList d = modelMapper.map(r, ResponseMyList.class);
+            ResponseMyList d = modelMapper.map(r, ResponseMyList.class); //res에 값을 data로 매핑
             data.add(d);
         }
-        if(!data.isEmpty()){
+        if(!data.isEmpty()){ //data가 있으면 성공 메시지와 data
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else {
+        } else { //data가 비어 있으면 실패 메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
             status = HttpStatus.OK;
@@ -219,17 +218,17 @@ public class PostController {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readAllPost();
+        List<PostDto> res = postService.readAllPost(); //서비스 결과를 res 리스트로
         List<ResponsePostMap> data = new ArrayList<>();
         for(PostDto r : res){
-            ResponsePostMap d = modelMapper.map(r, ResponsePostMap.class);
+            ResponsePostMap d = modelMapper.map(r, ResponsePostMap.class);//res를 data로 매핑
             data.add(d);
         }
-        if(!data.isEmpty()){
+        if(!data.isEmpty()){ //data가 있으면 성공 메시지와 data
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else{
+        } else{ //data가 비어있으면 실패 메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
             status = HttpStatus.OK;

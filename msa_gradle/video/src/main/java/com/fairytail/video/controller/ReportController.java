@@ -40,15 +40,15 @@ public class ReportController {
     @PostMapping
     public ResponseEntity<?> createReport(RequestReport req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT); //mapper 에러 발생 방지를 위해
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        PostReportDto dto = modelMapper.map(req, PostReportDto.class);
-        Boolean res = postService.createReport(dto);
-        if(res){
+        PostReportDto dto = modelMapper.map(req, PostReportDto.class); //req -> dto 매핑
+        Boolean res = postService.createReport(dto); //서비스 결과 res로
+        if(res){//true면 성공
             resultMap.put("message", "신고가 성공했습니다.");
             status = HttpStatus.OK;
-        } else{
+        } else{//false면 이미 신고
             resultMap.put("message", "이미 신고했습니다.");
             status = HttpStatus.OK;
         }

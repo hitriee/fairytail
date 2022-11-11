@@ -3,6 +3,10 @@ package com.fairytail.video.vo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+
+/**
+ * 내 게시글 리스트 리스폰스
+ */
 @Data
 public class ResponseMyList {
     private Long postId;
