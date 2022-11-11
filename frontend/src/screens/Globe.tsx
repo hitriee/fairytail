@@ -6,7 +6,8 @@ import {main} from '@apis/router';
 import MoveToBack from '@common/MoveToBack';
 import '@screens/Globe.scss';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
+import {loadingState} from '@apis/Recoil';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 function Globe() {
   // recoil
@@ -27,17 +28,20 @@ function Globe() {
     };
   }, []);
   return (
-    <div className="globe-background">
-      <MoveToBack path={main()} />
-      <Canvas style={{width, height}} camera={{near: 6, far: 30}}>
-        {/* <color attach="background" args={[0, 0, 0]} /> */}
-        <Stars position={[0, 0, 0]} />
-        <ambientLight />
-        {/* <pointLight position={[5, 1, 2]} /> */}
-        <pointLight position={[10, 10, 10]} />
-        <Earth position={[0, 0, 0]} />
-      </Canvas>
-    </div>
+    <>
+      <InitMessage />
+      <div className="globe-background">
+        <MoveToBack path={main()} />
+        <Canvas style={{width, height}} camera={{near: 6, far: 30}}>
+          {/* <color attach="background" args={[0, 0, 0]} /> */}
+          <Stars position={[0, 0, 0]} />
+          <ambientLight />
+          {/* <pointLight position={[5, 1, 2]} /> */}
+          <pointLight position={[10, 10, 10]} />
+          <Earth position={[0, 0, 0]} />
+        </Canvas>
+      </div>
+    </>
   );
 }
 export default Globe;

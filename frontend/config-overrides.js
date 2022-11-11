@@ -35,5 +35,6 @@ module.exports = override(
     "@screens": path.resolve(__dirname, "src", "screens"),
     "@styles": path.resolve(__dirname, "src", "styles"),
     "@fonts": path.resolve(__dirname, "src", "styles", "fonts"),
+    "@recoil": path.resolve(__dirname, "src", "apis", "recoil"),
   })
 );

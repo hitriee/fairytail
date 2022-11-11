@@ -9,6 +9,8 @@ import BgmModal from '@individual/BgmModal';
 import InfoModal from '@/components/individual/InfoModal';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
+import {useRecoilState} from 'recoil';
+import {playingState} from '@apis/Recoil';
 
 function Settings() {
   // 그 전에 설정했던 사항이 props로 들어옴 (좋아요 알림, 배경음악 여부, 배경음악)
@@ -20,16 +22,17 @@ function Settings() {
   const [info, setInfo] = useState<popUp>({title: '', message: ''});
   const [openAlert, setOpenAlert] = useState(false);
   const [bgm, setBgm] = useState(bgmList[0].title);
-  const [permitBgm, setPermitBgm] = useState(true);
+  const [onPlay, setOnPlay] = useRecoilState(playingState);
 
   // 좋아요 알림 변경
   const changePermitNoti = () => {
     setPermitNoti(!permitNoti);
   };
 
-  // 배경음악 변경
-  const changePermitBgm = () => {
-    setPermitBgm(!permitBgm);
+  //  배경 음악 재생 여부 변경
+  const changeOnPlay = () => {
+    setOnPlay(prev => !prev);
+    console.log(onPlay);
   };
 
   // 팝업에 뜰 내용 변경
@@ -62,18 +65,19 @@ function Settings() {
   };
   // bgm 설정 여부 변경
   const changeBgmPermit = () => {
+    changeOnPlay();
     if (bgm) {
-      setPermitBgm(returnFalse);
+      // setPermitBgm(returnFalse);
       setBgm('');
     } else {
-      setPermitBgm(returnTrue);
+      // setPermitBgm(returnTrue);
       setBgm(bgmList[0].title);
     }
   };
 
   // bgm 팝업 띄우기
   const bgmPopUp = () => {
-    setPermitBgm(returnTrue);
+    changeOnPlay();
     setSelectBgm(returnTrue);
   };
   // bgm 팝업 끄기
@@ -81,7 +85,7 @@ function Settings() {
     setSelectBgm(returnFalse);
     // 팝업에서 아무 것도 선택하지 않고 끌 경우
     if (!bgm) {
-      setPermitBgm(returnFalse);
+      changeOnPlay();
     }
   };
 
@@ -108,14 +112,14 @@ function Settings() {
         </div>
         <div className="settings-between">
           <div className="settings-each">
-            <div onClick={changePermitBgm}>배경음악</div>
+            <div onClick={changeOnPlay}>배경음악</div>
             <div
-              className={permitBgm ? 'bgm-title' : 'bgm-hidden'}
+              className={onPlay ? 'bgm-title' : 'bgm-hidden'}
               onClick={bgmPopUp}>
               {bgm || 'bgm'}
             </div>
           </div>
-          <Toggle label="" onClick={setPermitBgm} value={permitBgm} />
+          <Toggle label="" onClick={changeOnPlay} value={onPlay} />
         </div>
       </section>
 

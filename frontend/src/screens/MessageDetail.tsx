@@ -2,13 +2,14 @@ import {useState, useRef, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '@apis/Recoil';
-import {ReactComponent as EllipsisVertical} from '@images/more_4.svg';
+import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
 import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import MoveToBack from '@common/MoveToBack';
 import {notFound} from '@apis/router';
 import '@screens/MessageDetail.scss';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 function MessageDetail() {
   // recoil
@@ -73,44 +74,47 @@ function MessageDetail() {
   };
 
   return (
-    <div
-      className={`screen background${data.background}`}
-      ref={messageDetailRef}
-      onClick={hiddenMenu}>
-      <main id="container">
-        <section data-html2canvas-ignore="true" className="ignore">
-          <MoveToBack path="" />
-          <div id="message-detail-nav-more" onClick={showMenu}>
-            <EllipsisVertical width="25" height="25" fill="white" />
-          </div>
-          <MoreMenu
-            open={more}
-            isMine={isMine}
-            detail={messageDetailRef}
-            messageId={messageId}
-            type={data.type}
-            content={data.content}
-            close={hiddenMenu}
-            status={data.status}
-          />
-        </section>
-        <section className="container">
-          <Content
-            title={data.title}
-            content={data.content}
-            type={data.type}
-            date={modifiedDate()}
-            status={data.status}
-          />
-          <Like
-            count={data.like_cnt}
-            like={data.is_like}
-            isMine={isMine}
-            emoji={data.emoji_no}
-          />
-        </section>
-      </main>
-    </div>
+    <>
+      <InitMessage />
+      <div
+        className={`screen background${data.background}`}
+        ref={messageDetailRef}
+        onClick={hiddenMenu}>
+        <main id="container">
+          <section data-html2canvas-ignore="true" className="ignore">
+            <MoveToBack path="" />
+            <div id="message-detail-nav-more" onClick={showMenu}>
+              <EllipsisVertical width="32" height="32" fill="white" />
+            </div>
+            <MoreMenu
+              open={more}
+              isMine={isMine}
+              detail={messageDetailRef}
+              messageId={messageId}
+              type={data.type}
+              content={data.content}
+              close={hiddenMenu}
+              status={data.status}
+            />
+          </section>
+          <section className="container">
+            <Content
+              title={data.title}
+              content={data.content}
+              type={data.type}
+              date={modifiedDate()}
+              status={data.status}
+            />
+            <Like
+              count={data.like_cnt}
+              like={data.is_like}
+              isMine={isMine}
+              emoji={data.emoji_no}
+            />
+          </section>
+        </main>
+      </div>
+    </>
   );
 }
 

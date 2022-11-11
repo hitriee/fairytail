@@ -8,6 +8,7 @@ import {useRecoilState} from 'recoil';
 import {loadingState} from '@apis/Recoil';
 import MoveToBack from '@/components/common/MoveToBack';
 import {main} from '@apis/router';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 function MessageList() {
   // recoil
@@ -22,6 +23,7 @@ function MessageList() {
         src="../background/Background.html"
         frameBorder={0}
       /> */}
+      <InitMessage />
       <div className="messageList">
         <div className="navbarContainer">
           <MoveToBack path={main()} />
