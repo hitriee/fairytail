@@ -17,8 +17,6 @@ function Notifications() {
   };
   const deleteAll = () => {
     setNewItems(() => []);
-    console.log('하나씩 사라지는 효과가 필요할까....');
-    console.log('백에 신호 보내기');
   };
 
   return (
@@ -46,7 +44,7 @@ function Notifications() {
                 key={item.id}
                 deleteEach={deleteEach}
                 index={index}
-                // onDragEnd={(e) => dragEndHandler(e)}
+                dragFlag={true}
               />
             );
           })}
