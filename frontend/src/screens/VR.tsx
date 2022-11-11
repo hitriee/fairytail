@@ -1,54 +1,77 @@
 import './VR.scss';
 import Iframe from 'react-iframe';
-import {useNavigate, useLocation} from 'react-router';
+import {useNavigate, useLocation} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import Loading from '@/components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '../apis/Recoil';
-
-type RouteState = {
-  state: {
-    position: {
-      lat: number;
-      lng: number;
-    };
-  };
-};
+import {getMessageVR} from '@/apis/vr';
+import {LocationParams} from '@/apis';
+import OptionBtn from '@/components/vr/OptionBtn';
 
 function VR() {
   // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  setIsLoading(true);
 
-  // 받은 위치 정보로 서버에 데이터 요청
-  const {state} = useLocation() as RouteState;
+  const navigate = useNavigate();
 
-  let location = {};
+  // 정렬 옵션: false-최신순, true-좋아요순
+  const [option, setOption] = useState(false);
 
-  // 받은 위치 정보가 없을 경우, 현재 위치 탐색
-  if (state === null) {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        location = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        };
-      });
+  const [data, setData] = useState([]);
+  const [isFinished, setIsFinished] = useState(-1);
+
+  // 이전 페이지에서 받은 위치 정보를 location에 저장
+  const state = useLocation().state;
+  const position = state ? (state.position as LocationParams) : null;
+  const [location, setLocation] = useState(position);
+
+  // iframe 준비 확인
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // 받은 위치 정보가 없을 경우, 현재 위치 받아오기
+    if (location === null) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async pos => {
+          setLocation({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          });
+        });
+      } else {
+        alert('브라우저에서 위치 정보를 얻을 수 없습니다.');
+        navigate(-1);
+      }
+    } else {
+      // 서버에서 데이터 받아오기
+      const optionString = option ? 'like' : 'latest';
+
+      for (let i = 0; i < 4; i++) {
+        getMessageVR(i, optionString, location)
+          .then(res => {
+            setData(prev => prev.concat(res.data));
+            setIsFinished(prev => prev + 1);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
-  } else {
-    location = state.position;
-  }
+  }, [isLoaded, option]);
 
   // 자식에 데이터 전달
   useEffect(() => {
-    const child = document.getElementsByTagName('iframe');
-    child[0].contentWindow?.postMessage(location, '*');
-  });
+    if (isFinished === 3 && data.length > 0) {
+      console.log(option);
+      const child = document.getElementsByTagName('iframe');
+      child[0].contentWindow?.postMessage(data, '*');
+      setIsFinished(-1);
+    }
+  }, [isFinished, data]);
 
   // 자식에게서 메세지 받을 경우 페이지 이동
-  const navigate = useNavigate();
-  const [isLoaded, setIsLoaded] = useState(false);
   const [postId, setPostId] = useState(0);
 
   const receiveMsgFromChild = (ev: MessageEvent<any>) => {
@@ -72,12 +95,20 @@ function VR() {
       {isLoaded ? null : <Loading />}
 
       <MoveToBack path="-1" />
+      {data.length > 0 ? (
+        <OptionBtn option={option} setOption={setOption} setData={setData} />
+      ) : null}
 
       <Iframe
         className="vr-frame"
         url="../iframeVR/IframeVR.html"
         frameBorder={0}
-        onLoad={() => setIsLoaded(true)}
+        onLoad={() =>
+          setTimeout(() => {
+            setIsLoaded(true);
+            setIsLoading(true);
+          }, 1000)
+        }
       />
     </div>
   );
