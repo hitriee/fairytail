@@ -1,23 +1,22 @@
-import {useEffect} from 'react';
-import SaveToken from '@/apis/auth/SaveToken';
-import GetUser from '@/apis/auth/GetUser';
+import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {saveToken} from '@/apis/Process';
+import './Process.scss';
 
 function Process() {
+  const navigate = useNavigate();
+
   // 인증받은 access token, localstorage에 저장
-  SaveToken();
-  console.log(localStorage.token);
-  // GetUser();
-  const result = GetUser();
-  console.log(result);
+  saveToken();
 
   // useEffect(() => {
-  //   if (localStorage.token) {
-  //     alert('이미 로그인 되어있습니다.');
-  //     navigate('/');
+  //   if (localStorage.token && localStorage.token !== null) {
+  //     // 토큰 저장 후 main 페이지로 자동 이동
+  //     navigate('/main');
   //   }
   // });
 
-  return <div>Process</div>;
+  return <div className="process" />;
 }
 
 export default Process;

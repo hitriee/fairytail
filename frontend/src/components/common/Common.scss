@@ -93,3 +93,27 @@
 .white {
   color: white;
 }
+
+#foreground {
+  position: absolute;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 1000;
+  top: 10px;
+  opacity: 75%;
+}
+
+@media (max-device-aspect-ratio: 9 / 16) {
+  #foreground {
+    width: 90vw;
+    left: 5%;
+  }
+}
+
+@media (min-device-aspect-ratio: 9 / 16) {
+  #foreground {
+    width: 40vw;
+    left: 30%;
+  }
+}

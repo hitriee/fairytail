@@ -1,10 +1,9 @@
-function SaveToken() {
+export const saveToken = () => {
   // url에 있는 토큰이름 가져오기
   const params = new URLSearchParams(window.location.search);
-  // localstorage에 넣기 위해 string 형태로 변환
+  // localstorage에 토큰 저장(string 형태)
   const token = JSON.stringify(params.get('accessToken'));
+  const userID = JSON.stringify(params.get('userId'));
   window.localStorage.setItem('token', token);
-  // console.log(window.location.search);
-}
-
-export default SaveToken;
+  window.localStorage.setItem('userID', userID);
+};

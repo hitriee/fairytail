@@ -8,7 +8,8 @@ import bell from '@images/bell.png';
 import gear from '@images/gear.png';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '@apis/Recoil';
-import {main} from '@apis/router';
+import {main, settings} from '@apis/router';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 function Individual() {
   // recoil
@@ -16,8 +17,7 @@ function Individual() {
   setIsLoading(true);
 
   const location = useLocation();
-  const isSettings = location.pathname === '/settings';
-
+  const isSettings = location.pathname === settings();
   return (
     <main className="screen messageList">
       <section className="container individual-container">
@@ -29,6 +29,7 @@ function Individual() {
             className="individual-header-icon"
           />
         </div>
+        <InitMessage />
 
         <div className="individual-body">
           {isSettings ? <Settings /> : <Notifications />}
