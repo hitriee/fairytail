@@ -7,9 +7,13 @@ import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.jpa.*;
 import com.fairytail.img.util.MainUtil;
 import com.fairytail.img.util.S3Util;
+import com.google.cloud.vision.v1.*;
+import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -227,6 +231,49 @@ public class PostServiceImpl implements PostService {
             data.add(d);
         }
         return data;
+    }
+
+    /** 이미지의 유해성 여부를 판별해서 유해하면 1을 유해하지 않으면 0을 에러 발생시 -1 반환 */
+    @Override
+    public Integer detectSafeSearch(MultipartFile file) throws IOException {
+        String responseAnnotation = null;
+        Integer result = 0; // 이미지의 유해성 여부 (1: 유해함, 0: 유해하지 않음)
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(file.getInputStream());
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.SAFE_SEARCH_DETECTION).build();
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                    return -1;
+                }
+
+                // For full list of available annotations, see http://g.co/cloud/vision/docs
+                SafeSearchAnnotation annotation = res.getSafeSearchAnnotation();
+
+                // 이미지의 각 유해성 판단 값 점수로 저장
+                int violence = annotation.getViolenceValue();
+                int racy = annotation.getRacyValue();
+                int medical = annotation.getMedicalValue();
+                int adult = annotation.getAdultValue();
+
+                // 각 판단 기준을 하나라도 위반할 시 유해한 이미지로 인식
+                if (violence >= 3 || racy >= 5 || medical >= 4 || adult >= 4)
+                    result = 1;
+            }
+        }
+
+        return result;
     }
 
     public Boolean checkLike(Long userId, Long postId) throws Exception{

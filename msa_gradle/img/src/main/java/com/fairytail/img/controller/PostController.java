@@ -3,6 +3,7 @@ package com.fairytail.img.controller;
 import com.fairytail.img.dto.PostDto;
 import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.service.PostService;
+import com.fairytail.img.util.BadWordsUtils;
 import com.fairytail.img.util.S3Util;
 import com.fairytail.img.vo.*;
 import io.swagger.annotations.Api;
@@ -33,6 +34,8 @@ public class PostController {
     private final String OKAY= "SUCCESS";
     private final String FAIL= "FAIL";
     private final PostService postService;
+
+    private final BadWordsUtils badWordsUtils;
     private static HttpStatus status = null;
 
     private static Map<String, Object> resultMap = null;
@@ -50,19 +53,40 @@ public class PostController {
      */
     @ApiOperation(value = "이미지 게시글 생성", notes = "이미지 게시글 생성 API 입니다.")
     @PostMapping
-    public ResponseEntity<?> createPost(RequestPost req) throws Exception{
+    public ResponseEntity<?> createPost(RequestPost req) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostDto dto = modelMapper.map(req, PostDto.class); //dto에 맵핑
-        PostDto data = postService.createPost(dto); //서비스 실행
-        if(data != null){ //데이터가 null이 아니면 성공
-            resultMap.put("data", data);
-            resultMap.put("message", OKAY);
-            status = HttpStatus.OK;
-        } else{
-            resultMap.put("message", FAIL);
+
+        /** 제목 텍스트 금지어 여부 확인 */
+        if (badWordsUtils.filterText(dto.getTitle())) { // 제목에 금지어가 있을 경우
+            resultMap.put("message", "등록 실패 : 제목 금지어 발견");
+            status = HttpStatus.ACCEPTED;
+
+            return new ResponseEntity<>(resultMap, status);
         }
+
+        Integer safeSearchResult = postService.detectSafeSearch(dto.getFile());
+
+        /** 이미지 유해성 필터링 서비스 실행 */
+        if (safeSearchResult == 1) { // 유해 이미지로 판단됨
+            resultMap.put("message", "등록 실패 : 유해한 이미지로 판단됨");
+            status = HttpStatus.ACCEPTED;
+        }
+        else if (safeSearchResult == 0) { // 유해 이미지로 판단되지 않음
+            PostDto data = postService.createPost(dto); //서비스 실행
+            if (data != null) { //데이터가 null이 아니면 성공
+                resultMap.put("data", data);
+                resultMap.put("message", OKAY);
+                status = HttpStatus.OK;
+            } else {
+                resultMap.put("message", FAIL);
+            }
+        } else { // 유해 이미지 판단 중 에러 발생했을 경우
+            /** 예외 처리 해줄 것 */
+        }
+
         return new ResponseEntity<>(resultMap, status);
     }
 
