@@ -37,7 +37,8 @@
       "@room/*": ["src/components/room/*"],
       "@screens/*": ["src/screens/*"],
       "@styles/*": ["src/styles/*"],
-      "@fonts/*": ["src/styles/fonts/*"]
+      "@fonts/*": ["src/styles/fonts/*"],
+      "@recoil/*": ["src/apis/recoil/*"]
     }
   },
   "include": ["src", "public/background"]

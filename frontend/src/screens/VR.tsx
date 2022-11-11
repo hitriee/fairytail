@@ -5,7 +5,8 @@ import {useEffect, useState} from 'react';
 import Loading from '@/components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
 import {useRecoilState} from 'recoil';
-import {loadingState} from '../apis/Recoil';
+import {loadingState} from '@apis/Recoil';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 type RouteState = {
   state: {
@@ -68,18 +69,21 @@ function VR() {
   }, [postId]);
 
   return (
-    <div className="vr">
-      {isLoaded ? null : <Loading />}
+    <>
+      <InitMessage />
+      <div className="vr">
+        {isLoaded ? null : <Loading />}
 
-      <MoveToBack path="-1" />
+        <MoveToBack path="-1" />
 
-      <Iframe
-        className="vr-frame"
-        url="../iframeVR/IframeVR.html"
-        frameBorder={0}
-        onLoad={() => setIsLoaded(true)}
-      />
-    </div>
+        <Iframe
+          className="vr-frame"
+          url="../iframeVR/IframeVR.html"
+          frameBorder={0}
+          onLoad={() => setIsLoaded(true)}
+        />
+      </div>
+    </>
   );
 }
 

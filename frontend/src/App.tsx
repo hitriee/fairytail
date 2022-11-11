@@ -1,8 +1,16 @@
-import React, {Suspense, lazy} from 'react';
-import '@/apis/notifications/fcm';
+// notification
+import {
+  initToken,
+  requestPermission,
+} from '@apis/notifications/getMessagingToken';
+
+import {Suspense, useEffect, useState, useRef, lazy} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import bgm from '@bgms/silver_waves.mp3';
+
 import '@/App.scss';
-import Loading from '../src/components/loading/Loading';
+
+import Loading from '@components/loading/Loading';
 // route
 import Intro from '@screens/Intro';
 import Main from '@screens/Main';
@@ -14,8 +22,11 @@ import MessageCreate from '@screens/MessageCreate';
 import MessageDetail from '@screens/MessageDetail';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
-import Individual from '@/screens/Individual';
+import Individual from '@screens/Individual';
 
+//recoil
+import {useRecoilState, useRecoilValue} from 'recoil';
+// router
 import {
   main,
   intro,
@@ -30,16 +41,31 @@ import {
   settings,
   notifications,
 } from '@apis/router';
-
-//recoil
-import {RecoilRoot} from 'recoil';
-
-const MessageList = lazy(() => import('@screens/MessageList'));
+import {playingState} from '@apis/Recoil';
 
 function App() {
+  initToken();
+  const [onPlay, setOnPlay] = useRecoilState(playingState);
+  const audioRef = useRef<HTMLAudioElement>(null!);
+  const handlePlay = () => {
+    if (onPlay) {
+      audioRef.current && audioRef.current.play();
+    } else {
+      audioRef.current && audioRef.current.pause();
+    }
+    setOnPlay(prev => !prev);
+  };
+  useEffect(() => {
+    audioRef.current.volume = 0.4;
+  }, []);
+  useEffect(handlePlay, [onPlay]);
+
+  const MessageList = lazy(() => import('@screens/MessageList'));
   return (
-    <BrowserRouter>
-      <RecoilRoot>
+    <>
+      {/* <InitMessage /> */}
+      <BrowserRouter>
+        {/* <RecoilRoot> */}
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path={intro()} element={<Intro />} />
@@ -56,8 +82,10 @@ function App() {
             <Route path={notifications()} element={<Individual />} />
           </Routes>
         </Suspense>
-      </RecoilRoot>
-    </BrowserRouter>
+        {/* </RecoilRoot> */}
+      </BrowserRouter>
+      <audio autoPlay={onPlay} loop={onPlay} src={bgm} ref={audioRef} />
+    </>
   );
 }
 export default App;

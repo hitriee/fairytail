@@ -12,17 +12,17 @@ export const notFound = () => '/404';
 export const settings = () => '/settings';
 export const notifications = () => '/notifications';
 
-export const toMessageDetail = (messageId: string) => {
-  if (parseInt(messageId)) {
+export const toMessageDetail = (messageId: string | number) => {
+  if (typeof messageId === 'number' || parseInt(messageId)) {
     return `/message/detail/${messageId}`;
   } else {
-    return '/404';
+    return notFound();
   }
 };
-export const toMessageUpdate = (messageId: string) => {
-  if (parseInt(messageId)) {
+export const toMessageUpdate = (messageId: string | number) => {
+  if (typeof messageId === 'number' || parseInt(messageId)) {
     return `/message/update/${messageId}`;
   } else {
-    return '/404';
+    return notFound();
   }
 };
