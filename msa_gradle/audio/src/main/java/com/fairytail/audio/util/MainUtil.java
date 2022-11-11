@@ -17,7 +17,7 @@ public class MainUtil {
     }
 
     public String urlToFilePath(String url){
-        if(url != null){
+        if(url != null && url != ""){
             String[] sp = url.split("/");
             if(sp.length >= 2){
                 return sp[sp.length -2] + "/" + sp[sp.length -1];
