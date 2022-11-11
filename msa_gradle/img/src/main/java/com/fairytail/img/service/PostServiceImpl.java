@@ -215,6 +215,18 @@ public class PostServiceImpl implements PostService {
         return false;
     }
 
+    @Override
+    public List<PostDto> readAllPost() throws Exception {
+        ModelMapper modelMapper = new ModelMapper();
+        List<PostDto> data = new ArrayList<>();
+        List<PostEntity> res = postRepository.findAllByStatus(0);
+        for (PostEntity r: res) {
+            PostDto d = modelMapper.map(r, PostDto.class);
+            data.add(d);
+        }
+        return data;
+    }
+
     public Boolean checkLike(Long userId, Long postId) throws Exception{
         Optional<PostLikeEntity> optional = postLikeRepository.findByPostIdAndUserId(userId, postId);
         if (optional.isPresent()){
