@@ -24,4 +24,6 @@ public interface PostService {
     Boolean createReport(PostReportDto postReportDto) throws Exception;
 
     Boolean changeStatus(PostEntity post)throws Exception;
+
+    List<PostDto> readAllPost() throws Exception;
 }

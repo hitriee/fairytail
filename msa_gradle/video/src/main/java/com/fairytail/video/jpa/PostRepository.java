@@ -33,4 +33,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
                     "AND p.lng BETWEEN :lng - 0.01 AND :lng + 0.01 AND p.status = 0 ORDER BY p.like_cnt DESC LIMIT 25", nativeQuery = true
     )
     List<PostEntity> findTop25ByLatAndLngAndStatusOrderByLikeCntDesc(Double lat, Double lng);
+
+    List<PostEntity> findAllByStatus(Integer status);
 }

@@ -214,5 +214,27 @@ public class PostController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    @GetMapping("/map")
+    public ResponseEntity<?> readAll() throws Exception{
+        ModelMapper modelMapper = new ModelMapper();
+        resultMap = new HashMap<>();
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
+        List<PostDto> res = postService.readAllPost();
+        List<ResponsePostMap> data = new ArrayList<>();
+        for(PostDto r : res){
+            ResponsePostMap d = modelMapper.map(r, ResponsePostMap.class);
+            data.add(d);
+        }
+        if(!data.isEmpty()){
+            resultMap.put("data", data);
+            resultMap.put("message", OKAY);
+            status = HttpStatus.OK;
+        } else{
+            resultMap.put("data", data);
+            resultMap.put("message", FAIL);
+            status = HttpStatus.OK;
+        }
+        return new ResponseEntity<>(resultMap, status);
+    }
 
 }
