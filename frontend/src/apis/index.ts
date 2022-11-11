@@ -1,8 +1,44 @@
-const BASE_URL = 'https://k7c209.p.ssafy.io/api';
-export const main = () => BASE_URL + '/main';
-export const intro = () => BASE_URL + '/';
-export const map = () => BASE_URL + '/map';
-export const vr = () => BASE_URL + '/vr';
-export const messageList = () => BASE_URL + '/message/list';
-export const messageCreate = () => BASE_URL + '/message/create';
-export const messageDetail = () => BASE_URL + '/message/detail/:id';
+import axios from 'axios';
+
+const BASE_URL = 'https://k7c209.p.ssafy.io';
+
+export const API_INTRO = axios.create({
+  baseURL: BASE_URL,
+  headers: {},
+});
+
+export const API_AUTH = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    Authorization: localStorage.token,
+  },
+});
+
+export const API_FILE = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    Authorization: localStorage.token,
+    'Content-Type': 'multipart/form-data',
+  },
+});
+
+export const checkType = (type: number) => {
+  switch (type) {
+    case 0:
+      return 'text';
+
+    case 1:
+      return 'img';
+
+    case 2:
+      return 'video';
+
+    case 3:
+      return 'audio';
+  }
+};
+
+export interface Location {
+  lat: number;
+  lng: number;
+}
