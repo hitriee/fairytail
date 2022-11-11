@@ -18,6 +18,8 @@ function init() {
   window.addEventListener("message", (ev) => {
     const location = ev.data;
 
+    console.log(location);
+
     // 데이터 가져오기
     axios
       .get(

@@ -1,14 +1,17 @@
 import {useLayoutEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
 import Message from '@messageCreate/Message';
-import Loading from '@components/loading/Loading';
+import Spinner from '@messageCreate/Spinner';
 import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '@apis/Recoil';
 import Toggle from '@/components/messageCreate/Toggle';
-import axios from 'axios';
+import Compress from '@/components/messageCreate/Compress';
+import {postText, postFile} from '@/apis/messageCreate';
+import {toMessageDetail} from '@/apis/router';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 // 내용 타입 정의
@@ -19,26 +22,35 @@ export type Content = {
 };
 
 function MessageCreate() {
-  // 모바일 가상 키보드 고려한 스크롤 이동
-
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
   setIsLoading(true);
+
+  // 모바일 가상 키보드 고려한 스크롤 이동
   const screenRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const detectMobileKeybord = () => {
-      if (document.activeElement?.tagName === 'INPUT') {
+    const detectMobileKeyboard = () => {
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
+      ) {
         screenRef.current?.scrollIntoView({block: 'end'});
       }
     };
 
-    window.addEventListener('resize', detectMobileKeybord);
+    window.addEventListener('resize', detectMobileKeyboard);
 
-    return window.removeEventListener('resize', detectMobileKeybord);
+    return window.removeEventListener('resize', detectMobileKeyboard);
   });
 
-  // 파일 전송 중 보여주는 로딩
-  const [loading, setLoading] = useState(false);
+  // 디테일 페이지로 이동
+  const navigate = useNavigate();
+
+  // 파일 전송 중 보여주는 스피너
+  const [spinner, setSpinner] = useState(false);
+  const [spinnerMessage, setSpinnerMessage] =
+    useState('잠시만 기다려주세요...');
+  const [spinnerStop, setspinnerStop] = useState(0);
 
   // 이모지 길게 클릭했는지 확인
   const [isLongClicked, setIsLongClicked] = useState(false);
@@ -64,41 +76,76 @@ function MessageCreate() {
       alert('파일이 첨부되지 않았습니다.');
     } else {
       if (navigator.geolocation) {
-        setLoading(true);
-        navigator.geolocation.getCurrentPosition(position => {
+        setSpinner(true);
+
+        navigator.geolocation.getCurrentPosition(async position => {
           const location = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
 
-          console.log(emojiNo);
-          console.log(title);
-          console.log(content);
-          console.log(location);
-          console.log(isShare);
+          let compressedFile = content.file;
 
-          // 서버 통신, type에 따라 보내는 url 달라짐
-          const formData = new FormData();
-          formData.append('emojiNo', emojiNo.toString());
-          formData.append('title', title);
-          formData.append('type', content.type.toString());
-          formData.append('file', content.file as Blob);
-          formData.append('content', content.fileURL);
-          formData.append('lat', location.lat.toString());
-          formData.append('lng', location.lng.toString());
-          formData.append('status', isShare ? '0' : '1');
+          // 이미지는 압축
+          if (content.type === 1 && content.file !== null) {
+            compressedFile = await Compress(content.file);
+          }
 
-          axios({
-            method: 'post',
-            url: 'url',
-            data: formData,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: localStorage.getItem('access_token'),
-            },
-          });
+          let data;
 
-          setLoading(false);
+          // 서버 통신, type에 따라 보내는 방식이 달라짐
+          // text인 경우
+          if (content.type === 0) {
+            data = {
+              content: content.fileURL,
+              emojiNo: emojiNo,
+              lat: location.lat,
+              lng: location.lng,
+              status: isShare ? '0' : '1',
+              title: title,
+              type: content.type,
+            };
+            postText(content.type, data)
+              .then(({data}) => {
+                setspinnerStop(1);
+                setSpinnerMessage('성공적으로 등록되었습니다.');
+                setTimeout(() => {
+                  setSpinner(false);
+                  navigate(toMessageDetail(data.postId));
+                }, 1500);
+              })
+              .catch(err => {
+                setspinnerStop(2);
+                setSpinnerMessage('풍선 등록에 실패했습니다.');
+                setTimeout(() => setSpinner(false), 1500);
+              });
+          } else {
+            // image, video, audio인 경우
+            data = new FormData();
+            data.append('content', content.fileURL);
+            data.append('emojiNo', emojiNo.toString());
+            data.append('file', compressedFile as Blob);
+            data.append('lat', location.lat.toString());
+            data.append('lng', location.lng.toString());
+            data.append('status', isShare ? '0' : '1');
+            data.append('title', title);
+            data.append('type', content.type.toString());
+
+            postFile(content.type, data)
+              .then(({data}) => {
+                setspinnerStop(1);
+                setSpinnerMessage('성공적으로 등록되었습니다.');
+                setTimeout(() => {
+                  setSpinner(false);
+                  navigate(toMessageDetail(data.postId));
+                }, 1000);
+              })
+              .catch(err => {
+                setspinnerStop(2);
+                setSpinnerMessage('풍선 등록에 실패했습니다.');
+                setTimeout(() => setSpinner(false), 1000);
+              });
+          }
         });
       }
     }
@@ -108,7 +155,9 @@ function MessageCreate() {
     <>
       <InitMessage />
       <div className="screen messageList" ref={screenRef}>
-        {loading ? <Loading /> : null}
+        {spinner ? (
+          <Spinner message={spinnerMessage} spinnerStop={spinnerStop} />
+        ) : null}
 
         <MoveToBack path="/main" />
         <div className="container">

@@ -4,7 +4,7 @@ import {
   requestPermission,
 } from '@apis/notifications/getMessagingToken';
 
-import {Suspense, useEffect, useState, useRef} from 'react';
+import {Suspense, useEffect, useState, useRef, lazy} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import bgm from '@bgms/silver_waves.mp3';
 
@@ -16,7 +16,8 @@ import Intro from '@screens/Intro';
 import Main from '@screens/Main';
 import Globe from '@screens/Globe';
 import Map from '@screens/Map';
-import MessageList from '@screens/MessageList';
+// lazy loading으로 대체
+// import MessageList from '@screens/MessageList';
 import MessageCreate from '@screens/MessageCreate';
 import MessageDetail from '@screens/MessageDetail';
 import VR from '@screens/VR';
@@ -59,6 +60,7 @@ function App() {
   }, []);
   useEffect(handlePlay, [onPlay]);
 
+  const MessageList = lazy(() => import('@screens/MessageList'));
   return (
     <>
       {/* <InitMessage /> */}
@@ -78,7 +80,6 @@ function App() {
             <Route path={notFound()} element={<NotFound />} />
             <Route path={settings()} element={<Individual />} />
             <Route path={notifications()} element={<Individual />} />
-            {/* <Route path="/loading" element={<Loading />} /> */}
           </Routes>
         </Suspense>
         {/* </RecoilRoot> */}
