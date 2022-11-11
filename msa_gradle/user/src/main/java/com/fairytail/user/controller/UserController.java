@@ -3,10 +3,14 @@ package com.fairytail.user.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.net.http.HttpRequest;
 
 @Api(value = "user")
 @RestController
@@ -21,6 +25,17 @@ public class UserController {
     public String status() {
         // Random으로 할당된 포트 번호 받아오기
         return String.format("User service is working on port %s!", env.getProperty("local.server.port"));
+    }
+
+    @ApiOperation(value = "Token 체크", notes = "토큰 체크를 위한 API 입니다.")
+    @PostMapping
+    public String tokenCheck(HttpServletRequest request) {
+        return "토큰왔다";
+    }
+
+    @GetMapping
+    public String tokenCheck2(HttpServletRequest request) {
+        return "토큰왔다";
     }
 
 }

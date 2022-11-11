@@ -15,10 +15,11 @@ public class UserEntity {
 
     @Builder
     public UserEntity(String email,
-                      String username, Integer block_cnt,
+                      String username, String firebaseToken, Integer block_cnt,
                       Integer status) {
         this.email = email;
         this.username = username;
+        this.firebaseToken = firebaseToken;
         this.block_cnt = block_cnt == null ? 0 : block_cnt;
         this.status = status == null ? 0 : status;
     }
@@ -37,11 +38,14 @@ public class UserEntity {
     @Column(nullable = false)
     private String username;
 
+    private String firebaseToken;
     // 신고횟수
     private Integer block_cnt;
 
     // 활성화여부
     // 0: 활성화 / 1: 비활성화 / 2: 신고로 비활성화
     private Integer status;
+
+
 
 }

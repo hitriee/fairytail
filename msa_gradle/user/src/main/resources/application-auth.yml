@@ -7,8 +7,9 @@ spring:
         registration:
           google:
             # Todo: 인증 정보 - EC2 서버에 올린 후 변경 필요
-            client-id: 587123311906-3monu6i6uj6fmdbar1q9oq9bva9ochgt.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 972146122059-e028ed3mkq6g5g40rrkm67mqjv5f9oc6.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://k7c209.p.ssafy.io:9096/user/login/oauth2/code/google
             scope: profile, email
 
   datasource:
@@ -17,12 +18,18 @@ spring:
     username: dongsim
     password: dongsim12!
 
-    jpa:
-      open-in-view: false
-      generate-ddl: true
-      show-sql: true
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
       hibernate:
-        ddl-auto: create-drop
+        format_sql: true
+
+  devtools:
+    livereload:
+      enabled: true
 
 # Token expiration 관련 설정
 token:

@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     .compact();
         }
 
-        String url = "http://localhost:3000/main";
+        String url = "http://localhost:3000/process";
 
         String uri = UriComponentsBuilder.fromUriString(url)
                 .queryParam("accessToken", token)
@@ -73,9 +73,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             return;
         }
 
-        redirectStrategy.sendRedirect(request, response, uri);
+
 //        response.addHeader("token", token);
 //        response.addHeader("userId", String.valueOf(user.get().getId()));
-//        log.info("token----------------------" + token);
+        log.info("token----------------------" + token);
+        redirectStrategy.sendRedirect(request, response, uri);
     }
 }

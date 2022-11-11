@@ -82,6 +82,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
      * WebFlux에서 데이터를 처리하는 단위 중 하나가 Mono - 단일 값
                                            단일 값이 아닐 경우 Flux
      */
+
     private Mono<Void> tokenError(ServerWebExchange exchange, String errorMessage, HttpStatus statusCode) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(statusCode);
