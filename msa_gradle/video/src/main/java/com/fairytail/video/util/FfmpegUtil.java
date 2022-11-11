@@ -10,6 +10,9 @@ import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import org.springframework.stereotype.Component;
 
 
+/**
+ * 영상 썸네일 추출 유틸
+ */
 @Component
 public class FfmpegUtil{
     private String serverPath = System.getProperty("user.dir")+"/ffmpeg/";
