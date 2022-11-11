@@ -102,7 +102,7 @@ public class PostController {
         if(res != null){
             data = modelMapper.map(res, ResponsePost.class);
         }
-        if(res != null){
+        if(data != null){
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
