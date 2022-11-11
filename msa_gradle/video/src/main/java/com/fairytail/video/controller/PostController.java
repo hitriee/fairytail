@@ -47,7 +47,7 @@ public class PostController {
     /**
      * 이미지 게시글 생성
      */
-    @ApiOperation(value = "이미지 게시글 생성", notes = "이미지 게시글 생성 API 입니다.")
+    @ApiOperation(value = "게시글 생성", notes = "게시글 생성 API 입니다.")
     @PostMapping
     public ResponseEntity<?> createPost(RequestPost req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
@@ -68,7 +68,7 @@ public class PostController {
     /**
      *이미지 게시글 상세 조회
      */
-    @ApiOperation(value = "이미지 게시글 상세 조회", notes = "이미지 게시글 상세 조회 API 입니다.")
+    @ApiOperation(value = "게시글 상세 조회", notes = "게시글 상세 조회 API 입니다.")
     @GetMapping("/detail")
     public ResponseEntity<?> readPost(@RequestParam Long postId, @RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
@@ -92,7 +92,7 @@ public class PostController {
     /**
      * 이미지 게시글 공개 여부 수정
      */
-    @ApiOperation(value = "이미지 게시글 공개 여부 수정", notes = "이미지 게시글 공개 여부 수정 API 입니다.")
+    @ApiOperation(value = "게시글 공개 여부 수정", notes = "게시글 공개 여부 수정 API 입니다.")
     @PostMapping("status")
     public ResponseEntity<?> putPost(RequestPostPut req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
@@ -117,7 +117,7 @@ public class PostController {
     /**
      *
      */
-    @ApiOperation(value = "이미지 게시글 삭제", notes = "이미지 게시글 삭제 API 입니다.")
+    @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제 API 입니다.")
     @DeleteMapping("/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable Long postId) throws Exception{
         resultMap = new HashMap<>();
@@ -135,7 +135,7 @@ public class PostController {
     /**
      * 좌표를 받아서 근처 글 리스트를 최신 순으로 25개 조회
      */
-    @ApiOperation(value = "근처 이미지 게시글 최신순 리스트 조회", notes = "근처 이미지 게시글 최신순 리스트 조회 API 입니다.")
+    @ApiOperation(value = "근처 게시글 최신순 리스트 조회", notes = "근처 게시글 최신순 리스트 조회 API 입니다.")
     @GetMapping("/vr/latest")
     public ResponseEntity<?> readPostListLatest(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
@@ -162,7 +162,7 @@ public class PostController {
     /**
      * 좌표를 받아서 근처 글 리스트를 좋아요 순으로 25개 조회
      */
-    @ApiOperation(value = "근처 이미지 게시글 좋아요 순 리스트 조회", notes = "근처 이미지 게시글 좋아요 순 리스트 조회 API 입니다.")
+    @ApiOperation(value = "근처 게시글 좋아요 순 리스트 조회", notes = "근처 게시글 좋아요 순 리스트 조회 API 입니다.")
     @GetMapping("/vr/like")
     public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
@@ -190,7 +190,7 @@ public class PostController {
     /**
      *
      */
-    @ApiOperation(value = "내 이미지 게시글 리스트 조회", notes = "내 이미지 게시글 최신순 리스트 조회 API 입니다.")
+    @ApiOperation(value = "내 게시글 리스트 조회", notes = "내 게시글 최신순 리스트 조회 API 입니다.")
     @GetMapping("/mylist/{userId}")
     public ResponseEntity<?> readMyPostList(@PathVariable Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
@@ -213,7 +213,7 @@ public class PostController {
         }
         return new ResponseEntity<>(resultMap, status);
     }
-
+    @ApiOperation(value = "전체 게시글 좌표 조회", notes = "전체 게시글 좌표 조회 API 입니다.")
     @GetMapping("/map")
     public ResponseEntity<?> readAll() throws Exception{
         ModelMapper modelMapper = new ModelMapper();
