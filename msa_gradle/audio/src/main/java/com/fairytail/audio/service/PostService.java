@@ -20,8 +20,6 @@ public interface PostService {
 
     Boolean createLike(PostLikeDto postLikeDto) throws Exception;
 
-    PostDto deletePostLike(PostLikeDto postLikeDto) throws Exception;
-
     Boolean createReport(PostReportDto postReportDto) throws Exception;
 
     Boolean changeStatus(PostEntity post)throws Exception;

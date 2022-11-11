@@ -34,6 +34,10 @@ public class PostServiceImpl implements PostService {
     private final MainUtil mainUtil;
 
     private String dirName = "audio";
+
+    /**
+     * 게시글 생성
+     */
     @Override
     public PostDto createPost(PostDto dto) throws IOException {
         ModelMapper modelMapper = new ModelMapper();
@@ -55,6 +59,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 게시글 상세 조회
+     */
     @Override
     public PostDto readPost(Long postId, Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -69,6 +76,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 게시글 공개, 비공개 수정
+     */
     @Override
     public PostDto putPost(PostDto dto) throws IOException{
         ModelMapper modelMapper = new ModelMapper();
@@ -83,6 +93,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 게시글 삭제
+     */
     @Override
     public Boolean deletePost(Long postId) {
         Boolean data = false;
@@ -102,6 +115,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 근처 게시글 최신순 조회
+     */
     @Override
     public List<PostDto> readPostListLatest(Double lat, Double lng) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -116,6 +132,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 근처 게시글 좋아요 순 조회
+     */
     @Override
     public List<PostDto> readPostListLike(Double lat, Double lng) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -130,6 +149,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 내 게시글 최신순 조회
+     */
     @Override
     public List<PostDto> readMyPostList(Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -144,6 +166,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 좋아요, 좋아요 취소 누르기
+     */
     @Override
     public Boolean createLike(PostLikeDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -173,21 +198,9 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-    @Override
-    public PostDto deletePostLike(PostLikeDto dto) throws Exception {
-        ModelMapper modelMapper = new ModelMapper();
-        PostDto data = null;
-        Long res = postLikeRepository.deleteByPostIdAndUserId(dto.getPostId(), dto.getUserId());
-        if(res >= 0){
-            Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
-            if(optional.isPresent()){
-                PostEntity post = optional.get();
-                data = modelMapper.map(post, PostDto.class);
-            }
-        }
-        return data;
-    }
-
+    /**
+     *  신고 누르기
+     */
     @Override
     public Boolean createReport(PostReportDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -211,6 +224,9 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    /**
+     * 신고 5회 이상 게시글 차단
+     */
     @Override
     public Boolean changeStatus(PostEntity post) throws Exception {
         Integer reportCnt =  post.getReportCnt();
@@ -222,6 +238,9 @@ public class PostServiceImpl implements PostService {
         return false;
     }
 
+    /**
+     * 모든 게시글 좌표 조회
+     */
     @Override
     public List<PostDto> readAllPost() throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -234,6 +253,9 @@ public class PostServiceImpl implements PostService {
         return data;
     }
 
+    /**
+     * 좋아요 여부 체크 로직
+     */
     public Boolean checkLike(Long userId, Long postId) throws Exception{
         Optional<PostLikeEntity> optional = postLikeRepository.findByPostIdAndUserId(userId, postId);
         if (optional.isPresent()){
