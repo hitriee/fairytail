@@ -10,11 +10,12 @@ interface itemProps {
     title: string;
     emoji: number;
   };
+  dragFlag: boolean;
   index?: number;
   deleteEach?: (index: number) => void;
 }
 
-function MyNotification({item, index, deleteEach}: itemProps) {
+function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   const ref = useRef<HTMLDivElement>(null!);
   const navigate = useNavigate();
   // const [originPos, setOriginPos] = useState({x: 0, y: 0});
@@ -33,63 +34,75 @@ function MyNotification({item, index, deleteEach}: itemProps) {
   };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    const {current} = ref;
-    const img = new Image();
-    e.dataTransfer?.setDragImage(img, 0, 0);
-    e.dataTransfer.effectAllowed = 'move';
-    const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
-    // setOriginPos(() => originPosTemp);
-    setIsGrabbing(true);
+    if (dragFlag) {
+      const {current} = ref;
+      const img = new Image();
+      e.dataTransfer?.setDragImage(img, 0, 0);
+      e.dataTransfer.effectAllowed = 'move';
+      const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
+      // setOriginPos(() => originPosTemp);
+      setIsGrabbing(true);
+    }
   };
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    (ref.current as HTMLDivElement as HTMLDivElement).style.marginLeft = `${
-      e.clientX * 0.4
-    }px`;
+    if (dragFlag) {
+      e.preventDefault();
+      (ref.current as HTMLDivElement as HTMLDivElement).style.marginLeft = `${
+        e.clientX * 0.4
+      }px`;
+    }
   };
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsGrabbing(false);
-    e.dataTransfer.dropEffect = 'move';
-    const {current} = ref;
-    if ((current.offsetLeft + current.offsetWidth) / 2 < e.clientX * 0.4) {
-      setDeleted(true);
-      console.log(true);
-      if (deleteEach && index) {
-        deleteEach(index);
+    if (dragFlag) {
+      e.preventDefault();
+      setIsGrabbing(false);
+      e.dataTransfer.dropEffect = 'move';
+      const {current} = ref;
+      if ((current.offsetLeft + current.offsetWidth) / 2 < e.clientX * 0.4) {
+        setDeleted(true);
+        console.log(true);
+        if (deleteEach && index) {
+          deleteEach(index);
+        }
+      } else {
+        (ref.current as HTMLDivElement).style.marginLeft = `0`;
+        setDeleted(false);
+        console.log(false);
       }
-    } else {
-      (ref.current as HTMLDivElement).style.marginLeft = `0`;
-      setDeleted(false);
-      console.log(false);
     }
   };
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const {current} = ref;
-    const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
-    // setOriginPos(() => originPosTemp);
-    setIsGrabbing(true);
+    if (dragFlag) {
+      const {current} = ref;
+      const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
+      // setOriginPos(() => originPosTemp);
+      setIsGrabbing(true);
+    }
   };
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    (
-      ref.current as HTMLDivElement
-    ).style.marginLeft = `${e.changedTouches[0].clientX}px`;
+    if (dragFlag) {
+      (
+        ref.current as HTMLDivElement
+      ).style.marginLeft = `${e.changedTouches[0].clientX}px`;
+    }
   };
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
-    setIsGrabbing(false);
-    const {current} = ref;
-    if (
-      (current.offsetLeft + current.offsetWidth) / 2 <
-      e.changedTouches[0].clientX
-    ) {
-      setDeleted(true);
-      if (deleteEach && index) {
-        deleteEach(index);
+    if (dragFlag) {
+      setIsGrabbing(false);
+      const {current} = ref;
+      if (
+        (current.offsetLeft + current.offsetWidth) / 2 <
+        e.changedTouches[0].clientX
+      ) {
+        setDeleted(true);
+        if (deleteEach && index) {
+          deleteEach(index);
+        }
+      } else {
+        (ref.current as HTMLDivElement).style.marginLeft = '0';
+        setDeleted(false);
       }
-    } else {
-      (ref.current as HTMLDivElement).style.marginLeft = '0';
-      setDeleted(false);
     }
   };
   const dynamicClass = () => {
@@ -111,7 +124,7 @@ function MyNotification({item, index, deleteEach}: itemProps) {
       <div
         ref={ref}
         className={dynamicClass()}
-        draggable
+        draggable={dragFlag}
         onClick={toDetail(id)}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
