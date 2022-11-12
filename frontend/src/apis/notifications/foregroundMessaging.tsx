@@ -4,6 +4,7 @@ import {returnTrue} from '@/components/common/commonFunc';
 import MyNotification from '@individual/MyNotification';
 import {useEffect, useState} from 'react';
 import {returnFalse} from '@common/commonFunc';
+import '@common/Common.scss'
 
 function InitMessage() {
   const messaging = getMessaging(app);
@@ -13,18 +14,18 @@ function InitMessage() {
   const changeOpenState = () => {
     if (open) {
       setInterval(() => {
-        setOpen(returnFalse);
+        setOpen(returnFalse)
       }, 5000);
     }
   };
 
   onMessage(messaging, payload => {
-    if (payload.notification?.body && payload.notification?.title) {
-      const body = JSON.parse(payload.notification?.body);
+    if (payload.data?.body && payload.data?.title) {
+      const body = JSON.parse(payload.data?.body);
       const newInfo = {
         id: body?.post_id,
         emoji: body?.emoji_no,
-        title: payload.notification?.title,
+        title: payload.data?.title,
       };
       setInfo(newInfo);
     }
@@ -35,13 +36,13 @@ function InitMessage() {
     }
   }, [info]);
 
-  useEffect(() => changeOpenState, [open]);
+  useEffect(changeOpenState, [open]);
 
   return (
     <>
       {open ? (
         <div id="foreground">
-          <MyNotification item={info} />
+          <MyNotification item={info} dragFlag={false} />
         </div>
       ) : null}
     </>

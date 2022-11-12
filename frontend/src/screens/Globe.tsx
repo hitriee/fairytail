@@ -32,7 +32,7 @@ function Globe() {
       <InitMessage />
       <div className="globe-background">
         <MoveToBack path={main()} />
-        <Canvas style={{width, height}} camera={{near: 6, far: 30}}>
+        <Canvas style={{width, height}} camera={{near: 6, far: 30, zoom: 1.2}}>
           {/* <color attach="background" args={[0, 0, 0]} /> */}
           <Stars position={[0, 0, 0]} />
           <ambientLight />
