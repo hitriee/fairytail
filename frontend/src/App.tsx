@@ -35,7 +35,6 @@ import {
   vr,
   messageList,
   messageCreate,
-  messageUpdate,
   messageDetail,
   notFound,
   settings,

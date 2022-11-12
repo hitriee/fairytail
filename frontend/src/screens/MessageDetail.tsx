@@ -11,7 +11,8 @@ import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 import {getMesssage, detailResponse} from '@/apis/messageDetail';
-import {isNumberType} from '@/components/common/commonFunc';
+import {intMessageId, convStringType} from '@/components/common/commonFunc';
+import {checkType} from '@/apis';
 
 function MessageDetail() {
   // recoil
@@ -24,27 +25,12 @@ function MessageDetail() {
   // 전달 받은 messageId가 숫자가 아니라면 notfound로 이동
   const navigate = useNavigate();
   const params = useParams();
-  const messageId = params.id;
-  let intMessageId = 0;
-
-  useEffect(() => {
-    if (!messageId || !parseInt(messageId)) {
-      navigate(notFound());
-    } else {
-      intMessageId = parseInt(messageId);
-    }
-  }, []);
+  const messageId = intMessageId(params.id);
+  const type = convStringType(params.type);
 
   // 현재 사용자 정보
-  const userId = localStorage.getItem('id');
-  let intUserId = 0;
-  useEffect(() => {
-    if (!userId || !parseInt(userId)) {
-      // navigate(intro());
-    } else {
-      intUserId = parseInt(userId);
-    }
-  }, []);
+  // const userId = currentUser()
+  const userId = 2;
 
   // 서버 통신으로 게시글 정보 가져오기
   const dataType = {
@@ -58,31 +44,36 @@ function MessageDetail() {
     isLike: false,
     date: '',
     dayType: 10,
+    status: 0,
   };
 
   const [data, setData] = useState(dataType);
 
-  // 다른 페이지에서 넘어온 정보 (type)
-  const [type, setType] = useState<number | undefined>(useLocation().state);
-
   useEffect(() => {
-    if (type === undefined) {
-      // type 알려달라고 백에 요청
+    if (messageId === -1) {
+      navigate(notFound());
     }
-    getMesssage(0, messageId).then((res: detailResponse) => {
-      if (res.message === 'SUCCESS') {
-        setData(() => res.data);
-      } else {
-        // 실패했을 경우 404로 이동
-        navigate(notFound());
-      }
-    });
+    // else if (userId === -1) {
+    // navigate(intro());
+    // }
+    else if (type) {
+      getMesssage(type, messageId).then((res: detailResponse) => {
+        if (res.message === 'SUCCESS') {
+          setData(prev => {
+            return {...prev, ...res.data};
+          });
+        } else {
+          // 실패했을 경우 404로 이동
+          // navigate(notFound());
+        }
+      });
+    } else {
+      // navigate(notFound());
+    }
   }, []);
 
-  // 오류 처리
-
   // 현재 사용자가 작성한 게시글인지 확인
-  const isMine = () => userId === String(data.userId);
+  const isMine = () => userId === data.userId;
 
   // 메뉴 표시 여부
   const [more, setMore] = useState(false);
@@ -109,34 +100,34 @@ function MessageDetail() {
             <div id="message-detail-nav-more" onClick={showMenu}>
               <EllipsisVertical width="32" height="32" fill="white" />
             </div>
-            {/* <MoreMenu
+            <MoreMenu
               open={more}
               isMine={isMine()}
               detail={messageDetailRef}
               messageId={messageId}
-              type={data.type}
+              type={type}
               content={data.content}
               close={hiddenMenu}
               status={data.status}
-            /> */}
+            />
           </section>
           <section className="container">
-            {/* <Content
+            <Content
               title={data.title}
               content={data.content}
               type={data.type}
               date={modifiedDate()}
               status={data.status}
-            /> */}
+            />
             <Like
               count={data.likeCnt}
               like={data.isLike}
               isMine={isMine()}
               emoji={data.emojiNo}
-              type={data.type}
+              type={type}
               likeInfo={{
-                postId: data.postId,
-                userId: userId ? parseInt(userId) : 0,
+                postId: messageId,
+                userId,
               }}
             />
           </section>

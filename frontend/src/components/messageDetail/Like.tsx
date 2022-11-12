@@ -11,7 +11,7 @@ interface LikeProps {
   like: boolean;
   isMine: boolean;
   emoji: number;
-  type: number;
+  type: string;
   likeInfo: {
     postId: number;
     userId: number;

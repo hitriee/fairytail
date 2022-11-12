@@ -1,27 +1,17 @@
 import {API_AUTH} from '@apis/index';
-import {checkType} from '@apis/index';
-
-// const detailPath: messageType = (type, postId) =>
-//   `/${checkType(type)}/message/detail/${postId}`;
-
-// const likePath = (type: number) => `/${checkType(type)}/like`
 
 export const getMesssage: messageType = async (type, postId) => {
-  const res = await API_AUTH.get(
-    `/${checkType(type)}/message/detail/${postId}`,
-  );
+  const res = await API_AUTH.get(`/${type}/message/detail/${postId}`);
   return res.data;
 };
 
 export const deleteMessage: messageType = async (type, postId) => {
-  const res = await API_AUTH.delete(
-    `/${checkType(type)}/message/detail/${postId}`,
-  );
+  const res = await API_AUTH.delete(`/${type}/message/detail/${postId}`);
   return res.data;
 };
 
 export const likeMessage: likeMessageType = async (type, data) => {
-  const res = await API_AUTH.post(`/${checkType(type)}/like`, data);
+  const res = await API_AUTH.post(`/${type}/like`, data);
   return res.data;
 };
 
@@ -29,12 +19,12 @@ export const changeMessageStatus: changeMessageStatusType = async (
   type,
   data,
 ) => {
-  const res = await API_AUTH.post(`/${checkType(type)}/message/status`, data);
+  const res = await API_AUTH.post(`/${type}/message/status`, data);
   return res.data;
 };
 
 export const reportMessage: reportMessageType = async (type, data) => {
-  const res = await API_AUTH.post(`/${checkType(type)}/report`, data);
+  const res = await API_AUTH.post(`/${type}/report`, data);
   return res.data;
 };
 export interface likeRequest {
@@ -51,7 +41,7 @@ export interface reportRequest {
 
 export interface statusRequest {
   postId: number;
-  status: boolean;
+  status: number;
 }
 export interface detailResponse {
   data: {
@@ -70,14 +60,14 @@ export interface detailResponse {
 }
 
 export interface messageType {
-  (type: number, postId: string | undefined): any;
+  (type: string, postId: number): any;
 }
 export interface likeMessageType {
-  (type: number, data: likeRequest): any;
+  (type: string, data: likeRequest): any;
 }
 export interface changeMessageStatusType {
-  (type: number, data: statusRequest): any;
+  (type: string, data: statusRequest): any;
 }
 export interface reportMessageType {
-  (type: number, data: reportRequest): any;
+  (type: string, data: reportRequest): any;
 }

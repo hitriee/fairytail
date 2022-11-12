@@ -1,17 +1,24 @@
-import {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, ReactHTMLElement} from 'react';
 import Alert from '@common/Alert';
-import {returnTrue, returnFalse} from '@common/commonFunc';
+import {returnTrue, returnFalse, currentUser} from '@common/commonFunc';
 import '@common/Common.scss';
 import SelectBox from '../common/SelectBox';
+import {reportMessage} from '@/apis/messageDetail';
+import {checkType} from '@/apis';
+import {useNavigate} from 'react-router-dom';
+import {intro} from '@/apis/router';
 
 interface ReportProps {
   open: boolean;
   onCancel: () => void;
+  type: string;
+  messageId: number;
 }
 
-function Report({onCancel, open}: ReportProps) {
+function Report({onCancel, open, type, messageId}: ReportProps) {
   // 선택한 신고 유형
   const [reportType, setReportType] = useState(-1);
+  const [reportContent, setReportContent] = useState('');
 
   const reportRef = useRef<HTMLDivElement>(null);
 
@@ -22,13 +29,31 @@ function Report({onCancel, open}: ReportProps) {
         onCancel();
       }
     });
-  });
+  }, []);
 
   const [reported, setReported] = useState(false);
-  const reportedAlert = () => {
-    // 백에 신고 요청
-    // axios.post('url')
-    setReported(returnTrue);
+  const navigate = useNavigate();
+  const userId = currentUser();
+  useEffect(() => {
+    if (userId === -1) {
+      // navigate(intro());
+    }
+  }, []);
+
+  const reportedAlert = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const data = {
+      content: reportContent,
+      type: reportType,
+      postId: messageId,
+      userId: userId,
+    };
+    reportMessage(type, data).then(() => {
+      setReported(returnTrue);
+    });
+  };
+
+  const changeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setReportContent(() => e.target.value);
   };
 
   const closeAlert = () => {
@@ -63,6 +88,8 @@ function Report({onCancel, open}: ReportProps) {
             placeholder="신고 사유를 입력해주세요."
             maxLength={100}
             rows={8}
+            value={reportContent}
+            onChange={changeContent}
           />
           <footer className="modal-footer">
             <button className="btn" onClick={reportedAlert}>
