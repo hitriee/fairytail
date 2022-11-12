@@ -16,8 +16,7 @@ type error = any;
 type tokens = any;
 
 const PROJECT_ID = serviceAccount.project_id;
-const HOST = "https://fcm.googleapis.com";
-const PATH = "/v1/projects/" + PROJECT_ID + "/messages:send";
+const URL = `https://fcm.googleapis.com/v1/projects/${PROJECT_ID}/messages:send`;
 const MESSAGING_SCOPE = "https://www.googleapis.com/auth/firebase.messaging";
 const SCOPES = [MESSAGING_SCOPE];
 
@@ -42,10 +41,10 @@ export function getAccessToken() {
 export function sendFcmMessage(fcmMessage: fcmMessage) {
   const result = getAccessToken().then(async (accessToken) => {
     const options = {
-      url: HOST + PATH,
+      url: URL,
       method: "POST",
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       data: fcmMessage,

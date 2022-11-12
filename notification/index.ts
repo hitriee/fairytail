@@ -39,7 +39,11 @@ app.post("/fcm", (request: request, response: response) => {
 
   sendFcmMessage(message)
     .then(async (res: any) => {
-      response.status(200).send(res);
+      if (res) {
+        response.status(200).send(res);
+      } else {
+        response.status(400).send("오류가 발생했습니다");
+      }
     })
     .catch((error: error) => response.status(400).send(error));
 });
