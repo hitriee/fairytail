@@ -24,3 +24,7 @@ export const bgmList = [
   {title: 'silver waves', bgm: silverWaves},
   {title: 'silver waves', bgm: silverWaves},
 ];
+
+export const isNumberType = (id: string | undefined | null) => {
+  return !id || !parseInt(id);
+};

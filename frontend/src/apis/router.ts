@@ -8,7 +8,7 @@ export const messageList = () => '/message/list';
 export const messageCreate = () => '/message/create';
 export const messageUpdate = () => `/message/update/:id`;
 export const messageDetail = () => `/message/detail/:id`;
-export const notFound = () => '/404';
+export const notFound = () => '/*';
 export const settings = () => '/settings';
 export const notifications = () => '/notifications';
 
