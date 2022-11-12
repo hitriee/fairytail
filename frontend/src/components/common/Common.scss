@@ -96,11 +96,9 @@
 
 #foreground {
   position: absolute;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
   z-index: 1000;
   top: 10px;
+  cursor: pointer !important;
   opacity: 75%;
 }
 
