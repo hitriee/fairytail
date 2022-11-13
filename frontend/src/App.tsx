@@ -35,9 +35,8 @@ import {
   vr,
   messageList,
   messageCreate,
-  messageUpdate,
   messageDetail,
-  notFound,
+  nonexistent,
   settings,
   notifications,
 } from '@apis/router';
@@ -63,9 +62,7 @@ function App() {
   const MessageList = lazy(() => import('@screens/MessageList'));
   return (
     <>
-      {/* <InitMessage /> */}
       <BrowserRouter>
-        {/* <RecoilRoot> */}
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path={intro()} element={<Intro />} />
@@ -75,14 +72,12 @@ function App() {
             <Route path={vr()} element={<VR />} />
             <Route path={messageList()} element={<MessageList />} />
             <Route path={messageCreate()} element={<MessageCreate />} />
-            <Route path={messageUpdate()} element={<MessageCreate />} />
             <Route path={messageDetail()} element={<MessageDetail />} />
-            <Route path={notFound()} element={<NotFound />} />
             <Route path={settings()} element={<Individual />} />
             <Route path={notifications()} element={<Individual />} />
+            <Route path={nonexistent()} element={<NotFound />} />
           </Routes>
         </Suspense>
-        {/* </RecoilRoot> */}
       </BrowserRouter>
       <audio autoPlay={onPlay} loop={onPlay} src={bgm} ref={audioRef} />
     </>

@@ -15,8 +15,9 @@ function NotFound() {
     <>
       <InitMessage />
       <div className="notFound">
+        <div className="white"> 404 Not Found</div>
         <img src={IntroLogo} />
-        페이지를 찾을 수 없습니다
+        <div className="white">페이지를 찾을 수 없습니다</div>
         <Link to="/main">
           <button>go Main</button>
         </Link>

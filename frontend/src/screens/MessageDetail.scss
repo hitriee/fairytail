@@ -1,4 +1,4 @@
-.background1 {
+.background2 {
   background: rgb(65, 64, 75);
   background: linear-gradient(
     45deg,
@@ -7,7 +7,7 @@
     rgba(82, 179, 199, 1) 75%
   );
 }
-.background2 {
+.background1 {
   background: rgb(68, 161, 162);
   background: linear-gradient(
     29deg,
@@ -23,7 +23,7 @@
     rgba(185, 108, 183, 1) 97%
   );
 }
-.background4 {
+.background0 {
   background: rgb(238, 174, 202);
   background: radial-gradient(
     circle,
@@ -45,10 +45,9 @@
   );
 }
 
-.background7 {
+.background0 {
   background: rgb(73, 71, 92);
   background: linear-gradient(
-    90deg,
     rgba(73, 71, 92, 1) 0%,
     rgba(99, 99, 144, 1) 13%,
     rgba(189, 193, 194, 1) 75%
