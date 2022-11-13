@@ -20,7 +20,7 @@ function Individual() {
   const isSettings = location.pathname === settings();
 
   return (
-    <main className="screen messageList">
+    <main className="screen screen-background">
       <section className="container individual-container">
         <MoveToBack path={main()} />
 

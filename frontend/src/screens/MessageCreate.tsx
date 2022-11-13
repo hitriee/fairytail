@@ -159,7 +159,7 @@ function MessageCreate() {
   return (
     <>
       <InitMessage />
-      <div className="screen messageList" ref={screenRef}>
+      <div className="screen screen-background" ref={screenRef}>
         {spinner ? (
           <Spinner message={spinnerMessage} spinnerStop={spinnerStop} />
         ) : null}

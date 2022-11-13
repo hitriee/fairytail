@@ -107,7 +107,7 @@ function Map() {
           scrollWheelZoom={true}>
           <TileLayer
             noWrap={true}
-            url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           />
           {data ? Markers() : null}
           <ClickMarker
