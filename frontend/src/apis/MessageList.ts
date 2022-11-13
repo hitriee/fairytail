@@ -6,3 +6,7 @@ export const getMesssageList = async (type: number, userId: number) => {
   );
   return res.data;
 };
+
+export const messageUrl = (type: number, postId: number) => {
+  return `/message/detail/${checkType(type)}/${postId}`;
+};

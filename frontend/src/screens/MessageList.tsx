@@ -28,7 +28,7 @@ function MessageList() {
 
   // 0: text, 1: img, 2:video, 3:audio
   // const types = [0, 1, 2, 3];
-  const types = [2];
+  const types = [0, 1, 2, 3];
   const userId = Number(localStorage.getItem('userId'));
   console.log('여기냐? 3');
   useEffect(() => {
@@ -89,7 +89,9 @@ function MessageList() {
 
           <div className="messageList-container-list">
             {messageItems.length === 0 && (
-              <div className="leagueopen-empty">작성한 메세지가 없습니다.</div>
+              <div className="messageList-container-list-empty">
+                작성한 메세지가 없습니다.
+              </div>
             )}
             {messageItems.length !== 0 &&
               messageItems.map(messageItem => {
