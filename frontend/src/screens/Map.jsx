@@ -15,6 +15,7 @@ import {useRecoilState} from 'recoil';
 import {loadingState} from '@apis/Recoil';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 import {getMessageMap} from '@apis/map';
+import OpenHelp from '@common/OpenHelp';
 
 function generateRandomFloat(min, max) {
   return Math.random() * (max - min) + min;
@@ -78,6 +79,7 @@ function Map() {
       <InitMessage />
       <div className="screen">
         <MoveToBack path="/main" color="black" />
+        <OpenHelp imagesIndex={1} color="black" />
         <div
           className="map-random"
           onClick={() => {
