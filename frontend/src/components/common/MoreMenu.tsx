@@ -127,12 +127,12 @@ function MoreMenu({
       .then((res: any) => {
         setDeleted(returnTrue);
         changeInfo('삭제 완료', '글이 정상적으로 삭제되었습니다');
-        setAlert(returnTrue);
-        setConfirm(returnFalse);
       })
       .catch((err: any) => {
         setDeleted(returnFalse);
         changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
+      })
+      .finally(() => {
         setAlert(returnTrue);
         setConfirm(returnFalse);
       });
@@ -145,22 +145,22 @@ function MoreMenu({
           <article className="button" onClick={saveMessage}>
             저장
           </article>
-          {isMine ? (
-            <>
-              <article className="button" onClick={onDelete}>
-                삭제
-              </article>
-              <article className="button" onClick={changeStatus}>
-                {`${presentStatus(1 - newStatus)}로 변경`}
-              </article>
-            </>
-          ) : (
-            <>
-              <article className="button" onClick={reportMessage}>
-                신고
-              </article>
-            </>
-          )}
+          {/* {isMine ? ( */}
+          <>
+            <article className="button" onClick={onDelete}>
+              삭제
+            </article>
+            <article className="button" onClick={changeStatus}>
+              {`${presentStatus(1 - newStatus)}로 변경`}
+            </article>
+          </>
+          {/* ) : ( */}
+          <>
+            <article className="button" onClick={reportMessage}>
+              신고
+            </article>
+          </>
+          {/* )} */}
         </main>
       ) : null}
 

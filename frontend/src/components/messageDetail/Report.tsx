@@ -27,17 +27,18 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
       if (reportRef.current && !reportRef.current.contains(target as Node)) {
         setReportType(-1);
         onCancel();
+        setReportContent(() => '');
       }
     });
-  }, []);
+  });
 
   const [reported, setReported] = useState(false);
   const navigate = useNavigate();
   const userId = currentUser();
   useEffect(() => {
-    if (userId === -1) {
-      // navigate(intro());
-    }
+    // if (userId === -1) {
+    //   navigate(intro());
+    // }
   }, []);
 
   const reportedAlert = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,6 +50,8 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
     };
     reportMessage(type, data).then(() => {
       setReported(returnTrue);
+      setReportContent(() => '');
+      setReportType(-1);
     });
   };
 
@@ -59,6 +62,12 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
   const closeAlert = () => {
     setReported(returnFalse);
     onCancel();
+  };
+
+  const closeReport = () => {
+    setReportContent(() => '');
+    onCancel();
+    setReportType(-1);
   };
 
   const options = [
@@ -95,7 +104,7 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
             <button className="btn" onClick={reportedAlert}>
               확인
             </button>
-            <button className="btn" onClick={onCancel}>
+            <button className="btn" onClick={closeReport}>
               취소
             </button>
           </footer>

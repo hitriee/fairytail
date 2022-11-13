@@ -36,7 +36,7 @@ import {
   messageList,
   messageCreate,
   messageDetail,
-  notFound,
+  nonexistent,
   settings,
   notifications,
 } from '@apis/router';
@@ -75,7 +75,7 @@ function App() {
             <Route path={messageDetail()} element={<MessageDetail />} />
             <Route path={settings()} element={<Individual />} />
             <Route path={notifications()} element={<Individual />} />
-            <Route path={notFound()} element={<NotFound />} />
+            <Route path={nonexistent()} element={<NotFound />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

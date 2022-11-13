@@ -3,6 +3,7 @@ import {emojiArr} from 'src/assets/emojis';
 import '@individual/MyNotifications.scss';
 import {useNavigate} from 'react-router';
 import {toMessageDetail} from '@apis/router';
+import {checkType} from '@/apis';
 
 interface itemProps {
   item: {
@@ -22,8 +23,9 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   const [deleted, setDeleted] = useState(false);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const {id, title, emoji} = item;
+  const type = 0;
   const toDetail = (postId: number) => {
-    return () => navigate(toMessageDetail(postId));
+    return () => navigate(toMessageDetail(postId, type));
   };
   const shortTitle = () => {
     if (title.length >= 6) {

@@ -13,6 +13,7 @@ import InitMessage from '@/apis/notifications/foregroundMessaging';
 import {getMesssage, detailResponse} from '@/apis/messageDetail';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {checkType} from '@/apis';
+import {currentUser} from '@/components/common/commonFunc';
 
 function MessageDetail() {
   // recoil
@@ -29,7 +30,7 @@ function MessageDetail() {
   const type = convStringType(params.type);
 
   // 현재 사용자 정보
-  // const userId = currentUser()
+  // const userId = currentUser();
   const userId = 2;
 
   // 서버 통신으로 게시글 정보 가져오기
@@ -43,11 +44,12 @@ function MessageDetail() {
     likeCnt: 0,
     isLike: false,
     date: '',
-    dayType: 10,
+    dayType: 9,
     status: 0,
   };
-
+  // 현재 사용자가 작성한 게시글인지 확인
   const [data, setData] = useState(dataType);
+  const isMine = () => userId === data.userId;
 
   useEffect(() => {
     if (messageId === -1) {
@@ -72,8 +74,12 @@ function MessageDetail() {
     }
   }, []);
 
-  // 현재 사용자가 작성한 게시글인지 확인
-  const isMine = () => userId === data.userId;
+  // 비공개 글일 때 작성자가 자신이 아니면 404 페이지로 이동
+  useEffect(() => {
+    if (!isMine() && data.status) {
+      navigate(notFound());
+    }
+  }, [data]);
 
   // 메뉴 표시 여부
   const [more, setMore] = useState(false);

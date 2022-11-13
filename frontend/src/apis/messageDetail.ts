@@ -2,6 +2,7 @@ import {API_AUTH} from '@apis/index';
 
 export const getMesssage: messageType = async (type, postId) => {
   const res = await API_AUTH.get(`/${type}/message/detail/${postId}`);
+  console.log(res);
   return res.data;
 };
 

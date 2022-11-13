@@ -111,7 +111,7 @@ function MessageCreate() {
                 setSpinnerMessage('성공적으로 등록되었습니다.');
                 setTimeout(() => {
                   setSpinner(false);
-                  navigate(toMessageDetail(data.postId));
+                  navigate(toMessageDetail(data.postId, data.type));
                 }, 1500);
               })
               .catch(err => {
@@ -137,7 +137,7 @@ function MessageCreate() {
                 setSpinnerMessage('성공적으로 등록되었습니다.');
                 setTimeout(() => {
                   setSpinner(false);
-                  navigate(toMessageDetail(data.postId));
+                  navigate(toMessageDetail(data.postId, data.type));
                 }, 1000);
               })
               .catch(err => {
