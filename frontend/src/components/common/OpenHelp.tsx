@@ -30,7 +30,13 @@ function OpenHelp({imagesIndex, color = 'white'}: OpenHelpProps) {
       {isOpened ? (
         <div className="help-background" onClick={closeHelp}>
           <div className="container help-container">
-            <img className="help-img" src={helpImages[imagesIndex]} />
+            <img
+              className="help-img"
+              src={helpImages[imagesIndex]}
+              onClick={event => {
+                event.stopPropagation();
+              }}
+            />
             <button className="btn" onClick={closeHelp}>
               닫기
             </button>

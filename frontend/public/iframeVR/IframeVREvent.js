@@ -27,8 +27,6 @@ AFRAME.registerComponent("handle-click", {
 
 AFRAME.registerComponent("handle-move", {
   init: function () {
-    const post_id = this.data.post_id;
-
     this.el.addEventListener("click", function () {
       window.parent.postMessage("create", "*");
     });
