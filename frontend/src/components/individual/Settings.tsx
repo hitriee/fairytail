@@ -13,7 +13,6 @@ import {useRecoilState} from 'recoil';
 import {playingState} from '@apis/Recoil';
 
 function Settings() {
-  // 그 전에 설정했던 사항이 props로 들어옴 (좋아요 알림, 배경음악 여부, 배경음악)
   const [permitNoti, setPermitNoti] = useState(true);
   const [selectBgm, setSelectBgm] = useState(false);
   const [wantLogout, setWantLogout] = useState(false);
@@ -21,7 +20,7 @@ function Settings() {
   const [infoType, setInfoType] = useState('');
   const [info, setInfo] = useState<popUp>({title: '', message: ''});
   const [openAlert, setOpenAlert] = useState(false);
-  const [bgm, setBgm] = useState(bgmList[0].title);
+  const [bgm, setBgm] = useState(localStorage.getItem('bgm') || '');
   const [onPlay, setOnPlay] = useRecoilState(playingState);
 
   // 좋아요 알림 변경

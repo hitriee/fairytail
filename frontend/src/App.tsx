@@ -25,7 +25,7 @@ import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
 
 //recoil
-import {useRecoilState, useRecoilValue} from 'recoil';
+import {useRecoilValue} from 'recoil';
 // router
 import {
   main,
@@ -44,7 +44,8 @@ import {playingState} from '@apis/Recoil';
 
 function App() {
   initToken();
-  const [onPlay, setOnPlay] = useRecoilState(playingState);
+  const recoilPlay = useRecoilValue(playingState);
+  const [onPlay, setOnPlay] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null!);
   const handlePlay = () => {
     if (onPlay) {
@@ -52,12 +53,12 @@ function App() {
     } else {
       audioRef.current && audioRef.current.pause();
     }
-    setOnPlay(prev => !prev);
+    setOnPlay(() => recoilPlay);
   };
   useEffect(() => {
     audioRef.current.volume = 0.4;
   }, []);
-  useEffect(handlePlay, [onPlay]);
+  useEffect(handlePlay, [recoilPlay]);
 
   const MessageList = lazy(() => import('@screens/MessageList'));
   return (
