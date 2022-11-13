@@ -3,30 +3,32 @@ import {smallEmojiArr} from '../../assets/emojis';
 import {ReactComponent as Heart} from '@images/heartFilled.svg';
 import './MyMessage.scss';
 
-interface itemProps {
-  item: {
-    id: number;
+interface messageProps {
+  messageItem: {
+    postId: number;
+    date: string;
+    emojiNo: number;
+    likeCnt: number;
+    status: number;
     title: string;
-    contents: string;
-    emoji: number;
-    like: number;
+    type: number;
   };
 }
 
-function MyMessage({item}: itemProps) {
+function MyMessage({messageItem}: messageProps) {
   return (
     <div className="myMessage">
       <div className="myMessage-emoji">
-        <img src={smallEmojiArr[item.emoji]} alt="smallEmojiArr" />
+        <img src={smallEmojiArr[messageItem.emojiNo]} alt="smallEmojiArr" />
       </div>
       <div className="myMessage-container">
-        <p className="myMessage-container-title">{item.title}</p>
-        <span className="myMessage-container-date">{item.contents}</span>
+        <p className="myMessage-container-title">{messageItem.title}</p>
+        <span className="myMessage-container-date">{messageItem.date}</span>
       </div>
       <div className="myMessage-container-like">
         {/* <img src={Heart} alt="emoji" /> */}
         <Heart className="myMessage-container-like-heart" />
-        {item.like}
+        {messageItem.likeCnt}
       </div>
     </div>
   );
