@@ -23,4 +23,6 @@ public class TextDetailResponse extends TextIdResponse {
 
     private Integer dayType;
 
+    private Integer status;
+
 }
