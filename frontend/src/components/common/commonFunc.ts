@@ -1,29 +1,9 @@
-import slowmotion from '@bgms/slowmotion.mp3';
-import silverWaves from '@bgms/silver_waves.mp3';
-
 export const returnTrue = () => true;
 export const returnFalse = () => false;
 export interface popUp {
   title: string;
   message: string;
 }
-
-export const bgmList = [
-  {title: 'slow motion', bgm: slowmotion},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-  {title: 'silver waves', bgm: silverWaves},
-];
 
 // 현재 사용자 id를 int로 변경 (없거나 유효하지 않은 형식이면 -1 반환)
 export const currentUser = () => {
