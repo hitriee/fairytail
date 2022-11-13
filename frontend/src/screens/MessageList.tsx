@@ -36,10 +36,14 @@ function MessageList() {
       console.log('여기냐? 1');
 
       types.forEach(type => {
-        getMesssageList(type, userId).then(res => {
-          // setMessageItems(oldArray => [...oldArray, res.data]);
-          setMessageItems(prev => prev.concat(res.data));
-        });
+        getMesssageList(type, userId)
+          .then(res => {
+            // setMessageItems(oldArray => [...oldArray, res.data]);
+            setMessageItems(prev => prev.concat(res.data));
+          })
+          .catch(err => {
+            console.log(err);
+          });
       });
     }
   }, []);
