@@ -14,14 +14,7 @@ function Process() {
 
   // 인증받은 access token, localstorage에 저장
   saveToken();
-
-  useEffect(() => {
-    if (localStorage.token && localStorage.token !== null) {
-      // 토큰 저장 후 main 페이지로 자동 이동
-      navigate('/main');
-    }
-  }, []);
-
+  setTimeout(() => navigate('/main'), 100);
   return <div className="process" />;
 }
 
