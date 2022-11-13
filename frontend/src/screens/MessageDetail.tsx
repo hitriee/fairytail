@@ -1,5 +1,5 @@
 import {useState, useRef, useEffect} from 'react';
-import {useNavigate, useParams} from 'react-router';
+import {useNavigate, useParams, useLocation} from 'react-router';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '@apis/Recoil';
 import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
@@ -7,9 +7,14 @@ import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import MoveToBack from '@common/MoveToBack';
-import {notFound} from '@apis/router';
+import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
+import {getMesssage} from '@/apis/messageDetail/textDetail';
+import {detailResponse} from '@/apis/messageDetail/detailInterface';
+import {intMessageId, convStringType} from '@/components/common/commonFunc';
+import {checkType} from '@/apis';
+import {currentUser} from '@/components/common/commonFunc';
 
 function MessageDetail() {
   // recoil
@@ -22,38 +27,60 @@ function MessageDetail() {
   // 전달 받은 messageId가 숫자가 아니라면 notfound로 이동
   const navigate = useNavigate();
   const params = useParams();
-  const messageId = params.id;
-
-  useEffect(() => {
-    loader();
-  }, []);
-
-  const loader = async () => {
-    if (!messageId || !parseInt(messageId)) {
-      navigate(notFound());
-    }
-  };
+  const messageId = intMessageId(params.id);
+  const type = convStringType(params.type);
 
   // 현재 사용자 정보
-  const currentUserId = 1;
+  // const userId = currentUser();
+  const userId = 2;
 
   // 서버 통신으로 게시글 정보 가져오기
-  const data = {
-    title: '여우비 가온해 안녕',
-    content:
-      '바나나 아련 노트북 포도 늘품 미리내 바나나 그루잠 감사합니다 노트북 바람꽃 아련 별하 소록소록 산들림 함초롱하다 아련 늘품 감또개 이플 컴퓨터 노트북 나래 산들림 도르레 가온해!',
-    like_cnt: 121,
-    is_like: true,
-    date: new Date(),
-    user_id: 0,
+  const dataType = {
+    postId: 0,
     type: 0,
-    emoji_no: 15,
+    title: '',
+    userId: 0,
+    emojiNo: 0,
+    content: '',
+    likeCnt: 0,
+    isLike: false,
+    date: '',
+    dayType: 9,
     status: 0,
-    background: 1,
   };
-
   // 현재 사용자가 작성한 게시글인지 확인
-  const isMine = currentUserId === data.user_id;
+  const [data, setData] = useState(dataType);
+  const isMine = () => userId === data.userId;
+
+  useEffect(() => {
+    if (messageId === -1) {
+      navigate(notFound());
+    }
+    // else if (userId === -1) {
+    // navigate(intro());
+    // }
+    else if (type) {
+      getMesssage(type, messageId).then((res: detailResponse) => {
+        if (res.message === 'SUCCESS') {
+          setData(prev => {
+            return {...prev, ...res.data};
+          });
+        } else {
+          // 실패했을 경우 404로 이동
+          navigate(notFound());
+        }
+      });
+    } else {
+      navigate(notFound());
+    }
+  }, []);
+
+  // 비공개 글일 때 작성자가 자신이 아니면 404 페이지로 이동
+  useEffect(() => {
+    if (!isMine() && data.status) {
+      navigate(notFound());
+    }
+  }, [data]);
 
   // 메뉴 표시 여부
   const [more, setMore] = useState(false);
@@ -65,19 +92,13 @@ function MessageDetail() {
   const showMenu = () => setMore(!more);
 
   // 날짜 형식에 맞춰 표시
-  const modifiedDate = () => {
-    let month: number | string = data.date.getMonth();
-    if (month < 10) month = '0' + month;
-    let day: number | string = data.date.getDate();
-    if (day < 10) day = '0' + day;
-    return `${data.date.getFullYear()}-${month}-${day}`;
-  };
+  const modifiedDate = () => data.date.split('T')[0];
 
   return (
     <>
       <InitMessage />
       <div
-        className={`screen background${data.background}`}
+        className={`screen background${data.dayType}`}
         ref={messageDetailRef}
         onClick={hiddenMenu}>
         <main id="container">
@@ -88,10 +109,10 @@ function MessageDetail() {
             </div>
             <MoreMenu
               open={more}
-              isMine={isMine}
+              isMine={isMine()}
               detail={messageDetailRef}
               messageId={messageId}
-              type={data.type}
+              type={type}
               content={data.content}
               close={hiddenMenu}
               status={data.status}
@@ -106,10 +127,15 @@ function MessageDetail() {
               status={data.status}
             />
             <Like
-              count={data.like_cnt}
-              like={data.is_like}
-              isMine={isMine}
-              emoji={data.emoji_no}
+              count={data.likeCnt}
+              like={data.isLike}
+              isMine={isMine()}
+              emoji={data.emojiNo}
+              type={type}
+              likeInfo={{
+                postId: messageId,
+                userId,
+              }}
             />
           </section>
         </main>
