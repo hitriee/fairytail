@@ -24,10 +24,7 @@ function init() {
 
     if (emojies.length > 0) {
       for (let i = 0; i < emojies.length; i++) {
-        // const titleItem = document.querySelector(`#title${i}`);
         const emojiItem = emojies[i];
-        // emojiItem.removeChild(titleItem);
-        // scene.removeChild(emojiItem);
         emojiItem.remove();
       }
     }

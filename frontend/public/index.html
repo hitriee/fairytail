@@ -26,6 +26,15 @@
     -->
     <title>동하책</title>
   </head>
+  <script>
+    addEventListener("load", function () {
+      var viewport = document.querySelector("meta[name=viewport]");
+      viewport.setAttribute(
+        "content",
+        viewport.content + ", height=" + window.innerHeight
+      );
+    });
+  </script>
   <body oncontextmenu="return false" onselect="return false">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

@@ -182,7 +182,7 @@ function MessageCreate() {
               <>
                 <input
                   className="message-create-title"
-                  placeholder="제목을 입력하세요."
+                  placeholder="제목을 입력해주세요."
                   maxLength={10}
                   onChange={e => {
                     setTitle(e.target.value);
