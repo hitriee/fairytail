@@ -13,6 +13,8 @@ import {loadingState} from '@apis/Recoil';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 import OpenHelp from '@common/OpenHelp';
+import {toMessageDetail} from '@/apis/router';
+// import {vrResponse} from '@/apis/messageCreate';
 
 function VR() {
   // recoil
@@ -68,7 +70,8 @@ function VR() {
   // 자식에 데이터 전달
   useEffect(() => {
     if (isFinished === 3 && data.length > 0) {
-      console.log(option);
+      console.log(data);
+
       const child = document.getElementsByTagName('iframe');
       child[0].contentWindow?.postMessage(data, '*');
       setIsFinished(-1);
@@ -83,9 +86,9 @@ function VR() {
       navigate(-1);
     } else if (ev.data === 'create') {
       navigate('/message/create');
-    } else if (typeof ev.data === 'number') {
-      setPostId(ev.data);
-      navigate(`/message/detail/${ev.data}`);
+    } else if (ev.data.postId !== undefined && ev.data.postId !== null) {
+      setPostId(ev.data.postId);
+      navigate(toMessageDetail(ev.data.postId, ev.data.type));
     }
   };
 

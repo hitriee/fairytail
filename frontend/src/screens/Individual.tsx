@@ -18,6 +18,7 @@ function Individual() {
 
   const location = useLocation();
   const isSettings = location.pathname === settings();
+
   return (
     <main className="screen messageList">
       <section className="container individual-container">

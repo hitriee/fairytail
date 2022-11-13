@@ -1,3 +1,5 @@
+import {checkType} from '.';
+
 export const BASE_URL = () => 'https://k7c209.p.ssafy.io';
 export const main = () => '/main';
 export const process = () => '/process';
@@ -7,23 +9,18 @@ export const map = () => '/map';
 export const vr = () => '/vr';
 export const messageList = () => '/message/list';
 export const messageCreate = () => '/message/create';
-export const messageUpdate = () => `/message/update/:id`;
-export const messageDetail = () => `/message/detail/:id`;
-export const notFound = () => '/404';
+export const messageDetail = () => `/message/detail/:type/:id`;
+export const nonexistent = () => '/*';
 export const settings = () => '/settings';
 export const notifications = () => '/notifications';
 
-export const toMessageDetail = (messageId: string | number) => {
+export const notFound = () => '/404';
+export const toMessageDetail = (messageId: string | number, type: number) => {
   if (typeof messageId === 'number' || parseInt(messageId)) {
-    return `/message/detail/${messageId}`;
-  } else {
-    return notFound();
+    const stringType = checkType(type);
+    if (stringType) {
+      return `/message/detail/${stringType}/${messageId}`;
+    }
   }
-};
-export const toMessageUpdate = (messageId: string | number) => {
-  if (typeof messageId === 'number' || parseInt(messageId)) {
-    return `/message/update/${messageId}`;
-  } else {
-    return notFound();
-  }
+  return notFound();
 };

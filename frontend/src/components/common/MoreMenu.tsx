@@ -7,15 +7,19 @@ import Report from '@messageDetail/Report';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import {popUp} from '@common/commonFunc';
-import {toMessageUpdate} from '@/apis/router';
 import '@common/Common.scss';
+import {checkType} from '@/apis';
+import {
+  changeMessageStatus,
+  deleteMessage,
+} from '@/apis/messageDetail/textDetail';
 
 interface MoreMenuProps {
   open: boolean;
   isMine: boolean;
   detail: any;
-  messageId: string | undefined;
-  type: number;
+  messageId: number;
+  type: string;
   content: string;
   close: () => void;
   status: number;
@@ -49,7 +53,7 @@ function MoreMenu({
 
   const saveMessage = async () => {
     close();
-    if (type === 0) {
+    if (type === 'text') {
       const height = window.innerHeight;
       const width = window.innerWidth;
 
@@ -76,27 +80,25 @@ function MoreMenu({
   // 신고 팝업
   const reportMessage = () => {
     setReport(returnTrue);
-    console.log('신고 페이지로');
-    console.log('back에 요청 - axios');
   };
+
   // 메시지 상태(공개, 비공개) 설정
-  // const toEdit = () => {
-  //   if (messageId) {
-  //     navigate(toMessageUpdate(messageId));
-  //     close();
-  //   }
-  // };
   const presentStatus = (statusNum: number) =>
-    statusNum === 0 ? '공개' : '비공개';
+    statusNum === 1 ? '비공개' : '공개';
   const changeStatus = () => {
-    // 백에 변경 요청 보내기
-    setNewStatus(prev => 1 - prev);
-    // 변경되었음을 알림
-    changeInfo(
-      '완료',
-      `작성한 메시지가\n${presentStatus(1 - newStatus)}로 변경되었습니다.`,
-    );
-    setAlert(returnTrue);
+    changeMessageStatus(type, {
+      postId: messageId,
+      status: 1 - status,
+    }).then((res: any) => {
+      console.log(res);
+      setNewStatus(prev => 1 - prev);
+      // 변경되었음을 알림
+      changeInfo(
+        '완료',
+        `작성한 메시지가\n${presentStatus(1 - newStatus)}로 변경되었습니다.`,
+      );
+      setAlert(returnTrue);
+    });
   };
   // 삭제 확인
   const onDelete = () => {
@@ -123,40 +125,45 @@ function MoreMenu({
   };
 
   // 삭제 요청 백에 보내기
-  const deleteMessage = () => {
-    setDeleted(returnTrue);
-    // axios.delete('url')
-    // .then(())
-    changeInfo('완료', '글이 정상적으로 삭제되었습니다');
-    setAlert(returnTrue);
-    setConfirm(returnFalse);
-    // 동기로 처리
-    // changeInfo('', '');
+  const delMessage = () => {
+    deleteMessage(type, messageId)
+      .then((res: any) => {
+        setDeleted(returnTrue);
+        changeInfo('삭제 완료', '글이 정상적으로 삭제되었습니다');
+      })
+      .catch((err: any) => {
+        setDeleted(returnFalse);
+        changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
+      })
+      .finally(() => {
+        setAlert(returnTrue);
+        setConfirm(returnFalse);
+      });
   };
 
   return (
     <>
       {open ? (
         <main id="menu">
-          {isMine ? (
-            <>
-              <article className="button" onClick={changeStatus}>
-                {`${presentStatus(1 - newStatus)}로 변경`}
-              </article>
-              <article className="button" onClick={onDelete}>
-                삭제
-              </article>
-            </>
-          ) : (
-            <>
-              <article className="button" onClick={reportMessage}>
-                신고
-              </article>
-            </>
-          )}
           <article className="button" onClick={saveMessage}>
             저장
           </article>
+          {/* {isMine ? ( */}
+          <>
+            <article className="button" onClick={onDelete}>
+              삭제
+            </article>
+            <article className="button" onClick={changeStatus}>
+              {`${presentStatus(1 - newStatus)}로 변경`}
+            </article>
+          </>
+          {/* ) : ( */}
+          <>
+            <article className="button" onClick={reportMessage}>
+              신고
+            </article>
+          </>
+          {/* )} */}
         </main>
       ) : null}
 
@@ -166,13 +173,18 @@ function MoreMenu({
       {/* 삭제 확인 모달 */}
       <Confirm
         info={info}
-        onConfirmed={deleteMessage}
+        onConfirmed={delMessage}
         onCancel={onCancel}
         open={openConfirm}
       />
 
       {/* 신고 모달 */}
-      <Report onCancel={onReportCancel} open={openReport} />
+      <Report
+        onCancel={onReportCancel}
+        open={openReport}
+        type={type}
+        messageId={messageId}
+      />
     </>
   );
 }

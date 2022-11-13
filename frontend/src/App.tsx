@@ -6,7 +6,6 @@ import {
 
 import {Suspense, useEffect, useState, useRef, lazy} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import bgm from '@bgms/silver_waves.mp3';
 
 import '@/App.scss';
 
@@ -37,37 +36,42 @@ import {
   vr,
   messageList,
   messageCreate,
-  messageUpdate,
   messageDetail,
-  notFound,
+  nonexistent,
   settings,
   notifications,
 } from '@apis/router';
-import {playingState} from '@apis/Recoil';
+import {bgmArr} from './assets/bgms';
+import {bgmNoState, playingState} from './apis/Recoil';
 
 function App() {
   initToken();
-  const [onPlay, setOnPlay] = useRecoilState(playingState);
+
+  // 배경음악
+  const [isPlaying, setIsPlaying] = useRecoilState(playingState);
+  const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
+
   const audioRef = useRef<HTMLAudioElement>(null!);
-  const handlePlay = () => {
-    if (onPlay) {
-      audioRef.current && audioRef.current.play();
-    } else {
-      audioRef.current && audioRef.current.pause();
-    }
-    setOnPlay(prev => !prev);
-  };
+
   useEffect(() => {
     audioRef.current.volume = 0.4;
   }, []);
-  useEffect(handlePlay, [onPlay]);
+
+  useEffect(() => {
+    if (isPlaying && audioRef.current) {
+      audioRef.current.muted = false;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    } else {
+      audioRef.current && audioRef.current.pause();
+    }
+  }, [isPlaying, bgmNo]);
 
   const MessageList = lazy(() => import('@screens/MessageList'));
+
   return (
     <>
-      {/* <InitMessage /> */}
       <BrowserRouter>
-        {/* <RecoilRoot> */}
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path={intro()} element={<Intro />} />
@@ -78,16 +82,14 @@ function App() {
             <Route path={vr()} element={<VR />} />
             <Route path={messageList()} element={<MessageList />} />
             <Route path={messageCreate()} element={<MessageCreate />} />
-            <Route path={messageUpdate()} element={<MessageCreate />} />
             <Route path={messageDetail()} element={<MessageDetail />} />
-            <Route path={notFound()} element={<NotFound />} />
             <Route path={settings()} element={<Individual />} />
             <Route path={notifications()} element={<Individual />} />
+            <Route path={nonexistent()} element={<NotFound />} />
           </Routes>
         </Suspense>
-        {/* </RecoilRoot> */}
       </BrowserRouter>
-      <audio autoPlay={onPlay} loop={onPlay} src={bgm} ref={audioRef} />
+      <audio muted={true} src={bgmArr[bgmNo].src} loop={true} ref={audioRef} />
     </>
   );
 }

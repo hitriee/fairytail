@@ -78,20 +78,20 @@ function init() {
       const dodes = [];
 
       const dodesXYZ = [
-        { px: 0, py: 0, pz: 0, fromxyz: "0 -0.1 0", toxyz: "0 0.1 0" },
-        { px: 35, py: 15, pz: 30, fromxyz: "0.1 0 0", toxyz: "-0.1 0 0" },
-        { px: 45, py: 0, pz: 60, fromxyz: "0 0 0.1", toxyz: "0 0 -0.1" },
-        { px: 0, py: 60, pz: 15, fromxyz: "-0.1 -0.1 0", toxyz: "0 0.1 0" },
-        { px: 15, py: 45, pz: 45, fromxyz: "0 -0.1 0", toxyz: "0 0.1 0.1" },
+        { rx: -90, ry: -90, rz: 0, fromxyz: "0 -0.1 0", toxyz: "0 0.1 0" },
+        { rx: 35, ry: 15, rz: 30, fromxyz: "0.1 0 0", toxyz: "-0.1 0 0" },
+        { rx: 45, ry: 0, rz: 60, fromxyz: "0 0 0.1", toxyz: "0 0 -0.1" },
+        { rx: 0, ry: 60, rz: 15, fromxyz: "-0.1 -0.1 0", toxyz: "0 0.1 0" },
+        { rx: 15, ry: 45, rz: 45, fromxyz: "0 -0.1 0", toxyz: "0 0.1 0.1" },
       ];
 
-      dodesXYZ.forEach(({ px, py, pz, fromxyz, toxyz }, index) => {
+      dodesXYZ.forEach(({ rx, ry, rz, fromxyz, toxyz }, index) => {
         const dodecahedron = document.createElement("a-entity");
         dodecahedron.setAttribute("position", { x: 0, y: index, z: 0 });
-        dodecahedron.setAttribute("rotation", { x: px, y: py, z: pz });
+        dodecahedron.setAttribute("rotation", { x: rx, y: ry, z: rz });
         dodecahedron.setAttribute("layout", {
           type: "dodecahedron",
-          radius: 6 + index * 0.5,
+          radius: 6.5 + index * 0.5,
         });
         dodecahedron.setAttribute("animation", {
           property: "position",
@@ -126,7 +126,7 @@ function init() {
         emoji.setAttribute("look-at", "[camera]");
         emoji.className = "emoji";
 
-        emoji.setAttribute("handle-click", { post_id: postId });
+        emoji.setAttribute("handle-click", { postId: postId, type: type });
 
         emoji.setAttribute("sound", {
           on: "mouseenter",
