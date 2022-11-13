@@ -155,7 +155,7 @@ function Message({content, setContent}: MessageProps) {
         {newFile === null && newFileType === 0 ? (
           <textarea
             className="message-create-content-text"
-            placeholder="내용을 입력하세요."
+            placeholder="내용을 입력해주세요."
             maxLength={100}
             onChange={e => {
               setNewFile(null);
@@ -176,7 +176,7 @@ function Message({content, setContent}: MessageProps) {
             onClick={handleClickFileUpload}>
             <span>
               이곳을 눌러서 <br /> "{fileTypeKoArr[newFileType]}" 파일을
-              첨부하세요.
+              첨부해주세요.
             </span>
           </div>
         ) : null}

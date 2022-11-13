@@ -10,12 +10,12 @@ import {CustomMarkerIcon} from '@map/CustomMarker';
 import './Map.scss';
 import ClickMarker from '@map/ClickMarker';
 import {useEffect, useState} from 'react';
-import shuffle from '@images/shuffle.svg';
 import MoveToBack from '@common/MoveToBack';
 import {useRecoilState} from 'recoil';
 import {loadingState} from '@apis/Recoil';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 import {getMessageMap} from '@apis/map';
+import OpenHelp from '@common/OpenHelp';
 
 function generateRandomFloat(min, max) {
   return Math.random() * (max - min) + min;
@@ -79,6 +79,7 @@ function Map() {
       <InitMessage />
       <div className="screen">
         <MoveToBack path="/main" color="black" />
+        <OpenHelp imagesIndex={1} color="black" />
         <div
           className="map-random"
           onClick={() => {
@@ -88,23 +89,25 @@ function Map() {
             });
             setIsClicked(true);
           }}>
-          <img src={shuffle} alt="랜덤 위치 선정 버튼" />
+          {'랜덤 위치로\n이동하기'}
         </div>
 
         <MapContainer
+          attributionControl={false}
           zoomControl={false}
           maxBounds={[
             [-90, -180],
             [90, 180],
           ]}
           minZoom={2}
+          maxZoom={14}
           style={{width: '100%', height: '100%'}}
           center={center}
           zoom={14}
           scrollWheelZoom={true}>
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            noWrap={true}
+            url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
           />
           {data ? Markers() : null}
           <ClickMarker

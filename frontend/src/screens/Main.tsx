@@ -8,6 +8,8 @@ import Confirm from '@/components/common/Confirm';
 import Alert from '@/components/common/Alert';
 import {returnFalse, returnTrue} from '@/components/common/commonFunc';
 
+import OpenHelp from '@common/OpenHelp';
+
 let prePath = '';
 
 function Main() {
@@ -51,6 +53,8 @@ function Main() {
         open={openConfirm}
       /> */}
       {/* <Alert info={} open={} onConfirmed={} /> */}
+
+      <OpenHelp imagesIndex={0} />
       <Room />
     </>
   );

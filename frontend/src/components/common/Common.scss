@@ -11,6 +11,43 @@
   cursor: pointer;
 }
 
+#open-help {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 999;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.help {
+  &-background {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-container {
+    align-items: center;
+  }
+
+  &-img {
+    max-width: 90%;
+    margin-bottom: 2vh;
+  }
+}
+
 #menu {
   top: 15px;
   right: 15px;

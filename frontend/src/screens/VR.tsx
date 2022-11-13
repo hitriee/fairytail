@@ -12,6 +12,8 @@ import OptionBtn from '@/components/vr/OptionBtn';
 import {loadingState} from '@apis/Recoil';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 
+import OpenHelp from '@common/OpenHelp';
+
 function VR() {
   // recoil
   const [isLoading, setIsLoading] = useRecoilState(loadingState);
@@ -102,6 +104,7 @@ function VR() {
         {data.length > 0 ? (
           <OptionBtn option={option} setOption={setOption} setData={setData} />
         ) : null}
+        <OpenHelp imagesIndex={2} />
 
         <Iframe
           className="vr-frame"
