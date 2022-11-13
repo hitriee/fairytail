@@ -52,7 +52,7 @@ public class PostController {
      * 이미지 게시글 생성
      */
     @ApiOperation(value = "이미지 게시글 생성", notes = "이미지 게시글 생성 API 입니다.")
-    @PostMapping(produces = "application/json; charset=UTF-8")
+    @PostMapping
     public ResponseEntity<?> createPost(RequestPost req) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
