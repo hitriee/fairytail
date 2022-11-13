@@ -101,7 +101,7 @@ function MessageCreate() {
               emojiNo: emojiNo,
               lat: location.lat,
               lng: location.lng,
-              status: isShare ? '0' : '1',
+              status: isShare ? '1' : '0',
               title: title,
               type: content.type,
             };
@@ -127,7 +127,7 @@ function MessageCreate() {
             data.append('file', compressedFile as Blob);
             data.append('lat', location.lat.toString());
             data.append('lng', location.lng.toString());
-            data.append('status', isShare ? '0' : '1');
+            data.append('status', isShare ? '1' : '0');
             data.append('title', title);
             data.append('type', content.type.toString());
 
@@ -143,7 +143,12 @@ function MessageCreate() {
               .catch(err => {
                 setspinnerStop(2);
                 setSpinnerMessage('풍선 등록에 실패했습니다.');
-                setTimeout(() => setSpinner(false), 1000);
+
+                setTimeout(() => {
+                  setSpinner(false);
+                  setspinnerStop(0);
+                  setSpinnerMessage('잠시만 기다려주세요...');
+                }, 1000);
               });
           }
         });
@@ -177,7 +182,7 @@ function MessageCreate() {
               <>
                 <input
                   className="message-create-title"
-                  placeholder="제목을 입력하세요."
+                  placeholder="제목을 입력해주세요."
                   maxLength={10}
                   onChange={e => {
                     setTitle(e.target.value);

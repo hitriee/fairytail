@@ -1,28 +1,9 @@
-// import { getMessaging } from "firebase/messaging";
-// import { onBackgroundMessage } from "firebase/messaging/sw";
-
-// const messaging = getMessaging();
-// onBackgroundMessage(messaging, (payload) => {
-//   console.log(
-//     "[firebase-messaging-sw.js] Received background message ",
-//     payload
-//   );
-//   // Customize notification here
-//   const notificationTitle = "Background Message Title";
-//   const notificationOptions = {
-//     body: "Background Message body.",
-//     icon: "./logo192.png",
-//   };
-
-//   self.registration.showNotification(notificationTitle, notificationOptions);
-// });
-
 // 프로젝트 버전 확인
 importScripts(
-  "https://www.gstatic.com/firebasejs/9.13.0/firebase-app-compat.js"
+  "https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"
 );
 importScripts(
-  "https://www.gstatic.com/firebasejs/9.13.0/firebase-messaging-compat.js"
+  "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"
 );
 
 const config = {
@@ -36,22 +17,18 @@ const config = {
 };
 
 const app = firebase.initializeApp(config);
-const messaging = firebase.messaging();
-// console.log(app);
-// console.log(app.messaging);
+const messaging = firebase.messaging(app);
 
 //백그라운드 서비스워커 설정
 messaging.onBackgroundMessage((payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
+  // console.log(
+  //   "[firebase-messaging-sw.js] Received background message ",
+  //   payload
+  // );
   if (Notification.permission === "granted") {
     // 알림 설정
-
-    const { title } = payload.notification;
-    const body = JSON.parse(payload.notification.body);
-    console.log(body);
+    const { title } = payload.data;
+    // const body = JSON.parse(payload.data.body);
     const shortTitle = () => {
       if (title.length >= 6) {
         return `${title.slice(0, 6)}...`;
@@ -59,7 +36,7 @@ messaging.onBackgroundMessage((payload) => {
         return title;
       }
     };
-    const notificationTitle = `익명의 작가가 당신의 이야기 \n ${shortTitle()}을(를) 좋아합니다`;
+    const notificationTitle = `익명의 작가가 당신의 이야기 \n${shortTitle()}을(를) 좋아합니다`;
     const notificationOptions = {
       body: "",
       icon: "./logo192.png", // web

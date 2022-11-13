@@ -31,6 +31,7 @@ module.exports = override(
     ),
     "@messageList": path.resolve(__dirname, "src", "components", "messageList"),
     "@individual": path.resolve(__dirname, "src", "components", "individual"),
+    "@vr": path.resolve(__dirname, "src", "components", "vr"),
     "@screens": path.resolve(__dirname, "src", "screens"),
     "@styles": path.resolve(__dirname, "src", "styles"),
     "@fonts": path.resolve(__dirname, "src", "styles", "fonts"),

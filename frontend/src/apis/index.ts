@@ -10,14 +10,14 @@ const BASE_URL = 'https://k7c209.p.ssafy.io';
 export const API_AUTH = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: localStorage.token,
+    Authorization: `Bearer ${localStorage.token}`,
   },
 });
 
 export const API_FILE = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: localStorage.token,
+    Authorization: `Bearer ${localStorage.token}`,
     'Content-Type': 'multipart/form-data',
   },
 });
@@ -38,7 +38,7 @@ export const checkType = (type: number) => {
   }
 };
 
-export interface Location {
+export interface LocationParams {
   lat: number;
   lng: number;
 }

@@ -1,0 +1,15 @@
+#option-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 999;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: white;
+  font-size: 2vh;
+  word-wrap: break-word;
+  white-space: pre;
+  text-align: center;
+}
