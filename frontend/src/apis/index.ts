@@ -35,6 +35,9 @@ export const checkType = (type: number) => {
 
     case 3:
       return 'audio';
+
+    default:
+      return '';
   }
 };
 

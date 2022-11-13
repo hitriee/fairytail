@@ -10,7 +10,8 @@ import MoveToBack from '@common/MoveToBack';
 import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
-import {getMesssage, detailResponse} from '@/apis/messageDetail';
+import {getMesssage} from '@/apis/messageDetail/textDetail';
+import {detailResponse} from '@/apis/messageDetail/detailInterface';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {checkType} from '@/apis';
 import {currentUser} from '@/components/common/commonFunc';
@@ -66,11 +67,11 @@ function MessageDetail() {
           });
         } else {
           // 실패했을 경우 404로 이동
-          // navigate(notFound());
+          navigate(notFound());
         }
       });
     } else {
-      // navigate(notFound());
+      navigate(notFound());
     }
   }, []);
 

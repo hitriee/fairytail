@@ -9,3 +9,14 @@ export const postFile = async (type: number, data: object) => {
   const res = await API_FILE.post(`/${checkType(type)}/message`, data);
   return res.data;
 };
+
+export interface vrResponse {
+  date: string;
+  emojiNo: number;
+  likeCnt: number;
+  postId: number;
+  content: string;
+  status: number;
+  title: string;
+  type: number;
+}

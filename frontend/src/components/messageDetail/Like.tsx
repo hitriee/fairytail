@@ -4,7 +4,7 @@ import {ReactComponent as HeartFilled} from '@images/heartFilled.svg';
 import {emojiArr} from '@emojis/index';
 import '@messageDetail/Like.scss';
 import {returnFalse, returnTrue} from '../common/commonFunc';
-import {likeMessage} from '@/apis/messageDetail';
+import {likeMessage} from '@apis/messageDetail/textDetail';
 
 interface LikeProps {
   count: number;
@@ -46,7 +46,7 @@ function Like({count, like, isMine, emoji, type, likeInfo}: LikeProps) {
 
   useEffect(() => {
     setLike(() => like);
-  }, [like]);
+  }, []);
 
   return (
     <article className="like">

@@ -13,6 +13,8 @@ import {loadingState} from '@apis/Recoil';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 import OpenHelp from '@common/OpenHelp';
+import {toMessageDetail} from '@/apis/router';
+// import {vrResponse} from '@/apis/messageCreate';
 
 function VR() {
   // recoil
@@ -85,7 +87,8 @@ function VR() {
       navigate('/message/create');
     } else if (typeof ev.data === 'number') {
       setPostId(ev.data);
-      navigate(`/message/detail/${ev.data}`);
+      // console.log(ev.data);
+      // navigate(toMessageDetail(ev.data));
     }
   };
 

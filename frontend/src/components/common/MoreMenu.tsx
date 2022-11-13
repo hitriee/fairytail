@@ -9,7 +9,10 @@ import Alert from '@common/Alert';
 import {popUp} from '@common/commonFunc';
 import '@common/Common.scss';
 import {checkType} from '@/apis';
-import {changeMessageStatus, deleteMessage} from '@/apis/messageDetail';
+import {
+  changeMessageStatus,
+  deleteMessage,
+} from '@/apis/messageDetail/textDetail';
 
 interface MoreMenuProps {
   open: boolean;

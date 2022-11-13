@@ -3,7 +3,7 @@ import Alert from '@common/Alert';
 import {returnTrue, returnFalse, currentUser} from '@common/commonFunc';
 import '@common/Common.scss';
 import SelectBox from '../common/SelectBox';
-import {reportMessage} from '@/apis/messageDetail';
+import {reportMessage} from '@/apis/messageDetail/textDetail';
 import {checkType} from '@/apis';
 import {useNavigate} from 'react-router-dom';
 import {intro} from '@/apis/router';
