@@ -1,15 +1,10 @@
 import {useState} from 'react';
-import items from '@screens/items.json';
 import MyNotification from '@/components/individual/MyNotification';
 import '@individual/Notifications.scss';
+import {item} from '@individual/notification';
 
-interface item {
-  id: number;
-  title: string;
-  emoji: number;
-}
 function Notifications() {
-  const [newItems, setNewItems] = useState<item[]>(items);
+  const [newItems, setNewItems] = useState<item[]>([]);
   const deleteEach = (index: number) => {
     // 임시
     setNewItems(() => newItems.filter((element, i) => i !== index));
@@ -24,15 +19,6 @@ function Notifications() {
       <p className="notifications-delete-all" onClick={deleteAll} draggable>
         전체 삭제
       </p>
-      {/* <div ref={dragPreview} style={{opacity: isDragging ? 0.5 : 1}}>
-        <div role="Handle" ref={drag} />
-      </div>
-      <div
-        ref={drop}
-        role={'Dustbin'}
-        style={{backgroundColor: isOver ? 'red' : 'white'}}>
-        {canDrop ? 'Release to drop' : 'Drag a box here'}
-      </div> */}
       {newItems.length === 0 ? (
         <div className="notifications-empty">새로운 알림이 없습니다.</div>
       ) : (

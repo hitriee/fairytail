@@ -4,13 +4,10 @@ import '@individual/MyNotifications.scss';
 import {useNavigate} from 'react-router';
 import {toMessageDetail} from '@apis/router';
 import {checkType} from '@/apis';
+import {item} from '@individual/notification';
 
 interface itemProps {
-  item: {
-    id: number;
-    title: string;
-    emoji: number;
-  };
+  item: item;
   dragFlag: boolean;
   index?: number;
   deleteEach?: (index: number) => void;
@@ -22,8 +19,7 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   // const [originPos, setOriginPos] = useState({x: 0, y: 0});
   const [deleted, setDeleted] = useState(false);
   const [isGrabbing, setIsGrabbing] = useState(false);
-  const {id, title, emoji} = item;
-  const type = 0;
+  const {id, title, emoji, type} = item;
   const toDetail = (postId: number) => {
     return () => navigate(toMessageDetail(postId, type));
   };
