@@ -59,7 +59,7 @@ function Main() {
   // main 최초 렌더링 확인
   const [isLoaded, setIsLoaded] = useRecoilState(loadingState);
 
-  if (!isLoaded) {
+  if (pathname === '/main' && !isLoaded) {
     setTimeout(() => {
       setIsLoaded(true);
     }, 3000);
@@ -69,7 +69,9 @@ function Main() {
     <>
       {isAlertOpened ? null : (
         <div className="screen main">
-          {isLoaded ? null : <Loading />}
+          {pathname === '/main' && !isLoaded ? (
+            <Loading fillBackground={false} />
+          ) : null}
 
           <InitMessage />
           <div

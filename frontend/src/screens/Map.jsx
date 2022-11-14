@@ -6,18 +6,22 @@ import {
   useMap,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import {CustomMarkerIcon} from '@map/CustomMarker';
-import './Map.scss';
-import ClickMarker from '@map/ClickMarker';
 import {useEffect, useState} from 'react';
+
+import '@screens/Map.scss';
+import {CustomMarkerIcon} from '@map/CustomMarker';
+import ClickMarker from '@map/ClickMarker';
 import MoveToBack from '@common/MoveToBack';
-import {getMessageMap} from '@apis/map';
 import OpenHelp from '@common/OpenHelp';
 
+import {getMessageMap} from '@apis/map';
+
+// 최소, 최대 범위 이내 랜덤 실수 생성
 function generateRandomFloat(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+// 지도 중심 지정
 function SetCenter({center}) {
   const map = useMap();
 
@@ -29,15 +33,19 @@ function SetCenter({center}) {
 }
 
 function Map() {
-  // 클릭 시 팝업 표시, 해당 위치 좌표값
+  // 지도 클릭 시 팝업 표시, 해당 위치 좌표값
   const [isClicked, setIsClicked] = useState(false);
   const [position, setPosition] = useState({lat: -999, lng: -999});
 
+  // 지도 중심
   const [center, setCenter] = useState({lat: 0, lng: 0});
+
+  // 데이터 및 데이터 받아오기가 끝났는지 확인하기 위한 state
+  const [isFinished, setIsFinished] = useState(-1);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // 현재 위치 받아오기
+    // 현재 위치 받아와서 지도 중심 설정
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async pos => {
         setCenter({
@@ -52,14 +60,15 @@ function Map() {
       getMessageMap(i)
         .then(res => {
           setData(prev => prev.concat(res.data));
+          setIsFinished(prev => prev + 1);
         })
         .catch(err => {
           console.log(err);
         });
     }
-  }, []);
+  });
 
-  // 받은 데이터 화면에 뿌리기
+  // 받은 데이터 화면에 마커로 표시하기
   const Markers = () => {
     const markers = data.map((position, index) => {
       return <Marker key={index} position={position} icon={CustomMarkerIcon} />;
@@ -100,7 +109,7 @@ function Map() {
           noWrap={true}
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
-        {data ? Markers() : null}
+        {isFinished === 3 ? Markers() : null}
         <ClickMarker
           isClicked={isClicked}
           setIsClicked={setIsClicked}

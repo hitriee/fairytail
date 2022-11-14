@@ -1,5 +1,6 @@
 import imageCompression from 'browser-image-compression';
 
+// 이미지 압축
 async function Compress(file: File) {
   const options = {
     maxSizeMb: 5,

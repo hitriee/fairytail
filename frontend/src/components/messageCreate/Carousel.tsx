@@ -1,11 +1,12 @@
-import {useState, Dispatch, SetStateAction, useEffect} from 'react';
 import 'swiper/css';
-import './Carousel.scss';
 import 'swiper/css/effect-coverflow';
-import {Swiper, SwiperSlide} from 'swiper/react';
 import SwiperCore, {EffectCoverflow} from 'swiper';
-import {emojiArr} from '../../assets/emojis';
-import useLongPress from '@/apis/useLongPress';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {useState, Dispatch, SetStateAction, useEffect} from 'react';
+
+import '@messageCreate/Carousel.scss';
+import {emojiArr} from '@emojis/index';
+import useLongPress from '@apis/useLongPress';
 
 type CarouselProps = {
   emojiNo: number;
@@ -13,11 +14,13 @@ type CarouselProps = {
   setIsLongClicked: Dispatch<SetStateAction<boolean>>;
 };
 
+// 캐러셀
 function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
   const [swiper, setSwiper] = useState<SwiperCore>();
 
   const longPress = useLongPress(() => setIsLongClicked(true), 500);
 
+  // emojiNo가 변하면 캐러셀 중심도 이동
   useEffect(() => {
     swiper && swiper.slideTo(emojiNo, 0);
   }, [emojiNo]);
