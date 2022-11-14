@@ -37,6 +37,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation "org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE"
 	implementation group: 'com.google.cloud', name: 'google-cloud-speech', version: '4.0.0'
+	implementation group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.7.0'
 }
 
 dependencyManagement {

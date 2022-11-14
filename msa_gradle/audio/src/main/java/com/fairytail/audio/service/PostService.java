@@ -6,6 +6,7 @@ import com.fairytail.audio.dto.PostReportDto;
 import com.fairytail.audio.jpa.PostEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,5 +29,5 @@ public interface PostService {
 
     List<PostDto> readAllPost() throws Exception;
 
-    String speechToText(MultipartFile file) throws IOException;
+    String speechToText(File file) throws IOException;
 }
