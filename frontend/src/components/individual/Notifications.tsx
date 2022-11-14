@@ -1,3 +1,5 @@
+// ** 알림
+
 import {useState} from 'react';
 import MyNotification from '@/components/individual/MyNotification';
 import '@individual/Notifications.scss';

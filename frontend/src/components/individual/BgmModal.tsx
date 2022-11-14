@@ -1,3 +1,5 @@
+// ** bgm 설정 모달
+
 import {useRecoilState} from 'recoil';
 import {playingState, bgmNoState} from '@/apis/Recoil';
 import '@individual/BgmModal.scss';
