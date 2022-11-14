@@ -6,7 +6,7 @@ import '@common/Common.scss';
 
 function BgmBtn() {
   // 배경음악
-  const [isPlaying, setIsPlaying] = useRecoilState(playingState);
+  const [isPlaying, setIsPlaying] = useRecoilState<boolean>(playingState);
 
   return (
     <div

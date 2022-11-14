@@ -29,8 +29,6 @@ import {bgmArr} from './assets/bgms';
 import {bgmNoState, playingState} from './apis/Recoil';
 
 function App() {
-  initToken();
-
   // 배경음악
   const [isPlaying, setIsPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
@@ -44,7 +42,7 @@ function App() {
   useEffect(() => {
     if (isPlaying && audioRef.current) {
       audioRef.current.muted = false;
-      audioRef.current.currentTime = 0;
+      // audioRef.current.currentTime = 0;
       audioRef.current.play();
     } else {
       audioRef.current && audioRef.current.pause();

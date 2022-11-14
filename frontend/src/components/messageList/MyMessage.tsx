@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {smallEmojiArr} from '../../assets/emojis';
 import {ReactComponent as Heart} from '@images/heartFilled.svg';
 import './MyMessage.scss';
-import {messageUrl} from '@apis/MessageList';
+import {messageUrl} from '@/apis/messageList';
 
 interface messageProps {
   messageItem: {

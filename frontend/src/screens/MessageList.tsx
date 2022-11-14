@@ -3,7 +3,7 @@ import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
 import {main} from '@apis/router';
-import {getMesssageList} from '@apis/MessageList';
+import {getMesssageList} from '@/apis/messageList';
 
 interface items {
   postId: number;
@@ -59,7 +59,10 @@ function MessageList() {
           {messageItems.length !== 0 &&
             messageItems.map(messageItem => {
               return (
-                <MyMessage key={messageItem.postId} messageItem={messageItem} />
+                <MyMessage
+                  key={`${messageItem.type}+${messageItem.postId}`}
+                  messageItem={messageItem}
+                />
               );
             })}
         </div>
