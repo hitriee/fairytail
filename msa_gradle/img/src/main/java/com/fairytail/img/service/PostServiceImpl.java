@@ -38,6 +38,10 @@ public class PostServiceImpl implements PostService {
     private final MainUtil mainUtil;
 
     private String dirName = "image";
+
+    /**
+     * 이미지 게시글 생성
+     */
     @Override
     public PostDto createPost(PostDto dto) throws IOException {
         ModelMapper modelMapper = new ModelMapper();
@@ -59,7 +63,9 @@ public class PostServiceImpl implements PostService {
         filePath.delete();
         return data;
     }
-
+    /**
+     * 이미지 게시글 상세 조회
+     */
     @Override
     public PostDto readPost(Long postId, Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -73,7 +79,9 @@ public class PostServiceImpl implements PostService {
         }
         return data;
     }
-
+    /**
+     * 이미지 공개 여부 수정
+     */
     @Override
     public PostDto putPost(PostDto dto) throws IOException{
         ModelMapper modelMapper = new ModelMapper();
@@ -87,7 +95,9 @@ public class PostServiceImpl implements PostService {
         }
         return data;
     }
-
+    /**
+     * 이미지 게시글 삭제
+     */
     @Override
     public Boolean deletePost(Long postId) {
         Boolean data = false;
@@ -106,7 +116,9 @@ public class PostServiceImpl implements PostService {
         }
         return data;
     }
-
+    /**
+     *  주변 이미지 게시글 최신순 조회
+     */
     @Override
     public List<PostDto> readPostListLatest(Double lat, Double lng) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -120,7 +132,9 @@ public class PostServiceImpl implements PostService {
         }
         return data;
     }
-
+    /**
+     * 주변 이미지 게시글 좋아요 순 조회
+     */
     @Override
     public List<PostDto> readPostListLike(Double lat, Double lng) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -134,7 +148,9 @@ public class PostServiceImpl implements PostService {
         }
         return data;
     }
-
+    /**
+     * 내 이미지 게시글 조회
+     */
     @Override
     public List<PostDto> readMyPostList(Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -148,7 +164,9 @@ public class PostServiceImpl implements PostService {
         }
         return data;
     }
-
+    /**
+     * 이미지 게시글 좋아요, 좋아요 취소 기능
+     */
     @Override
     public Boolean createLike(PostLikeDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -177,22 +195,9 @@ public class PostServiceImpl implements PostService {
             return true;
         }
     }
-
-    @Override
-    public PostDto deletePostLike(PostLikeDto dto) throws Exception {
-        ModelMapper modelMapper = new ModelMapper();
-        PostDto data = null;
-        Long res = postLikeRepository.deleteByPostIdAndUserId(dto.getPostId(), dto.getUserId());
-        if(res >= 0){
-            Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
-            if(optional.isPresent()){
-                PostEntity post = optional.get();
-                data = modelMapper.map(post, PostDto.class);
-            }
-        }
-        return data;
-    }
-
+    /**
+     * 이미지 게시글 신고 누르기
+     */
     @Override
     public Boolean createReport(PostReportDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -215,7 +220,9 @@ public class PostServiceImpl implements PostService {
             }
         }
     }
-
+    /**
+     * 이미지 게시글 신고 횟수 5회 이상시 게시글 잠금 기능
+     */
     @Override
     public Boolean changeStatus(PostEntity post) throws Exception {
         Integer reportCnt =  post.getReportCnt();
@@ -226,7 +233,9 @@ public class PostServiceImpl implements PostService {
         }
         return false;
     }
-
+    /**
+     * 이미지 게시글 전체 좌표 조회
+     */
     @Override
     public List<PostDto> readAllPost() throws Exception {
         ModelMapper modelMapper = new ModelMapper();
@@ -281,7 +290,9 @@ public class PostServiceImpl implements PostService {
 
         return result;
     }
-
+    /**
+     * 이미지 게시글 좋아요 눌린지 여부 체크
+     */
     public Boolean checkLike(Long userId, Long postId) throws Exception{
         Optional<PostLikeEntity> optional = postLikeRepository.findByPostIdAndUserId(userId, postId);
         if (optional.isPresent()){
