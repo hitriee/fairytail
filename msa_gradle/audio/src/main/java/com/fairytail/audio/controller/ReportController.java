@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 @Api(value = "img")
-@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/report")

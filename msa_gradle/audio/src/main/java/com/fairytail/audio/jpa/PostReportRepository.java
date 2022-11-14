@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface PostReportRepository extends JpaRepository<PostReportEntity, Long> {
-    Optional<PostReportEntity> findByPostIdAndUserId(Long postId, Long userId);
+    Optional<PostReportEntity> findByPostIdAndUserId(Long postId, Long userId);//신고 여부 체크
 }

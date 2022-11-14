@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 @Api(value = "img")
-@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/message")

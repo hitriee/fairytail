@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Api(value = "like")
-@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/like")

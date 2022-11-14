@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
     @Query(value = "select max(i.postId) from PostEntity i")
-    Long getMaxId();
+    Long getMaxId(); //S3 파일에 postId를 파일명에 넣기 위해서 사용
 
     Optional<PostEntity> findByPostId(Long postId);
 
