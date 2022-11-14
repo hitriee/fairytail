@@ -48,7 +48,7 @@ public class UserController {
 
         Integer result = userService.saveFirebaseToken(userDto);
         log.debug(result);
-        if(result < 1) {
+        if(result != 1) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save firebase token.");
         }
         return ResponseEntity.status(HttpStatus.OK).body("Succeeded to save firebase token.");
