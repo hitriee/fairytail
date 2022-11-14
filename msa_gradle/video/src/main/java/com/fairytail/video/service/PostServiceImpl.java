@@ -50,8 +50,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto createPost(PostDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-//        PostDto data = null;
-//        PostEntity img = modelMapper.map(dto, PostEntity.class); //dto -> entity 매핑
+        PostDto data = null;
+        PostEntity img = modelMapper.map(dto, PostEntity.class); //dto -> entity 매핑
         Long maxIdx = postRepository.getMaxId() + 1; //s3 저장 파일에 idx를 넣어주기 위해 조회
         MultipartFile file = dto.getFile(); //dto file 가져와서
         File filePath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename());//저장경로/ + 저장할 컨텐츠 타입 이름(dirName) + 인덱스 값 + 파일 이름
@@ -59,50 +59,30 @@ public class PostServiceImpl implements PostService {
         ffmpegUtil.makeThumbNail(filePath.getPath());
         File thumbPath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename() + "_thumbnail.png"); //저장경로/ + 저장할 컨텐츠 타입 이름(dirName) + 인덱스 값 + 파일 이름 + 썸네일.png
 
-        InputStream inputStream = new FileInputStream(thumbPath);
+        InputStream inputStream = new FileInputStream(thumbPath); // 썸네일 이미지를 InputStream으로 변환
 
-        String responseAnnotation = null;
-        List<AnnotateImageRequest> requests = new ArrayList<>();
+        /** 썸네일 유해성 여부 판단 */
+        Integer safeSearchResult = detectSafeSearch(inputStream);
 
-        ByteString imgBytes = ByteString.readFrom(inputStream);
+        /** 이미지 유해성 필터링 서비스 실행 */
+        if (safeSearchResult == 0) { // 유해 이미지로 판단되지 않음
+            String url = s3Util.upload(filePath, dirName);//s3 업로드(File, 폴더이름 String)
+            img.setUrl(url); //s3 저장 후 받은 url로 entity 세팅
 
-        Image img = Image.newBuilder().setContent(imgBytes).build();
-        Feature feat = Feature.newBuilder().setType(Feature.Type.SAFE_SEARCH_DETECTION).build();
-        AnnotateImageRequest request =
-                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-        requests.add(request);
+            LocalDateTime now = LocalDateTime.now(); //현재 시간 받아서
+            Integer hour =  now.getHour(); //시간만 받고
+            Integer dayType = mainUtil.checkTime(hour); //dayType 계산
 
-        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-            List<AnnotateImageResponse> responses = response.getResponsesList();
+            img.setDayType(dayType); //dayType값 넣어주기
+            img.setDate(now);
 
-            for (AnnotateImageResponse res : responses) {
-                if (res.hasError()) {
-                    System.out.format("Error: %s%n", res.getError().getMessage());
-                }
+            postRepository.save(img); //저장
 
-                // For full list of available annotations, see http://g.co/cloud/vision/docs
-                SafeSearchAnnotation annotation = res.getSafeSearchAnnotation();
-                responseAnnotation = String.format("adult: %s %d%nmedical: %s %d%nspoofed: %s %d%nviolence: %s %d%nracy: %s %d%n",
-                        annotation.getAdult(), annotation.getAdultValue(),
-                        annotation.getMedical(), annotation.getMedicalValue(),
-                        annotation.getSpoof(), annotation.getSpoofValue(),
-                        annotation.getViolence(), annotation.getViolenceValue(),
-                        annotation.getRacy(), annotation.getRacyValue());
-                System.out.println(responseAnnotation);
-            }
+            data = modelMapper.map(img, PostDto.class); //dto로 매핑
+            filePath.delete();//사용한 파일 삭제
         }
-//        String url = s3Util.upload(filePath, dirName);//s3 업로드(File, 폴더이름 String)
-//        img.setUrl(url); //s3 저장 후 받은 url로 entity 세팅
-//        LocalDateTime now = LocalDateTime.now(); //현재 시간 받아서
-//        Integer hour =  now.getHour(); //시간만 받고
-//        Integer dayType = mainUtil.checkTime(hour); //dayType 계산
-//        img.setDayType(dayType); //dayType값 넣어주기
-//        img.setDate(now);
-//        postRepository.save(img); //저장
-//        data = modelMapper.map(img, PostDto.class); //dto로 매핑
-//        filePath.delete();//사용한 파일 삭제
-        return null;
+
+        return data;
     }
 
     /**
@@ -297,6 +277,55 @@ public class PostServiceImpl implements PostService {
             data.add(d);
         }
         return data;
+    }
+
+    /** 이미지의 유해성 여부를 판별해서 유해하면 1을 유해하지 않으면 0을 에러 발생시 -1 반환 */
+    @Override
+    public Integer detectSafeSearch(InputStream inputStream) throws IOException {
+        String responseAnnotation = null;
+        Integer result = 0; // 이미지의 유해성 여부 (1: 유해함, 0: 유해하지 않음)
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(inputStream);
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.SAFE_SEARCH_DETECTION).build();
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                    return -1;
+                }
+
+                // For full list of available annotations, see http://g.co/cloud/vision/docs
+                SafeSearchAnnotation annotation = res.getSafeSearchAnnotation();
+                responseAnnotation = String.format("adult: %s %d%nmedical: %s %d%nspoofed: %s %d%nviolence: %s %d%nracy: %s %d%n",
+                        annotation.getAdult(), annotation.getAdultValue(),
+                        annotation.getMedical(), annotation.getMedicalValue(),
+                        annotation.getSpoof(), annotation.getSpoofValue(),
+                        annotation.getViolence(), annotation.getViolenceValue(),
+                        annotation.getRacy(), annotation.getRacyValue());
+                System.out.println(responseAnnotation);
+                // 이미지의 각 유해성 판단 값 점수로 저장
+                int violence = annotation.getViolenceValue();
+                int racy = annotation.getRacyValue();
+                int medical = annotation.getMedicalValue();
+                int adult = annotation.getAdultValue();
+
+                // 각 판단 기준을 하나라도 위반할 시 유해한 이미지로 인식
+                if (violence >= 3 || racy >= 5 || medical >= 4 || adult >= 4)
+                    result = 1;
+            }
+        }
+
+        return result;
     }
 
     /**

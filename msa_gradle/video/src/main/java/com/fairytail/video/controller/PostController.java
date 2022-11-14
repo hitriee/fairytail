@@ -2,6 +2,7 @@ package com.fairytail.video.controller;
 
 import com.fairytail.video.dto.PostDto;
 import com.fairytail.video.service.PostService;
+import com.fairytail.video.util.BadWordsUtils;
 import com.fairytail.video.util.S3Util;
 import com.fairytail.video.vo.*;
 import io.swagger.annotations.Api;
@@ -29,6 +30,7 @@ public class PostController {
     private Environment env;
     private final String OKAY= "SUCCESS";
     private final String FAIL= "FAIL";
+    private final BadWordsUtils badWordsUtils;
     private final PostService postService;
     private static HttpStatus status = null;
 
@@ -52,13 +54,24 @@ public class PostController {
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostDto dto = modelMapper.map(req, PostDto.class); //req에서 dto로 매핑
+
+        /** 제목 텍스트 금지어 여부 확인 */
+        if (badWordsUtils.filterText(dto.getTitle())) { // 제목에 금지어가 있을 경우
+            resultMap.put("message", "등록 실패 : 제목 금지어 발견");
+            status = HttpStatus.ACCEPTED;
+
+            return new ResponseEntity<>(resultMap, status);
+        }
+
         PostDto data = postService.createPost(dto); //서비스 결과를 data로 받아오기
-        if(data != null){ //dto에 데이터가 있으면 성공
+
+        if(data != null){ // dto에 데이터가 있으면 성공 (썸네일이 유해한 이미지로 판단되지 않음)
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else{ //없으면 실패
-            resultMap.put("message", FAIL);
+        } else{ // 없으면 실패 (썸네일이 유해한 이미지로 판단되어 걸러짐)
+            resultMap.put("message", "등록 실패 : 유해한 영상으로 판단됨");
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }

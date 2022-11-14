@@ -3,7 +3,10 @@ import com.fairytail.video.dto.PostDto;
 import com.fairytail.video.dto.PostLikeDto;
 import com.fairytail.video.dto.PostReportDto;
 import com.fairytail.video.jpa.PostEntity;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -24,4 +27,6 @@ public interface PostService {
     Boolean changeStatus(PostEntity post)throws Exception; //게시글이 5회 이상 신고 받으면 게시글을 잠금 상태로 변경
 
     List<PostDto> readAllPost() throws Exception; //전체 지역의 모든 리스트 조회
+
+    Integer detectSafeSearch(InputStream inputStream) throws IOException;
 }
