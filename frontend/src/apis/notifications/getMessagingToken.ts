@@ -9,7 +9,7 @@ export const initToken = async () => {
   })
     .then(currentToken => {
       if (currentToken) {
-        console.log(currentToken);
+        // console.log(currentToken);
         return currentToken;
       } else {
         console.log(
@@ -27,7 +27,7 @@ export const initToken = async () => {
 
 // 등록 토큰에 액세스 (알림 권한 요청)
 export const requestPermission = () => {
-  console.log(Notification.permission)
+  console.log(Notification.permission);
   if (Notification.permission === 'default') {
     console.log('Requesting permission...');
     Notification.requestPermission().then(permission => {
