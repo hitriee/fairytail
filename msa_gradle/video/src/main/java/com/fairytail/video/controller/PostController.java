@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 @Api(value = "video")
-@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/message")
