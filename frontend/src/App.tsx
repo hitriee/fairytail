@@ -60,7 +60,7 @@ function App() {
   useEffect(() => {
     if (isPlaying && audioRef.current) {
       audioRef.current.muted = false;
-      audioRef.current.currentTime = 0;
+      // audioRef.current.currentTime = 0;
       audioRef.current.play();
     } else {
       audioRef.current && audioRef.current.pause();
