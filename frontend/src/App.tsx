@@ -21,12 +21,9 @@ import Intro from '@screens/Intro';
 import Process from '@screens/Process';
 import Main from '@screens/Main';
 
-// notification
-import {initToken} from '@apis/notifications/getMessagingToken';
-
 import {useRecoilState} from 'recoil';
-import {bgmArr} from './assets/bgms';
-import {bgmNoState, playingState} from './apis/recoil';
+import {bgmArr} from '@bgms/index';
+import {bgmNoState, playingState} from '@apis/recoil';
 
 function App() {
   // 배경음악
