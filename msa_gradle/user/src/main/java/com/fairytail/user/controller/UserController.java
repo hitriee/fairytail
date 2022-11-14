@@ -43,8 +43,8 @@ public class UserController {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDto userDto = modelMapper.map(requestFirebase, UserDto.class);
 
-        userDto = userService.saveFirebaseToken(userDto);
-        if(userDto == null) {
+        Integer result = userService.saveFirebaseToken(userDto);
+        if(result != 1) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save firebase token.");
         }
         return ResponseEntity.status(HttpStatus.OK).body("Succeeded to save firebase token.");
