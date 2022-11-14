@@ -23,7 +23,7 @@ import Main from '@screens/Main';
 
 import {useRecoilState} from 'recoil';
 import {bgmArr} from '@bgms/index';
-import {bgmNoState, playingState} from '@apis/Recoil';
+import {bgmNoState, playingState} from '@apis/recoil';
 
 function App() {
   // 배경음악

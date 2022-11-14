@@ -1,7 +1,7 @@
 // ** bgm 설정 모달
 
 import {useRecoilState} from 'recoil';
-import {playingState, bgmNoState} from '@/apis/Recoil';
+import {playingState, bgmNoState} from '@/apis/recoil';
 import '@individual/BgmModal.scss';
 import Toggle from '@messageCreate/Toggle';
 import {bgmArr} from '@bgms/index';
