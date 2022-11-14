@@ -27,4 +27,5 @@ public class PostDto {
     private MultipartFile file;
     private Integer likeCnt;
     private Boolean isLike;
+    private Integer dayType;
 }
