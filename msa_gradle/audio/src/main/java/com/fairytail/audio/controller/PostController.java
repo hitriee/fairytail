@@ -56,7 +56,7 @@ public class PostController {
 
         /** 제목 텍스트 금지어 여부 확인 */
         if (badWordsUtils.filterText(dto.getTitle())) { // 제목에 금지어가 있을 경우
-            resultMap.put("message", "등록 실패 : 제목 금지어 발견");
+            resultMap.put("message", FAIL); // 등록 실패 : 제목 금지어 발견
             status = HttpStatus.ACCEPTED;
 
             return new ResponseEntity<>(resultMap, status);
@@ -68,7 +68,7 @@ public class PostController {
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else{ // 없으면 실패 (음성에 금지어가 발견됨)
-            resultMap.put("message", "등록 실패 : 음성에서 금지어 발견");
+            resultMap.put("message", FAIL); // 등록 실패 : 음성에서 금지어 발견
             status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
