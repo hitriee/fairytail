@@ -17,17 +17,21 @@ function Process() {
   saveToken();
 
   // firebase token 불러오기
-  initToken();
-
-  // 불러온 firebase token, backend에 저장
-  const data = {
-    firebaseToken: localStorage.firebaseToken,
-    userId: localStorage.userId,
-  };
-  saveFirebaseToken(data);
+  initToken().then(res => {
+    console.log(res);
+    // 불러온 firebase token, backend에 저장
+    const data = {
+      firebaseToken: res,
+      userId: localStorage.userId,
+    };
+    saveFirebaseToken(data)
+      .catch(err => console.log(err))
+      .then(() => requestPermission())
+      .then(() => navigate('/main'));
+  });
 
   // 작업 완료 후 main 페이지로 이동
-  setTimeout(() => navigate('/main'), 100);
+  // setTimeout(() => navigate('/main'), 100);
   return <div className="process" />;
 }
 
