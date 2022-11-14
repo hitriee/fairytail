@@ -7,9 +7,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
+@Configuration
 public class S3Config {
 
     @Value("${cloud.aws.region.static}") //properties에서 받음
@@ -27,5 +30,10 @@ public class S3Config {
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withRegion(region)
                 .build();
+    }
+
+    @PostConstruct
+    public void start() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
     }
 }
