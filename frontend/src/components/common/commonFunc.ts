@@ -1,5 +1,10 @@
+// ** 공통으로 사용할 함수
+
+// boolean 값 반환
 export const returnTrue = () => true;
 export const returnFalse = () => false;
+
+// 모달에 필요한 유형
 export interface popUp {
   title: string;
   message: string;

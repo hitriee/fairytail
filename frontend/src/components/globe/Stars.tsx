@@ -1,3 +1,5 @@
+//** 별 배경
+
 import {useEffect, useRef} from 'react';
 import * as THREE from 'three';
 

@@ -7,7 +7,7 @@ import {
 } from '@apis/notifications/getMessagingToken';
 
 import {useNavigate} from 'react-router-dom';
-import {saveToken, saveFirebaseToken} from '@apis/process';
+import {saveToken, saveFirebaseToken} from '@/apis/process';
 import './Process.scss';
 
 function Process() {

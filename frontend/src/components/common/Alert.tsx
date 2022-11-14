@@ -1,3 +1,5 @@
+// ** 알림 모달 (제목, 내용, 확인 버튼으로 구성)
+
 import {useEffect, useRef} from 'react';
 
 interface AlertProps {
@@ -10,8 +12,8 @@ interface AlertProps {
 }
 
 function Alert({info, open, onConfirmed}: AlertProps) {
+  // 모달 바깥을 누르면 종료
   const alertRef = useRef<HTMLSelectElement>(null);
-
   useEffect(() => {
     window.addEventListener('mousedown', ({target}) => {
       if (alertRef.current && !alertRef.current.contains(target as Node)) {

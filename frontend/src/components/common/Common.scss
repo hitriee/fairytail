@@ -1,3 +1,5 @@
+@import '@styles/_colors.scss';
+
 #move-to-back {
   width: 50px;
   height: 50px;
@@ -130,6 +132,7 @@
 
   &-textarea {
     margin: 1.5vh 1vh;
+    padding: 1vh;
     font-size: 2vh;
     word-break: break-all;
     line-height: 3vh;
@@ -137,6 +140,8 @@
     text-align: center;
     resize: none;
     overflow: hidden;
+    border: 1px solid $GRAY-BF;
+    border-radius: 15px;
   }
 }
 
