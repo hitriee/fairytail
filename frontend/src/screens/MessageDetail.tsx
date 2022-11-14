@@ -1,3 +1,5 @@
+// ** 메시지 상세
+
 import {useState, useRef, useEffect} from 'react';
 import {useNavigate, useParams, useLocation} from 'react-router';
 import {useRecoilState} from 'recoil';
@@ -7,7 +9,7 @@ import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import MoveToBack from '@common/MoveToBack';
-import {notFound, intro, BASE_URL} from '@apis/router';
+import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
 import {getTextMesssage, getImgMesssage} from '@/apis/messageDetail/detailFunc';
@@ -34,8 +36,8 @@ function MessageDetail() {
   const type = convStringType(params.type);
 
   // 현재 사용자 정보
-  // const userId = currentUser();
-  const userId = 1;
+  const userId = currentUser();
+  // const userId = 1;
 
   // 서버 통신으로 게시글 정보 가져오기
   const dataType = {
@@ -48,7 +50,7 @@ function MessageDetail() {
     likeCnt: 0,
     isLike: false,
     date: '',
-    dayType: 9,
+    dayType: 4,
     status: 0,
     url: '',
     lat: 0,
@@ -90,11 +92,9 @@ function MessageDetail() {
   useEffect(() => {
     if (messageId === -1) {
       navigate(notFound());
-    }
-    // else if (userId === -1) {
-    // navigate(intro());
-    // }
-    else if (type) {
+    } else if (userId === -1) {
+      navigate(intro());
+    } else if (type) {
       getVaribleMessage();
     }
   }, []);
@@ -119,6 +119,7 @@ function MessageDetail() {
   // 날짜 형식에 맞춰 표시
   const modifiedDate = () => data.date.split('T')[0];
 
+  // 공개 여부 변경 대비
   const [newStatus, setNewStatus] = useState(data.status);
   // content에 들어갈 내용
   const detailContent = () => {
@@ -151,7 +152,8 @@ function MessageDetail() {
               type={type}
               content={data.content}
               close={hiddenMenu}
-              status={data.status}
+              status={newStatus}
+              setStatus={setNewStatus}
             />
           </section>
           <section className="container">
@@ -160,7 +162,7 @@ function MessageDetail() {
               content={detailContent()}
               type={data.type}
               date={modifiedDate()}
-              status={data.status}
+              status={newStatus}
             />
             <Like
               count={data.likeCnt}
@@ -168,6 +170,7 @@ function MessageDetail() {
               isMine={isMine()}
               emoji={data.emojiNo}
               type={type}
+              writerId={data.userId}
               likeInfo={{
                 postId: messageId,
                 userId,

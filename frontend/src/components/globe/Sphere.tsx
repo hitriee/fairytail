@@ -1,8 +1,10 @@
+// ** 지구
+
 import {useRef, Suspense} from 'react';
 import {useFrame} from '@react-three/fiber';
 import {Mesh} from 'three';
 import {useTexture, OrbitControls} from '@react-three/drei';
-import earthMap from '../../assets/images/earthmap.jpg';
+import earthMap from '@assets/images/earthmap.jpg';
 
 export function Earth(props: JSX.IntrinsicElements['mesh']) {
   const mapImg = useTexture(earthMap);

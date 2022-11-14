@@ -1,3 +1,5 @@
+// ** 각 bgm별 설정
+
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
 import '@individual/SettingsModal.scss';

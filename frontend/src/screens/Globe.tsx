@@ -1,3 +1,5 @@
+// ** 숨겨진 페이지
+
 import {useState, useEffect, useRef} from 'react';
 import {Canvas} from '@react-three/fiber';
 import Stars from '@globe/Stars';

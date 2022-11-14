@@ -1,3 +1,5 @@
+// ** 설정
+
 import {useEffect} from 'react';
 import '@individual/Settings.scss';
 import Toggle from '@messageCreate/Toggle';
@@ -9,7 +11,6 @@ import BgmModal from '@individual/BgmModal';
 import InfoModal from '@/components/individual/InfoModal';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
-import {useRecoilState} from 'recoil';
 
 function Settings() {
   const [permitNoti, setPermitNoti] = useState(true);
@@ -56,16 +57,16 @@ function Settings() {
     setWantLogout(returnFalse);
   };
 
-  // bgm 모달 켜기
+  // bgm 모달
   const openBgmModal = () => {
     setIsBgmModalOpened(returnTrue);
   };
 
-  // bgm 모달 끄기
   const closeBgmModal = () => {
     setIsBgmModalOpened(returnFalse);
   };
 
+  // 라이선스, 도움말 모달
   const openInfoModal = (type: string) => {
     return () => {
       setInfoType(type);

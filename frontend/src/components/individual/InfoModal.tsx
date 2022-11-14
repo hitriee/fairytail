@@ -1,3 +1,5 @@
+//** 라이선스, 도움말 모달
+
 import '@individual/SettingsModal.scss';
 
 interface InfoModalProps {

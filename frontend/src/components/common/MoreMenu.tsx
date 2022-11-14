@@ -1,4 +1,6 @@
-import {useState} from 'react';
+// ** 상세 페이지 더보기 메뉴
+
+import {useEffect, useState} from 'react';
 import html2canvas from 'html2canvas';
 import {useNavigate} from 'react-router-dom';
 import {saveAs} from 'file-saver';
@@ -14,6 +16,7 @@ import {
   deleteMessage,
 } from '@/apis/messageDetail/detailFunc';
 
+// props 유형
 interface MoreMenuProps {
   open: boolean;
   isMine: boolean;
@@ -23,6 +26,7 @@ interface MoreMenuProps {
   content: string;
   close: () => void;
   status: number;
+  setStatus: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function MoreMenu({
@@ -34,6 +38,7 @@ function MoreMenu({
   content,
   close,
   status,
+  setStatus,
 }: MoreMenuProps) {
   const navigate = useNavigate();
   const [info, setInfo] = useState({title: '', message: ''});
@@ -41,7 +46,6 @@ function MoreMenu({
   const [openReport, setReport] = useState(false);
   const [openAlert, setAlert] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const [newStatus, setNewStatus] = useState(status);
 
   // info 값 변경
   const changeInfo = (title: popUp['title'], message: popUp['message']) => {
@@ -51,6 +55,7 @@ function MoreMenu({
     }));
   };
 
+  // 저장
   const saveMessage = async () => {
     close();
     if (type === 'text') {
@@ -70,61 +75,68 @@ function MoreMenu({
         width: resultWidth,
         height: height,
       }).then(canvas => {
-        saveAs(canvas.toDataURL(), `fairytail_${messageId}.png`);
+        saveAs(canvas.toDataURL(), `fairytail_${type}_${messageId}.png`);
       });
     } else {
       // content는 url형식
       saveAs(content, `fairytail_${messageId}.png`);
     }
   };
-  // 신고 팝업
+
+  // 신고 팝업 띄우기
   const reportMessage = () => {
     setReport(returnTrue);
   };
 
-  // 메시지 상태(공개, 비공개) 설정
+  // 메시지 공개 여부
   const presentStatus = (statusNum: number) =>
     statusNum === 1 ? '비공개' : '공개';
+
+  // 메시지 공개 여부 변경
   const changeStatus = () => {
     changeMessageStatus(type, {
       postId: messageId,
       status: 1 - status,
     }).then((res: any) => {
       console.log(res);
-      setNewStatus(prev => 1 - prev);
+      setStatus(prev => 1 - prev);
       // 변경되었음을 알림
       changeInfo(
         '완료',
-        `작성한 메시지가\n${presentStatus(1 - newStatus)}로 변경되었습니다.`,
+        `작성한 메시지가\n${presentStatus(1 - status)}로 변경되었습니다.`,
       );
       setAlert(returnTrue);
     });
   };
+
   // 삭제 확인
   const onDelete = () => {
     changeInfo('확인', '정말 삭제하시겠습니까?');
     setConfirm(returnTrue);
     close();
   };
+
   // 취소 버튼
   const onCancel = () => {
     setConfirm(returnFalse);
     changeInfo('', '');
     close();
   };
+
   // 알림 창
   const closeAlert = () => {
     setAlert(returnFalse);
-    close();
     changeInfo('', '');
+    close();
   };
+
   // 신고 취소
   const onReportCancel = () => {
     setReport(returnFalse);
     close();
   };
 
-  // 삭제 요청 백에 보내기
+  // 백에 삭제 요청
   const delMessage = () => {
     deleteMessage(type, messageId)
       .then((res: any) => {
@@ -140,6 +152,11 @@ function MoreMenu({
         setConfirm(returnFalse);
       });
   };
+  useEffect(() => {
+    if (deleted) {
+      navigate(-1);
+    }
+  }, [deleted]);
 
   return (
     <>
@@ -148,22 +165,22 @@ function MoreMenu({
           <article className="button" onClick={saveMessage}>
             저장
           </article>
-          {isMine ? (
-            <>
-              <article className="button" onClick={onDelete}>
-                삭제
-              </article>
-              <article className="button" onClick={changeStatus}>
-                {`${presentStatus(1 - newStatus)}로 변경`}
-              </article>
-            </>
-          ) : (
-            <>
-              <article className="button" onClick={reportMessage}>
-                신고
-              </article>
-            </>
-          )}
+          {/* {isMine ? ( */}
+          <>
+            <article className="button" onClick={onDelete}>
+              삭제
+            </article>
+            <article className="button" onClick={changeStatus}>
+              {`${presentStatus(1 - status)}로 변경`}
+            </article>
+          </>
+          {/* ) : ( */}
+          <>
+            <article className="button" onClick={reportMessage}>
+              신고
+            </article>
+          </>
+          {/* )} */}
         </main>
       ) : null}
 

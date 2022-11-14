@@ -1,3 +1,5 @@
+// ** 하단 바 (지울 예정)
+
 import {useNavigate} from 'react-router';
 import bell from '@images/bell.png';
 import gear from '@images/gear.png';

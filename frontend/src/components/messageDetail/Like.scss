@@ -7,7 +7,7 @@
     position: absolute;
     // top: 5vh;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 130%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,9 +27,9 @@
 
   &-balloon {
     position: absolute;
-    top: 50%;
+    top: 65%;
     left: 50%;
     transform: translate(-50%, -40%);
-    height: 30vh;
+    height: 23vh;
   }
 }

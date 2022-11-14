@@ -1,3 +1,5 @@
+//** 좋아요, 이모지 관련
+
 import React, {useEffect, useState, useRef} from 'react';
 import {ReactComponent as HeartEmpty} from '@images/heartEmpty.svg';
 import {ReactComponent as HeartFilled} from '@images/heartFilled.svg';
@@ -6,23 +8,35 @@ import '@messageDetail/Like.scss';
 import {returnFalse, returnTrue} from '../common/commonFunc';
 import {likeMessage} from '@/apis/messageDetail/detailFunc';
 
+// props 유형
 interface LikeProps {
   count: number;
   like: boolean;
   isMine: boolean;
   emoji: number;
   type: string;
+  writerId: number;
   likeInfo: {
     postId: number;
     userId: number;
   };
 }
 
-function Like({count, like, isMine, emoji, type, likeInfo}: LikeProps) {
+function Like({
+  count,
+  like,
+  isMine,
+  emoji,
+  type,
+  writerId,
+  likeInfo,
+}: LikeProps) {
   // 현재 사용자가 좋아요 눌렀는지 여부
   const [myLike, setLike] = useState(like);
+  // 사용자에게 보여줄 좋아요 수
   const [messageCount, setMessageCount] = useState(count);
 
+  // 좋아요 수, 좋아요 여부 변경
   const changeLike = () => {
     // if (!isMine) {
     if (myLike) {
@@ -34,19 +48,30 @@ function Like({count, like, isMine, emoji, type, likeInfo}: LikeProps) {
     // }
   };
 
+  // unload시에 좋아요에 변동이 있으면 좋아요 변경 요청 보냄
   window.onbeforeunload = () => {
     if (myLike !== like) {
-      likeMessage(type, {isLike: myLike, ...likeInfo});
+      switch (type) {
+        case 'text':
+          likeMessage(type, {isLike: myLike, ...likeInfo});
+          break;
+        case 'img':
+          likeMessage(type, {...likeInfo, writerId});
+          break;
+        default:
+          return '';
+      }
     }
   };
 
+  // props 데이터 갱신 (count, like)
   useEffect(() => {
     setMessageCount(count);
   }, [count]);
 
   useEffect(() => {
     setLike(() => like);
-  }, []);
+  }, [like]);
 
   return (
     <article className="like">

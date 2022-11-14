@@ -1,3 +1,5 @@
+//** 없는 페이지, 요청이 유효하지 않을 때
+
 import React from 'react';
 import {Link} from 'react-router-dom';
 import IntroLogo from '@images/introLogo.png';
