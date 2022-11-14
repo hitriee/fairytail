@@ -1,6 +1,7 @@
 package com.fairytail.user.jpa;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 @Table(name = "user")
 public class UserEntity {
@@ -38,6 +39,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String username;
 
+    @Column(unique = true)
     private String firebaseToken;
     // 신고횟수
     private Integer block_cnt;
@@ -45,7 +47,5 @@ public class UserEntity {
     // 활성화여부
     // 0: 활성화 / 1: 비활성화 / 2: 신고로 비활성화
     private Integer status;
-
-
 
 }
