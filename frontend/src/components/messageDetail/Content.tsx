@@ -1,3 +1,5 @@
+// ** 메시지 상세 페이지 본문
+
 import Preview from '@messageCreate/Preview';
 import '@messageDetail/Content.scss';
 

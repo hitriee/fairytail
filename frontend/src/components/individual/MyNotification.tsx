@@ -1,5 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {emojiArr} from 'src/assets/emojis';
+// ** 각 알림당 설정
+
 import '@individual/MyNotifications.scss';
 import {useNavigate} from 'react-router';
 import {toMessageDetail} from '@apis/router';

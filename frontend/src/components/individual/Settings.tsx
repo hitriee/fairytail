@@ -1,3 +1,5 @@
+// ** 설정
+
 import {useEffect} from 'react';
 import '@individual/Settings.scss';
 import Toggle from '@messageCreate/Toggle';
@@ -9,10 +11,8 @@ import BgmModal from '@individual/BgmModal';
 import InfoModal from '@/components/individual/InfoModal';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
-import {useRecoilState} from 'recoil';
 
 function Settings() {
-  // 그 전에 설정했던 사항이 props로 들어옴 (좋아요 알림, 배경음악 여부, 배경음악)
   const [permitNoti, setPermitNoti] = useState(true);
   const [isBgmModalOpened, setIsBgmModalOpened] = useState(false);
   const [wantLogout, setWantLogout] = useState(false);
@@ -57,16 +57,16 @@ function Settings() {
     setWantLogout(returnFalse);
   };
 
-  // bgm 모달 켜기
+  // bgm 모달
   const openBgmModal = () => {
     setIsBgmModalOpened(returnTrue);
   };
 
-  // bgm 모달 끄기
   const closeBgmModal = () => {
     setIsBgmModalOpened(returnFalse);
   };
 
+  // 라이선스, 도움말 모달
   const openInfoModal = (type: string) => {
     return () => {
       setInfoType(type);

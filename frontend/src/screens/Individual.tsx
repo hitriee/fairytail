@@ -1,3 +1,5 @@
+// ** 설정 또는 알림
+
 import '@screens/Individual.scss';
 import Notifications from '@individual/Notifications';
 import Settings from '@individual/Settings';

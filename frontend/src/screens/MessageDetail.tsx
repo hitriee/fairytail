@@ -1,3 +1,5 @@
+// ** 메시지 상세
+
 import {useState, useRef, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router';
 import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
@@ -7,9 +9,13 @@ import Like from '@messageDetail/Like';
 import MoveToBack from '@common/MoveToBack';
 import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
-import {getMesssage} from '@apis/messageDetail/textDetail';
-import {detailResponse} from '@apis/messageDetail/detailInterface';
-import {intMessageId, convStringType} from '@common/commonFunc';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
+import {getTextMesssage, getImgMesssage} from '@/apis/messageDetail/detailFunc';
+import {
+  textDetailResponse,
+  imgDetailResponse,
+} from '@/apis/messageDetail/detailInterface';
+import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {checkType} from '@/apis';
 import {currentUser} from '@common/commonFunc';
 
@@ -24,8 +30,8 @@ function MessageDetail() {
   const type = convStringType(params.type);
 
   // 현재 사용자 정보
-  // const userId = currentUser();
-  const userId = 2;
+  const userId = currentUser();
+  // const userId = 1;
 
   // 서버 통신으로 게시글 정보 가져오기
   const dataType = {
@@ -38,22 +44,16 @@ function MessageDetail() {
     likeCnt: 0,
     isLike: false,
     date: '',
-    dayType: 9,
+    dayType: 4,
     status: 0,
+    url: '',
+    lat: 0,
+    lng: 0,
   };
-  // 현재 사용자가 작성한 게시글인지 확인
   const [data, setData] = useState(dataType);
-  const isMine = () => userId === data.userId;
-
-  useEffect(() => {
-    if (messageId === -1) {
-      navigate(notFound());
-    }
-    // else if (userId === -1) {
-    // navigate(intro());
-    // }
-    else if (type) {
-      getMesssage(type, messageId).then((res: detailResponse) => {
+  const getVaribleMessage = () => {
+    if (type === 'text') {
+      getTextMesssage(type, messageId).then((res: textDetailResponse) => {
         if (res.message === 'SUCCESS') {
           setData(prev => {
             return {...prev, ...res.data};
@@ -63,8 +63,33 @@ function MessageDetail() {
           navigate(notFound());
         }
       });
+    } else if (type === 'img') {
+      getImgMesssage(type, {postId: messageId, userId}).then(
+        (res: imgDetailResponse) => {
+          if (res.message === 'SUCCESS') {
+            setData(prev => {
+              return {...prev, ...res.data};
+            });
+          } else {
+            // 실패했을 경우 404로 이동
+            navigate(notFound());
+          }
+        },
+      );
     } else {
       navigate(notFound());
+    }
+  };
+  // 현재 사용자가 작성한 게시글인지 확인
+  const isMine = () => userId === data.userId;
+
+  useEffect(() => {
+    if (messageId === -1) {
+      navigate(notFound());
+    } else if (userId === -1) {
+      navigate(intro());
+    } else if (type) {
+      getVaribleMessage();
     }
   }, []);
 
@@ -73,6 +98,7 @@ function MessageDetail() {
     if (!isMine() && data.status) {
       navigate(notFound());
     }
+    setNewStatus(data.status);
   }, [data]);
 
   // 메뉴 표시 여부
@@ -86,6 +112,18 @@ function MessageDetail() {
 
   // 날짜 형식에 맞춰 표시
   const modifiedDate = () => data.date.split('T')[0];
+
+  // 공개 여부 변경 대비
+  const [newStatus, setNewStatus] = useState(data.status);
+  // content에 들어갈 내용
+  const detailContent = () => {
+    switch (type) {
+      case 'text':
+        return data.content;
+      default:
+        return `https://${data.url}`;
+    }
+  };
 
   return (
     <div
@@ -106,16 +144,17 @@ function MessageDetail() {
             type={type}
             content={data.content}
             close={hiddenMenu}
-            status={data.status}
+            status={newStatus}
+            setStatus={setNewStatus}
           />
         </section>
         <section className="container">
           <Content
             title={data.title}
-            content={data.content}
+            content={detailContent()}
             type={data.type}
             date={modifiedDate()}
-            status={data.status}
+            status={newStatus}
           />
           <Like
             count={data.likeCnt}
@@ -123,6 +162,7 @@ function MessageDetail() {
             isMine={isMine()}
             emoji={data.emojiNo}
             type={type}
+            writerId={data.userId}
             likeInfo={{
               postId: messageId,
               userId,
