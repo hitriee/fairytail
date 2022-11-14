@@ -5,8 +5,12 @@ import com.fairytail.audio.dto.PostDto;
 import com.fairytail.audio.dto.PostLikeDto;
 import com.fairytail.audio.dto.PostReportDto;
 import com.fairytail.audio.jpa.*;
+import com.fairytail.audio.util.BadWordsUtils;
 import com.fairytail.audio.util.MainUtil;
 import com.fairytail.audio.util.S3Util;
+import com.google.cloud.speech.v1.*;
+import com.google.cloud.speech.v1.RecognitionConfig.AudioEncoding;
+import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -15,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +38,8 @@ public class PostServiceImpl implements PostService {
 
     private final MainUtil mainUtil;
 
+    private final BadWordsUtils badWordsUtils;
+
     private String dirName = "audio";
 
     /**
@@ -45,18 +52,32 @@ public class PostServiceImpl implements PostService {
         PostEntity img = modelMapper.map(dto, PostEntity.class);
         Long maxIdx = postRepository.getMaxId() + 1;
         MultipartFile file = dto.getFile();
-        File filePath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename());
-        file.transferTo(filePath);
-        String url = s3Util.upload(filePath, dirName);
-        img.setUrl(url);
-        LocalDateTime now = LocalDateTime.now(); //현재 날짜 시간 가져오기
-        Integer hour = now.getHour(); //현재 시간만 가져오기
-        Integer dayType = mainUtil.checkTime(hour); //daytype 체크
-        img.setDayType(dayType); //dayType 세팅
-        img.setDate(now); //작성 시간 세팅
-        postRepository.save(img); //저장
-        data = modelMapper.map(img, PostDto.class);
-        filePath.delete();
+
+        /** 음성을 텍스트로 변환 */
+        String text = speechToText(file);
+
+        /** 변환된 텍스트의 금지어 포함 여부 확인 */
+        if (!badWordsUtils.filterText(text)) { // 금지어가 포함되어 있지 않을 경우 -> 데이터 저장
+            File filePath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename());
+            file.transferTo(filePath);
+
+            String url = s3Util.upload(filePath, dirName);
+            img.setUrl(url);
+
+            LocalDateTime now = LocalDateTime.now(); //현재 날짜 시간 가져오기
+            Integer hour = now.getHour(); //현재 시간만 가져오기
+            Integer dayType = mainUtil.checkTime(hour); //daytype 체크
+
+            img.setDayType(dayType); //dayType 세팅
+            img.setDate(now); //작성 시간 세팅
+            img.setContent(text); //변환된 텍스트 세팅
+
+            postRepository.save(img); //저장
+
+            data = modelMapper.map(img, PostDto.class);
+            filePath.delete();
+        }
+
         return data;
     }
 
@@ -252,6 +273,33 @@ public class PostServiceImpl implements PostService {
             data.add(d);
         }
         return data;
+    }
+
+    /** 오디오 파일을 받아 텍스트로 변환하여 그 텍스트를 반환한다. */
+    @Override
+    public String speechToText(MultipartFile file) throws IOException {
+        String responseTranscription = null;
+
+        try (SpeechClient speech = SpeechClient.create()) {
+            ByteString audioBytes = ByteString.copyFrom(file.getBytes());
+            RecognitionConfig config = RecognitionConfig.newBuilder()
+                    .setEncoding(AudioEncoding.ENCODING_UNSPECIFIED)
+                    .setLanguageCode("ko-KR")
+                    .setSampleRateHertz(16000)
+                    .build();
+            RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(audioBytes).build();
+
+            RecognizeResponse response = speech.recognize(config, audio);
+            List<SpeechRecognitionResult> results = response.getResultsList();
+
+            for (SpeechRecognitionResult result : results) {
+                SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
+                responseTranscription = alternative.getTranscript();
+                System.out.printf("Transcription: %s%n", responseTranscription);
+            }
+        }
+
+        return responseTranscription;
     }
 
     /**

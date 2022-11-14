@@ -2,6 +2,7 @@ package com.fairytail.audio.controller;
 
 import com.fairytail.audio.dto.PostDto;
 import com.fairytail.audio.service.PostService;
+import com.fairytail.audio.util.BadWordsUtils;
 import com.fairytail.audio.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,7 @@ public class PostController {
     private final String OKAY= "SUCCESS";
     private final String FAIL= "FAIL";
     private final PostService postService;
+    private final BadWordsUtils badWordsUtils;
     private static HttpStatus status = null;
 
     private static Map<String, Object> resultMap = null;
@@ -51,13 +53,23 @@ public class PostController {
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostDto dto = modelMapper.map(req, PostDto.class); //dto에 맵핑
+
+        /** 제목 텍스트 금지어 여부 확인 */
+        if (badWordsUtils.filterText(dto.getTitle())) { // 제목에 금지어가 있을 경우
+            resultMap.put("message", "등록 실패 : 제목 금지어 발견");
+            status = HttpStatus.ACCEPTED;
+
+            return new ResponseEntity<>(resultMap, status);
+        }
+
         PostDto data = postService.createPost(dto); //서비스 실행
-        if(data != null){ //데이터가 null이 아니면 성공
+        if(data != null){ // dto에 데이터가 있으면 성공 (음성에 금지어가 발견되지 않음)
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
-        } else{
-            resultMap.put("message", FAIL);
+        } else{ // 없으면 실패 (음성에 금지어가 발견됨)
+            resultMap.put("message", "등록 실패 : 음성에서 금지어 발견");
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
