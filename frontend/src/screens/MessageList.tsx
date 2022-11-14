@@ -3,7 +3,6 @@ import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
 import {main} from '@apis/router';
-import InitMessage from '@apis/notifications/foregroundMessaging';
 import {getMesssageList} from '@apis/MessageList';
 
 interface items {
@@ -44,34 +43,28 @@ function MessageList() {
   }, [messageItems]);
 
   return (
-    <>
-      <InitMessage />
-      <div className="messageList">
-        <div className="navbarContainer">
-          <MoveToBack path={main()} />
-        </div>
-        <div className="messageList-container">
-          <div className="messageList-container-info">내 이야기</div>
+    <div className="messageList">
+      <div className="navbarContainer">
+        <MoveToBack path={main()} />
+      </div>
+      <div className="messageList-container">
+        <div className="messageList-container-info">내 이야기</div>
 
-          <div className="messageList-container-list">
-            {messageItems.length === 0 && (
-              <div className="messageList-container-list-empty">
-                작성한 메세지가 없습니다.
-              </div>
-            )}
-            {messageItems.length !== 0 &&
-              messageItems.map(messageItem => {
-                return (
-                  <MyMessage
-                    key={messageItem.postId}
-                    messageItem={messageItem}
-                  />
-                );
-              })}
-          </div>
+        <div className="messageList-container-list">
+          {messageItems.length === 0 && (
+            <div className="messageList-container-list-empty">
+              작성한 메세지가 없습니다.
+            </div>
+          )}
+          {messageItems.length !== 0 &&
+            messageItems.map(messageItem => {
+              return (
+                <MyMessage key={messageItem.postId} messageItem={messageItem} />
+              );
+            })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

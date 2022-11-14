@@ -63,8 +63,6 @@ function VR() {
   // 자식에 데이터 전달
   useEffect(() => {
     if (isFinished === 3 && data.length > 0) {
-      console.log(data);
-
       const child = document.getElementsByTagName('iframe');
       child[0].contentWindow?.postMessage(data, '*');
       setIsFinished(-1);
@@ -107,7 +105,7 @@ function VR() {
         onLoad={() =>
           setTimeout(() => {
             setIsLoaded(true);
-          }, 1000)
+          }, 500)
         }
       />
     </div>

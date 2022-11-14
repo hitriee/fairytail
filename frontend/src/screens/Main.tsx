@@ -1,4 +1,3 @@
-import {lazy} from 'react';
 import InitMessage from '@apis/notifications/foregroundMessaging';
 
 import Room from '@main/Room';
@@ -9,12 +8,11 @@ import Globe from '@screens/Globe';
 import Map from '@screens/Map';
 import MessageCreate from '@screens/MessageCreate';
 import MessageDetail from '@screens/MessageDetail';
+import MessageList from '@screens/MessageList';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
 import {useLocation} from 'react-router-dom';
-
-const MessageList = lazy(() => import('@screens/MessageList'));
 
 function Main() {
   const location = useLocation();

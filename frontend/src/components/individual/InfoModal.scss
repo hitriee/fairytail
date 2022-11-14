@@ -1,0 +1,12 @@
+.info {
+  &-title {
+    color: black;
+    font-size: 3vh;
+    font-weight: 700;
+  }
+  &-content {
+    word-break: break-all;
+    color: black;
+    overflow: auto;
+  }
+}
