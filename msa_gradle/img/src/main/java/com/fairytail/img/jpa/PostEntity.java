@@ -37,4 +37,6 @@ public class PostEntity {
 
     @Column(name = "like_cnt")
     private Long likeCnt;
+    @Column(name = "day_type")
+    private Integer dayType;
 }
