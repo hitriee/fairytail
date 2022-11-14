@@ -28,9 +28,7 @@ messaging.onBackgroundMessage((payload) => {
   if (Notification.permission === "granted") {
     // 알림 설정
     const { title } = payload.data;
-    const list = localStorage.getItem("list")
-      ? JSON.parse(localStorage.getItem("list"))
-      : {};
+    const list = localStorage.getItem("list" || "[]");
     const body = JSON.parse(payload.data.body);
     const newList = JSON.stringify({ ...list, ...body });
     localStorage.setItem(newList);
