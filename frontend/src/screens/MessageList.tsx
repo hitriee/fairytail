@@ -7,7 +7,7 @@ import {loadingState} from '@apis/Recoil';
 import MoveToBack from '@/components/common/MoveToBack';
 import {main} from '@apis/router';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
-import {getMesssageList} from '@apis/MessageList';
+import {getMesssageList} from '@/apis/messageList';
 
 interface items {
   postId: number;
@@ -70,7 +70,7 @@ function MessageList() {
               messageItems.map(messageItem => {
                 return (
                   <MyMessage
-                    key={messageItem.postId}
+                    key={`${messageItem.type}+${messageItem.postId}`}
                     messageItem={messageItem}
                   />
                 );

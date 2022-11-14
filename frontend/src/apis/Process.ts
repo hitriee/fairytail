@@ -1,3 +1,5 @@
+import {API_AUTH, API_FILE, checkType} from '@apis/index';
+
 export const saveToken = () => {
   // url에 있는 토큰이름 가져오기
   const params = new URLSearchParams(window.location.search);
@@ -9,4 +11,9 @@ export const saveToken = () => {
   const userId = String(params.get('userId'));
   window.localStorage.setItem('token', token);
   window.localStorage.setItem('userId', userId);
+};
+
+export const saveFirebaseToken = async (data: object) => {
+  const res = await API_FILE.post(`/user`, data);
+  return res.data;
 };

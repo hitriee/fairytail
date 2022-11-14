@@ -1,9 +1,3 @@
-// notification
-import {
-  initToken,
-  requestPermission,
-} from '@apis/notifications/getMessagingToken';
-
 import {Suspense, useEffect, useState, useRef, lazy} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
@@ -45,8 +39,6 @@ import {bgmArr} from './assets/bgms';
 import {bgmNoState, playingState} from './apis/Recoil';
 
 function App() {
-  initToken();
-
   // 배경음악
   const [isPlaying, setIsPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
@@ -72,7 +64,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Suspense fallback={<Loading />}>
+        {/* <Suspense fallback={<Loading />}> */}
+        <Suspense fallback={null}>
           <Routes>
             <Route path={intro()} element={<Intro />} />
             <Route path={process()} element={<Process />} />
