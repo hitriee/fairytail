@@ -57,9 +57,11 @@ public class PostController {
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         PostDto dto = modelMapper.map(req, PostDto.class); //dto에 맵핑
-
+        System.out.println(dto.toString());
+        boolean filterResult = badWordsUtils.filterText(dto.getTitle());
+        System.out.println(filterResult);
         /** 제목 텍스트 금지어 여부 확인 */
-        if (badWordsUtils.filterText(dto.getTitle())) { // 제목에 금지어가 있을 경우
+        if (filterResult) { // 제목에 금지어가 있을 경우
             resultMap.put("message", "등록 실패 : 제목 금지어 발견");
             status = HttpStatus.ACCEPTED;
 
