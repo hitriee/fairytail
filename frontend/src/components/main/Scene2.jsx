@@ -1,6 +1,6 @@
-import useSpline from '@splinetool/r3f-spline';
-import {PerspectiveCamera} from '@react-three/drei';
 import {useNavigate} from 'react-router-dom';
+import useSpline from '@splinetool/r3f-spline';
+import {OrthographicCamera} from '@react-three/drei';
 
 //route
 import {
@@ -10,7 +10,6 @@ import {
   messageList,
   messageCreate,
   settings,
-  notifications,
 } from '@apis/router.ts';
 
 // recoil
@@ -19,7 +18,7 @@ import {bgmNoState, playingState} from '@/apis/recoil';
 
 export default function Scene({...props}) {
   const {nodes, materials} = useSpline(
-    'https://prod.spline.design/2uEjxOedlTWCvPSa/scene.splinecode',
+    'https://prod.spline.design/hYXWU3uqCJYiHBkd/scene.splinecode',
   );
 
   const navigate = useNavigate();
@@ -54,11 +53,6 @@ export default function Scene({...props}) {
     navigate(settings());
   };
 
-  const moveNotifications = event => {
-    event.stopPropagation();
-    navigate(notifications());
-  };
-
   const [isPlaying, setISPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
 
@@ -77,6 +71,391 @@ export default function Scene({...props}) {
   return (
     <>
       <group {...props} dispose={null}>
+        <group
+          name="지구본"
+          position={[589.2, -161.77, 166.94]}
+          rotation={[0, -0.78, 0]}
+          scale={0.61}>
+          <mesh
+            name="Sphere"
+            geometry={nodes.Sphere.geometry}
+            material={materials['Sphere Material']}
+            castShadow
+            receiveShadow
+            position={[0, 0, 0]}
+            rotation={[0, -Math.PI / 2, 0]}
+            scale={1}
+            onClick={moveGlobe}
+          />
+        </group>
+        <group
+          name="star - 지도"
+          position={[824.43, 1105.07, -36.16]}
+          rotation={[0, -1.44, 0]}
+          scale={0.15}>
+          <mesh
+            name="star"
+            geometry={nodes.star.geometry}
+            material={materials.yellow}
+            castShadow
+            receiveShadow
+            position={[-6.89, -18.18, 0]}
+            scale={3.72}
+            onClick={moveMap}
+          />
+        </group>
+        <group
+          name="star - 풍선"
+          position={[671.04, 769.84, 742.93]}
+          rotation={[0, -0.98, 0]}
+          scale={0.15}>
+          <mesh
+            name="star1"
+            geometry={nodes.star1.geometry}
+            material={materials.yellow}
+            castShadow
+            receiveShadow
+            position={[-6.89, -18.18, 0]}
+            scale={3.72}
+            onClick={moveCreate}
+          />
+        </group>
+        <group
+          name="star - 노트북"
+          position={[718.09, 345.08, -92.11]}
+          rotation={[0, -1.28, 0]}
+          scale={0.15}>
+          <mesh
+            name="star2"
+            geometry={nodes.star2.geometry}
+            material={materials.yellow}
+            castShadow
+            receiveShadow
+            position={[-6.89, -18.18, 0]}
+            scale={3.72}
+            onClick={moveSettings}
+          />
+        </group>
+        <group
+          name="star - 책"
+          position={[474.47, 290.78, -524.82]}
+          rotation={[0, -0.94, 0]}
+          scale={0.15}>
+          <mesh
+            name="star3"
+            geometry={nodes.star3.geometry}
+            material={materials.yellow}
+            castShadow
+            receiveShadow
+            position={[-6.89, -18.18, 0]}
+            scale={3.72}
+            onClick={moveMessage}
+          />
+        </group>
+        <group
+          name="star - 망원경"
+          position={[-155.54, 290.78, -379.54]}
+          rotation={[0, -0.41, 0]}
+          scale={0.15}>
+          <mesh
+            name="star4"
+            geometry={nodes.star4.geometry}
+            material={materials.yellow}
+            castShadow
+            receiveShadow
+            position={[-6.89, -18.18, 0]}
+            scale={3.72}
+            onClick={moveVR}
+          />
+        </group>
+        <group
+          name="풍선"
+          position={[719.43, 423.93, 708.08]}
+          rotation={[0.15, 0, 0]}
+          scale={1.52}>
+          <mesh
+            name="cord"
+            geometry={nodes.cord.geometry}
+            material={materials['cord Material']}
+            castShadow
+            receiveShadow
+            position={[-0.09, -106.61, 2.08]}
+            rotation={[0, 0, -0.04]}
+            scale={[0.04, 2.76, 0.04]}
+            onClick={moveCreate}
+          />
+          <mesh
+            name="baseballoon"
+            geometry={nodes.baseballoon.geometry}
+            material={materials['baseballoon Material']}
+            castShadow
+            receiveShadow
+            position={[4.15, -20.25, 2.36]}
+            scale={0.31}
+            onClick={moveCreate}
+          />
+          <mesh
+            name="balloon"
+            geometry={nodes.balloon.geometry}
+            material={materials.ballon}
+            castShadow
+            receiveShadow
+            position={[-17.4, 114.61, -6.75]}
+            rotation={[0, 0, 0.14]}
+            scale={1.28}
+            onClick={moveCreate}
+          />
+        </group>
+        <group
+          name="망원경"
+          position={[-125.81, 0, -368.74]}
+          rotation={[Math.PI, -1.49, Math.PI]}
+          scale={1}>
+          <mesh
+            name="topfrontpiece"
+            geometry={nodes.topfrontpiece.geometry}
+            material={materials.blackparts}
+            castShadow
+            receiveShadow
+            position={[-228.43, 209.77, 2.25]}
+            rotation={[0, 0, 1.15]}
+            scale={1.03}
+            onClick={moveVR}
+          />
+          <group name="baselegs" position={[63, -287.95, 0]} scale={0.75}>
+            <mesh
+              name="Cylinder 15"
+              geometry={nodes['Cylinder 15'].geometry}
+              material={materials.blackparts}
+              castShadow
+              receiveShadow
+              position={[-5.46, 0, -227.53]}
+              rotation={[0, -Math.PI / 2, 0]}
+              scale={0.29}
+              onClick={moveVR}
+            />
+            <mesh
+              name="Cylinder 13"
+              geometry={nodes['Cylinder 13'].geometry}
+              material={materials.blackparts}
+              castShadow
+              receiveShadow
+              position={[-5.46, 0, 227.53]}
+              rotation={[0, -Math.PI / 2, 0]}
+              scale={0.29}
+              onClick={moveVR}
+            />
+            <mesh
+              name="Cylinder 14"
+              geometry={nodes['Cylinder 14'].geometry}
+              material={materials.blackparts}
+              castShadow
+              receiveShadow
+              position={[204.74, 0, 2.89]}
+              rotation={[0, -Math.PI / 2, 0]}
+              scale={0.29}
+              onClick={moveVR}
+            />
+            <mesh
+              name="Cylinder 12"
+              geometry={nodes['Cylinder 12'].geometry}
+              material={materials.blackparts}
+              castShadow
+              receiveShadow
+              position={[-204.74, 0, 2.89]}
+              rotation={[0, -Math.PI / 2, 0]}
+              scale={0.29}
+              onClick={moveVR}
+            />
+          </group>
+          <mesh
+            name="backleg"
+            geometry={nodes.backleg.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[140.64, -177.73, 4.17]}
+            rotation={[0.01, 0, 0.63]}
+            scale={[0.25, 0.05, 0.25]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="frontleg"
+            geometry={nodes.frontleg.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[-21.26, -176.47, 1.36]}
+            rotation={[-0.02, -0.02, -0.59]}
+            scale={[0.25, 0.05, 0.25]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="leg_r"
+            geometry={nodes.leg_r.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[58.01, -178.34, -90.83]}
+            rotation={[0.66, 0.01, 0.01]}
+            scale={[0.25, 0.05, 0.25]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="leg_l"
+            geometry={nodes.leg_l.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[58.03, -179.58, 94]}
+            rotation={[-0.65, -0.01, 0.01]}
+            scale={[0.25, 0.05, 0.25]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="centerleg"
+            geometry={nodes.centerleg.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[56.56, -95.31, 1.97]}
+            rotation={[0, 0, 0.02]}
+            scale={[0.25, 0.05, 0.25]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="legjoint"
+            geometry={nodes.legjoint.geometry}
+            material={materials.blackparts}
+            castShadow
+            receiveShadow
+            position={[55.54, -66.97, 1.97]}
+            rotation={[0, 0, 0.02]}
+            scale={[0.75, 0.46, 0.75]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="highpieceadjustment"
+            geometry={nodes.highpieceadjustment.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[53.11, 17.72, 1.77]}
+            rotation={[0, 0, 0.02]}
+            scale={0.28}
+            onClick={moveVR}
+          />
+          <mesh
+            name="screw2"
+            geometry={nodes.screw2.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[63.53, 54.3, -40.51]}
+            rotation={[-0.35, 0.15, 1.18]}
+            scale={[0.16, 0.16, 0.04]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="screw1"
+            geometry={nodes.screw1.geometry}
+            material={materials.whiteparts}
+            castShadow
+            receiveShadow
+            position={[63.75, 54.79, 42.56]}
+            rotation={[0.36, -0.16, 1.18]}
+            scale={[0.16, 0.16, 0.04]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="sphericsupport"
+            geometry={nodes.sphericsupport.geometry}
+            material={materials.blackparts}
+            castShadow
+            receiveShadow
+            position={[53.43, 20.06, 1.7]}
+            rotation={[0, 0, 1.15]}
+            scale={0.36}
+            onClick={moveVR}
+          />
+          <mesh
+            name="supportpiece"
+            geometry={nodes.supportpiece.geometry}
+            material={materials.blackparts}
+            castShadow
+            receiveShadow
+            position={[54.21, 33.99, 1.12]}
+            rotation={[0, 0, 1.15]}
+            scale={[0.1, 0.3, 0.75]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="littleglass"
+            geometry={nodes.littleglass.geometry}
+            material={materials.glass}
+            castShadow
+            receiveShadow
+            position={[312.76, -24.87, 1.42]}
+            rotation={[0.23, -0.1, 1.17]}
+            scale={[0.14, 0.02, 0.14]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="glass"
+            geometry={nodes.glass.geometry}
+            material={materials.glass}
+            castShadow
+            receiveShadow
+            position={[-265.21, 228.83, 0.92]}
+            rotation={[0.23, -0.1, 1.17]}
+            scale={[0.79, 0.13, 0.79]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="centerpiece"
+            geometry={nodes.centerpiece.geometry}
+            material={materials.blackparts}
+            castShadow
+            receiveShadow
+            position={[166.74, 37.61, 1.47]}
+            rotation={[0, 0, 1.15]}
+            scale={[0.63, 0.37, 0.63]}
+            onClick={moveVR}
+          />
+          <mesh
+            name="peephole"
+            geometry={nodes.peephole.geometry}
+            material={materials.blackparts}
+            castShadow
+            receiveShadow
+            position={[308.29, -23.84, 1.1]}
+            rotation={[0, 0, 1.15]}
+            scale={0.26}
+            onClick={moveVR}
+          />
+          <mesh
+            name="basetelescope"
+            geometry={nodes.basetelescope.geometry}
+            material={materials.redparts}
+            castShadow
+            receiveShadow
+            position={[105.9, 64.11, 1.26]}
+            rotation={[0, 0, 1.16]}
+            scale={0.4}
+            onClick={moveVR}
+          />
+          <mesh
+            name="body"
+            geometry={nodes.body.geometry}
+            material={materials.redparts}
+            castShadow
+            receiveShadow
+            position={[-209.78, 202.81, 1.26]}
+            rotation={[0, 0, 1.16]}
+            scale={0.76}
+            onClick={moveVR}
+          />
+        </group>
         <directionalLight
           name="Directional Light"
           castShadow
@@ -102,451 +481,7 @@ export default function Scene({...props}) {
           scale={0.7}
         />
         <group name="Objects" position={[51.27, 362.21, -28.87]}>
-          <group
-            name="편지"
-            position={[504.16, -239.98, 361.68]}
-            rotation={[-Math.PI / 2, -0.01, -2.07]}
-            scale={[1.2, 1.69, 1.48]}>
-            <mesh
-              name="Rectangle 4"
-              geometry={nodes['Rectangle 4'].geometry}
-              material={materials['Mat 3']}
-              castShadow
-              receiveShadow
-              position={[-0.85, 2.56, -0.13]}
-              onClick={moveNotifications}
-            />
-            <mesh
-              name="Rectangle 3"
-              geometry={nodes['Rectangle 3'].geometry}
-              material={materials['Mat 3']}
-              castShadow
-              receiveShadow
-              position={[-0.85, 16.03, -0.13]}
-              onClick={moveNotifications}
-            />
-            <mesh
-              name="Rectangle 2"
-              geometry={nodes['Rectangle 2'].geometry}
-              material={materials['Mat 4']}
-              castShadow
-              receiveShadow
-              position={[-0.33, -4.52, -4.33]}
-              onClick={moveNotifications}
-            />
-            <mesh
-              name="Cube"
-              geometry={nodes.Cube.geometry}
-              material={materials['Mat 2']}
-              castShadow
-              receiveShadow
-              position={[0.84, -23.92, 9.25]}
-              onClick={moveNotifications}
-            />
-          </group>
-          <group
-            name="지구본"
-            position={[537.93, -523.98, 195.81]}
-            rotation={[0, -0.78, 0]}
-            scale={0.61}>
-            <mesh
-              name="Sphere"
-              geometry={nodes.Sphere.geometry}
-              material={materials['Sphere Material']}
-              castShadow
-              receiveShadow
-              position={[0, 0, 0]}
-              rotation={[0, -Math.PI / 2, 0]}
-              scale={1}
-              onClick={moveGlobe}
-            />
-          </group>
-          <group
-            name="star - 지도"
-            position={[773.15, 742.86, -7.29]}
-            rotation={[0, -1.44, 0]}
-            scale={0.15}>
-            <mesh
-              name="star"
-              geometry={nodes.star.geometry}
-              material={materials.yellow}
-              castShadow
-              receiveShadow
-              position={[-6.89, -18.18, 0]}
-              scale={3.72}
-              onClick={moveMap}
-            />
-          </group>
-          <group
-            name="star - 풍선"
-            position={[619.77, 407.63, 771.8]}
-            rotation={[0, -0.98, 0]}
-            scale={0.15}>
-            <mesh
-              name="star1"
-              geometry={nodes.star1.geometry}
-              material={materials.yellow}
-              castShadow
-              receiveShadow
-              position={[-6.89, -18.18, 0]}
-              scale={3.72}
-              onClick={moveCreate}
-            />
-          </group>
-          <group
-            name="star - 편지"
-            position={[491.83, -100.33, 349.46]}
-            rotation={[0, -0.01, 0]}
-            scale={1}>
-            <mesh
-              name="star2"
-              geometry={nodes.star2.geometry}
-              material={materials.yellow}
-              castShadow
-              receiveShadow
-              position={[0.31, -2.81, 1.02]}
-              rotation={[0, -1.28, 0]}
-              scale={[-0.16, 0.16, 0.16]}
-              onClick={moveNotifications}
-            />
-          </group>
-          <group
-            name="star - 노트북"
-            position={[666.82, -17.13, -63.24]}
-            rotation={[0, -1.28, 0]}
-            scale={[-0.16, 0.16, 0.16]}>
-            <mesh
-              name="star3"
-              geometry={nodes.star3.geometry}
-              material={materials.yellow}
-              castShadow
-              receiveShadow
-              position={[-6.89, -18.18, 0]}
-              scale={3.72}
-              onClick={moveSettings}
-            />
-          </group>
-          <group
-            name="star - 책"
-            position={[423.2, -71.43, -495.95]}
-            rotation={[0, -0.94, 0]}
-            scale={0.15}>
-            <mesh
-              name="star4"
-              geometry={nodes.star4.geometry}
-              material={materials.yellow}
-              castShadow
-              receiveShadow
-              position={[-6.89, -18.18, 0]}
-              scale={3.72}
-              onClick={moveMessage}
-            />
-          </group>
-          <group
-            name="star - 망원경"
-            position={[-206.81, -71.43, -350.67]}
-            rotation={[0, -0.41, 0]}
-            scale={0.15}>
-            <mesh
-              name="star5"
-              geometry={nodes.star5.geometry}
-              material={materials.yellow}
-              castShadow
-              receiveShadow
-              position={[-6.89, -18.18, 0]}
-              scale={3.72}
-              onClick={moveVR}
-            />
-          </group>
-          <group
-            name="풍선"
-            position={[668.16, 61.72, 736.95]}
-            rotation={[0.15, 0, 0]}
-            scale={1.52}>
-            <mesh
-              name="cord"
-              geometry={nodes.cord.geometry}
-              material={materials['cord Material']}
-              castShadow
-              receiveShadow
-              position={[-0.09, -106.61, 2.08]}
-              rotation={[0, 0, -0.04]}
-              scale={[0.04, 2.76, 0.04]}
-              onClick={moveCreate}
-            />
-            <mesh
-              name="baseballoon"
-              geometry={nodes.baseballoon.geometry}
-              material={materials['baseballoon Material']}
-              castShadow
-              receiveShadow
-              position={[4.15, -20.25, 2.36]}
-              scale={0.31}
-              onClick={moveCreate}
-            />
-            <mesh
-              name="balloon"
-              geometry={nodes.balloon.geometry}
-              material={materials.ballon}
-              castShadow
-              receiveShadow
-              position={[-17.4, 114.61, -6.75]}
-              rotation={[0, 0, 0.14]}
-              scale={1.28}
-              onClick={moveCreate}
-            />
-          </group>
-          <group
-            name="망원경"
-            position={[-177.08, -362.21, -339.87]}
-            rotation={[Math.PI, -1.49, Math.PI]}
-            scale={1}>
-            <mesh
-              name="topfrontpiece"
-              geometry={nodes.topfrontpiece.geometry}
-              material={materials.blackparts}
-              castShadow
-              receiveShadow
-              position={[-228.43, 209.77, 2.25]}
-              rotation={[0, 0, 1.15]}
-              scale={1.03}
-              onClick={moveVR}
-            />
-            <group name="baselegs" position={[63, -287.95, 0]} scale={0.75}>
-              <mesh
-                name="Cylinder 15"
-                geometry={nodes['Cylinder 15'].geometry}
-                material={materials.blackparts}
-                castShadow
-                receiveShadow
-                position={[-5.46, 0, -227.53]}
-                rotation={[0, -Math.PI / 2, 0]}
-                scale={0.29}
-                onClick={moveVR}
-              />
-              <mesh
-                name="Cylinder 13"
-                geometry={nodes['Cylinder 13'].geometry}
-                material={materials.blackparts}
-                castShadow
-                receiveShadow
-                position={[-5.46, 0, 227.53]}
-                rotation={[0, -Math.PI / 2, 0]}
-                scale={0.29}
-                onClick={moveVR}
-              />
-              <mesh
-                name="Cylinder 14"
-                geometry={nodes['Cylinder 14'].geometry}
-                material={materials.blackparts}
-                castShadow
-                receiveShadow
-                position={[204.74, 0, 2.89]}
-                rotation={[0, -Math.PI / 2, 0]}
-                scale={0.29}
-                onClick={moveVR}
-              />
-              <mesh
-                name="Cylinder 12"
-                geometry={nodes['Cylinder 12'].geometry}
-                material={materials.blackparts}
-                castShadow
-                receiveShadow
-                position={[-204.74, 0, 2.89]}
-                rotation={[0, -Math.PI / 2, 0]}
-                scale={0.29}
-                onClick={moveVR}
-              />
-            </group>
-            <mesh
-              name="backleg"
-              geometry={nodes.backleg.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[140.64, -177.73, 4.17]}
-              rotation={[0.01, 0, 0.63]}
-              scale={[0.25, 0.05, 0.25]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="frontleg"
-              geometry={nodes.frontleg.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[-21.26, -176.47, 1.36]}
-              rotation={[-0.02, -0.02, -0.59]}
-              scale={[0.25, 0.05, 0.25]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="leg_r"
-              geometry={nodes.leg_r.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[58.01, -178.34, -90.83]}
-              rotation={[0.66, 0.01, 0.01]}
-              scale={[0.25, 0.05, 0.25]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="leg_l"
-              geometry={nodes.leg_l.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[58.03, -179.58, 94]}
-              rotation={[-0.65, -0.01, 0.01]}
-              scale={[0.25, 0.05, 0.25]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="centerleg"
-              geometry={nodes.centerleg.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[56.56, -95.31, 1.97]}
-              rotation={[0, 0, 0.02]}
-              scale={[0.25, 0.05, 0.25]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="legjoint"
-              geometry={nodes.legjoint.geometry}
-              material={materials.blackparts}
-              castShadow
-              receiveShadow
-              position={[55.54, -66.97, 1.97]}
-              rotation={[0, 0, 0.02]}
-              scale={[0.75, 0.46, 0.75]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="highpieceadjustment"
-              geometry={nodes.highpieceadjustment.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[53.11, 17.72, 1.77]}
-              rotation={[0, 0, 0.02]}
-              scale={0.28}
-              onClick={moveVR}
-            />
-            <mesh
-              name="screw2"
-              geometry={nodes.screw2.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[63.53, 54.3, -40.51]}
-              rotation={[-0.35, 0.15, 1.18]}
-              scale={[0.16, 0.16, 0.04]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="screw1"
-              geometry={nodes.screw1.geometry}
-              material={materials.whiteparts}
-              castShadow
-              receiveShadow
-              position={[63.75, 54.79, 42.56]}
-              rotation={[0.36, -0.16, 1.18]}
-              scale={[0.16, 0.16, 0.04]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="sphericsupport"
-              geometry={nodes.sphericsupport.geometry}
-              material={materials.blackparts}
-              castShadow
-              receiveShadow
-              position={[53.43, 20.06, 1.7]}
-              rotation={[0, 0, 1.15]}
-              scale={0.36}
-              onClick={moveVR}
-            />
-            <mesh
-              name="supportpiece"
-              geometry={nodes.supportpiece.geometry}
-              material={materials.blackparts}
-              castShadow
-              receiveShadow
-              position={[54.21, 33.99, 1.12]}
-              rotation={[0, 0, 1.15]}
-              scale={[0.1, 0.3, 0.75]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="littleglass"
-              geometry={nodes.littleglass.geometry}
-              material={materials.glass}
-              castShadow
-              receiveShadow
-              position={[312.76, -24.87, 1.42]}
-              rotation={[0.23, -0.1, 1.17]}
-              scale={[0.14, 0.02, 0.14]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="glass"
-              geometry={nodes.glass.geometry}
-              material={materials.glass}
-              castShadow
-              receiveShadow
-              position={[-265.21, 228.83, 0.92]}
-              rotation={[0.23, -0.1, 1.17]}
-              scale={[0.79, 0.13, 0.79]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="centerpiece"
-              geometry={nodes.centerpiece.geometry}
-              material={materials.blackparts}
-              castShadow
-              receiveShadow
-              position={[166.74, 37.61, 1.47]}
-              rotation={[0, 0, 1.15]}
-              scale={[0.63, 0.37, 0.63]}
-              onClick={moveVR}
-            />
-            <mesh
-              name="peephole"
-              geometry={nodes.peephole.geometry}
-              material={materials.blackparts}
-              castShadow
-              receiveShadow
-              position={[308.29, -23.84, 1.1]}
-              rotation={[0, 0, 1.15]}
-              scale={0.26}
-              onClick={moveVR}
-            />
-            <mesh
-              name="basetelescope"
-              geometry={nodes.basetelescope.geometry}
-              material={materials.redparts}
-              castShadow
-              receiveShadow
-              position={[105.9, 64.11, 1.26]}
-              rotation={[0, 0, 1.16]}
-              scale={0.4}
-              onClick={moveVR}
-            />
-            <mesh
-              name="body"
-              geometry={nodes.body.geometry}
-              material={materials.redparts}
-              castShadow
-              receiveShadow
-              position={[-209.78, 202.81, 1.26]}
-              rotation={[0, 0, 1.16]}
-              scale={0.76}
-              onClick={moveVR}
-            />
-          </group>
-          <group name="책(장식)" position={[750.17, -126.85, -719.48]}>
+          <group name="books-1" position={[750.17, -126.85, -719.48]}>
             <mesh
               name="book-1"
               geometry={nodes['book-1'].geometry}
@@ -692,8 +627,8 @@ export default function Scene({...props}) {
                 onClick={moveSettings}
               />
               <mesh
-                name="Rectangle 41"
-                geometry={nodes['Rectangle 41'].geometry}
+                name="Rectangle 4"
+                geometry={nodes['Rectangle 4'].geometry}
                 material={materials.purple}
                 castShadow
                 receiveShadow
@@ -804,8 +739,8 @@ export default function Scene({...props}) {
               scale={[1.07, 0.86, 0.86]}
             />
             <mesh
-              name="Rectangle 42"
-              geometry={nodes['Rectangle 42'].geometry}
+              name="Rectangle 41"
+              geometry={nodes['Rectangle 41'].geometry}
               material={materials['blue-1-3']}
               castShadow
               receiveShadow
@@ -814,8 +749,8 @@ export default function Scene({...props}) {
               scale={[1.07, 0.86, 0.86]}
             />
             <mesh
-              name="Rectangle 31"
-              geometry={nodes['Rectangle 31'].geometry}
+              name="Rectangle 3"
+              geometry={nodes['Rectangle 3'].geometry}
               material={materials['blue-1-3']}
               castShadow
               receiveShadow
@@ -824,8 +759,8 @@ export default function Scene({...props}) {
               scale={[1.07, 0.86, 0.86]}
             />
             <mesh
-              name="Rectangle 21"
-              geometry={nodes['Rectangle 21'].geometry}
+              name="Rectangle 2"
+              geometry={nodes['Rectangle 2'].geometry}
               material={materials['blue-1-3']}
               castShadow
               receiveShadow
@@ -948,8 +883,8 @@ export default function Scene({...props}) {
               scale={1}
             />
             <mesh
-              name="Cube1"
-              geometry={nodes.Cube1.geometry}
+              name="Cube"
+              geometry={nodes.Cube.geometry}
               material={materials['blue-1-3']}
               castShadow
               receiveShadow
@@ -979,45 +914,129 @@ export default function Scene({...props}) {
               />
             </group>
           </group>
+          <group name="카세트 테이프" position={[654.55, -241.79, 378.15]}>
+            <group
+              name="Group 16"
+              position={[-24.94, 0, 29.89]}
+              rotation={[0.01, 0.26, 0.2]}
+              scale={1}>
+              <mesh
+                name="Ellipse 3"
+                geometry={nodes['Ellipse 3'].geometry}
+                material={materials['main1-1']}
+                castShadow
+                receiveShadow
+                position={[1.17, 7.28, 25.65]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                name="Ellipse 21"
+                geometry={nodes['Ellipse 21'].geometry}
+                material={materials['main1-1']}
+                castShadow
+                receiveShadow
+                position={[1.17, 7.28, -24.94]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                name="Rectangle 31"
+                geometry={nodes['Rectangle 31'].geometry}
+                material={materials['main-3']}
+                castShadow
+                receiveShadow
+                position={[1.51, 6.49, 0.49]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                name="Rectangle 21"
+                geometry={nodes['Rectangle 21'].geometry}
+                material={materials['Rectangle 21 Material']}
+                castShadow
+                receiveShadow
+                position={[10.61, 5.37, -0.01]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={[0.94, 1, 1]}
+              />
+              <mesh
+                name="Rectangle1"
+                geometry={nodes.Rectangle1.geometry}
+                material={materials['blue-1-3']}
+                castShadow
+                receiveShadow
+                position={[0, -5.23, 0]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={[0.94, 1, 1]}
+              />
+            </group>
+            <group
+              name="Group 13"
+              position={[32.49, -9.1, -33.06]}
+              rotation={[0, -0.17, 0]}
+              scale={1}>
+              <mesh
+                name="Ellipse 31"
+                geometry={nodes['Ellipse 31'].geometry}
+                material={materials['main1-1']}
+                castShadow
+                receiveShadow
+                position={[0.76, 7.99, 25.68]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                name="Ellipse 22"
+                geometry={nodes['Ellipse 22'].geometry}
+                material={materials['main1-1']}
+                castShadow
+                receiveShadow
+                position={[0.76, 7.99, -24.92]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                name="Rectangle 32"
+                geometry={nodes['Rectangle 32'].geometry}
+                material={materials['main-3']}
+                castShadow
+                receiveShadow
+                position={[1.23, 7.16, 0.5]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={1}
+              />
+              <mesh
+                name="Rectangle 22"
+                geometry={nodes['Rectangle 22'].geometry}
+                material={materials.purple}
+                castShadow
+                receiveShadow
+                position={[10.5, 5.78, 0]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={[0.94, 1, 1]}
+              />
+              <mesh
+                name="Rectangle2"
+                geometry={nodes.Rectangle2.geometry}
+                material={materials['main-3']}
+                castShadow
+                receiveShadow
+                position={[0, -5.23, 0]}
+                rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+                scale={[0.94, 1, 1]}
+              />
+            </group>
+          </group>
           <group
             name="헤드셋"
-            position={[481.82, -224.36, -251.16]}
+            position={[481.82, -239.32, 122.09]}
             rotation={[0.04, 0, -0.12]}
             scale={1}>
             <group
               name="Group 50"
               position={[-38.67, 10.21, 105.47]}
               rotation={[-0.08, 0.47, -1.6]}
-              scale={0.84}>
-              <mesh
-                name="Rectangle 32"
-                geometry={nodes['Rectangle 32'].geometry}
-                material={materials['Rectangle 32 Material']}
-                castShadow
-                receiveShadow
-                position={[-1.2, -0.12, 15.36]}
-              />
-              <mesh
-                name="Rectangle 22"
-                geometry={nodes['Rectangle 22'].geometry}
-                material={materials['Rectangle 22 Material']}
-                castShadow
-                receiveShadow
-                position={[-1.2, -0.12, 8.51]}
-              />
-              <mesh
-                name="Cube2"
-                geometry={nodes.Cube2.geometry}
-                material={materials['Cube2 Material']}
-                castShadow
-                receiveShadow
-                position={[0, 0, -7.36]}
-              />
-            </group>
-            <group
-              name="Group 51"
-              position={[-111.24, 1.41, -9.91]}
-              rotation={[3.07, -0.73, 1.6]}
               scale={0.84}>
               <mesh
                 name="Rectangle 33"
@@ -1036,9 +1055,39 @@ export default function Scene({...props}) {
                 position={[-1.2, -0.12, 8.51]}
               />
               <mesh
-                name="Cube3"
-                geometry={nodes.Cube3.geometry}
-                material={materials['Cube3 Material']}
+                name="Cube1"
+                geometry={nodes.Cube1.geometry}
+                material={materials['Cube1 Material']}
+                castShadow
+                receiveShadow
+                position={[0, 0, -7.36]}
+              />
+            </group>
+            <group
+              name="Group 51"
+              position={[-111.24, 1.41, -9.91]}
+              rotation={[3.07, -0.73, 1.6]}
+              scale={0.84}>
+              <mesh
+                name="Rectangle 34"
+                geometry={nodes['Rectangle 34'].geometry}
+                material={materials['Rectangle 34 Material']}
+                castShadow
+                receiveShadow
+                position={[-1.2, -0.12, 15.36]}
+              />
+              <mesh
+                name="Rectangle 24"
+                geometry={nodes['Rectangle 24'].geometry}
+                material={materials['Rectangle 24 Material']}
+                castShadow
+                receiveShadow
+                position={[-1.2, -0.12, 8.51]}
+              />
+              <mesh
+                name="Cube2"
+                geometry={nodes.Cube2.geometry}
+                material={materials['Cube2 Material']}
                 castShadow
                 receiveShadow
                 position={[0, 0, -7.36]}
@@ -1171,7 +1220,7 @@ export default function Scene({...props}) {
             />
           </group>
           <group
-            name="박스 - 책상 아래"
+            name="box 2"
             position={[547.09, -552.18, -478.18]}
             rotation={[0, -1.48, 0]}
             scale={[2.25, 2.26, 2.26]}>
@@ -1186,8 +1235,8 @@ export default function Scene({...props}) {
               scale={1}
             />
             <mesh
-              name="Cube4"
-              geometry={nodes.Cube4.geometry}
+              name="Cube3"
+              geometry={nodes.Cube3.geometry}
               material={materials['blue-1-3']}
               castShadow
               receiveShadow
@@ -1196,7 +1245,7 @@ export default function Scene({...props}) {
             />
           </group>
           <group
-            name="박스 - 기타 아래"
+            name="box"
             position={[-650.29, -551.73, -670.1]}
             rotation={[-Math.PI, -Math.PI / 9, -Math.PI]}
             scale={2.25}>
@@ -1220,9 +1269,9 @@ export default function Scene({...props}) {
               scale={0.74}
             />
             <mesh
-              name="Cube5"
-              geometry={nodes.Cube5.geometry}
-              material={materials['Cube5 Material']}
+              name="Cube4"
+              geometry={nodes.Cube4.geometry}
+              material={materials['Cube4 Material']}
               castShadow
               receiveShadow
               position={[-0.69, -0.53, -1.41]}
@@ -1281,18 +1330,18 @@ export default function Scene({...props}) {
             rotation={[0, -Math.PI / 2, 0]}
             scale={[0.79, 0.66, 0.07]}>
             <mesh
-              name="Rectangle 34"
-              geometry={nodes['Rectangle 34'].geometry}
-              material={materials['Rectangle 34 Material']}
+              name="Rectangle 35"
+              geometry={nodes['Rectangle 35'].geometry}
+              material={materials['Rectangle 35 Material']}
               castShadow
               receiveShadow
               position={[-70.57, 1.3, -1440.14]}
               onClick={moveMap}
             />
             <mesh
-              name="Rectangle 24"
-              geometry={nodes['Rectangle 24'].geometry}
-              material={materials['Rectangle 24 Material']}
+              name="Rectangle 25"
+              geometry={nodes['Rectangle 25'].geometry}
+              material={materials['Rectangle 25 Material']}
               castShadow
               receiveShadow
               position={[-73.17, 0, -1470.57]}
@@ -1363,8 +1412,8 @@ export default function Scene({...props}) {
               scale={1.42}
             />
             <mesh
-              name="Cube6"
-              geometry={nodes.Cube6.geometry}
+              name="Cube5"
+              geometry={nodes.Cube5.geometry}
               material={materials['table-ao']}
               castShadow
               receiveShadow
@@ -1373,9 +1422,9 @@ export default function Scene({...props}) {
               scale={1.42}
             />
             <mesh
-              name="Rectangle1"
-              geometry={nodes.Rectangle1.geometry}
-              material={materials['Rectangle1 Material']}
+              name="Rectangle3"
+              geometry={nodes.Rectangle3.geometry}
+              material={materials['Rectangle3 Material']}
               castShadow
               receiveShadow
               position={[0, 230.16, 109]}
@@ -1388,9 +1437,9 @@ export default function Scene({...props}) {
             position={[-256.11, -681.27, 145.27]}
             scale={0.96}>
             <mesh
-              name="Ellipse 3"
-              geometry={nodes['Ellipse 3'].geometry}
-              material={materials['Ellipse 3 Material']}
+              name="Ellipse 32"
+              geometry={nodes['Ellipse 32'].geometry}
+              material={materials['Ellipse 32 Material']}
               castShadow
               receiveShadow
               position={[0, 10.56, 0]}
@@ -1398,9 +1447,9 @@ export default function Scene({...props}) {
               scale={[1.09, 1.09, 1.66]}
             />
             <mesh
-              name="Ellipse 21"
-              geometry={nodes['Ellipse 21'].geometry}
-              material={materials['Ellipse 21 Material']}
+              name="Ellipse 23"
+              geometry={nodes['Ellipse 23'].geometry}
+              material={materials['Ellipse 23 Material']}
               castShadow
               receiveShadow
               position={[0, 7.39, 0]}
@@ -1419,14 +1468,14 @@ export default function Scene({...props}) {
             />
           </group>
         </group>
-        <PerspectiveCamera
+        <OrthographicCamera
           name="1"
           makeDefault={true}
+          zoom={0.17}
           far={100000}
-          near={5}
-          fov={45}
-          position={[-2776.27, 1133.08, 2325.68]}
-          rotation={[-0.45, -0.82, -0.34]}
+          near={-100000}
+          position={[-2202.46, 1218.68, 546.71]}
+          rotation={[-0.43, -0.87, -0.33]}
           scale={1}
         />
         <hemisphereLight

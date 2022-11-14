@@ -7,6 +7,7 @@ function GoogleLoginForm() {
     <>
       <a
         href="http://k7c209.p.ssafy.io:9096/user/oauth2/authorization/google"
+        // href="https://k7c209.p.ssafy.io/user/oauth2/authorization/google"
         role="button">
         <div className="googleLogin">
           <img src={googleLogo} alt="GoogleLogo" />
