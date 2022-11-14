@@ -9,7 +9,7 @@ spring:
             # Todo: 인증 정보 - EC2 서버에 올린 후 변경 필요
             client-id: 972146122059-e028ed3mkq6g5g40rrkm67mqjv5f9oc6.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: http://k7c209.p.ssafy.io:9096/user/login/oauth2/code/google
+            redirect-uri: https://k7c209.p.ssafy.io/user/login/oauth2/code/google
             scope: profile, email
 
   datasource:
