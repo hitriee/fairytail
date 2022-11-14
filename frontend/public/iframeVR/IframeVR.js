@@ -109,7 +109,7 @@ function init() {
       data.map(({ emojiNo, likeCnt, postId, title, type }, index) => {
         const emoji = document.createElement("a-entity");
         const size = calculateSize(likeCnt);
-        const isRead = readArr.includes(postId) ? true : false;
+        const isRead = readArr.includes(postId + type) ? true : false;
 
         emoji.setAttribute("geometry", {
           primitive: "plane",

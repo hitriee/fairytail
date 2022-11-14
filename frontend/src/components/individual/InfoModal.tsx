@@ -1,5 +1,5 @@
-import close from '@images/close.svg';
-import '@individual/SettingsModal.scss';
+import {useRef, useEffect} from 'react';
+import '@individual/InfoModal.scss';
 
 interface InfoModalProps {
   open: boolean;
@@ -17,18 +17,42 @@ function InfoModal({open, type, onConfirmed}: InfoModalProps) {
     }
   };
 
+  const infoModalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.addEventListener('mousedown', ({target}) => {
+      if (
+        infoModalRef.current &&
+        !infoModalRef.current.contains(target as Node)
+      ) {
+        onConfirmed();
+      }
+    });
+  });
+
   return (
     <>
       {open ? (
-        <main id="infoModal" className="modal bgm-modal">
-          <div className="modal-title">{isLicense ? '라이선스' : '도움말'}</div>
+        <div
+          className="bgm-background"
+          onClick={onConfirmed}
+          ref={infoModalRef}>
+          <div
+            className="container bgm-container"
+            onClick={event => {
+              event.stopPropagation();
+            }}>
+            <div className="bgm-header info-title">
+              {isLicense ? '라이선스' : '도움말'}
+            </div>
 
-          <p className="info-modal-content bgm-list">{content()}</p>
+            <div className="bgm-list info-content">{content()}</div>
 
-          <button className="btn" onClick={onConfirmed}>
-            닫기
-          </button>
-        </main>
+            <button className="btn" onClick={onConfirmed}>
+              닫기
+            </button>
+          </div>
+        </div>
       ) : null}
     </>
   );
