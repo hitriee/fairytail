@@ -2,24 +2,17 @@
 
 .notFound {
   display: flex;
-  margin-top: 25%;
-  margin-bottom: 25%;
+  margin-top: 10vh;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  height: 75%;
+  margin-bottom: 10%;
+  height: 70vh;
   &-title {
     font-size: 4vh;
     font-family: 'PyeongChangPeace-Light';
     font-weight: bold;
     word-spacing: 200%;
-  }
-  &-content {
-    margin: 1vh;
-  }
-  &-parent {
-    height: 100vh;
-    justify-content: center;
   }
   &-button {
     border: white;
