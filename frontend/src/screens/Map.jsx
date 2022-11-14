@@ -11,9 +11,7 @@ import './Map.scss';
 import ClickMarker from '@map/ClickMarker';
 import {useEffect, useState} from 'react';
 import MoveToBack from '@common/MoveToBack';
-import {useRecoilState} from 'recoil';
-import {loadingState} from '@apis/Recoil';
-import InitMessage from '@/apis/notifications/foregroundMessaging';
+import InitMessage from '@apis/notifications/foregroundMessaging';
 import {getMessageMap} from '@apis/map';
 import OpenHelp from '@common/OpenHelp';
 
@@ -32,10 +30,6 @@ function SetCenter({center}) {
 }
 
 function Map() {
-  // recoil
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  setIsLoading(true);
-
   // 클릭 시 팝업 표시, 해당 위치 좌표값
   const [isClicked, setIsClicked] = useState(false);
   const [position, setPosition] = useState({lat: -999, lng: -999});

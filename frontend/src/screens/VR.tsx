@@ -4,22 +4,15 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import Loading from '@/components/loading/Loading';
 import MoveToBack from '@/components/common/MoveToBack';
-import {useRecoilState} from 'recoil';
 
 import {getMessageVR} from '@/apis/vr';
 import {LocationParams} from '@/apis';
 import OptionBtn from '@/components/vr/OptionBtn';
-import {loadingState} from '@apis/Recoil';
-import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 import OpenHelp from '@common/OpenHelp';
 import {toMessageDetail} from '@/apis/router';
-// import {vrResponse} from '@/apis/messageCreate';
 
 function VR() {
-  // recoil
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
-
   const navigate = useNavigate();
 
   // 정렬 옵션: false-최신순, true-좋아요순
@@ -98,30 +91,26 @@ function VR() {
   }, [postId]);
 
   return (
-    <>
-      <InitMessage />
-      <div className="vr">
-        {isLoaded ? null : <Loading />}
+    <div className="vr">
+      {isLoaded ? null : <Loading />}
 
-        <MoveToBack path="-1" />
-        {data.length > 0 ? (
-          <OptionBtn option={option} setOption={setOption} setData={setData} />
-        ) : null}
-        <OpenHelp imagesIndex={2} />
+      <MoveToBack path="-1" />
+      {data.length > 0 ? (
+        <OptionBtn option={option} setOption={setOption} setData={setData} />
+      ) : null}
+      <OpenHelp imagesIndex={2} />
 
-        <Iframe
-          className="vr-frame"
-          url="../iframeVR/IframeVR.html"
-          frameBorder={0}
-          onLoad={() =>
-            setTimeout(() => {
-              setIsLoaded(true);
-              setIsLoading(true);
-            }, 1000)
-          }
-        />
-      </div>
-    </>
+      <Iframe
+        className="vr-frame"
+        url="../iframeVR/IframeVR.html"
+        frameBorder={0}
+        onLoad={() =>
+          setTimeout(() => {
+            setIsLoaded(true);
+          }, 1000)
+        }
+      />
+    </div>
   );
 }
 

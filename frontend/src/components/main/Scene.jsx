@@ -1,4 +1,3 @@
-import React, {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useSpline from '@splinetool/r3f-spline';
 import {OrthographicCamera} from '@react-three/drei';
@@ -11,7 +10,7 @@ import {
   messageList,
   messageCreate,
   settings,
-} from '../../apis/router.ts';
+} from '@apis/router.ts';
 
 // recoil
 import {useRecoilState} from 'recoil';
@@ -23,12 +22,36 @@ export default function Scene({...props}) {
   );
 
   const navigate = useNavigate();
-  const moveGlobe = () => navigate(globe());
-  const moveMap = () => navigate(map());
-  const moveVR = () => navigate(vr());
-  const moveMessage = () => navigate(messageList());
-  const moveCreate = () => navigate(messageCreate());
-  const moveSettings = () => navigate(settings());
+
+  const moveGlobe = event => {
+    event.stopPropagation();
+    navigate(globe());
+  };
+
+  const moveMap = event => {
+    event.stopPropagation();
+    navigate(map());
+  };
+
+  const moveVR = event => {
+    event.stopPropagation();
+    navigate(vr());
+  };
+
+  const moveMessage = event => {
+    event.stopPropagation();
+    navigate(messageList());
+  };
+
+  const moveCreate = event => {
+    event.stopPropagation();
+    navigate(messageCreate());
+  };
+
+  const moveSettings = event => {
+    event.stopPropagation();
+    navigate(settings());
+  };
 
   const [isPlaying, setISPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
@@ -47,7 +70,6 @@ export default function Scene({...props}) {
 
   return (
     <>
-      <color attach="background" args={['#dfd4fb']} />
       <group {...props} dispose={null}>
         <group
           name="지구본"
@@ -63,7 +85,7 @@ export default function Scene({...props}) {
             position={[0, 0, 0]}
             rotation={[0, -Math.PI / 2, 0]}
             scale={1}
-            onClick={() => moveGlobe()}
+            onClick={moveGlobe}
           />
         </group>
         <group
@@ -79,7 +101,7 @@ export default function Scene({...props}) {
             receiveShadow
             position={[-6.89, -18.18, 0]}
             scale={3.72}
-            onClick={() => moveMap()}
+            onClick={moveMap}
           />
         </group>
         <group
@@ -95,7 +117,7 @@ export default function Scene({...props}) {
             receiveShadow
             position={[-6.89, -18.18, 0]}
             scale={3.72}
-            onClick={() => moveCreate()}
+            onClick={moveCreate}
           />
         </group>
         <group
@@ -111,7 +133,7 @@ export default function Scene({...props}) {
             receiveShadow
             position={[-6.89, -18.18, 0]}
             scale={3.72}
-            onClick={() => moveSettings()}
+            onClick={moveSettings}
           />
         </group>
         <group
@@ -127,7 +149,7 @@ export default function Scene({...props}) {
             receiveShadow
             position={[-6.89, -18.18, 0]}
             scale={3.72}
-            onClick={() => moveMessage()}
+            onClick={moveMessage}
           />
         </group>
         <group
@@ -143,7 +165,7 @@ export default function Scene({...props}) {
             receiveShadow
             position={[-6.89, -18.18, 0]}
             scale={3.72}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
         </group>
         <group
@@ -160,7 +182,7 @@ export default function Scene({...props}) {
             position={[-0.09, -106.61, 2.08]}
             rotation={[0, 0, -0.04]}
             scale={[0.04, 2.76, 0.04]}
-            onClick={() => moveCreate()}
+            onClick={moveCreate}
           />
           <mesh
             name="baseballoon"
@@ -170,7 +192,7 @@ export default function Scene({...props}) {
             receiveShadow
             position={[4.15, -20.25, 2.36]}
             scale={0.31}
-            onClick={() => moveCreate()}
+            onClick={moveCreate}
           />
           <mesh
             name="balloon"
@@ -181,7 +203,7 @@ export default function Scene({...props}) {
             position={[-17.4, 114.61, -6.75]}
             rotation={[0, 0, 0.14]}
             scale={1.28}
-            onClick={() => moveCreate()}
+            onClick={moveCreate}
           />
         </group>
         <group
@@ -198,7 +220,7 @@ export default function Scene({...props}) {
             position={[-228.43, 209.77, 2.25]}
             rotation={[0, 0, 1.15]}
             scale={1.03}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <group name="baselegs" position={[63, -287.95, 0]} scale={0.75}>
             <mesh
@@ -210,7 +232,7 @@ export default function Scene({...props}) {
               position={[-5.46, 0, -227.53]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={0.29}
-              onClick={() => moveVR()}
+              onClick={moveVR}
             />
             <mesh
               name="Cylinder 13"
@@ -221,7 +243,7 @@ export default function Scene({...props}) {
               position={[-5.46, 0, 227.53]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={0.29}
-              onClick={() => moveVR()}
+              onClick={moveVR}
             />
             <mesh
               name="Cylinder 14"
@@ -232,7 +254,7 @@ export default function Scene({...props}) {
               position={[204.74, 0, 2.89]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={0.29}
-              onClick={() => moveVR()}
+              onClick={moveVR}
             />
             <mesh
               name="Cylinder 12"
@@ -243,7 +265,7 @@ export default function Scene({...props}) {
               position={[-204.74, 0, 2.89]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={0.29}
-              onClick={() => moveVR()}
+              onClick={moveVR}
             />
           </group>
           <mesh
@@ -255,7 +277,7 @@ export default function Scene({...props}) {
             position={[140.64, -177.73, 4.17]}
             rotation={[0.01, 0, 0.63]}
             scale={[0.25, 0.05, 0.25]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="frontleg"
@@ -266,7 +288,7 @@ export default function Scene({...props}) {
             position={[-21.26, -176.47, 1.36]}
             rotation={[-0.02, -0.02, -0.59]}
             scale={[0.25, 0.05, 0.25]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="leg_r"
@@ -277,7 +299,7 @@ export default function Scene({...props}) {
             position={[58.01, -178.34, -90.83]}
             rotation={[0.66, 0.01, 0.01]}
             scale={[0.25, 0.05, 0.25]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="leg_l"
@@ -288,7 +310,7 @@ export default function Scene({...props}) {
             position={[58.03, -179.58, 94]}
             rotation={[-0.65, -0.01, 0.01]}
             scale={[0.25, 0.05, 0.25]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="centerleg"
@@ -299,7 +321,7 @@ export default function Scene({...props}) {
             position={[56.56, -95.31, 1.97]}
             rotation={[0, 0, 0.02]}
             scale={[0.25, 0.05, 0.25]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="legjoint"
@@ -310,7 +332,7 @@ export default function Scene({...props}) {
             position={[55.54, -66.97, 1.97]}
             rotation={[0, 0, 0.02]}
             scale={[0.75, 0.46, 0.75]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="highpieceadjustment"
@@ -321,7 +343,7 @@ export default function Scene({...props}) {
             position={[53.11, 17.72, 1.77]}
             rotation={[0, 0, 0.02]}
             scale={0.28}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="screw2"
@@ -332,7 +354,7 @@ export default function Scene({...props}) {
             position={[63.53, 54.3, -40.51]}
             rotation={[-0.35, 0.15, 1.18]}
             scale={[0.16, 0.16, 0.04]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="screw1"
@@ -343,7 +365,7 @@ export default function Scene({...props}) {
             position={[63.75, 54.79, 42.56]}
             rotation={[0.36, -0.16, 1.18]}
             scale={[0.16, 0.16, 0.04]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="sphericsupport"
@@ -354,7 +376,7 @@ export default function Scene({...props}) {
             position={[53.43, 20.06, 1.7]}
             rotation={[0, 0, 1.15]}
             scale={0.36}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="supportpiece"
@@ -365,7 +387,7 @@ export default function Scene({...props}) {
             position={[54.21, 33.99, 1.12]}
             rotation={[0, 0, 1.15]}
             scale={[0.1, 0.3, 0.75]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="littleglass"
@@ -376,7 +398,7 @@ export default function Scene({...props}) {
             position={[312.76, -24.87, 1.42]}
             rotation={[0.23, -0.1, 1.17]}
             scale={[0.14, 0.02, 0.14]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="glass"
@@ -387,7 +409,7 @@ export default function Scene({...props}) {
             position={[-265.21, 228.83, 0.92]}
             rotation={[0.23, -0.1, 1.17]}
             scale={[0.79, 0.13, 0.79]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="centerpiece"
@@ -398,7 +420,7 @@ export default function Scene({...props}) {
             position={[166.74, 37.61, 1.47]}
             rotation={[0, 0, 1.15]}
             scale={[0.63, 0.37, 0.63]}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="peephole"
@@ -409,7 +431,7 @@ export default function Scene({...props}) {
             position={[308.29, -23.84, 1.1]}
             rotation={[0, 0, 1.15]}
             scale={0.26}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="basetelescope"
@@ -420,7 +442,7 @@ export default function Scene({...props}) {
             position={[105.9, 64.11, 1.26]}
             rotation={[0, 0, 1.16]}
             scale={0.4}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
           <mesh
             name="body"
@@ -431,7 +453,7 @@ export default function Scene({...props}) {
             position={[-209.78, 202.81, 1.26]}
             rotation={[0, 0, 1.16]}
             scale={0.76}
-            onClick={() => moveVR()}
+            onClick={moveVR}
           />
         </group>
         <directionalLight
@@ -509,7 +531,7 @@ export default function Scene({...props}) {
               position={[-21.38, -15.18, 12.29]}
               rotation={[-Math.PI / 2, 0, -1.31]}
               scale={1}
-              onClick={() => moveMessage()}
+              onClick={moveMessage}
             />
             <mesh
               name="paper"
@@ -520,7 +542,7 @@ export default function Scene({...props}) {
               position={[8.89, -14.38, 22.3]}
               rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
               scale={1}
-              onClick={() => moveMessage()}
+              onClick={moveMessage}
             />
             <group
               name="book-5"
@@ -535,7 +557,7 @@ export default function Scene({...props}) {
                 receiveShadow
                 position={[-22.7, 32.77, 1.79]}
                 rotation={[0, -Math.PI / 2, 0]}
-                onClick={() => moveMessage()}
+                onClick={moveMessage}
               />
               <mesh
                 name="Cube 4"
@@ -546,7 +568,7 @@ export default function Scene({...props}) {
                 position={[-0.32, 0.86, 0.42]}
                 rotation={[0, 0, 0]}
                 scale={[0.99, 1.01, 1]}
-                onClick={() => moveMessage()}
+                onClick={moveMessage}
               />
               <mesh
                 name="Cube 41"
@@ -557,7 +579,7 @@ export default function Scene({...props}) {
                 position={[-16.68, -0.27, 9.75]}
                 rotation={[0, 0, 0]}
                 scale={[0.99, 1.01, 1]}
-                onClick={() => moveMessage()}
+                onClick={moveMessage}
               />
             </group>
           </group>
@@ -580,7 +602,7 @@ export default function Scene({...props}) {
                 position={[46.52, 45.59, -58.48]}
                 rotation={[-0.22, -0.66, -1.71]}
                 scale={0.84}
-                onClick={() => moveSettings()}
+                onClick={moveSettings}
               />
               <mesh
                 name="Rectangle 61"
@@ -591,7 +613,7 @@ export default function Scene({...props}) {
                 position={[51.33, 45.04, -64.53]}
                 rotation={[-0.22, -0.66, -1.71]}
                 scale={0.84}
-                onClick={() => moveSettings()}
+                onClick={moveSettings}
               />
               <mesh
                 name="Rectangle 5"
@@ -602,7 +624,7 @@ export default function Scene({...props}) {
                 position={[4.42, -66.89, -6.25]}
                 rotation={[-1.22, -0.27, -2.19]}
                 scale={0.84}
-                onClick={() => moveSettings()}
+                onClick={moveSettings}
               />
               <mesh
                 name="Rectangle 4"
@@ -613,7 +635,7 @@ export default function Scene({...props}) {
                 position={[-9.76, -82.25, 11.61]}
                 rotation={[-1.22, -0.27, -2.19]}
                 scale={0.84}
-                onClick={() => moveSettings()}
+                onClick={moveSettings}
               />
               <mesh
                 name="Cube 7"
@@ -624,7 +646,7 @@ export default function Scene({...props}) {
                 position={[-58.97, -92.67, -139.61]}
                 rotation={[-Math.PI, 0.67, -Math.PI / 2]}
                 scale={1}
-                onClick={() => moveSettings()}
+                onClick={moveSettings}
               />
             </group>
             <mesh
@@ -636,7 +658,7 @@ export default function Scene({...props}) {
               position={[-139.98, -2.99, -81.82]}
               rotation={[-Math.PI, 0, -Math.PI / 2]}
               scale={1}
-              onClick={() => moveSettings()}
+              onClick={moveSettings}
             />
             <mesh
               name="Cube 6"
@@ -647,7 +669,7 @@ export default function Scene({...props}) {
               position={[139.49, -2.99, -83.54]}
               rotation={[-Math.PI, 0, -Math.PI / 2]}
               scale={1}
-              onClick={() => moveSettings()}
+              onClick={moveSettings}
             />
             <mesh
               name="Cube 72"
@@ -658,7 +680,7 @@ export default function Scene({...props}) {
               position={[-139.92, -46.3, -3.35]}
               rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
               scale={1}
-              onClick={() => moveSettings()}
+              onClick={moveSettings}
             />
             <mesh
               name="Cube 5"
@@ -669,7 +691,7 @@ export default function Scene({...props}) {
               position={[139.55, -46.3, -5.06]}
               rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
               scale={1}
-              onClick={() => moveSettings()}
+              onClick={moveSettings}
             />
             <mesh
               name="Cube 42"
@@ -680,7 +702,7 @@ export default function Scene({...props}) {
               position={[0, 2.04, 0]}
               rotation={[-1.13, 0, -Math.PI / 2]}
               scale={1}
-              onClick={() => moveSettings()}
+              onClick={moveSettings}
             />
           </group>
           <group
@@ -1314,7 +1336,7 @@ export default function Scene({...props}) {
               castShadow
               receiveShadow
               position={[-70.57, 1.3, -1440.14]}
-              onClick={() => moveMap()}
+              onClick={moveMap}
             />
             <mesh
               name="Rectangle 25"
@@ -1323,7 +1345,7 @@ export default function Scene({...props}) {
               castShadow
               receiveShadow
               position={[-73.17, 0, -1470.57]}
-              onClick={() => moveMap()}
+              onClick={moveMap}
             />
           </group>
           <group name="창문" position={[-43.23, 255.29, -833.02]}>
