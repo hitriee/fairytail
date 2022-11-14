@@ -1,12 +1,8 @@
-import {atom, RecoilRoot, useRecoilState} from 'recoil';
-import {recoilPersist} from 'recoil-persist';
-
-const {persistAtom} = recoilPersist();
+import {atom} from 'recoil';
 
 export const playingState = atom({
   key: 'playingState',
   default: false,
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const bgmNoState = atom({
