@@ -49,12 +49,12 @@ public class PostServiceImpl implements PostService {
         file.transferTo(filePath);
         String url = s3Util.upload(filePath, dirName);
         img.setUrl(url);
-        LocalDateTime now = LocalDateTime.now();
-        Integer hour =  now.getHour();
-        Integer dayType = mainUtil.checkTime(hour);
-        img.setDayType(dayType);
-        img.setDate(now);
-        postRepository.save(img);
+        LocalDateTime now = LocalDateTime.now(); //현재 날짜 시간 가져오기
+        Integer hour = now.getHour(); //현재 시간만 가져오기
+        Integer dayType = mainUtil.checkTime(hour); //daytype 체크
+        img.setDayType(dayType); //dayType 세팅
+        img.setDate(now); //작성 시간 세팅
+        postRepository.save(img); //저장
         data = modelMapper.map(img, PostDto.class);
         filePath.delete();
         return data;
