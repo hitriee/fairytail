@@ -15,6 +15,8 @@ import Individual from '@screens/Individual';
 import {useLocation} from 'react-router-dom';
 
 function Main() {
+  // 로그인 여부 확인
+
   const location = useLocation();
   const pathname = location.pathname;
 
