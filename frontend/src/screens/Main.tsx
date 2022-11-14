@@ -12,11 +12,25 @@ import MessageList from '@screens/MessageList';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {currentUser} from '@common/commonFunc';
+
+import Alert from '@common/Alert';
+import {useState} from 'react';
+import {useRecoilState} from 'recoil';
+import {loadingState} from '@/apis/recoil';
+import Loading from '@/components/loading/Loading';
 
 function Main() {
   // 로그인 여부 확인
+  const userInfo = currentUser();
+  const [isAlertOpened, setIsAlertOpend] = useState(
+    userInfo === -1 ? true : false,
+  );
 
+  const navigate = useNavigate();
+
+  // url에 따라 다른 컴포넌트 렌더링
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -42,21 +56,45 @@ function Main() {
     }
   };
 
-  return (
-    <div className="screen main">
-      <InitMessage />
-      <div
-        className="screen"
-        style={{display: pathname.startsWith('/main') ? 'block' : 'none'}}>
-        <OpenHelp imagesIndex={0} />
-        <BgmBtn />
-        <Room />
-      </div>
+  // main 최초 렌더링 확인
+  const [isLoaded, setIsLoaded] = useRecoilState(loadingState);
 
-      <div style={{display: pathname.startsWith('/main') ? 'none' : 'block'}}>
-        {component()}
-      </div>
-    </div>
+  if (!isLoaded) {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 3000);
+  }
+
+  return (
+    <>
+      {isAlertOpened ? null : (
+        <div className="screen main">
+          {isLoaded ? null : <Loading />}
+
+          <InitMessage />
+          <div
+            className="screen"
+            style={{display: pathname.startsWith('/main') ? 'block' : 'none'}}>
+            <OpenHelp imagesIndex={0} />
+            <BgmBtn />
+            <Room />
+          </div>
+
+          <div
+            style={{display: pathname.startsWith('/main') ? 'none' : 'block'}}>
+            {component()}
+          </div>
+        </div>
+      )}
+      <Alert
+        info={{title: '알림', message: '로그인이 필요합니다.'}}
+        open={isAlertOpened}
+        onConfirmed={() => {
+          setIsAlertOpend(false);
+          navigate('/');
+        }}
+      />
+    </>
   );
 }
 

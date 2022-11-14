@@ -4,12 +4,14 @@ import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
 import Message from '@messageCreate/Message';
 import Spinner from '@messageCreate/Spinner';
-import MoveToBack from '@/components/common/MoveToBack';
-import EmojiGrid from '@/components/messageCreate/EmojiGrid';
-import Toggle from '@/components/messageCreate/Toggle';
-import Compress from '@/components/messageCreate/Compress';
-import {postText, postFile} from '@/apis/messageCreate';
-import {toMessageDetail} from '@/apis/router';
+import MoveToBack from '@common/MoveToBack';
+import EmojiGrid from '@messageCreate/EmojiGrid';
+import Toggle from '@messageCreate/Toggle';
+import Compress from '@messageCreate/Compress';
+import {postText, postFile} from '@apis/messageCreate';
+import {toMessageDetail} from '@apis/router';
+
+import Alert from '@common/Alert';
 
 // 내용 타입 정의
 export type Content = {
@@ -19,6 +21,10 @@ export type Content = {
 };
 
 function MessageCreate() {
+  // alert state
+  const [isAlertOpened, setIsAlertOpend] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({title: '', message: ''});
+
   // 모바일 가상 키보드 고려한 스크롤 이동
   const screenRef = useRef<HTMLDivElement>(null);
 
@@ -59,15 +65,38 @@ function MessageCreate() {
   });
   const [isShare, setIsShare] = useState(false);
 
+  // 스피너
+  const successSpinner = (postId: number, type: number) => {
+    setSpinnerMessage('성공적으로 등록되었습니다.');
+    setTimeout(() => {
+      setSpinner(false);
+      navigate(toMessageDetail(postId, type));
+    }, 1500);
+  };
+
+  const failSpinner = (message: string) => {
+    setspinnerStop(2);
+    setSpinnerMessage(message);
+
+    setTimeout(() => {
+      setSpinner(false);
+      setspinnerStop(0);
+      setSpinnerMessage('잠시만 기다려주세요...');
+    }, 1500);
+  };
+
   // 풍선 등록
   function handleSubmit() {
     // 제목이나 내용이 비어있는지 확인
     if (title.trim() === '') {
-      alert('제목을 입력해주세요.');
+      setAlertInfo({title: '알림', message: '제목을 입력해주세요.'});
+      setIsAlertOpend(true);
     } else if (content.type === 0 && content.fileURL.trim() === '') {
-      alert('내용을 입력해주세요.');
+      setAlertInfo({title: '알림', message: '내용을 입력해주세요.'});
+      setIsAlertOpend(true);
     } else if (content.type !== 0 && content.file === null) {
-      alert('파일이 첨부되지 않았습니다.');
+      setAlertInfo({title: '알림', message: '파일이 첨부되지 않았습니다.'});
+      setIsAlertOpend(true);
     } else {
       if (navigator.geolocation) {
         setSpinner(true);
@@ -100,18 +129,15 @@ function MessageCreate() {
               type: content.type,
             };
             postText(content.type, data)
-              .then(({data}) => {
-                setspinnerStop(1);
-                setSpinnerMessage('성공적으로 등록되었습니다.');
-                setTimeout(() => {
-                  setSpinner(false);
-                  navigate(toMessageDetail(data.postId, data.type));
-                }, 1500);
+              .then(({data, message}) => {
+                if (message === 'FAIL') {
+                  failSpinner('부적절한 내용이 포함되어 있습니다.');
+                } else {
+                  successSpinner(data.postId, data.type);
+                }
               })
               .catch(err => {
-                setspinnerStop(2);
-                setSpinnerMessage('풍선 등록에 실패했습니다.');
-                setTimeout(() => setSpinner(false), 1500);
+                failSpinner('풍선 등록에 실패했습니다.');
               });
           } else {
             // image, video, audio인 경우
@@ -126,23 +152,15 @@ function MessageCreate() {
             data.append('type', content.type.toString());
 
             postFile(content.type, data)
-              .then(({data}) => {
-                setspinnerStop(1);
-                setSpinnerMessage('성공적으로 등록되었습니다.');
-                setTimeout(() => {
-                  setSpinner(false);
-                  navigate(toMessageDetail(data.postId, data.type));
-                }, 1000);
+              .then(({data, message}) => {
+                if (message === 'FAIL') {
+                  failSpinner('부적절한 내용이 포함되어 있습니다.');
+                } else {
+                  successSpinner(data.postId, data.type);
+                }
               })
               .catch(err => {
-                setspinnerStop(2);
-                setSpinnerMessage('풍선 등록에 실패했습니다.');
-
-                setTimeout(() => {
-                  setSpinner(false);
-                  setspinnerStop(0);
-                  setSpinnerMessage('잠시만 기다려주세요...');
-                }, 1000);
+                failSpinner('풍선 등록에 실패했습니다.');
               });
           }
         });
@@ -193,6 +211,12 @@ function MessageCreate() {
           )}
         </div>
       </div>
+
+      <Alert
+        info={alertInfo}
+        open={isAlertOpened}
+        onConfirmed={() => setIsAlertOpend(false)}
+      />
     </div>
   );
 }
