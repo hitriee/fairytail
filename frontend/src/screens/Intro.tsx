@@ -18,9 +18,9 @@ function Intro() {
           <img className="introLogo" src={IntroLogo} alt="loading" />
           <h1 className="intro-title">동하책</h1>
           <p className="intro-subTitle">같은 하늘 아래, 우리들의 이야기</p>
-          <Link to="main">
+          {/* <Link to="main">
             <button>go Main</button>
-          </Link>
+          </Link> */}
           <GoogleLoginForm />
         </div>
       </div>

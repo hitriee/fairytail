@@ -6,6 +6,7 @@ import '@/App.scss';
 import {
   main,
   intro,
+  process,
   globe,
   map,
   vr,
@@ -17,6 +18,7 @@ import {
   notifications,
 } from '@apis/router';
 import Intro from '@screens/Intro';
+import Process from '@screens/Process';
 import Main from '@screens/Main';
 
 // notification
@@ -54,6 +56,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={intro()} element={<Intro />} />
+          <Route path={process()} element={<Process />} />
           <Route path={main()} element={<Main />} />
           <Route path={globe()} element={<Main />} />
           <Route path={map()} element={<Main />} />
