@@ -12,7 +12,7 @@ export const initToken = async () => {
   })
     .then(currentToken => {
       if (currentToken) {
-        console.log(currentToken);
+        // console.log(currentToken);
         return currentToken;
       } else {
         console.log(
