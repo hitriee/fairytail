@@ -6,6 +6,7 @@ import Stars from '@globe/Stars';
 import {Earth} from '@globe/Sphere';
 import {main} from '@apis/router';
 import MoveToBack from '@common/MoveToBack';
+import {returnFalse} from '@common/commonFunc';
 import '@screens/Globe.scss';
 
 function Globe() {
@@ -40,7 +41,6 @@ function Globe() {
 
   return (
     <>
-      <InitMessage />
       {isFirstVisit ? (
         <div
           className="white first-visit center"

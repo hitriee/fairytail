@@ -1,7 +1,7 @@
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
 import {useRecoilState} from 'recoil';
-import {playingState} from '@apis/Recoil';
+import {playingState} from '@/apis/recoil';
 import '@common/Common.scss';
 
 function BgmBtn() {

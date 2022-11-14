@@ -3,7 +3,7 @@
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
 import {useRecoilState} from 'recoil';
-import {playingState, bgmNoState} from '@/apis/Recoil';
+import {playingState, bgmNoState} from '@/apis/recoil';
 import '@individual/BgmModal.scss';
 
 interface BgmListItemProps {
