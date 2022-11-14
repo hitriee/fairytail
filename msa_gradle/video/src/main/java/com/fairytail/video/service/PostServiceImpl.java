@@ -306,13 +306,7 @@ public class PostServiceImpl implements PostService {
 
                 // For full list of available annotations, see http://g.co/cloud/vision/docs
                 SafeSearchAnnotation annotation = res.getSafeSearchAnnotation();
-                responseAnnotation = String.format("adult: %s %d%nmedical: %s %d%nspoofed: %s %d%nviolence: %s %d%nracy: %s %d%n",
-                        annotation.getAdult(), annotation.getAdultValue(),
-                        annotation.getMedical(), annotation.getMedicalValue(),
-                        annotation.getSpoof(), annotation.getSpoofValue(),
-                        annotation.getViolence(), annotation.getViolenceValue(),
-                        annotation.getRacy(), annotation.getRacyValue());
-                System.out.println(responseAnnotation);
+
                 // 이미지의 각 유해성 판단 값 점수로 저장
                 int violence = annotation.getViolenceValue();
                 int racy = annotation.getRacyValue();
