@@ -7,11 +7,14 @@ import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import MoveToBack from '@common/MoveToBack';
-import {notFound, intro} from '@apis/router';
+import {notFound, intro, BASE_URL} from '@apis/router';
 import '@screens/MessageDetail.scss';
 import InitMessage from '@/apis/notifications/foregroundMessaging';
-import {getMesssage} from '@/apis/messageDetail/textDetail';
-import {detailResponse} from '@/apis/messageDetail/detailInterface';
+import {getTextMesssage, getImgMesssage} from '@/apis/messageDetail/detailFunc';
+import {
+  textDetailResponse,
+  imgDetailResponse,
+} from '@/apis/messageDetail/detailInterface';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {checkType} from '@/apis';
 import {currentUser} from '@/components/common/commonFunc';
@@ -32,7 +35,7 @@ function MessageDetail() {
 
   // 현재 사용자 정보
   // const userId = currentUser();
-  const userId = 2;
+  const userId = 1;
 
   // 서버 통신으로 게시글 정보 가져오기
   const dataType = {
@@ -47,9 +50,41 @@ function MessageDetail() {
     date: '',
     dayType: 9,
     status: 0,
+    url: '',
+    lat: 0,
+    lng: 0,
+  };
+  const [data, setData] = useState(dataType);
+  const getVaribleMessage = () => {
+    if (type === 'text') {
+      getTextMesssage(type, messageId).then((res: textDetailResponse) => {
+        if (res.message === 'SUCCESS') {
+          setData(prev => {
+            return {...prev, ...res.data};
+          });
+        } else {
+          // 실패했을 경우 404로 이동
+          navigate(notFound());
+        }
+      });
+    } else if (type === 'img') {
+      getImgMesssage(type, {postId: messageId, userId}).then(
+        (res: imgDetailResponse) => {
+          if (res.message === 'SUCCESS') {
+            setData(prev => {
+              return {...prev, ...res.data};
+            });
+          } else {
+            // 실패했을 경우 404로 이동
+            navigate(notFound());
+          }
+        },
+      );
+    } else {
+      navigate(notFound());
+    }
   };
   // 현재 사용자가 작성한 게시글인지 확인
-  const [data, setData] = useState(dataType);
   const isMine = () => userId === data.userId;
 
   useEffect(() => {
@@ -60,18 +95,7 @@ function MessageDetail() {
     // navigate(intro());
     // }
     else if (type) {
-      getMesssage(type, messageId).then((res: detailResponse) => {
-        if (res.message === 'SUCCESS') {
-          setData(prev => {
-            return {...prev, ...res.data};
-          });
-        } else {
-          // 실패했을 경우 404로 이동
-          navigate(notFound());
-        }
-      });
-    } else {
-      navigate(notFound());
+      getVaribleMessage();
     }
   }, []);
 
@@ -80,6 +104,7 @@ function MessageDetail() {
     if (!isMine() && data.status) {
       navigate(notFound());
     }
+    setNewStatus(data.status);
   }, [data]);
 
   // 메뉴 표시 여부
@@ -93,6 +118,17 @@ function MessageDetail() {
 
   // 날짜 형식에 맞춰 표시
   const modifiedDate = () => data.date.split('T')[0];
+
+  const [newStatus, setNewStatus] = useState(data.status);
+  // content에 들어갈 내용
+  const detailContent = () => {
+    switch (type) {
+      case 'text':
+        return data.content;
+      default:
+        return `https://${data.url}`;
+    }
+  };
 
   return (
     <>
@@ -121,7 +157,7 @@ function MessageDetail() {
           <section className="container">
             <Content
               title={data.title}
-              content={data.content}
+              content={detailContent()}
               type={data.type}
               date={modifiedDate()}
               status={data.status}

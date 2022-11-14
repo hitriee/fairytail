@@ -1,49 +1,62 @@
-import {useState} from 'react';
-import EachBgm from '@individual/EachBgm';
-import {bgmList} from '@common/commonFunc';
-import '@individual/SettingsModal.scss';
+import {useRecoilState} from 'recoil';
+import {playingState, bgmNoState} from '@/apis/Recoil';
+import '@individual/BgmModal.scss';
+import Toggle from '@messageCreate/Toggle';
+import {bgmArr} from '@bgms/index';
+import BgmListItem from '@individual/BgmListItem';
+import {useRef, useEffect} from 'react';
 
 interface BgmModalProps {
-  bgm: string;
   open: boolean;
-  setBgm: React.Dispatch<any>;
-  onCancel: () => void;
+  onCancel(): void;
 }
 
-function BgmModal({bgm, open, setBgm, onCancel}: BgmModalProps) {
-  const [newBgm, setNewBgm] = useState(bgm);
+function BgmModal({open, onCancel}: BgmModalProps) {
+  const bgmModalRef = useRef<HTMLDivElement>(null);
 
-  const changeBgm = (index: number) => {
-    return () => setNewBgm(bgmList[index].title);
-  };
+  useEffect(() => {
+    window.addEventListener('mousedown', ({target}) => {
+      if (
+        bgmModalRef.current &&
+        !bgmModalRef.current.contains(target as Node)
+      ) {
+        onCancel();
+      }
+    });
+  });
 
-  const applyBgm = () => {
-    setBgm(newBgm);
-    onCancel();
-  };
+  const [isPlaying, setIsPlaying] = useRecoilState(playingState);
+  const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
+
+  const handlePlay = () => setIsPlaying(prev => !prev);
 
   return (
     <>
       {open ? (
-        <main id="bgm-modal" className="modal bgm-modal">
-          <div className="modal-title">배경음악 목록</div>
+        <div className="bgm-background" onClick={onCancel} ref={bgmModalRef}>
+          <div
+            className="container bgm-container"
+            onClick={event => {
+              event.stopPropagation();
+            }}>
+            <div className="bgm-header">
+              <span onClick={handlePlay}>배경음악 재생</span>
+              <Toggle label="" onClick={handlePlay} value={isPlaying} />
+            </div>
 
-          <div className="bgm-list">
-            {bgmList.map((element, index) => (
-              <EachBgm
-                key={`${element.title}-${index}`}
-                element={element}
-                index={index}
-                newBgm={newBgm}
-                changeBgm={changeBgm}
-              />
-            ))}
+            <div
+              className="bgm-list"
+              style={{overflow: isPlaying ? 'auto' : 'hidden'}}>
+              {bgmArr.map(({title}, index) => {
+                return <BgmListItem title={title} index={index} key={index} />;
+              })}
+            </div>
+
+            <button className="btn" onClick={onCancel}>
+              닫기
+            </button>
           </div>
-
-          <button className="btn" onClick={applyBgm}>
-            닫기
-          </button>
-        </main>
+        </div>
       ) : null}
     </>
   );

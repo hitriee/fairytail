@@ -15,7 +15,7 @@ import {
 
 // recoil
 import {useRecoilState} from 'recoil';
-import {playingState} from '@apis/Recoil';
+import {bgmNoState, playingState} from '@/apis/Recoil';
 
 export default function Scene({...props}) {
   const {nodes, materials} = useSpline(
@@ -30,12 +30,20 @@ export default function Scene({...props}) {
   const moveCreate = () => navigate(messageCreate());
   const moveSettings = () => navigate(settings());
 
-  const [onPlay, setOnPlay] = useRecoilState(playingState);
-  const changeOnPlay = () => {
-    setOnPlay(prev => !prev);
-    console.log(onPlay);
+  const [isPlaying, setISPlaying] = useRecoilState(playingState);
+  const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
+
+  const changeBgmNo = event => {
+    event.stopPropagation();
+    setISPlaying(true);
+    setBgmNo(prev => {
+      if (prev >= 9) {
+        return 0;
+      } else {
+        return prev + 1;
+      }
+    });
   };
-  // useEffect(changeOnPlay, []);
 
   return (
     <>
@@ -1262,7 +1270,7 @@ export default function Scene({...props}) {
               position={[-1.37, -178.62, 13.24]}
               rotation={[0, 0.04, 0.16]}
               scale={[1, 1, 0.86]}
-              onClick={changeOnPlay}
+              onClick={changeBgmNo}
             />
             <mesh
               name="Shape 4"
@@ -1271,7 +1279,7 @@ export default function Scene({...props}) {
               castShadow
               receiveShadow
               position={[-27.71, -266.66, 4.48]}
-              onClick={changeOnPlay}
+              onClick={changeBgmNo}
             />
             <mesh
               name="Shape 3"
@@ -1282,7 +1290,7 @@ export default function Scene({...props}) {
               position={[-25.83, -106.07, 3.57]}
               rotation={[0, 0, 0]}
               scale={1}
-              onClick={changeOnPlay}
+              onClick={changeBgmNo}
             />
             <mesh
               name="Shape 2"
@@ -1291,7 +1299,7 @@ export default function Scene({...props}) {
               castShadow
               receiveShadow
               position={[-82, -132.42, -38.9]}
-              onClick={() => setOnPlay(!onPlay)}
+              onClick={changeBgmNo}
             />
           </group>
           <group

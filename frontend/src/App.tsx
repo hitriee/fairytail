@@ -6,7 +6,6 @@ import {
 
 import {Suspense, useEffect, useState, useRef, lazy} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import bgm from '@bgms/silver_waves.mp3';
 
 import '@/App.scss';
 
@@ -25,7 +24,7 @@ import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
 
 //recoil
-import {useRecoilValue} from 'recoil';
+import {useRecoilState} from 'recoil';
 // router
 import {
   main,
@@ -40,27 +39,34 @@ import {
   settings,
   notifications,
 } from '@apis/router';
-import {playingState} from '@apis/Recoil';
+import {bgmArr} from './assets/bgms';
+import {bgmNoState, playingState} from './apis/Recoil';
 
 function App() {
   initToken();
-  const recoilPlay = useRecoilValue(playingState);
-  const [onPlay, setOnPlay] = useState(false);
+
+  // 배경음악
+  const [isPlaying, setIsPlaying] = useRecoilState(playingState);
+  const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
+
   const audioRef = useRef<HTMLAudioElement>(null!);
-  const handlePlay = () => {
-    if (onPlay) {
-      audioRef.current && audioRef.current.play();
-    } else {
-      audioRef.current && audioRef.current.pause();
-    }
-    setOnPlay(() => recoilPlay);
-  };
+
   useEffect(() => {
     audioRef.current.volume = 0.4;
   }, []);
-  useEffect(handlePlay, [recoilPlay]);
+
+  useEffect(() => {
+    if (isPlaying && audioRef.current) {
+      audioRef.current.muted = false;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    } else {
+      audioRef.current && audioRef.current.pause();
+    }
+  }, [isPlaying, bgmNo]);
 
   const MessageList = lazy(() => import('@screens/MessageList'));
+
   return (
     <>
       <BrowserRouter>
@@ -80,7 +86,7 @@ function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
-      <audio autoPlay={onPlay} loop={onPlay} src={bgm} ref={audioRef} />
+      <audio muted={true} src={bgmArr[bgmNo].src} loop={true} ref={audioRef} />
     </>
   );
 }

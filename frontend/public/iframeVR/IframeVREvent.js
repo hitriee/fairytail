@@ -1,9 +1,11 @@
 AFRAME.registerComponent("handle-click", {
   schema: {
-    post_id: { type: "number", default: 0 },
+    postId: { type: "number", default: 0 },
+    type: { type: "number", default: 0 },
   },
   init: function () {
-    const post_id = this.data.post_id;
+    const postId = this.data.postId;
+    const type = this.data.type;
 
     this.el.addEventListener("click", function () {
       // 읽은 글 목록 가져오기
@@ -14,21 +16,19 @@ AFRAME.registerComponent("handle-click", {
       }
 
       // 게시글 번호가 읽은 글 목록에 없다면 추가
-      if (!readArr?.includes(post_id)) {
-        readArr?.push(post_id);
+      if (!readArr?.includes(postId)) {
+        readArr?.push(postId);
         localStorage.setItem("read", JSON.stringify(readArr));
       }
 
       // 부모로 게시글 번호 전송
-      window.parent.postMessage(post_id, "*");
+      window.parent.postMessage({ postId: postId, type: type }, "*");
     });
   },
 });
 
 AFRAME.registerComponent("handle-move", {
   init: function () {
-    const post_id = this.data.post_id;
-
     this.el.addEventListener("click", function () {
       window.parent.postMessage("create", "*");
     });

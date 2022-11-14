@@ -10,6 +10,11 @@ export const playingState = atom({
   default: false,
 });
 
+export const bgmNoState = atom({
+  key: 'bgmNoState',
+  default: 0,
+});
+
 export const likeModalState = atom({
   key: 'likeModalState',
   default: false,

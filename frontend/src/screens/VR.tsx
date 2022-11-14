@@ -70,7 +70,8 @@ function VR() {
   // 자식에 데이터 전달
   useEffect(() => {
     if (isFinished === 3 && data.length > 0) {
-      console.log(option);
+      console.log(data);
+
       const child = document.getElementsByTagName('iframe');
       child[0].contentWindow?.postMessage(data, '*');
       setIsFinished(-1);
@@ -85,10 +86,9 @@ function VR() {
       navigate(-1);
     } else if (ev.data === 'create') {
       navigate('/message/create');
-    } else if (typeof ev.data === 'number') {
-      setPostId(ev.data);
-      // console.log(ev.data);
-      // navigate(toMessageDetail(ev.data));
+    } else if (ev.data.postId !== undefined && ev.data.postId !== null) {
+      setPostId(ev.data.postId);
+      navigate(toMessageDetail(ev.data.postId, ev.data.type));
     }
   };
 

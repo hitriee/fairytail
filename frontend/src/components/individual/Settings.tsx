@@ -4,34 +4,25 @@ import Toggle from '@messageCreate/Toggle';
 import {returnTrue, returnFalse} from '@common/commonFunc';
 import {useState} from 'react';
 import {popUp} from '@common/commonFunc';
-import {bgmList} from '@common/commonFunc';
+import {bgmArr} from '@/assets/bgms';
 import BgmModal from '@individual/BgmModal';
 import InfoModal from '@/components/individual/InfoModal';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import {useRecoilState} from 'recoil';
-import {playingState} from '@apis/Recoil';
 
 function Settings() {
   const [permitNoti, setPermitNoti] = useState(true);
-  const [selectBgm, setSelectBgm] = useState(false);
+  const [isBgmModalOpened, setIsBgmModalOpened] = useState(false);
   const [wantLogout, setWantLogout] = useState(false);
   const [wantInfo, setWantInfo] = useState(false);
   const [infoType, setInfoType] = useState('');
   const [info, setInfo] = useState<popUp>({title: '', message: ''});
   const [openAlert, setOpenAlert] = useState(false);
-  const [bgm, setBgm] = useState(localStorage.getItem('bgm') || '');
-  const [onPlay, setOnPlay] = useRecoilState(playingState);
 
   // 좋아요 알림 변경
   const changePermitNoti = () => {
     setPermitNoti(!permitNoti);
-  };
-
-  //  배경 음악 재생 여부 변경
-  const changeOnPlay = () => {
-    setOnPlay(prev => !prev);
-    console.log(onPlay);
   };
 
   // 팝업에 뜰 내용 변경
@@ -41,51 +32,38 @@ function Settings() {
       message,
     }));
   };
+
   // 로그아웃
   const logoutConfirm = () => {
     changeInfo('확인', '정말 로그아웃하시겠어요?');
     setWantLogout(returnTrue);
   };
+
   // 로그아웃 요청 백에 보내기
   const logout = () => {
-    // axios.post('url')
-    // .then(())
     changeInfo('완료', '정상적으로 로그아웃되었습니다.');
     cancelLogout();
     setOpenAlert(returnTrue);
   };
+
   // alert 창 닫기
   const closeAlert = () => {
     setOpenAlert(returnFalse);
   };
+
   // 모달 창에서 로그아웃 취소
   const cancelLogout = () => {
     setWantLogout(returnFalse);
   };
-  // bgm 설정 여부 변경
-  const changeBgmPermit = () => {
-    changeOnPlay();
-    if (bgm) {
-      // setPermitBgm(returnFalse);
-      setBgm('');
-    } else {
-      // setPermitBgm(returnTrue);
-      setBgm(bgmList[0].title);
-    }
+
+  // bgm 모달 켜기
+  const openBgmModal = () => {
+    setIsBgmModalOpened(returnTrue);
   };
 
-  // bgm 팝업 띄우기
-  const bgmPopUp = () => {
-    changeOnPlay();
-    setSelectBgm(returnTrue);
-  };
-  // bgm 팝업 끄기
-  const closeBgmPopUp = () => {
-    setSelectBgm(returnFalse);
-    // 팝업에서 아무 것도 선택하지 않고 끌 경우
-    if (!bgm) {
-      changeOnPlay();
-    }
+  // bgm 모달 끄기
+  const closeBgmModal = () => {
+    setIsBgmModalOpened(returnFalse);
   };
 
   const openInfoModal = (type: string) => {
@@ -110,15 +88,9 @@ function Settings() {
           <Toggle label="" onClick={setPermitNoti} value={permitNoti} />
         </div>
         <div className="settings-between">
-          <div className="settings-each">
-            <div onClick={changeOnPlay}>배경음악</div>
-            <div
-              className={onPlay ? 'bgm-title' : 'bgm-hidden'}
-              onClick={bgmPopUp}>
-              {bgm || 'bgm'}
-            </div>
+          <div className="settings-each" onClick={openBgmModal}>
+            배경음악 설정
           </div>
-          <Toggle label="" onClick={changeOnPlay} value={onPlay} />
         </div>
       </section>
 
@@ -159,12 +131,7 @@ function Settings() {
       <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
 
       {/* 배경음악 목록 */}
-      <BgmModal
-        bgm={bgm}
-        setBgm={setBgm}
-        open={selectBgm}
-        onCancel={closeBgmPopUp}
-      />
+      <BgmModal open={isBgmModalOpened} onCancel={closeBgmModal} />
 
       {/* 라이선스, 도움말 모달 */}
       <InfoModal open={wantInfo} onConfirmed={closeInfoModal} type={infoType} />

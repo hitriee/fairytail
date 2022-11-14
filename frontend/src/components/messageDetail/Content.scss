@@ -4,8 +4,9 @@
     height: 56vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    overflow-y: visible;
   }
 
   &-title {
@@ -16,8 +17,8 @@
   }
 
   &-content {
-    width: 90%;
-    height: 45vh;
+    width: 87%;
+    height: 34vh;
     padding: 1.5vh;
     display: flex;
     flex-direction: column;

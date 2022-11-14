@@ -3,7 +3,7 @@ import Alert from '@common/Alert';
 import {returnTrue, returnFalse, currentUser} from '@common/commonFunc';
 import '@common/Common.scss';
 import SelectBox from '../common/SelectBox';
-import {reportMessage} from '@/apis/messageDetail/textDetail';
+import {reportMessage} from '@/apis/messageDetail/detailFunc';
 import {checkType} from '@/apis';
 import {useNavigate} from 'react-router-dom';
 import {intro} from '@/apis/router';
@@ -34,7 +34,8 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
 
   const [reported, setReported] = useState(false);
   const navigate = useNavigate();
-  const userId = currentUser();
+  // const userId = currentUser();
+  const userId = 2;
   useEffect(() => {
     // if (userId === -1) {
     //   navigate(intro());
@@ -48,6 +49,7 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
       postId: messageId,
       userId: userId,
     };
+    console.log(data);
     reportMessage(type, data).then(() => {
       setReported(returnTrue);
       setReportContent(() => '');

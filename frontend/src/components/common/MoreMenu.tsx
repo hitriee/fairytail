@@ -12,7 +12,7 @@ import {checkType} from '@/apis';
 import {
   changeMessageStatus,
   deleteMessage,
-} from '@/apis/messageDetail/textDetail';
+} from '@/apis/messageDetail/detailFunc';
 
 interface MoreMenuProps {
   open: boolean;
@@ -148,22 +148,22 @@ function MoreMenu({
           <article className="button" onClick={saveMessage}>
             저장
           </article>
-          {/* {isMine ? ( */}
-          <>
-            <article className="button" onClick={onDelete}>
-              삭제
-            </article>
-            <article className="button" onClick={changeStatus}>
-              {`${presentStatus(1 - newStatus)}로 변경`}
-            </article>
-          </>
-          {/* ) : ( */}
-          <>
-            <article className="button" onClick={reportMessage}>
-              신고
-            </article>
-          </>
-          {/* )} */}
+          {isMine ? (
+            <>
+              <article className="button" onClick={onDelete}>
+                삭제
+              </article>
+              <article className="button" onClick={changeStatus}>
+                {`${presentStatus(1 - newStatus)}로 변경`}
+              </article>
+            </>
+          ) : (
+            <>
+              <article className="button" onClick={reportMessage}>
+                신고
+              </article>
+            </>
+          )}
         </main>
       ) : null}
 

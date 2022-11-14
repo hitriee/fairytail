@@ -18,11 +18,11 @@ function Individual() {
 
   const location = useLocation();
   const isSettings = location.pathname === settings();
+
   return (
     <main className="screen messageList">
+      <MoveToBack path={main()} />
       <section className="container individual-container">
-        <MoveToBack path={main()} />
-
         <div className="individual-header">
           <img
             src={isSettings ? gear : bell}
