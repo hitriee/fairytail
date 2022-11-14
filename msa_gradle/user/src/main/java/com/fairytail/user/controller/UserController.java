@@ -12,10 +12,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -54,10 +51,23 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("Succeeded to save firebase token.");
     }
 
-    @ApiOperation(value = "Token 체크", notes = "토큰 체크를 위한 API 입니다.")
-    @GetMapping
-    public String tokenCheck(HttpServletRequest request) {
-        return "토큰왔다";
+    @ApiOperation(value ="비활성화된 유저인지 판단", notes = "비활성화된 유저인지를 확인합니다.")
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> isAvailableUserId(@PathVariable(value = "userId") Long userId) {
+        Boolean result = userService.findUser(userId);
+        if(result) return ResponseEntity.status(HttpStatus.OK).body("Available user");
+        else return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Unavailable user");
+    }
+
+
+    @ApiOperation(value = "신고 횟수 증가", notes = "UserId의 신고 횟수를 증가시킵니다.")
+    @PostMapping("/alert/{userId}")
+    public ResponseEntity<?> updateAlert(@PathVariable(value = "userId") Long userId) {
+        Integer result = userService.updateAlert(userId);
+        if(result != 1) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to to update block cnt.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Succeeded to update block cnt.");
     }
 
 }

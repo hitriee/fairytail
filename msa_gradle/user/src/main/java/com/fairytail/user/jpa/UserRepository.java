@@ -18,4 +18,14 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query(value = "UPDATE user SET firebase_token = :firebase WHERE userid = :userId", nativeQuery = true)
     int updateFirebaseToken(String firebase, Long userId);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user SET block_cnt = block_cnt + 1 WHERE userid = :userId", nativeQuery = true)
+    int updateBlockCnt(Long userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user SET status = 1 WHERE userid = :userId", nativeQuery = true)
+    int updateUserStatus(Long userId);
+
 }
