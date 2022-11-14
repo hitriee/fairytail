@@ -6,13 +6,10 @@ import Message from '@messageCreate/Message';
 import Spinner from '@messageCreate/Spinner';
 import MoveToBack from '@/components/common/MoveToBack';
 import EmojiGrid from '@/components/messageCreate/EmojiGrid';
-import {useRecoilState} from 'recoil';
-import {loadingState} from '@apis/Recoil';
 import Toggle from '@/components/messageCreate/Toggle';
 import Compress from '@/components/messageCreate/Compress';
 import {postText, postFile} from '@/apis/messageCreate';
 import {toMessageDetail} from '@/apis/router';
-import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 // 내용 타입 정의
 export type Content = {
@@ -22,9 +19,6 @@ export type Content = {
 };
 
 function MessageCreate() {
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  setIsLoading(true);
-
   // 모바일 가상 키보드 고려한 스크롤 이동
   const screenRef = useRef<HTMLDivElement>(null);
 
@@ -157,52 +151,49 @@ function MessageCreate() {
   }
 
   return (
-    <>
-      <InitMessage />
-      <div className="screen messageList" ref={screenRef}>
-        {spinner ? (
-          <Spinner message={spinnerMessage} spinnerStop={spinnerStop} />
-        ) : null}
+    <div className="screen" ref={screenRef}>
+      {spinner ? (
+        <Spinner message={spinnerMessage} spinnerStop={spinnerStop} />
+      ) : null}
 
-        <MoveToBack path="/main" />
-        <div className="container">
-          <Carousel
-            emojiNo={emojiNo}
-            onSlideChange={setEmojiNo}
-            setIsLongClicked={setIsLongClicked}
-          />
+      <MoveToBack path="/main" />
+      <div className="container">
+        <Carousel
+          emojiNo={emojiNo}
+          onSlideChange={setEmojiNo}
+          setIsLongClicked={setIsLongClicked}
+        />
 
-          <div className="message-create-card">
-            {isLongClicked ? (
-              <EmojiGrid
-                setEmojiNo={setEmojiNo}
-                setIsLongClicked={setIsLongClicked}
+        <div className="message-create-card">
+          {isLongClicked ? (
+            <EmojiGrid
+              setEmojiNo={setEmojiNo}
+              setIsLongClicked={setIsLongClicked}
+            />
+          ) : (
+            <>
+              <input
+                className="message-create-title"
+                placeholder="제목을 입력해주세요."
+                maxLength={10}
+                onChange={e => {
+                  setTitle(e.target.value);
+                }}
               />
-            ) : (
-              <>
-                <input
-                  className="message-create-title"
-                  placeholder="제목을 입력해주세요."
-                  maxLength={10}
-                  onChange={e => {
-                    setTitle(e.target.value);
-                  }}
-                />
 
-                <Message content={content} setContent={setContent} />
+              <Message content={content} setContent={setContent} />
 
-                <div className="message-create-save-container">
-                  <Toggle label="비공개" onClick={setIsShare} value={isShare} />
-                  <button className="btn" onClick={handleSubmit}>
-                    등록
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+              <div className="message-create-save-container">
+                <Toggle label="비공개" onClick={setIsShare} value={isShare} />
+                <button className="btn" onClick={handleSubmit}>
+                  등록
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

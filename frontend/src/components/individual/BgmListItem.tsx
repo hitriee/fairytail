@@ -2,11 +2,9 @@
 
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
-import '@individual/SettingsModal.scss';
 import {useRecoilState} from 'recoil';
 import {playingState, bgmNoState} from '@/apis/Recoil';
-import {useEffect, useRef, useState} from 'react';
-import {bgmArr} from '@bgms/index';
+import '@individual/BgmModal.scss';
 
 interface BgmListItemProps {
   title: string;

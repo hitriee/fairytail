@@ -15,9 +15,11 @@ AFRAME.registerComponent("handle-click", {
         readArr = JSON.parse(readJson);
       }
 
+      const post = postId + type;
+
       // 게시글 번호가 읽은 글 목록에 없다면 추가
-      if (!readArr?.includes(postId)) {
-        readArr?.push(postId);
+      if (!readArr?.includes(post)) {
+        readArr?.push(post);
         localStorage.setItem("read", JSON.stringify(readArr));
       }
 

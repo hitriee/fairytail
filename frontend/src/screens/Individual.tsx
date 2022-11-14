@@ -8,21 +8,14 @@ import {useLocation} from 'react-router';
 import MoveToBack from '@common/MoveToBack';
 import bell from '@images/bell.png';
 import gear from '@images/gear.png';
-import {useRecoilState} from 'recoil';
-import {loadingState} from '@apis/Recoil';
 import {main, settings} from '@apis/router';
-import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 function Individual() {
-  // recoil
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  setIsLoading(true);
-
   const location = useLocation();
   const isSettings = location.pathname === settings();
 
   return (
-    <main className="screen messageList">
+    <main className="screen">
       <MoveToBack path={main()} />
       <section className="container individual-container">
         <div className="individual-header">
@@ -31,7 +24,6 @@ function Individual() {
             className="individual-header-icon"
           />
         </div>
-        <InitMessage />
 
         <div className="individual-body">
           {isSettings ? <Settings /> : <Notifications />}

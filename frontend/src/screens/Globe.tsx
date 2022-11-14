@@ -7,16 +7,8 @@ import {Earth} from '@globe/Sphere';
 import {main} from '@apis/router';
 import MoveToBack from '@common/MoveToBack';
 import '@screens/Globe.scss';
-import {useRecoilState} from 'recoil';
-import {loadingState} from '@apis/Recoil';
-import InitMessage from '@/apis/notifications/foregroundMessaging';
-import {returnFalse} from '@/components/common/commonFunc';
 
 function Globe() {
-  // recoil
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  setIsLoading(true);
-
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
   const [isFirstVisit, setFirstVisit] = useState(true);

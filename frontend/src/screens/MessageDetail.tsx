@@ -1,9 +1,7 @@
 // ** 메시지 상세
 
 import {useState, useRef, useEffect} from 'react';
-import {useNavigate, useParams, useLocation} from 'react-router';
-import {useRecoilState} from 'recoil';
-import {loadingState} from '@apis/Recoil';
+import {useNavigate, useParams} from 'react-router';
 import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
 import MoreMenu from '@common/MoreMenu';
 import Content from '@messageDetail/Content';
@@ -19,13 +17,9 @@ import {
 } from '@/apis/messageDetail/detailInterface';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {checkType} from '@/apis';
-import {currentUser} from '@/components/common/commonFunc';
+import {currentUser} from '@common/commonFunc';
 
 function MessageDetail() {
-  // recoil
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  setIsLoading(true);
-
   // 풍선 저장 관련
   const messageDetailRef = useRef(null!);
 
@@ -132,54 +126,51 @@ function MessageDetail() {
   };
 
   return (
-    <>
-      <InitMessage />
-      <div
-        className={`screen background${data.dayType}`}
-        ref={messageDetailRef}
-        onClick={hiddenMenu}>
-        <main id="container">
-          <section data-html2canvas-ignore="true" className="ignore">
-            <MoveToBack path="" />
-            <div id="message-detail-nav-more" onClick={showMenu}>
-              <EllipsisVertical width="32" height="32" fill="white" />
-            </div>
-            <MoreMenu
-              open={more}
-              isMine={isMine()}
-              detail={messageDetailRef}
-              messageId={messageId}
-              type={type}
-              content={data.content}
-              close={hiddenMenu}
-              status={newStatus}
-              setStatus={setNewStatus}
-            />
-          </section>
-          <section className="container">
-            <Content
-              title={data.title}
-              content={detailContent()}
-              type={data.type}
-              date={modifiedDate()}
-              status={newStatus}
-            />
-            <Like
-              count={data.likeCnt}
-              like={data.isLike}
-              isMine={isMine()}
-              emoji={data.emojiNo}
-              type={type}
-              writerId={data.userId}
-              likeInfo={{
-                postId: messageId,
-                userId,
-              }}
-            />
-          </section>
-        </main>
-      </div>
-    </>
+    <div
+      className={`screen background${data.dayType}`}
+      ref={messageDetailRef}
+      onClick={hiddenMenu}>
+      <main id="container">
+        <section data-html2canvas-ignore="true" className="ignore">
+          <MoveToBack path="" />
+          <div id="message-detail-nav-more" onClick={showMenu}>
+            <EllipsisVertical width="32" height="32" fill="white" />
+          </div>
+          <MoreMenu
+            open={more}
+            isMine={isMine()}
+            detail={messageDetailRef}
+            messageId={messageId}
+            type={type}
+            content={data.content}
+            close={hiddenMenu}
+            status={newStatus}
+            setStatus={setNewStatus}
+          />
+        </section>
+        <section className="container">
+          <Content
+            title={data.title}
+            content={detailContent()}
+            type={data.type}
+            date={modifiedDate()}
+            status={newStatus}
+          />
+          <Like
+            count={data.likeCnt}
+            like={data.isLike}
+            isMine={isMine()}
+            emoji={data.emojiNo}
+            type={type}
+            writerId={data.userId}
+            likeInfo={{
+              postId: messageId,
+              userId,
+            }}
+          />
+        </section>
+      </main>
+    </div>
   );
 }
 

@@ -11,9 +11,6 @@ import './Map.scss';
 import ClickMarker from '@map/ClickMarker';
 import {useEffect, useState} from 'react';
 import MoveToBack from '@common/MoveToBack';
-import {useRecoilState} from 'recoil';
-import {loadingState} from '@apis/Recoil';
-import InitMessage from '@/apis/notifications/foregroundMessaging';
 import {getMessageMap} from '@apis/map';
 import OpenHelp from '@common/OpenHelp';
 
@@ -32,10 +29,6 @@ function SetCenter({center}) {
 }
 
 function Map() {
-  // recoil
-  const [isLoading, setIsLoading] = useRecoilState(loadingState);
-  setIsLoading(true);
-
   // 클릭 시 팝업 표시, 해당 위치 좌표값
   const [isClicked, setIsClicked] = useState(false);
   const [position, setPosition] = useState({lat: -999, lng: -999});
@@ -75,52 +68,49 @@ function Map() {
   };
 
   return (
-    <>
-      <InitMessage />
-      <div className="screen">
-        <MoveToBack path="/main" color="black" />
-        <OpenHelp imagesIndex={1} color="black" />
-        <div
-          className="map-random"
-          onClick={() => {
-            setPosition({
-              lat: generateRandomFloat(-90, 90),
-              lng: generateRandomFloat(-180, 180),
-            });
-            setIsClicked(true);
-          }}>
-          {'랜덤 위치로\n이동하기'}
-        </div>
-
-        <MapContainer
-          attributionControl={false}
-          zoomControl={false}
-          maxBounds={[
-            [-90, -180],
-            [90, 180],
-          ]}
-          minZoom={2}
-          maxZoom={14}
-          style={{width: '100%', height: '100%'}}
-          center={center}
-          zoom={14}
-          scrollWheelZoom={true}>
-          <TileLayer
-            noWrap={true}
-            url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-          />
-          {data ? Markers() : null}
-          <ClickMarker
-            isClicked={isClicked}
-            setIsClicked={setIsClicked}
-            position={position}
-            setPosition={setPosition}
-          />
-          <ZoomControl position="bottomright" />
-          <SetCenter center={center} />
-        </MapContainer>
+    <div className="screen">
+      <MoveToBack path="/main" color="black" />
+      <OpenHelp imagesIndex={1} color="black" />
+      <div
+        className="map-random"
+        onClick={() => {
+          setPosition({
+            lat: generateRandomFloat(-90, 90),
+            lng: generateRandomFloat(-180, 180),
+          });
+          setIsClicked(true);
+        }}>
+        {'랜덤 위치로\n이동하기'}
       </div>
-    </>
+
+      <MapContainer
+        attributionControl={false}
+        zoomControl={false}
+        maxBounds={[
+          [-90, -180],
+          [90, 180],
+        ]}
+        minZoom={2}
+        maxZoom={14}
+        style={{width: '100%', height: '100%'}}
+        center={center}
+        zoom={14}
+        scrollWheelZoom={true}>
+        <TileLayer
+          noWrap={true}
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        />
+        {data ? Markers() : null}
+        <ClickMarker
+          isClicked={isClicked}
+          setIsClicked={setIsClicked}
+          position={position}
+          setPosition={setPosition}
+        />
+        <ZoomControl position="bottomright" />
+        <SetCenter center={center} />
+      </MapContainer>
+    </div>
   );
 }
 

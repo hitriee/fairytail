@@ -27,7 +27,7 @@ function BgmModal({open, onCancel}: BgmModalProps) {
     });
   });
 
-  const [isPlaying, setIsPlaying] = useRecoilState(playingState);
+  const [isPlaying, setIsPlaying] = useRecoilState<boolean>(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
 
   const handlePlay = () => setIsPlaying(prev => !prev);
