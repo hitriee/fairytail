@@ -110,7 +110,9 @@ public class PostController {
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else{
+            resultMap.put("data", data);
             resultMap.put("message", FAIL);
+            status = HttpStatus.OK;
         }
         return new ResponseEntity<>(resultMap, status);
     }
