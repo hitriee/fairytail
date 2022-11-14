@@ -18,7 +18,7 @@ function Main() {
 
   if (isLoading) {
     setIsLoading(false);
-    window.location.reload();
+    // window.location.reload();
     // setOpenConfirm(returnTrue)
   }
 
