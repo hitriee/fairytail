@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
 
-    @Query(value = "UPDATE USER SET firebase_token = :firebase WHERE userid = :userId", nativeQuery = true)
+    @Query(value = "UPDATE user SET firebase_token = :firebase WHERE userid = :userId", nativeQuery = true)
     Integer updateFirebaseToken(String firebase, Long userId);
 
 }
