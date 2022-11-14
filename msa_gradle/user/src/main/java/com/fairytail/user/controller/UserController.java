@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 @Api(value = "user")
 @RestController
@@ -56,7 +55,7 @@ public class UserController {
     public ResponseEntity<?> isAvailableUserId(@PathVariable(value = "userId") Long userId) {
         Boolean result = userService.findUser(userId);
         if(result) return ResponseEntity.status(HttpStatus.OK).body("Available user");
-        else return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Unavailable user");
+        else return ResponseEntity.status(HttpStatus.OK).body("Unavailable user");
     }
 
 
