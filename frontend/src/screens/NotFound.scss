@@ -1,7 +1,38 @@
+@import '@styles/_colors.scss';
+
 .notFound {
   display: flex;
+  margin-top: 25%;
+  margin-bottom: 25%;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  justify-content: space-evenly;
+  height: 75%;
+  &-title {
+    font-size: 4vh;
+    font-family: 'PyeongChangPeace-Light';
+    font-weight: bold;
+    word-spacing: 200%;
+  }
+  &-content {
+    margin: 1vh;
+  }
+  &-parent {
+    height: 100vh;
+    justify-content: center;
+  }
+  &-button {
+    border: white;
+    color: $PURPLE-2;
+    padding: 1vh 2vh;
+    font-size: 2.5vh;
+    border-radius: 20px;
+    font-weight: bold;
+    // width: 100%;
+    cursor: pointer;
+    &:hover {
+      color: white;
+      background-color: $PURPLE-2;
+    }
+  }
 }
