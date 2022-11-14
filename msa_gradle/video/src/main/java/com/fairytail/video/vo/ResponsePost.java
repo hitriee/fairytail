@@ -21,4 +21,5 @@ public class ResponsePost {
     private Integer status;
     private Integer likeCnt;
     private Boolean isLike;
+    private Integer dayType;
 }
