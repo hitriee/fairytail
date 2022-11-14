@@ -58,6 +58,7 @@ public class PostServiceImpl implements PostService {
         Integer hour =  now.getHour(); //시간만 받고
         Integer dayType = mainUtil.checkTime(hour); //dayType 계산
         img.setDayType(dayType); //dayType값 넣어주기
+        img.setDate(now);
         postRepository.save(img); //저장
         data = modelMapper.map(img, PostDto.class); //dto로 매핑
         filePath.delete();//사용한 파일 삭제
