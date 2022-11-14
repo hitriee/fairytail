@@ -37,6 +37,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation "org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE"
 	implementation group: 'net.bramp.ffmpeg', name: 'ffmpeg', version: '0.7.0'
+	implementation group: 'com.google.cloud', name: 'google-cloud-vision', version: '3.3.0'
+	implementation group: 'org.json', name: 'json', version: '20220924'
+
 }
 
 dependencyManagement {

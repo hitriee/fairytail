@@ -8,14 +8,20 @@ import com.fairytail.video.jpa.*;
 import com.fairytail.video.util.FfmpegUtil;
 import com.fairytail.video.util.MainUtil;
 import com.fairytail.video.util.S3Util;
+import com.google.cloud.vision.v1.*;
+import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,25 +50,59 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto createPost(PostDto dto) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-        PostDto data = null;
-        PostEntity img = modelMapper.map(dto, PostEntity.class); //dto -> entity 매핑
+//        PostDto data = null;
+//        PostEntity img = modelMapper.map(dto, PostEntity.class); //dto -> entity 매핑
         Long maxIdx = postRepository.getMaxId() + 1; //s3 저장 파일에 idx를 넣어주기 위해 조회
         MultipartFile file = dto.getFile(); //dto file 가져와서
         File filePath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename());//저장경로/ + 저장할 컨텐츠 타입 이름(dirName) + 인덱스 값 + 파일 이름
         file.transferTo(filePath);
         ffmpegUtil.makeThumbNail(filePath.getPath());
-        File ThumbPath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename() + "_thumbnail.png"); //저장경로/ + 저장할 컨텐츠 타입 이름(dirName) + 인덱스 값 + 파일 이름 + 썸네일.png
-        String url = s3Util.upload(filePath, dirName);//s3 업로드(File, 폴더이름 String)
-        img.setUrl(url); //s3 저장 후 받은 url로 entity 세팅
-        LocalDateTime now = LocalDateTime.now(); //현재 시간 받아서
-        Integer hour =  now.getHour(); //시간만 받고
-        Integer dayType = mainUtil.checkTime(hour); //dayType 계산
-        img.setDayType(dayType); //dayType값 넣어주기
-        img.setDate(now);
-        postRepository.save(img); //저장
-        data = modelMapper.map(img, PostDto.class); //dto로 매핑
-        filePath.delete();//사용한 파일 삭제
-        return data;
+        File thumbPath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename() + "_thumbnail.png"); //저장경로/ + 저장할 컨텐츠 타입 이름(dirName) + 인덱스 값 + 파일 이름 + 썸네일.png
+
+        InputStream inputStream = new FileInputStream(thumbPath);
+
+        String responseAnnotation = null;
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(inputStream);
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.SAFE_SEARCH_DETECTION).build();
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                }
+
+                // For full list of available annotations, see http://g.co/cloud/vision/docs
+                SafeSearchAnnotation annotation = res.getSafeSearchAnnotation();
+                responseAnnotation = String.format("adult: %s %d%nmedical: %s %d%nspoofed: %s %d%nviolence: %s %d%nracy: %s %d%n",
+                        annotation.getAdult(), annotation.getAdultValue(),
+                        annotation.getMedical(), annotation.getMedicalValue(),
+                        annotation.getSpoof(), annotation.getSpoofValue(),
+                        annotation.getViolence(), annotation.getViolenceValue(),
+                        annotation.getRacy(), annotation.getRacyValue());
+                System.out.println(responseAnnotation);
+            }
+        }
+//        String url = s3Util.upload(filePath, dirName);//s3 업로드(File, 폴더이름 String)
+//        img.setUrl(url); //s3 저장 후 받은 url로 entity 세팅
+//        LocalDateTime now = LocalDateTime.now(); //현재 시간 받아서
+//        Integer hour =  now.getHour(); //시간만 받고
+//        Integer dayType = mainUtil.checkTime(hour); //dayType 계산
+//        img.setDayType(dayType); //dayType값 넣어주기
+//        img.setDate(now);
+//        postRepository.save(img); //저장
+//        data = modelMapper.map(img, PostDto.class); //dto로 매핑
+//        filePath.delete();//사용한 파일 삭제
+        return null;
     }
 
     /**
