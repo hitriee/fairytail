@@ -53,6 +53,7 @@ public class PostServiceImpl implements PostService {
         Integer hour =  now.getHour();
         Integer dayType = mainUtil.checkTime(hour);
         img.setDayType(dayType);
+        img.setDate(now);
         postRepository.save(img);
         data = modelMapper.map(img, PostDto.class);
         filePath.delete();
