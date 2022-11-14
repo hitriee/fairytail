@@ -14,7 +14,7 @@ import {
 
 // recoil
 import {useRecoilState} from 'recoil';
-import {bgmNoState, playingState} from '@/apis/Recoil';
+import {bgmNoState, playingState} from '@/apis/recoil';
 
 export default function Scene({...props}) {
   const {nodes, materials} = useSpline(
