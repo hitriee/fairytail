@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import styled from 'styled-components';
-import './MusicPlayer.scss';
+import '@messageCreate/MusicPlayer.scss';
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
 
@@ -13,6 +13,7 @@ type AudioInfo = {
   duration: number;
 };
 
+// audio 재생기
 function MusicPlayer({fileURL}: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
 

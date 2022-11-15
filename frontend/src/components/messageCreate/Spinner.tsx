@@ -7,6 +7,7 @@ type SpinnerProps = {
   spinnerStop: number;
 };
 
+// 스피너
 function Spinner({message, spinnerStop}: SpinnerProps) {
   return (
     <div className="spinner-background">

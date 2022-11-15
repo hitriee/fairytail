@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import {ReactComponent as Help} from '@images/help.svg';
-import '@common/Common.scss';
 
+import '@common/Common.scss';
+import {ReactComponent as Help} from '@images/help.svg';
 import helpMap from '@images/helpMap.jpg';
 import helpMain from '@images/helpMain.jpg';
 import helpVR from '@images/helpVR.jpg';
@@ -13,6 +13,7 @@ interface OpenHelpProps {
 
 const helpImages = [helpMain, helpMap, helpVR];
 
+// 좌측 하단 도움말
 function OpenHelp({imagesIndex, color = 'white'}: OpenHelpProps) {
   const [isOpened, setIsOpened] = useState(false);
 

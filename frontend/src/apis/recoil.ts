@@ -5,6 +5,11 @@ export const loadingState = atom({
   default: false,
 });
 
+export const transitionState = atom({
+  key: 'transitionState',
+  default: '',
+});
+
 export const playingState = atom({
   key: 'playingState',
   default: false,
