@@ -49,11 +49,17 @@ public class TextController {
         HashMap<String, Object> resultMap = new HashMap<>();
 
         TextDetailDto responseDto = textService.getTextDetail(postId, userId);
-        TextDetailResponse responseVo = modelMapper.map(responseDto, TextDetailResponse.class);
+        TextDetailResponse responseVo = null;
 
-        resultMap.put("data", responseVo);
-        resultMap.put("message", SUCCESS);
-
+        if (responseDto != null) { // 상세 조회할 메시지 정보를 찾았을 경우
+            responseVo = modelMapper.map(responseDto, TextDetailResponse.class);
+            resultMap.put("data", responseVo);
+            resultMap.put("message", SUCCESS);
+        }
+        else { // 상세 조회할 메시지 정보가 없을 경우
+            resultMap.put("message", FAIL);
+        }
+        
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
 
