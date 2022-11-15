@@ -1432,13 +1432,12 @@ export default function Scene({...props}) {
         <PerspectiveCamera
           name="1"
           makeDefault={true}
-          far={1000000}
-          near={100}
-          fov={35}
-          position={[-2776.27, 1133.08, 2325.68]}
-          rotation={[-0.45, -0.82, -0.34]}
+          far={100000}
+          near={1000}
+          fov={45}
+          position={[-3464.2, 2872.21, 3531.06]}
+          rotation={[-0.68, -0.65, -0.46]}
           scale={1}
-          zoom={0.5}
         />
         <hemisphereLight
           name="Default Ambient Light"

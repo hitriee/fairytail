@@ -1,4 +1,4 @@
-import {API_AUTH, API_USER, API_FILE, checkType} from '@apis/index';
+import {API_AUTH, API_FILE, checkType} from '@apis/index';
 
 export const saveToken = () => {
   // url에 있는 토큰이름 가져오기
@@ -14,7 +14,6 @@ export const saveToken = () => {
 };
 
 export const saveFirebaseToken = async (data: object) => {
-  // const res = await API_AUTH.post(`/user`, data);
-  const res = await API_USER.post(`/user/`, data);
+  const res = await API_AUTH.post(`/user`, data);
   return res.data;
 };
