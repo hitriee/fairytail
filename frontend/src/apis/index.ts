@@ -2,11 +2,6 @@ import axios from 'axios';
 
 export const BASE_URL = 'https://k7c209.p.ssafy.io';
 
-// export const API_INTRO = axios.create({
-//   baseURL: BASE_URL,
-//   headers: {},
-// });
-
 export const API_AUTH = axios.create({
   baseURL: BASE_URL,
   headers: {

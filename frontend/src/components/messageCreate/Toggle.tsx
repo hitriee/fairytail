@@ -1,5 +1,5 @@
 import {Dispatch, SetStateAction} from 'react';
-import './Toggle.scss';
+import '@messageCreate/Toggle.scss';
 
 type ToggleProps = {
   label: string;
@@ -7,6 +7,7 @@ type ToggleProps = {
   value?: boolean;
 };
 
+// 토글 스위치
 function Toggle({label, onClick, value = false}: ToggleProps) {
   return (
     <div className={`toggle-container`} onClick={() => onClick(prev => !prev)}>

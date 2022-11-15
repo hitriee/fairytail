@@ -1,5 +1,6 @@
 import useSpline from '@splinetool/r3f-spline';
 import {PerspectiveCamera} from '@react-three/drei';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 //route
@@ -61,6 +62,7 @@ export default function Scene({...props}) {
 
   const [isPlaying, setISPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
+  const [cnt, setCnt] = useState(0);
 
   const changeBgmNo = event => {
     event.stopPropagation();
@@ -72,6 +74,14 @@ export default function Scene({...props}) {
         return prev + 1;
       }
     });
+  };
+
+  const handleMoveGlobe = () => {
+    setCnt(cnt + 1);
+    if (cnt > 5) {
+      setCnt(0);
+      navigate(globe());
+    }
   };
 
   return (
@@ -158,7 +168,7 @@ export default function Scene({...props}) {
               position={[0, 0, 0]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={1}
-              onClick={moveGlobe}
+              onClick={() => handleMoveGlobe()}
             />
           </group>
           <group
@@ -1422,12 +1432,13 @@ export default function Scene({...props}) {
         <PerspectiveCamera
           name="1"
           makeDefault={true}
-          far={100000}
-          near={5}
-          fov={45}
+          far={1000000}
+          near={100}
+          fov={35}
           position={[-2776.27, 1133.08, 2325.68]}
           rotation={[-0.45, -0.82, -0.34]}
           scale={1}
+          zoom={0.5}
         />
         <hemisphereLight
           name="Default Ambient Light"

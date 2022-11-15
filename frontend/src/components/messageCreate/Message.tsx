@@ -1,7 +1,9 @@
-import {Content} from '@/screens/MessageCreate';
 import React, {useRef, useState, Dispatch, SetStateAction} from 'react';
-import '../../screens/MessageCreate.scss';
-import './Message.scss';
+
+import '@messageCreate/Message.scss';
+import {Content} from '@screens/MessageCreate';
+import Preview from '@messageCreate/Preview';
+import Alert from '@common/Alert';
 import {ReactComponent as ImageIcon} from '@images/image.svg';
 import {ReactComponent as ImageFillIcon} from '@images/imageFill.svg';
 import {ReactComponent as VideoIcon} from '@images/video.svg';
@@ -10,8 +12,8 @@ import {ReactComponent as AudioIcon} from '@images/audio.svg';
 import {ReactComponent as AudioFillIcon} from '@images/audioFill.svg';
 import {ReactComponent as TextIcon} from '@images/text.svg';
 import {ReactComponent as TextFillIcon} from '@images/textFill.svg';
-import Preview from '@messageCreate/Preview';
 
+// 파일 타입
 const fileTypeArr = ['', 'image', 'video', 'audio'];
 const fileTypeKoArr = ['', '사진', '영상', '음성'];
 
@@ -20,17 +22,25 @@ type MessageProps = {
   setContent: Dispatch<SetStateAction<Content>>;
 };
 
+// 메세지 내용 작성 및 파일 등록 시 미리보기 지원
 function Message({content, setContent}: MessageProps) {
+  // 알림 관련 state
+  const [isAlertOpened, setIsAlertOpend] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({title: '', message: ''});
+
+  // 새로 등록하는 파일
   const newFileRef = useRef<HTMLInputElement>(null);
 
   const [newFile, setNewFile] = useState(content.file);
   const [newFileType, setNewFileType] = useState(content.type);
   const [newFileURL, setNewFileURL] = useState(content.fileURL);
 
+  // 버튼 클릭 시 파일 등록 창 보여주기
   const handleClickFileUpload = () => {
     newFileRef.current?.click();
   };
 
+  // nav에서 다른 카테고리 누를 때마다 메세지 내용 및 타입 초기화
   const handleChangeNewFileType = (type: number) => {
     if (newFileRef.current) {
       newFileRef.current.value = '';
@@ -46,6 +56,7 @@ function Message({content, setContent}: MessageProps) {
     });
   };
 
+  // 새로운 파일 등록
   const selectNewFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     if (fileList && fileList[0]) {
@@ -55,7 +66,11 @@ function Message({content, setContent}: MessageProps) {
 
       // 용량 10mb 이하인지 확인
       if (file.size > 10 * 1024 * 1024) {
-        alert('10MB 이하의 파일만 업로드할 수 있습니다.');
+        setAlertInfo({
+          title: '알림',
+          message: '10MB 이하의 파일만\n업로드할 수 있습니다.',
+        });
+        setIsAlertOpend(true);
         return;
       }
 
@@ -69,7 +84,11 @@ function Message({content, setContent}: MessageProps) {
           fileURL: url,
         });
       } else {
-        alert('올바르지 않은 파일 형식입니다.');
+        setAlertInfo({
+          title: '알림',
+          message: '올바르지 않은 형식입니다.',
+        });
+        setIsAlertOpend(true);
         return;
       }
     }
@@ -199,6 +218,12 @@ function Message({content, setContent}: MessageProps) {
         accept={fileTypeArr[newFileType] + '/*'}
         ref={newFileRef}
         onChange={selectNewFile}
+      />
+
+      <Alert
+        info={alertInfo}
+        open={isAlertOpened}
+        onConfirmed={() => setIsAlertOpend(false)}
       />
     </div>
   );
