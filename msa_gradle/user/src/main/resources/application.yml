@@ -19,6 +19,7 @@ spring:
 eureka:
   instance:
     prefer-ip-address: true
+
   client:
     fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
     register-with-eureka: true       # client 등록 시, true로 세팅
