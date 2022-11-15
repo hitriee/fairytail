@@ -6,7 +6,6 @@ import '@individual/Notifications.scss';
 import {item} from '@individual/notification';
 import {collection, query, where, getDocs} from 'firebase/firestore';
 import {db} from '@apis/notifications/firebaseConfig';
-import {addData} from '@/apis/notifications/firestore';
 
 function Notifications() {
   const [newItems, setNewItems] = useState<item[]>([]);
@@ -16,11 +15,6 @@ function Notifications() {
   const deleteAll = () => {
     setNewItems(() => []);
   };
-
-  // unload 시 localStorage 값 변경
-  // window.onbeforeunload = () => {
-  //   localStorage.setItem('list', JSON.stringify(newItems));
-  // };
 
   const readData = async (userId: number) => {
     const q = query(
@@ -36,9 +30,7 @@ function Notifications() {
   };
 
   useEffect(() => {
-    // addData('title2', 2, 4, 40, 0);
     readData(2);
-    // setNewItems(() => readData(1))
   }, []);
 
   return (
