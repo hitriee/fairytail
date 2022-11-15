@@ -37,7 +37,7 @@ public class UserController {
         return String.format("User service is working on port %s!", env.getProperty("local.server.port"));
     }
 
-    @ApiOperation(value = "Firebase Token 저장", notes = "FIrebase 토큰 저장을 위한 API 입니다.")
+    @ApiOperation(value = "Firebase Token 저장", notes = "Firebase 토큰 저장을 위한 API 입니다.")
     @PostMapping
     public ResponseEntity<?> firebaseTokenSave(@RequestBody RequestFirebase requestFirebase) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
