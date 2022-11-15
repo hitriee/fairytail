@@ -1,7 +1,31 @@
+@import '@styles/_colors.scss';
+
 .notFound {
   display: flex;
+  margin-top: 10vh;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  justify-content: space-evenly;
+  margin-bottom: 10%;
+  height: 70vh;
+  &-title {
+    font-size: 4vh;
+    font-family: 'PyeongChangPeace-Light';
+    font-weight: bold;
+    word-spacing: 200%;
+  }
+  &-button {
+    border: white;
+    color: $PURPLE-2;
+    padding: 1vh 2vh;
+    font-size: 2.5vh;
+    border-radius: 20px;
+    font-weight: bold;
+    // width: 100%;
+    cursor: pointer;
+    &:hover {
+      color: white;
+      background-color: $PURPLE-2;
+    }
+  }
 }

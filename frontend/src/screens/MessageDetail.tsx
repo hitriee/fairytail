@@ -9,14 +9,12 @@ import Like from '@messageDetail/Like';
 import MoveToBack from '@common/MoveToBack';
 import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
-import InitMessage from '@/apis/notifications/foregroundMessaging';
 import {getTextMesssage, getImgMesssage} from '@/apis/messageDetail/detailFunc';
 import {
   textDetailResponse,
   imgDetailResponse,
 } from '@/apis/messageDetail/detailInterface';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
-import {checkType} from '@/apis';
 import {currentUser} from '@common/commonFunc';
 
 function MessageDetail() {

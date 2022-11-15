@@ -25,10 +25,11 @@ function InitMessage() {
     }
   };
 
-  // fcm에서 요청이 오면 info값 변경
+  // fcm에서 요청이 오면 info값 변경, localStorage에 값 저장
   onMessage(messaging, payload => {
     if (payload.data?.body && payload.data?.title) {
       const body = JSON.parse(payload.data?.body);
+      const list = JSON.parse(localStorage.getItem('list') || '[]');
       const newInfo = {
         id: body?.postId,
         emoji: body?.emojiNo,
@@ -36,6 +37,8 @@ function InitMessage() {
         title: payload.data?.title,
       };
       setInfo(() => newInfo);
+      list.unshift(body);
+      localStorage.setItem('list', JSON.stringify(list));
     }
   });
 

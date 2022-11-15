@@ -28,7 +28,10 @@ messaging.onBackgroundMessage((payload) => {
   if (Notification.permission === "granted") {
     // 알림 설정
     const { title } = payload.data;
-    // const body = JSON.parse(payload.data.body);
+    const list = localStorage.getItem("list" || "[]");
+    const body = JSON.parse(payload.data.body);
+    const newList = JSON.stringify({ ...list, ...body });
+    localStorage.setItem(newList);
     const shortTitle = () => {
       if (title.length >= 6) {
         return `${title.slice(0, 6)}...`;

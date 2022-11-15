@@ -3,7 +3,6 @@
 import '@screens/Individual.scss';
 import Notifications from '@individual/Notifications';
 import Settings from '@individual/Settings';
-import BottomBar from '@individual/BottomBar';
 import {useLocation} from 'react-router';
 import MoveToBack from '@common/MoveToBack';
 import bell from '@images/bell.png';
@@ -28,10 +27,6 @@ function Individual() {
         <div className="individual-body">
           {isSettings ? <Settings /> : <Notifications />}
         </div>
-
-        <footer className="individual-bottom">
-          <BottomBar type={isSettings} />
-        </footer>
       </section>
     </main>
   );
