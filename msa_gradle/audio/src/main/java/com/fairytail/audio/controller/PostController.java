@@ -95,7 +95,7 @@ public class PostController {
         } else{
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -121,6 +121,7 @@ public class PostController {
             status = HttpStatus.OK;
         } else{
             resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -139,6 +140,7 @@ public class PostController {
             status = HttpStatus.OK;
         } else{
             resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -165,7 +167,7 @@ public class PostController {
         } else{
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -192,7 +194,7 @@ public class PostController {
         } else{
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -220,7 +222,7 @@ public class PostController {
         } else {
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -246,7 +248,7 @@ public class PostController {
         } else{
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
