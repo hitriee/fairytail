@@ -10,4 +10,6 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+  instance:
+    prefer-ip-address: true # 각 마이크로 서비스를 ip로 접근하겠다.
 
