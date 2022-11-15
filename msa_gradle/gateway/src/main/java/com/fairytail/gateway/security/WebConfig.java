@@ -1,4 +1,4 @@
-// CORS 에러 Spring Server 자체 해결 시 해제
+/*  CORS 에러 Spring Server 자체 해결 시 해제
 
 package com.fairytail.gateway.security;
 
@@ -46,7 +46,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 }
-
+*/
 
 //package com.fairytail.gateway.security;
 //
