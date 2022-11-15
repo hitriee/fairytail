@@ -22,7 +22,7 @@ spring:
               predicates: # 전제 조건
                   - Path=/img/**
               filters:
-                - AuthorizationHeaderFilter
+#                - AuthorizationHeaderFilter
 
             - id: user
               uri: lb://USER
