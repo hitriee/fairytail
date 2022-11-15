@@ -22,5 +22,10 @@ spring:
               predicates: # 전제 조건
                   - Path=/img/**
 
+            - id: user
+              uri: lb://USER
+              predicates:
+                - Path=/user/**
+
 
 
