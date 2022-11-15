@@ -25,5 +25,5 @@ spring:
             - id: user
               uri: lb://USER
               predicates:
-                - Path=/user/**
+                  - Path=/user/**
 
