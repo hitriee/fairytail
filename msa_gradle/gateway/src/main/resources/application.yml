@@ -21,8 +21,8 @@ spring:
               uri: lb://IMG
               predicates: # 전제 조건
                   - Path=/img/**
-#              filters:
-#                - AuthorizationHeaderFilter
+              filters:
+                - AuthorizationHeaderFilter
 
             - id: user
               uri: lb://USER

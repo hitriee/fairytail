@@ -1,5 +1,6 @@
 package com.fairytail.gateway.filter;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
@@ -59,14 +60,13 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     private boolean isValidJwt(String jwt) {
         boolean returnValue = true;
 
-        String subject = null;
+        Claims subject = null;
 
         try {
             // JWT parsing
             subject = Jwts.parser()
                     .setSigningKey(token_secret)
-                    .parseClaimsJws(jwt).getBody()
-                    .getSubject();
+                    .parseClaimsJws(jwt).getBody();
             System.out.println("********************subject***********************" + subject);
         } catch (Exception e) {
             returnValue = false;
