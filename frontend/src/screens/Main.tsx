@@ -96,8 +96,13 @@ function Main() {
               style={{
                 display: pathname.startsWith('/main') ? 'block' : 'none',
               }}>
-              <OpenHelp imagesIndex={0} />
-              <BgmBtn />
+              {isLoaded ? (
+                <>
+                  <OpenHelp imagesIndex={0} />
+                  <BgmBtn />
+                </>
+              ) : null}
+
               <Room />
             </div>
 

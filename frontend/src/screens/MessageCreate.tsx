@@ -68,6 +68,7 @@ function MessageCreate() {
 
   // 풍선 등록 결과에 따른 스피너 표시
   const successSpinner = (postId: number, type: number) => {
+    setspinnerStop(1);
     setSpinnerMessage('성공적으로 등록되었습니다.');
     setTimeout(() => {
       setSpinner(false);
@@ -86,6 +87,15 @@ function MessageCreate() {
     }, 1500);
   };
 
+  // 유저 아이디 확인
+  const userId = localStorage.getItem('userId');
+
+  if (userId === null) {
+    setAlertInfo({title: '알림', message: '로그인이 필요합니다.'});
+    setIsAlertOpend(true);
+    navigate(-1);
+  }
+
   // 풍선 등록
   function handleSubmit() {
     // 제목이나 내용이 비어있는지 확인
@@ -98,6 +108,10 @@ function MessageCreate() {
     } else if (content.type !== 0 && content.file === null) {
       setAlertInfo({title: '알림', message: '파일을 첨부해주세요.'});
       setIsAlertOpend(true);
+    } else if (userId === null) {
+      setAlertInfo({title: '알림', message: '로그인이 필요합니다.'});
+      setIsAlertOpend(true);
+      navigate(-1);
     } else {
       // 모두 작성되었다면 서버로 전송
       if (navigator.geolocation) {
@@ -130,6 +144,7 @@ function MessageCreate() {
               status: isShare ? '1' : '0',
               title: title,
               type: content.type,
+              userId: userId,
             };
             postText(content.type, data)
               .then(({data, message}) => {
@@ -153,6 +168,7 @@ function MessageCreate() {
             data.append('status', isShare ? '1' : '0');
             data.append('title', title);
             data.append('type', content.type.toString());
+            data.append('userId', userId);
 
             postFile(content.type, data)
               .then(({data, message}) => {

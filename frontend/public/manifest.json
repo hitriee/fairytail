@@ -328,7 +328,8 @@
     },
     {
       "src": "android/android-launchericon-192-192.png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "android/android-launchericon-144-144.png",
@@ -449,20 +450,12 @@
     {
       "src": "ios/1024.png",
       "sizes": "1024x1024"
-    },
-    {
-      "src": "icon.svg",
-      "purpose": "any"
-    },
-    {
-      "src": "icon.svg",
-      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#a07dff",
-  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "description": "같은 하늘 아래, 우리들의 이야기",
   "dir": "ltr",
   "lang": "ko",

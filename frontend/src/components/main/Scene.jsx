@@ -1433,7 +1433,7 @@ export default function Scene({...props}) {
           name="1"
           makeDefault={true}
           far={100000}
-          near={1000}
+          near={100}
           fov={45}
           position={[-3464.2, 2872.21, 3531.06]}
           rotation={[-0.68, -0.65, -0.46]}

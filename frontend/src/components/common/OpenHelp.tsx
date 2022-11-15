@@ -45,7 +45,7 @@ function OpenHelp({imagesIndex, color = 'white'}: OpenHelpProps) {
         <Help viewBox="0 0 45 50" width="40" height="40" fill={color} />
       </div>
       {isOpened ? (
-        <div className="help-background" onClick={closeHelp}>
+        <div className="help-background fadeIn" onClick={closeHelp}>
           <div className="container help-container">
             <img
               className="help-img"

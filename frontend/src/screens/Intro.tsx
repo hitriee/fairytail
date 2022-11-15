@@ -1,10 +1,20 @@
-import {Link} from 'react-router-dom';
-import './Intro.scss';
+import '@screens/Intro.scss';
 import GoogleLoginForm from '@intro/GoogleLoginForm';
 import IntroLogo from '@images/introLogo.png';
 import Iframe from 'react-iframe';
+import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
 
 function Intro() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId !== null) {
+      navigate('/main');
+    }
+  }, []);
+
   return (
     <>
       <Iframe
