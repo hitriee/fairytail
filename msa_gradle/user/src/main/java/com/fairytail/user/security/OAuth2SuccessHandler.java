@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     .compact();
         }
 
-        String url = "http://localhost:3000/process";
+        String url = "https://k7c2091.p.ssafy.io/process";
 
         String uri = UriComponentsBuilder.fromUriString(url)
                 .queryParam("accessToken", token)
