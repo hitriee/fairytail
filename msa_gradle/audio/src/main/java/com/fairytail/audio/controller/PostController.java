@@ -105,7 +105,7 @@ public class PostController {
      */
     @ApiOperation(value = "게시글 공개 여부 수정", notes = "게시글 공개 여부 수정 API 입니다.")
     @PostMapping("status")
-    public ResponseEntity<?> putPost(RequestPostPut req) throws Exception{
+    public ResponseEntity<?> putPost(@RequestBody RequestPostPut req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         PostDto dto = modelMapper.map(req, PostDto.class);
