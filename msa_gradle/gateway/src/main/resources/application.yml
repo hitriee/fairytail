@@ -21,7 +21,7 @@ spring:
               uri: lb://IMG
               predicates: # 전제 조건
                   - Path=/img/**
-#              filters:
-#                  - RewritePath=/user/(?<segment>.*), /$\{segment}
+              filters:
+                  - RewritePath= http://k7c209.p.ssafy.io:9091
 
 
