@@ -15,6 +15,7 @@ import {
   changeMessageStatus,
   deleteMessage,
 } from '@/apis/messageDetail/detailFunc';
+import {initToken} from '@/apis/notifications/getMessagingToken';
 
 // props 유형
 interface MoreMenuProps {
@@ -46,6 +47,7 @@ function MoreMenu({
   const [openReport, setReport] = useState(false);
   const [openAlert, setAlert] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  // initToken();
 
   // info 값 변경
   const changeInfo = (title: popUp['title'], message: popUp['message']) => {
@@ -78,8 +80,11 @@ function MoreMenu({
         saveAs(canvas.toDataURL(), `fairytail_${type}_${messageId}.png`);
       });
     } else {
-      // content는 url형식
-      saveAs(content, `fairytail_${messageId}.png`);
+      const extension = content.split('.').at(-1);
+      saveAs(
+        `https://${content}`,
+        `fairytail_${type}_${messageId}.${extension}`,
+      );
     }
   };
 
@@ -140,8 +145,13 @@ function MoreMenu({
   const delMessage = () => {
     deleteMessage(type, messageId)
       .then((res: any) => {
-        setDeleted(returnTrue);
-        changeInfo('삭제 완료', '글이 정상적으로 삭제되었습니다');
+        if (res.message === 'SUCCESS') {
+          setDeleted(returnTrue);
+          changeInfo('삭제 완료', '글이 정상적으로 삭제되었습니다');
+        } else {
+          setDeleted(returnFalse);
+          changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
+        }
       })
       .catch((err: any) => {
         setDeleted(returnFalse);

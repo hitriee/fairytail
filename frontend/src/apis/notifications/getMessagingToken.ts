@@ -1,7 +1,7 @@
 // ** fcm으로 요청보낼 때 필요한 토큰 관련
 
 import {getMessaging, getToken} from 'firebase/messaging';
-import app from '@apis/notifications/firebaseConfig';
+import {app} from '@apis/notifications/firebaseConfig';
 
 const messaging = getMessaging(app);
 
@@ -12,7 +12,7 @@ export const initToken = async () => {
   })
     .then(currentToken => {
       if (currentToken) {
-        // console.log(currentToken);
+        console.log(currentToken);
         return currentToken;
       } else {
         console.log(

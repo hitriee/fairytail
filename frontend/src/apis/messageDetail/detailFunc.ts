@@ -32,23 +32,27 @@ export const deleteMessage: messageType = async (type, postId) => {
 // 좋아요 여부 변경
 // data 타입만 다름
 export const likeMessage: likeMessageType = async (type, data) => {
-  switch (type) {
-    case 'text':
-      const textRes = await API_AUTH.post(`/${type}/like`, data);
-      return textRes.data;
-    default:
-      const res = await API_AUTH.post(`/${type}/like`, null, {params: data});
-      return res.data;
-  }
+  const res = await API_AUTH.post(`/${type}/like`, data);
+  console.log(res.data);
+  return res.data;
+  // switch (type) {
+  //   case 'text':
+  //     const textRes = await API_AUTH.post(`/${type}/like`, data);
+  //     console.log(textRes.data)
+  //     return textRes.data;
+  //   default:
+  //     const res = await API_AUTH.post(`/${type}/like`, null, {params: data});
+  //     return res.data;
+  // }
 };
 
 // 공개 여부 변경
 // 이미지, 텍스트 데이터 다름
 export const changeMessageStatus: changeMessageStatusType = async (
   type,
-  params,
+  data,
 ) => {
-  const res = await API_AUTH.post(`/${type}/message/status`, null, {params});
+  const res = await API_AUTH.post(`/${type}/message/status`, data);
   return res.data;
   // switch (type) {
   //   case 'text':
@@ -63,8 +67,8 @@ export const changeMessageStatus: changeMessageStatusType = async (
 };
 
 // 신고
-export const reportMessage: reportMessageType = async (type, params) => {
-  const res = await API_AUTH.post(`/${type}/report`, null, {params});
+export const reportMessage: reportMessageType = async (type, data) => {
+  const res = await API_AUTH.post(`/${type}/report`, data);
   return res.data;
   // switch (type) {
   //   case 'text':

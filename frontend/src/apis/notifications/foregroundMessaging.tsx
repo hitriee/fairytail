@@ -1,7 +1,7 @@
 // ** 사용자가 서비스를 이용하고 있을 때 내부 알림 컴포넌트
 
 import {getMessaging, onMessage} from 'firebase/messaging';
-import app from '@apis/notifications/firebaseConfig';
+import {app} from '@apis/notifications/firebaseConfig';
 import MyNotification from '@individual/MyNotification';
 import {useEffect, useState} from 'react';
 import {returnFalse, returnTrue} from '@common/commonFunc';

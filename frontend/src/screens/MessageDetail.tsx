@@ -47,6 +47,7 @@ function MessageDetail() {
   const [data, setData] = useState(dataType);
   const getDetailMessage = () => {
     getMesssage(type, {postId: messageId, userId}).then((res: any) => {
+      console.log(res);
       if (res.message === 'SUCCESS') {
         setData(prev => {
           return {...prev, ...res.data};
@@ -147,7 +148,7 @@ function MessageDetail() {
             detail={messageDetailRef}
             messageId={messageId}
             type={type}
-            content={data.content}
+            content={data.url || data.content}
             close={hiddenMenu}
             status={newStatus}
             setStatus={setNewStatus}

@@ -28,10 +28,6 @@ messaging.onBackgroundMessage((payload) => {
   if (Notification.permission === "granted") {
     // 알림 설정
     const { title } = payload.data;
-    const list = localStorage.getItem("list" || "[]");
-    const body = JSON.parse(payload.data.body);
-    const newList = JSON.stringify({ ...list, ...body });
-    localStorage.setItem(newList);
     const shortTitle = () => {
       if (title.length >= 6) {
         return `${title.slice(0, 6)}...`;
@@ -42,21 +38,21 @@ messaging.onBackgroundMessage((payload) => {
     const notificationTitle = `익명의 작가가 당신의 이야기 \n${shortTitle()}을(를) 좋아합니다`;
     const notificationOptions = {
       body: "",
-      icon: "./logo192.png", // web
-      requireInteraction: true,
-      badge: "./logo192.png", // 모바일에서만 - 권장 크기 72px
+      icon: "./windows11/LargeTile.scale-100.png", // web
+      // requireInteraction: false,
+      badge: "./android/android-launchericon-72-72.png", // 모바일에서만 - 권장 크기 72px
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
-    self.registration.getSubscription().then((subscription) => {
-      if (!subscription) {
-        return subscription.scribe();
-      }
-    });
-  } else {
-    self.registration.getSubscription().then((subscription) => {
-      if (subscription) {
-        return subscription.unsubscribe();
-      }
-    });
+    //   self.registration.getSubscription().then((subscription) => {
+    //     if (!subscription) {
+    //       return subscription.scribe();
+    //     }
+    //   });
+    // } else {
+    //   self.registration.getSubscription().then((subscription) => {
+    //     if (subscription) {
+    //       return subscription.unsubscribe();
+    //     }
+    //   });
   }
 });
