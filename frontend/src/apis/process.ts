@@ -14,6 +14,6 @@ export const saveToken = () => {
 };
 
 export const saveFirebaseToken = async (data: object) => {
-  const res = await API_AUTH.post(`/user`, data);
+  const res = await API_AUTH.post(`/user/`, data);
   return res.data;
 };
