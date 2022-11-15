@@ -25,6 +25,7 @@ function Process() {
       userId: localStorage.userId,
     };
     saveFirebaseToken(data)
+      .then(res => console.log(res))
       .catch(err => console.log(err))
       .then(() => requestPermission())
       .then(() => navigate('/main'));
