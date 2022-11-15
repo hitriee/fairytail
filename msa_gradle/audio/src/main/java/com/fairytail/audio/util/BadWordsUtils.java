@@ -78,9 +78,11 @@ public class BadWordsUtils {
 
     // 텍스트(content) 필터링을 수행하여 금지어가 존재하면 true, 존재하지 않으면 false 반환
     public boolean filterText(String content) {
-        for (String word : badWordsList) {
-            if  (findBadWord(content, word)) // 금지어가 발견됐으면 true 반환
-                return true;
+        if (content != null) { // 텍스트가 null이 아닐 경우 금지어 탐지 시작
+            for (String word : badWordsList) {
+                if  (findBadWord(content, word)) // 금지어가 발견됐으면 true 반환
+                    return true;
+            }
         }
 
         return false;
