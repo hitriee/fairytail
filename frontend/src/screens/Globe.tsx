@@ -26,11 +26,6 @@ function Globe() {
   };
   useEffect(() => {
     window.addEventListener('resize', onResize);
-    window.addEventListener('mousedown', ({target}) => {
-      if (firstRef.current && !firstRef.current.contains(target as Node)) {
-        setVisited();
-      }
-    });
     if (localStorage.getItem('visited')) {
       setVisited();
     }
@@ -41,15 +36,14 @@ function Globe() {
 
   return (
     <>
-      {isFirstVisit ? (
-        <div
-          className="white first-visit center"
-          onClick={setVisited}
-          ref={firstRef}>
-          숨겨진 페이지에 온 것을 환영합니다 <br /> 지구를 돌려보세요
-        </div>
-      ) : null}
       <div className="globe-background">
+        {isFirstVisit ? (
+          <div className="first-visit-background" onClick={setVisited}>
+            <span className="white center first-visit">
+              숨겨진 페이지에 온 것을 환영합니다 <br /> 지구를 돌려보세요
+            </span>
+          </div>
+        ) : null}
         <MoveToBack path={main()} />
         <Canvas style={{width, height}} camera={{near: 6, far: 30, zoom: 1.2}}>
           {/* <color attach="background" args={[0, 0, 0]} /> */}
