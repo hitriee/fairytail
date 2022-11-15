@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 
 import '@common/Common.scss';
 import {ReactComponent as Help} from '@images/help.svg';
@@ -15,9 +16,24 @@ const helpImages = [helpMain, helpMap, helpVR];
 
 // 좌측 하단 도움말
 function OpenHelp({imagesIndex, color = 'white'}: OpenHelpProps) {
-  const [isOpened, setIsOpened] = useState(false);
-
+  const [isOpened, setIsOpened] = useState(true);
   const closeHelp = () => setIsOpened(false);
+
+  const location = useLocation();
+  const pageName = location.pathname;
+  const path = ['/main', '/vr', '/map'];
+
+  useEffect(() => {
+    // 현재 주소를 방문한 적이 있다면 안내문 off
+    if (pageName in localStorage) {
+      setIsOpened(false);
+      // 방문한 적이 없다면 url 주소 localstorage에 저장
+    } else if (path.includes(pageName)) {
+      setTimeout(() => {
+        localStorage.setItem(`${pageName}`, `${pageName}`);
+      }, 100);
+    }
+  }, [pageName]);
 
   return (
     <>
