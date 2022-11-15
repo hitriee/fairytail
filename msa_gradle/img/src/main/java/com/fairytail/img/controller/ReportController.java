@@ -37,7 +37,7 @@ public class ReportController {
 
     @ApiOperation(value = "게시글 신고 기능", notes = "게시글 신고 기능")
     @PostMapping
-    public ResponseEntity<?> createReport(RequestReport req) throws Exception{
+    public ResponseEntity<?> createReport(@RequestBody RequestReport req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         resultMap = new HashMap<>();
