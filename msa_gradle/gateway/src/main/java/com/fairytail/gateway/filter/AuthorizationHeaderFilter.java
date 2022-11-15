@@ -72,7 +72,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             returnValue = false;
         }
 
-        if(subject.isEmpty() | subject == null) {
+        if(subject.isEmpty()) {
             returnValue = false;
         }
 
