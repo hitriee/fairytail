@@ -59,7 +59,6 @@ public class PostController {
         if (badWordsUtils.filterText(dto.getTitle())) { // 제목에 금지어가 있을 경우
             resultMap.put("message", FAIL); // 등록 실패 : 제목 금지어 발견"
             status = HttpStatus.ACCEPTED;
-
             return new ResponseEntity<>(resultMap, status);
         }
 
@@ -95,7 +94,9 @@ public class PostController {
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else{//실패
+            resultMap.put("data", data);
             resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -139,6 +140,7 @@ public class PostController {
             status = HttpStatus.OK;
         } else{
             resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -165,7 +167,7 @@ public class PostController {
         } else{ //data가 없으면 성공 메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -192,7 +194,7 @@ public class PostController {
         } else{ //data가 비어있으면 실패메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -220,7 +222,7 @@ public class PostController {
         } else { //data가 비어 있으면 실패 메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -243,7 +245,7 @@ public class PostController {
         } else{ //data가 비어있으면 실패 메시지와 빈 data
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
