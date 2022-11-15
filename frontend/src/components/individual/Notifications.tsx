@@ -32,7 +32,7 @@ function Notifications() {
         전체 삭제
       </p>
       {newItems.length === 0 ? (
-        <div className="notifications-empty">새로운 알림이 없습니다</div>
+        <div className="notifications-empty">새로운 알림이 없습니다.</div>
       ) : (
         <div className="notifications-list">
           {newItems.map((item, index) => {

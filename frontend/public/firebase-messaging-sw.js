@@ -47,5 +47,16 @@ messaging.onBackgroundMessage((payload) => {
       badge: "./logo192.png", // 모바일에서만 - 권장 크기 72px
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
+    self.registration.getSubscription().then((subscription) => {
+      if (!subscription) {
+        return subscription.scribe();
+      }
+    });
+  } else {
+    self.registration.getSubscription().then((subscription) => {
+      if (subscription) {
+        return subscription.unsubscribe();
+      }
+    });
   }
 });

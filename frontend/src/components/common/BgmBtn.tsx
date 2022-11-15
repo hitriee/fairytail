@@ -18,9 +18,21 @@ function BgmBtn() {
         }}>
         <div className="main-bgm-title white">{bgmArr[bgmNo].title}</div>
         {isPlaying ? (
-          <Pause viewBox="0 0 24 24" width="40" height="40" fill="white" />
+          <Pause
+            viewBox="0 0 24 24"
+            width="40"
+            height="40"
+            fill="white"
+            className="main-bgm-button"
+          />
         ) : (
-          <Play viewBox="0 0 24 24" width="40" height="40" fill="white" />
+          <Play
+            viewBox="0 0 24 24"
+            width="40"
+            height="40"
+            fill="white"
+            className="main-bgm-button"
+          />
         )}
       </div>
     </>

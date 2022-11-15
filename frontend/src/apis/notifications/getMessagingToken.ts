@@ -30,13 +30,29 @@ export const initToken = async () => {
 
 // 등록 토큰에 액세스 (알림 권한 요청)
 export const requestPermission = () => {
-  console.log(Notification.permission);
-  if (Notification.permission === 'default') {
-    console.log('Requesting permission...');
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-      }
-    });
-  }
+  Notification.requestPermission().then(permission => {
+    if (permission !== 'denied') {
+      localStorage.setItem('noti', 'true');
+    }
+  });
 };
+
+// 구독 취소, 설정
+// let swRegist = null
+// export const unsubscribe = () => {
+//   ServiceWorkerRegistration.pushManager.getSubscription()
+//     .then(subscription => {
+//       if (subscription) {
+//         return subscription.unsubscribe();
+//       }
+//     })
+//     .catch(error => {
+//       console.log('Error unsubscribing', error);
+//     })
+//     .then(() => {
+//       updateSubscription(null);
+//       console.log('User is unsubscribed.');
+//       isSubscribed = false;
+//       updateButton();
+//     });
+// }

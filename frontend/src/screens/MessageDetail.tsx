@@ -9,11 +9,7 @@ import Like from '@messageDetail/Like';
 import MoveToBack from '@common/MoveToBack';
 import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
-import {getTextMesssage, getImgMesssage} from '@/apis/messageDetail/detailFunc';
-import {
-  textDetailResponse,
-  imgDetailResponse,
-} from '@/apis/messageDetail/detailInterface';
+import {getMesssage} from '@/apis/messageDetail/detailFunc';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {currentUser} from '@common/commonFunc';
 
@@ -49,35 +45,46 @@ function MessageDetail() {
     lng: 0,
   };
   const [data, setData] = useState(dataType);
-  const getVaribleMessage = () => {
-    if (type === 'text') {
-      getTextMesssage(type, messageId).then((res: textDetailResponse) => {
-        if (res.message === 'SUCCESS') {
-          setData(prev => {
-            return {...prev, ...res.data};
-          });
-        } else {
-          // 실패했을 경우 404로 이동
-          navigate(notFound());
-        }
-      });
-    } else if (type === 'img') {
-      getImgMesssage(type, {postId: messageId, userId}).then(
-        (res: imgDetailResponse) => {
-          if (res.message === 'SUCCESS') {
-            setData(prev => {
-              return {...prev, ...res.data};
-            });
-          } else {
-            // 실패했을 경우 404로 이동
-            navigate(notFound());
-          }
-        },
-      );
-    } else {
-      navigate(notFound());
-    }
+  const getDetailMessage = () => {
+    getMesssage(type, {postId: messageId, userId}).then((res: any) => {
+      if (res.message === 'SUCCESS') {
+        setData(prev => {
+          return {...prev, ...res.data};
+        });
+      } else {
+        // 실패했을 경우 404로 이동
+        navigate(notFound());
+      }
+    });
   };
+  // if (type === 'text') {
+  //   getTextMesssage(type, messageId).then((res: textDetailResponse) => {
+  //     if (res.message === 'SUCCESS') {
+  //       setData(prev => {
+  //         return {...prev, ...res.data};
+  //       });
+  //     } else {
+  //       // 실패했을 경우 404로 이동
+  //       navigate(notFound());
+  //     }
+  //   });
+  // } else if (type === 'img') {
+  //   getImgMesssage(type, {postId: messageId, userId}).then(
+  //     (res: imgDetailResponse) => {
+  //       if (res.message === 'SUCCESS') {
+  //         setData(prev => {
+  //           return {...prev, ...res.data};
+  //         });
+  //       } else {
+  //         // 실패했을 경우 404로 이동
+  //         navigate(notFound());
+  //       }
+  //     },
+  //   );
+  // } else {
+  //   navigate(notFound());
+  // }
+  // };
   // 현재 사용자가 작성한 게시글인지 확인
   const isMine = () => userId === data.userId;
 
@@ -87,7 +94,7 @@ function MessageDetail() {
     } else if (userId === -1) {
       navigate(intro());
     } else if (type) {
-      getVaribleMessage();
+      getDetailMessage();
     }
   }, []);
 
