@@ -449,13 +449,18 @@
     {
       "src": "ios/1024.png",
       "sizes": "1024x1024"
+    },
+    {
+      "src": "icon.svg",
+      "purpose": "any"
     }
   ],
-  "start_url": "https://k7c2091.p.ssafy.io/",
+  "start_url": ".",
   "display": "standalone",
   "theme_color": "#a07dff",
   "background_color": "#ffffff",
   "description": "같은 하늘 아래, 우리들의 이야기",
+  "dir": "ltr",
   "lang": "ko",
   "orientation": "portrait",
   "categories": ["entertainment", "social"]

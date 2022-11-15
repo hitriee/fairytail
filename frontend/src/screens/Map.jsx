@@ -28,7 +28,7 @@ function SetCenter({center}) {
 
   useEffect(() => {
     map.setView(center);
-  }, [center]);
+  }, []);
 
   return null;
 }
@@ -40,34 +40,40 @@ function Map() {
 
   // 지도 중심
   const [center, setCenter] = useState({lat: 0, lng: 0});
+  const [isReady, setIsReady] = useState(false);
 
   // 데이터 및 데이터 받아오기가 끝났는지 확인하기 위한 state
   const [isFinished, setIsFinished] = useState(-1);
   const [data, setData] = useState([]);
 
+  // 현재 위치 받아와서 지도 중심 설정
   useEffect(() => {
-    // 현재 위치 받아와서 지도 중심 설정
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async pos => {
         setCenter({
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         });
+        setIsReady(true);
       });
     }
+  }, []);
 
-    // 서버에서 데이터 받아오기
-    for (let i = 0; i < 4; i++) {
-      getMessageMap(i)
-        .then(res => {
-          setData(prev => prev.concat(res.data));
-          setIsFinished(prev => prev + 1);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+  // 서버에서 데이터 받아오기
+  useEffect(() => {
+    if (isReady) {
+      for (let i = 0; i < 4; i++) {
+        getMessageMap(i)
+          .then(res => {
+            setData(prev => prev.concat(res.data));
+            setIsFinished(prev => prev + 1);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
-  });
+  }, [isReady]);
 
   // 받은 데이터 화면에 마커로 표시하기
   const Markers = () => {
@@ -118,7 +124,7 @@ function Map() {
           setPosition={setPosition}
         />
         <ZoomControl position="bottomright" />
-        <SetCenter center={center} />
+        {isReady ? <SetCenter center={center} /> : null}
       </MapContainer>
     </div>
   );
