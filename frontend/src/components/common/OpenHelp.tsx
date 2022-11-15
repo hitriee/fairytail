@@ -5,6 +5,7 @@ import {ReactComponent as Help} from '@images/help.svg';
 import helpMap from '@images/helpMap.jpg';
 import helpMain from '@images/helpMain.jpg';
 import helpVR from '@images/helpVR.jpg';
+import './OpenHelp.scss';
 
 interface OpenHelpProps {
   imagesIndex: number;
