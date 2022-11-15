@@ -27,3 +27,17 @@ spring:
               predicates:
                   - Path=/user/**
 
+            - id: video
+              uri: lb://video
+              predicates:
+                  - Path=/video/**
+
+            - id: audio
+              uri: lb://audio
+              predicates:
+                  - Path=/audio/**
+
+            - id: text
+              uri: lb://text
+              predicates:
+                  - Path=/text/**
