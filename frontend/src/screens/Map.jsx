@@ -13,6 +13,7 @@ import {CustomMarkerIcon} from '@map/CustomMarker';
 import ClickMarker from '@map/ClickMarker';
 import MoveToBack from '@common/MoveToBack';
 import OpenHelp from '@common/OpenHelp';
+import Airplane from '@images/airplane.webp';
 
 import {getMessageMap} from '@apis/map';
 
@@ -89,7 +90,7 @@ function Map() {
           });
           setIsClicked(true);
         }}>
-        {'랜덤 위치로\n이동하기'}
+        <img src={Airplane} alt="랜덤 위치 이동 버튼" />
       </div>
 
       <MapContainer
