@@ -20,7 +20,7 @@ spring:
             - id: img
               uri: lb://IMG
               predicates: # 전제 조건
-                  - Path=/user/**
+                  - Path=/img/**
 #              filters:
 #                  - RewritePath=/user/(?<segment>.*), /$\{segment}
 
