@@ -17,10 +17,10 @@ spring:
     cloud:
       gateway:
         routes:
-            - id: user
-              uri: lb://USER
+            - id: img
+              uri: lb://IMG
               predicates: # 전제 조건
-                  - Path=http://k7c209.p.ssafy.io:9096/health_check
+                  - Path=/user/**
 #              filters:
 #                  - RewritePath=/user/(?<segment>.*), /$\{segment}
 
