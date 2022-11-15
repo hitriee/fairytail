@@ -5,6 +5,7 @@ import com.fairytail.text.dto.TextDto;
 import com.fairytail.text.jpa.LikeRepository;
 import com.fairytail.text.jpa.TextEntity;
 import com.fairytail.text.jpa.TextRepository;
+import com.fairytail.text.util.MainUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,16 +21,20 @@ public class TextServiceImpl implements TextService {
 
     private final ModelMapper modelMapper;
 
+    private final MainUtils mainUtils;
+
     private final TextRepository textRepository;
 
     private final LikeRepository likeRepository;
 
     @Override
     public TextDto saveText(TextDto requestDto) {
-        /** 나머지 필요한 값들 지정해주기 (userId와 dayType은 임시로!!) */
+        /** 나머지 필요한 값들 지정해주기 (userId는 임시로!!) */
+        LocalDateTime now = LocalDateTime.now();
+
         requestDto.setUserId(1L);
-        requestDto.setDate(LocalDateTime.now());
-        requestDto.setDayType(0);
+        requestDto.setDate(now);
+        requestDto.setDayType(mainUtils.checkTime(now.getHour()));
 
         TextEntity requestEntity = modelMapper.map(requestDto, TextEntity.class);
         TextEntity responseEntity = textRepository.save(requestEntity);
@@ -44,11 +49,9 @@ public class TextServiceImpl implements TextService {
 
         if (selectedTextEntity.isPresent()) {
             responseDto = modelMapper.map(selectedTextEntity.get(), TextDetailDto.class);
-//            Integer likeCnt = likeRepository.countAllByPost(selectedTextEntity.get());
             // userId 임의로 넣음!! -> 나중에 꼭 User 객체로 바꿔주기
             Boolean isLike = likeRepository.existsByPostAndUserId(selectedTextEntity.get(), userId);
 
-//            responseDto.setLikeCnt(likeCnt);
             responseDto.setIsLike(isLike);
         }
         else {
@@ -65,10 +68,6 @@ public class TextServiceImpl implements TextService {
         List<TextDetailDto> responseDtoList = new ArrayList<>();
 
         textEntityList.forEach(v -> {
-//            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
-//            Integer likeCnt = likeRepository.countAllByPost(v);
-//            textDetailDto.setLikeCnt(likeCnt);
-//            responseDtoList.add(textDetailDto);
             responseDtoList.add(modelMapper.map(v, TextDetailDto.class));
         });
 
@@ -89,10 +88,6 @@ public class TextServiceImpl implements TextService {
         List<TextDetailDto> responseDtoList = new ArrayList<>();
 
         textEntityList.forEach(v -> {
-//            TextDetailDto textDetailDto = modelMapper.map(v, TextDetailDto.class);
-//            Integer likeCnt = likeRepository.countAllByPost(v);
-//            textDetailDto.setLikeCnt(likeCnt);
-//            responseDtoList.add(textDetailDto);
             responseDtoList.add(modelMapper.map(v, TextDetailDto.class));
         });
 
