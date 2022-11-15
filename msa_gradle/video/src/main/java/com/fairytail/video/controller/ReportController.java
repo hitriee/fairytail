@@ -12,10 +12,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -37,7 +34,7 @@ public class ReportController {
 
     @ApiOperation(value = "게시글 신고 기능", notes = "게시글 신고 기능")
     @PostMapping
-    public ResponseEntity<?> createReport(RequestReport req) throws Exception{
+    public ResponseEntity<?> createReport(@RequestBody RequestReport req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT); //mapper 에러 발생 방지를 위해
         resultMap = new HashMap<>();
