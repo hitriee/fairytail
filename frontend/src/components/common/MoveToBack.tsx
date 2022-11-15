@@ -11,6 +11,7 @@ interface MoveToBackProps {
 // 좌측 상단 뒤로가기 버튼
 function MoveToBack({path, color = 'white'}: MoveToBackProps) {
   const navigate = useNavigate();
+
   return (
     <div
       id="move-to-back"

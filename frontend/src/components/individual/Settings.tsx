@@ -5,6 +5,7 @@ import '@individual/Settings.scss';
 import Toggle from '@messageCreate/Toggle';
 import {returnTrue, returnFalse} from '@common/commonFunc';
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {popUp} from '@common/commonFunc';
 import {bgmArr} from '@/assets/bgms';
 import BgmModal from '@individual/BgmModal';
@@ -20,6 +21,7 @@ function Settings() {
   const [infoType, setInfoType] = useState('');
   const [info, setInfo] = useState<popUp>({title: '', message: ''});
   const [openAlert, setOpenAlert] = useState(false);
+  const navigate = useNavigate();
 
   // 좋아요 알림 변경
   const changePermitNoti = () => {
@@ -42,6 +44,8 @@ function Settings() {
 
   // 로그아웃 요청 백에 보내기
   const logout = () => {
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('token');
     changeInfo('완료', '정상적으로 로그아웃되었습니다.');
     cancelLogout();
     setOpenAlert(returnTrue);
@@ -55,6 +59,7 @@ function Settings() {
   // 모달 창에서 로그아웃 취소
   const cancelLogout = () => {
     setWantLogout(returnFalse);
+    navigate('/');
   };
 
   // bgm 모달
