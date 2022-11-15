@@ -453,6 +453,10 @@
     {
       "src": "icon.svg",
       "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",
