@@ -19,4 +19,6 @@ public class TextRequest {
 
     private Integer status;
 
+    private Long userId;
+
 }

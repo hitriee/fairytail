@@ -43,12 +43,12 @@ public class TextController {
                 env.getProperty("local.server.port"));
     }
 
-    @ApiOperation(value = "텍스트 메시지 상세조회", notes = "해당 post_id에 해당하는 메시지의 상세 정보가 반환됩니다.")
-    @GetMapping("/detail/{post_id}")
-    public ResponseEntity<HashMap<String, Object>> getTextDetail(@PathVariable("post_id") Long postId) {
+    @ApiOperation(value = "텍스트 메시지 상세조회", notes = "해당 postId에 해당하는 메시지의 상세 정보가 반환됩니다.")
+    @GetMapping("/detail")
+    public ResponseEntity<HashMap<String, Object>> getTextDetail(@RequestParam Long postId, @RequestParam Long userId) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
-        TextDetailDto responseDto = textService.getTextDetail(postId, 2L);
+        TextDetailDto responseDto = textService.getTextDetail(postId, userId);
         TextDetailResponse responseVo = modelMapper.map(responseDto, TextDetailResponse.class);
 
         resultMap.put("data", responseVo);

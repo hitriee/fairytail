@@ -29,10 +29,8 @@ public class TextServiceImpl implements TextService {
 
     @Override
     public TextDto saveText(TextDto requestDto) {
-        /** 나머지 필요한 값들 지정해주기 (userId는 임시로!!) */
         LocalDateTime now = LocalDateTime.now();
 
-        requestDto.setUserId(1L);
         requestDto.setDate(now);
         requestDto.setDayType(mainUtils.checkTime(now.getHour()));
 
@@ -49,7 +47,6 @@ public class TextServiceImpl implements TextService {
 
         if (selectedTextEntity.isPresent()) {
             responseDto = modelMapper.map(selectedTextEntity.get(), TextDetailDto.class);
-            // userId 임의로 넣음!! -> 나중에 꼭 User 객체로 바꿔주기
             Boolean isLike = likeRepository.existsByPostAndUserId(selectedTextEntity.get(), userId);
 
             responseDto.setIsLike(isLike);
