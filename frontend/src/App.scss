@@ -43,24 +43,6 @@
   -webkit-tap-highlight-color: transparent !important;
 }
 
-.main {
-  background: linear-gradient(-30deg, #ffee03, #a07dff, #1de1ff);
-  background-size: 400% 400%;
-  animation: gradient 7s ease infinite;
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-}
-
 .screen {
   display: flex;
   justify-content: center;
