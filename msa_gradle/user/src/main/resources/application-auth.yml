@@ -8,7 +8,7 @@ spring:
           google:
             client-id: 972146122059-e028ed3mkq6g5g40rrkm67mqjv5f9oc6.apps.googleusercontent.com
             client-secret: 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
-#            redirect-uri: https://k7c209.p.ssafy.io/user/login/oauth2/code/google
+            redirect-uri: https://k7c209.p.ssafy.io/user/login/oauth2/code/google
             scope: profile, email
 
   datasource:
@@ -21,7 +21,7 @@ spring:
     open-in-view: true
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
