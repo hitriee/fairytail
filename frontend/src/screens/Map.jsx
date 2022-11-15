@@ -78,8 +78,8 @@ function Map() {
 
   return (
     <div className="screen">
-      <MoveToBack path="/main" color="black" />
-      <OpenHelp imagesIndex={1} color="black" />
+      <MoveToBack path="/main" color="#779BFF " />
+      <OpenHelp imagesIndex={1} color="#779BFF" />
       <div
         className="map-random"
         onClick={() => {
