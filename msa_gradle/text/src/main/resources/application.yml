@@ -40,8 +40,12 @@ logging:
     com.fairytail: DEBUG
 
 # text eureka-client
-spring.application.name=text
-eureka.client.register-with-eureka=true
-eureka.client.fetch-registry=true
-eureka.client.service-url.defaultZone=http://k7c209.p.ssafy.io:8761/eureka
-#eureka.instance.instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
+    register-with-eureka: true       # client 등록 시, true로 세팅
+    service-url:
+      defaultZone: http://k7c209.p.ssafy.io:8761/eureka
