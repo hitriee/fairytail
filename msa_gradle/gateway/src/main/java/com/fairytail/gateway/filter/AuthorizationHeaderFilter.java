@@ -46,7 +46,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
             // 배열이 되기 때문에 0번째의 데이터를 가져온다. - Bearer Token
             String authorizationHeader = request.getHeaders().get(org.springframework.http.HttpHeaders.AUTHORIZATION).get(0);
-            String jwt = authorizationHeader.replace("Bearer", ""); // Bearer를 제외한 나머지 토큰
+            String jwt = authorizationHeader.replace("Bearer ", ""); // Bearer를 제외한 나머지 토큰
 
             // 이용가능한 토큰인지를 확인
             if(!isValidJwt(jwt)) {
