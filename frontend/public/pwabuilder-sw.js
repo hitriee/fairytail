@@ -1,56 +1,36 @@
-// This is the service worker with the combined offline experience (Offline page + Offline copy of pages)
+// 캐시 이름
+const CACHE_NAME = "cache-v1";
 
-const CACHE = "pwabuilder-offline-page";
+// 캐싱할 파일
+const FILES_TO_CACHE = ["/offline.html", "/favicon.ico"];
 
-importScripts(
-  "https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js"
-);
-
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "offline.html";
-
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-});
-
-self.addEventListener("install", async (event) => {
+// 상술한 파일 캐싱
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.add(offlineFallbackPage))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
   );
 });
 
-if (workbox.navigationPreload.isSupported()) {
-  workbox.navigationPreload.enable();
-}
+// CACHE_NAME이 변경되면 오래된 캐시 삭제
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keyList) =>
+      Promise.all(
+        keyList.map((key) => {
+          if (CACHE_NAME !== key) return caches.delete(key);
+        })
+      )
+    )
+  );
+});
 
-workbox.routing.registerRoute(
-  new RegExp("/*"),
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: CACHE,
-  })
-);
-
+// 요청에 실패하면 오프라인 페이지 표시
 self.addEventListener("fetch", (event) => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(
-      (async () => {
-        try {
-          const preloadResp = await event.preloadResponse;
+  if ("navigate" !== event.request.mode) return;
 
-          if (preloadResp) {
-            return preloadResp;
-          }
-
-          const networkResp = await fetch(event.request);
-          return networkResp;
-        } catch (error) {
-          const cache = await caches.open(CACHE);
-          const cachedResp = await cache.match(offlineFallbackPage);
-          return cachedResp;
-        }
-      })()
-    );
-  }
+  event.respondWith(
+    fetch(event.request).catch(() =>
+      caches.open(CACHE_NAME).then((cache) => cache.match("/offline.html"))
+    )
+  );
 });
