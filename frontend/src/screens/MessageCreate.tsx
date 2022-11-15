@@ -1,17 +1,18 @@
 import {useLayoutEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+
 import '@screens/MessageCreate.scss';
 import Carousel from '@messageCreate/Carousel';
 import Message from '@messageCreate/Message';
 import Spinner from '@messageCreate/Spinner';
-import MoveToBack from '@common/MoveToBack';
 import EmojiGrid from '@messageCreate/EmojiGrid';
-import Toggle from '@messageCreate/Toggle';
 import Compress from '@messageCreate/Compress';
+import Toggle from '@messageCreate/Toggle';
+import MoveToBack from '@common/MoveToBack';
+import Alert from '@common/Alert';
+
 import {postText, postFile} from '@apis/messageCreate';
 import {toMessageDetail} from '@apis/router';
-
-import Alert from '@common/Alert';
 
 // 내용 타입 정의
 export type Content = {
@@ -21,7 +22,7 @@ export type Content = {
 };
 
 function MessageCreate() {
-  // alert state
+  // 알림 관련 state
   const [isAlertOpened, setIsAlertOpend] = useState(false);
   const [alertInfo, setAlertInfo] = useState({title: '', message: ''});
 
@@ -43,16 +44,16 @@ function MessageCreate() {
     return window.removeEventListener('resize', detectMobileKeyboard);
   });
 
-  // 디테일 페이지로 이동
+  // detail 페이지로 이동하기 위한 navigate
   const navigate = useNavigate();
 
-  // 파일 전송 중 보여주는 스피너
+  // 풍선 등록 중 보여주는 스피너
   const [spinner, setSpinner] = useState(false);
   const [spinnerMessage, setSpinnerMessage] =
     useState('잠시만 기다려주세요...');
   const [spinnerStop, setspinnerStop] = useState(0);
 
-  // 이모지 길게 클릭했는지 확인
+  // 이모지 길게 클릭했는지 확인하기 위한 state
   const [isLongClicked, setIsLongClicked] = useState(false);
 
   // 풍선 등록에 필요한 정보
@@ -65,7 +66,7 @@ function MessageCreate() {
   });
   const [isShare, setIsShare] = useState(false);
 
-  // 스피너
+  // 풍선 등록 결과에 따른 스피너 표시
   const successSpinner = (postId: number, type: number) => {
     setSpinnerMessage('성공적으로 등록되었습니다.');
     setTimeout(() => {
@@ -95,12 +96,14 @@ function MessageCreate() {
       setAlertInfo({title: '알림', message: '내용을 입력해주세요.'});
       setIsAlertOpend(true);
     } else if (content.type !== 0 && content.file === null) {
-      setAlertInfo({title: '알림', message: '파일이 첨부되지 않았습니다.'});
+      setAlertInfo({title: '알림', message: '파일을 첨부해주세요.'});
       setIsAlertOpend(true);
     } else {
+      // 모두 작성되었다면 서버로 전송
       if (navigator.geolocation) {
         setSpinner(true);
 
+        // 현재 위치 정보 받아오기
         navigator.geolocation.getCurrentPosition(async position => {
           const location = {
             lat: position.coords.latitude,
@@ -131,7 +134,7 @@ function MessageCreate() {
             postText(content.type, data)
               .then(({data, message}) => {
                 if (message === 'FAIL') {
-                  failSpinner('부적절한 내용이 포함되어 있습니다.');
+                  failSpinner('부적절한 내용이\n포함되어 있습니다.');
                 } else {
                   successSpinner(data.postId, data.type);
                 }
@@ -140,7 +143,7 @@ function MessageCreate() {
                 failSpinner('풍선 등록에 실패했습니다.');
               });
           } else {
-            // image, video, audio인 경우
+            // image, video, audio인 경우 -- multipart/form-data 사용
             data = new FormData();
             data.append('content', content.fileURL);
             data.append('emojiNo', emojiNo.toString());
@@ -154,7 +157,7 @@ function MessageCreate() {
             postFile(content.type, data)
               .then(({data, message}) => {
                 if (message === 'FAIL') {
-                  failSpinner('부적절한 내용이 포함되어 있습니다.');
+                  failSpinner('부적절한 내용이\n포함되어 있습니다.');
                 } else {
                   successSpinner(data.postId, data.type);
                 }

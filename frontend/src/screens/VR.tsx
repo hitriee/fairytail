@@ -1,36 +1,38 @@
-import './VR.scss';
 import Iframe from 'react-iframe';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import Loading from '@/components/loading/Loading';
-import MoveToBack from '@/components/common/MoveToBack';
 
-import {getMessageVR} from '@/apis/vr';
-import {LocationParams} from '@/apis';
-import OptionBtn from '@/components/vr/OptionBtn';
-
+import '@screens/VR.scss';
+import Loading from '@loading/Loading';
+import MoveToBack from '@common/MoveToBack';
 import OpenHelp from '@common/OpenHelp';
-import {toMessageDetail} from '@/apis/router';
+import OptionBtn from '@components/vr/OptionBtn';
+
+import {getMessageVR} from '@apis/vr';
+import {LocationParams} from '@apis/index';
+import {toMessageDetail} from '@apis/router';
 
 function VR() {
+  // detail 페이지로 이동하기 위한 navigate
   const navigate = useNavigate();
 
   // 정렬 옵션: false-최신순, true-좋아요순
   const [option, setOption] = useState(false);
 
+  // 데이터 및 데이터 받아오기가 끝났는지 확인하기 위한 state
   const [data, setData] = useState([]);
   const [isFinished, setIsFinished] = useState(-1);
 
-  // 이전 페이지에서 받은 위치 정보를 location에 저장
+  // 이전 페이지에서 받은 위치 정보를 location에 저장(VR에서 넘어온 경우)
   const state = useLocation().state;
   const position = state ? (state.position as LocationParams) : null;
   const [location, setLocation] = useState(position);
 
-  // iframe 준비 확인
+  // iframe 준비됐는지 확인
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // 받은 위치 정보가 없을 경우, 현재 위치 받아오기
+    // 받은 위치 정보가 없을 경우(Main에서 넘어온 경우), 현재 위치 받아오기
     if (location === null) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async pos => {
@@ -44,7 +46,7 @@ function VR() {
         navigate(-1);
       }
     } else {
-      // 서버에서 데이터 받아오기
+      // 위치 정보 가지고 서버에서 데이터 받아오기
       const optionString = option ? 'like' : 'latest';
 
       for (let i = 0; i < 4; i++) {
@@ -60,7 +62,7 @@ function VR() {
     }
   }, [isLoaded, option]);
 
-  // 자식에 데이터 전달
+  // 데이터 다 받았다면 자식에 데이터 전달
   useEffect(() => {
     if (isFinished === 3 && data.length > 0) {
       const child = document.getElementsByTagName('iframe');
@@ -69,7 +71,7 @@ function VR() {
     }
   }, [isFinished, data]);
 
-  // 자식에게서 메세지 받을 경우 페이지 이동
+  // 자식에게서 메세지 받을 경우 deatil 페이지로 이동
   const [postId, setPostId] = useState(0);
 
   const receiveMsgFromChild = (ev: MessageEvent<any>) => {
@@ -90,7 +92,7 @@ function VR() {
 
   return (
     <div className="vr">
-      {isLoaded ? null : <Loading />}
+      {isLoaded ? null : <Loading fillBackground={true} />}
 
       <MoveToBack path="-1" />
       {data.length > 0 ? (

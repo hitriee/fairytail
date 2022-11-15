@@ -1,9 +1,18 @@
+import {useLocation, useNavigate} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useRecoilState} from 'recoil';
+import {loadingState, transitionState} from '@apis/recoil';
+
 import InitMessage from '@apis/notifications/foregroundMessaging';
 
+import Loading from '@loading/Loading';
 import Room from '@main/Room';
 import OpenHelp from '@common/OpenHelp';
 import BgmBtn from '@common/BgmBtn';
+import {currentUser} from '@common/commonFunc';
+import Alert from '@common/Alert';
 
+import '@screens/Main.scss';
 import Globe from '@screens/Globe';
 import Map from '@screens/Map';
 import MessageCreate from '@screens/MessageCreate';
@@ -12,14 +21,6 @@ import MessageList from '@screens/MessageList';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
-import {useLocation, useNavigate} from 'react-router-dom';
-import {currentUser} from '@common/commonFunc';
-
-import Alert from '@common/Alert';
-import {useState} from 'react';
-import {useRecoilState} from 'recoil';
-import {loadingState} from '@/apis/recoil';
-import Loading from '@/components/loading/Loading';
 
 function Main() {
   // 로그인 여부 확인
@@ -59,30 +60,53 @@ function Main() {
   // main 최초 렌더링 확인
   const [isLoaded, setIsLoaded] = useRecoilState(loadingState);
 
-  if (!isLoaded) {
+  if (pathname === '/main' && !isLoaded) {
     setTimeout(() => {
       setIsLoaded(true);
     }, 3000);
   }
 
+  // main 렌더링 시 애니메이션 효과
+  const [transitionName, setTransitionName] = useRecoilState(transitionState);
+
+  useEffect(() => {
+    if (transitionName === '') {
+      setTransitionName('fadeIn');
+    }
+  }, [pathname]);
+
   return (
     <>
       {isAlertOpened ? null : (
         <div className="screen main">
-          {isLoaded ? null : <Loading />}
-
-          <InitMessage />
           <div
-            className="screen"
-            style={{display: pathname.startsWith('/main') ? 'block' : 'none'}}>
-            <OpenHelp imagesIndex={0} />
-            <BgmBtn />
-            <Room />
-          </div>
+            className={`${transitionName}`}
+            onAnimationEnd={() => {
+              if (transitionName === 'fadeIn') {
+                setTransitionName('');
+              }
+            }}>
+            {pathname === '/main' && !isLoaded ? (
+              <Loading fillBackground={false} />
+            ) : null}
 
-          <div
-            style={{display: pathname.startsWith('/main') ? 'none' : 'block'}}>
-            {component()}
+            <InitMessage />
+            <div
+              className="screen"
+              style={{
+                display: pathname.startsWith('/main') ? 'block' : 'none',
+              }}>
+              <OpenHelp imagesIndex={0} />
+              <BgmBtn />
+              <Room />
+            </div>
+
+            <div
+              style={{
+                display: pathname.startsWith('/main') ? 'none' : 'block',
+              }}>
+              {component()}
+            </div>
           </div>
         </div>
       )}

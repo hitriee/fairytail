@@ -1,7 +1,8 @@
 import L from 'leaflet';
+
 import customMarker from '@images/CustomMarker.svg';
-import {emojiArr} from '@/assets/emojis';
-import './CustomMarker.scss';
+import {emojiArr} from '@emojis/index';
+import '@map/CustomMarker.scss';
 
 export const CustomMarkerIcon = new L.Icon({
   iconUrl: customMarker,

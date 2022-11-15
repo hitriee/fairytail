@@ -1,7 +1,8 @@
-import './Loading.scss';
-import introLogo from '@images/introLogo.png';
+import '@loading/Loading.scss';
+import {emojiArr} from '@emojis/index';
 
-function Loading() {
+// main 최초 로딩, vr 로딩 시 보여지는 화면
+function Loading({fillBackground}: {fillBackground: boolean}) {
   const letter = [
     '당신이 잠들면 나도 잘게요',
     '넌 해도 돼, 내가 달이 되지 뭐',
@@ -20,13 +21,12 @@ function Loading() {
   function rand(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
   return (
-    <>
-      <div className="loading-background">
-        <img className="loading-image" src={introLogo} alt="로딩 이미지" />
-        <p className="loading-message">{letter[rand(0, 11)]}</p>
-      </div>
-    </>
+    <div className={fillBackground ? 'loading loading-background' : 'loading'}>
+      <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" />
+      <p className="loading-message">{letter[rand(0, 11)]}</p>
+    </div>
   );
 }
 

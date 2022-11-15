@@ -1,6 +1,7 @@
 import {useState, useRef, useEffect, Dispatch, SetStateAction} from 'react';
-import {ReactComponent as ArrowDropDown} from '@images/arrowDropDown.svg';
+
 import '@common/SelectBox.scss';
+import {ReactComponent as ArrowDropDown} from '@images/arrowDropDown.svg';
 
 interface SelectBoxProps {
   reportType: number;
@@ -8,6 +9,7 @@ interface SelectBoxProps {
   options: string[];
 }
 
+// custon select
 function SelectBox({reportType, setReportType, options}: SelectBoxProps) {
   // select 목록 표시 여부
   const [showSelect, setShowSelect] = useState(false);

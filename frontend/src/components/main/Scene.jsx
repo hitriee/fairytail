@@ -83,6 +83,7 @@ export default function Scene({...props}) {
       navigate(globe());
     }
   };
+
   return (
     <>
       <group {...props} dispose={null}>
@@ -1432,10 +1433,10 @@ export default function Scene({...props}) {
           name="1"
           makeDefault={true}
           far={100000}
-          near={5}
+          near={1000}
           fov={45}
-          position={[-2776.27, 1133.08, 2325.68]}
-          rotation={[-0.45, -0.82, -0.34]}
+          position={[-3464.2, 2872.21, 3531.06]}
+          rotation={[-0.68, -0.65, -0.46]}
           scale={1}
         />
         <hemisphereLight

@@ -16,7 +16,7 @@ export const API_AUTH = axios.create({
 
 // 추후 BASE_URL로 변경 예정
 export const API_USER = axios.create({
-  baseURL: 'http://k7c209.p.ssafy.io:9096',
+  baseURL: 'https://k7c209.p.ssafy.io',
   headers: {
     Authorization: `Bearer ${localStorage.token}`,
   },

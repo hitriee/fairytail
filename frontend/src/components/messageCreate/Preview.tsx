@@ -1,10 +1,11 @@
-import MusicPlayer from './MusicPlayer';
+import MusicPlayer from '@messageCreate/MusicPlayer';
 
 type PreviewProps = {
   type: number;
   fileURL: string;
 };
 
+// 전달받은 type에 따라 다른 미리보기 컴포넌트 반환
 function Preview({type, fileURL}: PreviewProps) {
   let preview: any;
 
