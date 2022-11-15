@@ -59,7 +59,7 @@ public class TextController {
 
     @ApiOperation(value = "텍스트 메시지 등록", notes = "요청이 성공하면 등록된 메시지의 아이디와 타입 번호가 반환됩니다.")
     @PostMapping
-    public ResponseEntity<HashMap<String, Object>> createText(TextRequest requestVo) {
+    public ResponseEntity<HashMap<String, Object>> createText(@RequestBody TextRequest requestVo) {
         HashMap<String, Object> resultMap = new HashMap<>();
         TextDto requestDto = modelMapper.map(requestVo, TextDto.class);
 
@@ -165,7 +165,7 @@ public class TextController {
 
     @ApiOperation(value = "텍스트 메시지 상태 변경", notes = "해당 post_id에 해당하는 메시지의 상태를 변경합니다.")
     @PostMapping("/status")
-    public ResponseEntity<HashMap<String, Object>> updateTextStatus(TextStatusRequest requestVo) {
+    public ResponseEntity<HashMap<String, Object>> updateTextStatus(@RequestBody TextStatusRequest requestVo) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
         TextDetailDto requestDto = modelMapper.map(requestVo, TextDetailDto.class);
