@@ -1,5 +1,6 @@
 import useSpline from '@splinetool/r3f-spline';
 import {PerspectiveCamera} from '@react-three/drei';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 //route
@@ -61,6 +62,7 @@ export default function Scene({...props}) {
 
   const [isPlaying, setISPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
+  const [cnt, setCnt] = useState(0);
 
   const changeBgmNo = event => {
     event.stopPropagation();
@@ -74,6 +76,13 @@ export default function Scene({...props}) {
     });
   };
 
+  const handleMoveGlobe = () => {
+    setCnt(cnt + 1);
+    if (cnt > 5) {
+      setCnt(0);
+      navigate(globe());
+    }
+  };
   return (
     <>
       <group {...props} dispose={null}>
@@ -158,7 +167,7 @@ export default function Scene({...props}) {
               position={[0, 0, 0]}
               rotation={[0, -Math.PI / 2, 0]}
               scale={1}
-              onClick={moveGlobe}
+              onClick={() => handleMoveGlobe()}
             />
           </group>
           <group
