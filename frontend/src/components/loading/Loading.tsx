@@ -1,5 +1,5 @@
 import '@loading/Loading.scss';
-import introLogo from '@images/introLogo.png';
+import {emojiArr} from '@emojis/index';
 
 // main 최초 로딩, vr 로딩 시 보여지는 화면
 function Loading({fillBackground}: {fillBackground: boolean}) {
@@ -24,11 +24,7 @@ function Loading({fillBackground}: {fillBackground: boolean}) {
 
   return (
     <div className={fillBackground ? 'loading loading-background' : 'loading'}>
-      <img
-        className="loading-image animate-flicker"
-        src={introLogo}
-        alt="로딩 이미지"
-      />
+      <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" />
       <p className="loading-message">{letter[rand(0, 11)]}</p>
     </div>
   );
