@@ -30,6 +30,15 @@ function App() {
   const [isPlaying, setIsPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
 
+  const bgmNoJson = localStorage.getItem('bgmNo');
+
+  if (bgmNoJson !== null) {
+    const bgmNoLocal = JSON.parse(bgmNoJson);
+    setBgmNo(bgmNoLocal);
+  } else {
+    localStorage.setItem('bgmNo', JSON.stringify(0));
+  }
+
   const audioRef = useRef<HTMLAudioElement>(null!);
 
   useEffect(() => {

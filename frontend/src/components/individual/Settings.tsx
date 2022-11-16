@@ -71,7 +71,7 @@ function Settings() {
     setIsBgmModalOpened(returnFalse);
   };
 
-  // 라이선스, 도움말 모달
+  // 라이선스, 개인정보 처리방침 모달
   const openInfoModal = (type: string) => {
     return () => {
       setInfoType(type);
@@ -120,8 +120,8 @@ function Settings() {
         </div>
         <span
           className="settings-each settings-margin-bottom"
-          onClick={openInfoModal('help')}>
-          도움말
+          onClick={openInfoModal('privacyPolicy')}>
+          개인정보 처리방침
         </span>
       </section>
 
@@ -139,7 +139,7 @@ function Settings() {
       {/* 배경음악 목록 */}
       <BgmModal open={isBgmModalOpened} onCancel={closeBgmModal} />
 
-      {/* 라이선스, 도움말 모달 */}
+      {/* 라이선스, 개인정보 처리방침 모달 */}
       <InfoModal open={wantInfo} onConfirmed={closeInfoModal} type={infoType} />
     </main>
   );

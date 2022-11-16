@@ -61,15 +61,15 @@
 
 .btn {
   background-color: white;
-  color: $PURPLE-2;
+  color: $YELLOW;
   border-radius: 20px;
   padding: 0.7vh 2vh;
   font-size: 2.3vh;
   cursor: pointer;
-  border: 1px solid #a07dff32;
+  border: 1px solid #ffc335;
 
   &:hover {
     color: white;
-    background-color: $PURPLE-2;
+    background-color: $YELLOW;
   }
 }
