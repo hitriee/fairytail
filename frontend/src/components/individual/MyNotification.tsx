@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {emojiArr} from 'src/assets/emojis';
+import {smallEmojiArr} from 'src/assets/emojis';
 // ** 각 알림당 설정
 
 import '@individual/MyNotifications.scss';
@@ -21,12 +21,12 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   // const [originPos, setOriginPos] = useState({x: 0, y: 0});
   const [deleted, setDeleted] = useState(false);
   const [isGrabbing, setIsGrabbing] = useState(false);
-  const {id, title, emoji, type} = item;
+  const {postId, title, emojiNo, type} = item;
   const toDetail = (postId: number) => {
     return () => navigate(toMessageDetail(postId, type));
   };
   const shortTitle = () => {
-    if (title.length >= 6) {
+    if (title.length > 6) {
       return `${title.slice(0, 6)}...`;
     } else {
       return title;
@@ -61,13 +61,12 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
       if ((current.offsetLeft + current.offsetWidth) / 2 < e.clientX * 0.4) {
         setDeleted(true);
         console.log(true);
-        if (deleteEach && index) {
+        if (deleteEach && index !== undefined) {
           deleteEach(index);
         }
       } else {
         (ref.current as HTMLDivElement).style.marginLeft = `0`;
         setDeleted(false);
-        console.log(false);
       }
     }
   };
@@ -125,7 +124,7 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
         ref={ref}
         className={dynamicClass()}
         draggable={dragFlag}
-        onClick={toDetail(id)}
+        onClick={toDetail(postId)}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
@@ -133,13 +132,13 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}>
         <img
-          src={emojiArr[emoji]}
+          src={smallEmojiArr[emojiNo]}
           alt="emoji"
           className="myNotification-emoji"
         />
-        <p>
-          익명의 작가가 당신의 이야기 <br />
-          <span className="myNotification-title">{shortTitle()}</span>을
+        <p className="myNotification-message">
+          누군가 당신의 이야기 <br />
+          <span className="myNotification-title">{shortTitle()}</span>을(를)
           좋아합니다
         </p>
       </div>

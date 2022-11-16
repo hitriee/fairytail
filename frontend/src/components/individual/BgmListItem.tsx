@@ -27,6 +27,7 @@ function BgmListItem({title, index}: BgmListItemProps) {
   const changeBgm = (index: number) => {
     if (isPlaying) {
       setBgmNo(index);
+      localStorage.setItem('bgmNo', JSON.stringify(index));
     }
   };
 

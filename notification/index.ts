@@ -1,3 +1,4 @@
+import { addData } from "./addData";
 import { sendFcmMessage } from "./firebase_admin_init";
 const express = require("express");
 const cors = require("cors");
@@ -40,6 +41,7 @@ app.post("/fcm", (request: request, response: response) => {
   sendFcmMessage(message)
     .then(async (res: any) => {
       if (res) {
+        addData(title, data.userId, data.postId, data.emojiNo, data.type);
         response.status(200).send(res);
       } else {
         response.status(400).send("오류가 발생했습니다");

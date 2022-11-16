@@ -1,7 +1,7 @@
 // ** fcm으로 요청보낼 때 필요한 토큰 관련
 
 import {getMessaging, getToken} from 'firebase/messaging';
-import app from '@apis/notifications/firebaseConfig';
+import {app} from '@apis/notifications/firebaseConfig';
 
 const messaging = getMessaging(app);
 
@@ -29,13 +29,9 @@ export const initToken = async () => {
 
 // 등록 토큰에 액세스 (알림 권한 요청)
 export const requestPermission = () => {
-  console.log(Notification.permission);
-  if (Notification.permission === 'default') {
-    console.log('Requesting permission...');
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-      }
-    });
-  }
+  Notification.requestPermission().then(permission => {
+    if (permission !== 'denied') {
+      localStorage.setItem('noti', 'true');
+    }
+  });
 };

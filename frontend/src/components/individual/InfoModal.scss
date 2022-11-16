@@ -1,12 +1,46 @@
+@import '@styles/_colors.scss';
+
 .info {
+  &-container {
+    padding: 4vh 3vh;
+  }
+
   &-title {
     color: black;
     font-size: 3vh;
     font-weight: 700;
   }
+
   &-content {
     word-break: break-all;
     color: black;
     overflow: auto;
+    background-color: $GRAY-E4;
+    border-radius: 15px;
+    padding: 1.5vh;
+  }
+
+  &-category {
+    width: 100%;
+    margin-bottom: 2vh;
+  }
+
+  &-subtitle {
+    text-align: center;
+    font-size: 2.5vh;
+    font-weight: 700;
+    color: $PURPLE-2;
+    margin: 1vh 0;
+  }
+
+  &-paragraph {
+    margin: 0;
+    white-space: pre-line;
+    font-size: 2vh;
+    line-height: 2.5vh;
+  }
+
+  &-keyword {
+    font-weight: 700;
   }
 }

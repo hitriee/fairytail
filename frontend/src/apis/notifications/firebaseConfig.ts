@@ -1,6 +1,8 @@
 //** fcm 사용하기 위한 앱 초기화
 
 import {initializeApp} from 'firebase/app';
+import {getFirestore} from 'firebase/firestore';
+import 'firebase/installations';
 
 // 설정값
 const firebaseConfig = {
@@ -14,5 +16,8 @@ const firebaseConfig = {
 };
 
 // 앱 초기화
-const app = initializeApp(firebaseConfig);
-export default app;
+export const app = initializeApp(firebaseConfig);
+
+export const db = getFirestore(app);
+
+// export default app;

@@ -16,7 +16,7 @@
   &-container {
     background-color: white;
     border-radius: 15px;
-    width: 80%;
+    width: 85%;
     height: 75vh;
     padding: 4vh;
     display: flex;
@@ -67,7 +67,7 @@
       }
 
       &-selected {
-        background-color: $PURPLE;
+        background-color: $YELLOW;
         color: white;
       }
 

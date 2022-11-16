@@ -15,7 +15,8 @@ import Alert from '@common/Alert';
 import {intro} from '@/apis/router';
 
 function Settings() {
-  const [permitNoti, setPermitNoti] = useState(true);
+  const [permitPush, setPermitPush] = useState('설정 가능');
+  const [permitNoti, setPermitNoti] = useState(false);
   const [isBgmModalOpened, setIsBgmModalOpened] = useState(false);
   const [wantLogout, setWantLogout] = useState(false);
   const [wantInfo, setWantInfo] = useState(false);
@@ -25,9 +26,47 @@ function Settings() {
   const navigate = useNavigate();
 
   // 좋아요 알림 변경
-  const changePermitNoti = () => {
-    setPermitNoti(!permitNoti);
+  // 백그라운드
+  const changePermitPush = () => {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().then(async permission => {
+        if (permission === 'default') {
+          setPermitPush(() => '설정 가능');
+        } else if (permission === 'denied') {
+          setPermitPush(() => '거부');
+        } else {
+          setPermitPush(() => '허용');
+        }
+      });
+    } else {
+      changeInfo(
+        '알림 설정',
+        `현재 알림 ${permitPush} 상태입니다. \n 브라우저의 알림 설정 페이지에서 \n 변경이 가능합니다`,
+      );
+      setOpenAlert(returnTrue);
+    }
   };
+  // 포그라운드
+  const changePermitNoti = () => {
+    console.log('clicked');
+    setPermitNoti(prev => !prev);
+    if (localStorage.getItem('noti')) {
+      localStorage.removeItem('noti');
+    } else {
+      localStorage.setItem('noti', 'true');
+    }
+  };
+  useEffect(() => {
+    const {permission} = Notification;
+    if (permission === 'denied') {
+      setPermitPush(() => '거부');
+    } else if (permission === 'granted') {
+      setPermitPush(() => '허용');
+    }
+    if (localStorage.getItem('noti')) {
+      setPermitNoti(returnTrue);
+    }
+  }, []);
 
   // 팝업에 뜰 내용 변경
   const changeInfo = (title: popUp['title'], message: popUp['message']) => {
@@ -71,7 +110,7 @@ function Settings() {
     setIsBgmModalOpened(returnFalse);
   };
 
-  // 라이선스, 도움말 모달
+  // 라이선스, 개인정보 처리방침 모달
   const openInfoModal = (type: string) => {
     return () => {
       setInfoType(type);
@@ -88,10 +127,18 @@ function Settings() {
       <section className="settings-section">
         <div className="settings-title">애플리케이션</div>
         <div className="settings-between">
-          <div className="settings-each" onClick={changePermitNoti}>
-            좋아요 알림
+          <div className="settings-each" onClick={changePermitPush}>
+            좋아요 푸시 알림
           </div>
-          <Toggle label="" onClick={setPermitNoti} value={permitNoti} />
+          <div className="settings-push" onClick={changePermitPush}>
+            {permitPush}
+          </div>
+        </div>
+        <div className="settings-between">
+          <div className="settings-each" onClick={changePermitNoti}>
+            앱 사용 중 좋아요 알림
+          </div>
+          <Toggle label="" onClick={changePermitNoti} value={permitNoti} />
         </div>
         <div className="settings-between">
           <div className="settings-each" onClick={openBgmModal}>
@@ -120,8 +167,8 @@ function Settings() {
         </div>
         <span
           className="settings-each settings-margin-bottom"
-          onClick={openInfoModal('help')}>
-          도움말
+          onClick={openInfoModal('privacyPolicy')}>
+          개인정보 처리방침
         </span>
       </section>
 
@@ -139,7 +186,7 @@ function Settings() {
       {/* 배경음악 목록 */}
       <BgmModal open={isBgmModalOpened} onCancel={closeBgmModal} />
 
-      {/* 라이선스, 도움말 모달 */}
+      {/* 라이선스, 개인정보 처리방침 모달 */}
       <InfoModal open={wantInfo} onConfirmed={closeInfoModal} type={infoType} />
     </main>
   );

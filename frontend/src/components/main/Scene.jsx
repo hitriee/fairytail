@@ -25,11 +25,6 @@ export default function Scene({...props}) {
 
   const navigate = useNavigate();
 
-  const moveGlobe = event => {
-    event.stopPropagation();
-    navigate(globe());
-  };
-
   const moveMap = event => {
     event.stopPropagation();
     navigate(map());
@@ -60,20 +55,21 @@ export default function Scene({...props}) {
     navigate(notifications());
   };
 
-  const [isPlaying, setISPlaying] = useRecoilState(playingState);
+  const [isPlaying, setIsPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
   const [cnt, setCnt] = useState(0);
 
   const changeBgmNo = event => {
     event.stopPropagation();
-    setISPlaying(true);
-    setBgmNo(prev => {
-      if (prev >= 9) {
-        return 0;
-      } else {
-        return prev + 1;
-      }
-    });
+    setIsPlaying(true);
+    let tempNo = 0;
+    if (bgmNo >= 9) {
+      tempNo = 0;
+    } else {
+      tempNo = bgmNo + 1;
+    }
+    setBgmNo(tempNo);
+    localStorage.setItem('bgmNo', JSON.stringify(tempNo));
   };
 
   const handleMoveGlobe = () => {
