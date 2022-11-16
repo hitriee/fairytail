@@ -1,10 +1,14 @@
 package com.fairytail.text.service;
 
+import com.fairytail.text.client.NotiFeignClient;
 import com.fairytail.text.dto.LikeDto;
+import com.fairytail.text.dto.NotiLikeRequestDto;
+import com.fairytail.text.dto.NotiRequestDto;
 import com.fairytail.text.jpa.LikeEntity;
 import com.fairytail.text.jpa.LikeRepository;
 import com.fairytail.text.jpa.TextEntity;
 import com.fairytail.text.jpa.TextRepository;
+import com.fairytail.text.util.UserReportFeign;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,10 @@ public class LikeServiceImpl implements LikeService {
     private final TextRepository textRepository;
 
     private final LikeRepository likeRepository;
+
+    private final UserReportFeign userReportFeign;
+
+    private final NotiFeignClient notiFeignClient;
 
     @Override
     @Transactional
@@ -43,6 +51,15 @@ public class LikeServiceImpl implements LikeService {
                 // post 테이블의 like_cnt 1 증가
                 textEntity.setLikeCnt(textEntity.getLikeCnt() + 1);
                 textRepository.save(textEntity);
+
+                /** 좋아요 알림 요청 보내기 */
+                // 요청 데이터 세팅
+                NotiRequestDto requsetDto = new NotiRequestDto();
+                requsetDto.setToken(userReportFeign.getUserToken(requestDto.getWriterId()));
+                requsetDto.setTitle(textEntity.getTitle());
+                requsetDto.setData(modelMapper.map(textEntity, NotiLikeRequestDto.class));
+                // 요청 보내기
+                notiFeignClient.createNotiLike(requsetDto);
 
                 response = 1;
             }
