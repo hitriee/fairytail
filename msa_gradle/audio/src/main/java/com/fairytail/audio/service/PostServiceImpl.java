@@ -80,9 +80,9 @@ public class PostServiceImpl implements PostService {
             img.setDate(now); //작성 시간 세팅
             img.setContent(text); //변환된 텍스트 세팅
 
-            postRepository.save(img); //저장
+            PostEntity res = postRepository.save(img); //저장
 
-            data = modelMapper.map(img, PostDto.class);
+            data = modelMapper.map(res, PostDto.class);
             filePath.delete();
         }
 
