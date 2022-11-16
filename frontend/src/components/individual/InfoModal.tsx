@@ -46,6 +46,26 @@ function InfoModal({open, type, onConfirmed}: InfoModalProps) {
               <span className="info-keyword">{`Like a dream,`}</span>
               {`김현정,\n한국저작권위원회,기증저작물`}
             </p>
+            <p className="info-paragraph">
+              <span className="info-keyword">{`Tonight,`}</span>
+              {`김재성,\n한국저작권위원회,기증저작물`}
+            </p>
+            <p className="info-paragraph">
+              <span className="info-keyword">{`I HAVE NOTHING,`}</span>
+              {`김재영,\n한국저작권위원회,기증저작물`}
+            </p>
+            <p className="info-paragraph">
+              <span className="info-keyword">{`Dreaming Rain,`}</span>
+              {`김현정,\n한국저작권위원회,기증저작물`}
+            </p>
+            <p className="info-paragraph">
+              <span className="info-keyword">{`Fantasy Piano,`}</span>
+              {`김태현,\n한국저작권위원회,기증저작물`}
+            </p>
+            <p className="info-paragraph">
+              <span className="info-keyword">{`Drive,`}</span>
+              {`서지현,\n한국저작권위원회,기증저작물`}
+            </p>
           </div>
         </div>
       );
