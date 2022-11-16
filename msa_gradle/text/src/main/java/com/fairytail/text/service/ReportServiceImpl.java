@@ -5,6 +5,7 @@ import com.fairytail.text.jpa.ReportEntity;
 import com.fairytail.text.jpa.ReportRepository;
 import com.fairytail.text.jpa.TextEntity;
 import com.fairytail.text.jpa.TextRepository;
+import com.fairytail.text.util.UserReportFeign;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class ReportServiceImpl implements ReportService {
     private final ReportRepository reportRepository;
 
     private final TextRepository textRepository;
+
+    private final UserReportFeign userReportFeign;
 
     @Override
     public Integer createTextReport(ReportDto requestDto) {
@@ -62,6 +65,7 @@ public class ReportServiceImpl implements ReportService {
 
             if (textEntity.getReportCnt() == 3) { // 신고 횟수가 3번이 됐을 경우
                 textEntity.setStatus(2); // 메시지 상태를 차단(2)으로 바꾸기
+                userReportFeign.userReport(textEntity.getUserId());
             }
             textRepository.save(textEntity);
             response = textEntity.getReportCnt();
