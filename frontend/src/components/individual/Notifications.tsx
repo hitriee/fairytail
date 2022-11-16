@@ -32,6 +32,7 @@ function Notifications() {
   const userId = currentUser();
 
   const readData = async (userId: number) => {
+    console.log(userId);
     const q = query(
       collection(db, 'notification'),
       where('userId', '==', userId),
@@ -45,7 +46,7 @@ function Notifications() {
   };
 
   useEffect(() => {
-    readData(2);
+    readData(userId);
   }, []);
 
   return (

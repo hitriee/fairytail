@@ -44,9 +44,9 @@ function MessageList() {
 
   return (
     <div className="messageList">
-      <div className="navbarContainer">
-        <MoveToBack path={main()} />
-      </div>
+      <MoveToBack path={main()} />
+      {/* <div className="navbarContainer">
+      </div> */}
       <div className="messageList-container">
         <div className="messageList-container-info">내 이야기</div>
 

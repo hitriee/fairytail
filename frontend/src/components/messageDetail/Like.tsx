@@ -38,28 +38,12 @@ function Like({
 
   // 좋아요 수, 좋아요 여부 변경
   const changeLike = () => {
-    // if (!isMine) {
     if (myLike) {
       setMessageCount(prev => prev - 1);
     } else {
       setMessageCount(prev => prev + 1);
     }
     setLike(() => !myLike);
-    // likeMessage(type, {isLike: myLike, ...likeInfo});
-    // }
-  };
-
-  // unload시에 좋아요에 변동이 있으면 좋아요 변경 요청 보냄
-  window.onbeforeunload = () => {
-    if (myLike !== like) {
-      switch (type) {
-        case 'text':
-          likeMessage(type, {isLike: myLike, ...likeInfo});
-          break;
-        default:
-          likeMessage(type, {...likeInfo, writerId});
-      }
-    }
   };
 
   // props 데이터 갱신 (count, like)
@@ -71,11 +55,15 @@ function Like({
     setLike(() => like);
   }, [like]);
 
+  useEffect(() => {
+    likeMessage(type, {isLike: myLike, ...likeInfo});
+  }, [myLike]);
+
   return (
     <article className="like">
       <img src={emojiArr[emoji]} alt="풍선 이모지" className="like-balloon" />
       <div className="like-container">
-        {isMine || myLike ? (
+        {myLike ? (
           <HeartFilled className="like-icon" onClick={changeLike} fill="red" />
         ) : (
           <HeartEmpty className="like-icon" onClick={changeLike} fill="white" />

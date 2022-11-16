@@ -72,7 +72,8 @@ function MessageCreate() {
     setSpinnerMessage('성공적으로 등록되었습니다.');
     setTimeout(() => {
       setSpinner(false);
-      navigate(toMessageDetail(postId, type));
+      console.log(toMessageDetail(postId, type));
+      // navigate(toMessageDetail(postId, type));
     }, 1500);
   };
 
@@ -175,6 +176,7 @@ function MessageCreate() {
                 if (message === 'FAIL') {
                   failSpinner('부적절한 내용이\n포함되어 있습니다.');
                 } else {
+                  console.log(data);
                   successSpinner(data.postId, data.type);
                 }
               })

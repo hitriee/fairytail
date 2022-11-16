@@ -19,6 +19,7 @@ interface messageProps {
 
 function MyMessage({messageItem}: messageProps) {
   const navigate = useNavigate();
+  const date = messageItem.date.split('T')[0];
 
   function moveMessage() {
     navigate(messageUrl(messageItem.type, messageItem.postId));
@@ -31,7 +32,7 @@ function MyMessage({messageItem}: messageProps) {
         </div>
         <div className="myMessage-container">
           <p className="myMessage-container-title">{messageItem.title}</p>
-          <span className="myMessage-container-date">{messageItem.date}</span>
+          <span className="myMessage-container-date">{date}</span>
         </div>
         <div className="myMessage-container-like">
           {/* <img src={Heart} alt="emoji" /> */}

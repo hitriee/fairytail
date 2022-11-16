@@ -10,12 +10,10 @@ import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import {popUp} from '@common/commonFunc';
 import '@common/Common.scss';
-import {checkType} from '@/apis';
 import {
   changeMessageStatus,
   deleteMessage,
 } from '@/apis/messageDetail/detailFunc';
-import {initToken} from '@/apis/notifications/getMessagingToken';
 
 // props 유형
 interface MoreMenuProps {
@@ -47,7 +45,6 @@ function MoreMenu({
   const [openReport, setReport] = useState(false);
   const [openAlert, setAlert] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  // initToken();
 
   // info 값 변경
   const changeInfo = (title: popUp['title'], message: popUp['message']) => {
@@ -163,7 +160,7 @@ function MoreMenu({
       });
   };
   useEffect(() => {
-    if (deleted) {
+    if (deleted && !openConfirm) {
       navigate(-1);
     }
   }, [deleted]);
@@ -175,22 +172,22 @@ function MoreMenu({
           <article className="button" onClick={saveMessage}>
             저장
           </article>
-          {/* {isMine ? ( */}
-          <>
-            <article className="button" onClick={onDelete}>
-              삭제
-            </article>
-            <article className="button" onClick={changeStatus}>
-              {`${presentStatus(1 - status)}로 변경`}
-            </article>
-          </>
-          {/* ) : ( */}
-          <>
-            <article className="button" onClick={reportMessage}>
-              신고
-            </article>
-          </>
-          {/* )} */}
+          {isMine ? (
+            <>
+              <article className="button" onClick={onDelete}>
+                삭제
+              </article>
+              <article className="button" onClick={changeStatus}>
+                {`${presentStatus(1 - status)}로 변경`}
+              </article>
+            </>
+          ) : (
+            <>
+              <article className="button" onClick={reportMessage}>
+                신고
+              </article>
+            </>
+          )}
         </main>
       ) : null}
 
