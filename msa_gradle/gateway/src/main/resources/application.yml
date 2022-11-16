@@ -44,20 +44,18 @@ spring:
               predicates:
                   - Path=/text/**
         #CORS
-#        globalcors:
-#          cors-configurations:
-#            '[/**]':
-#              allowed-origins: "https://k7c2091.p.ssafy.io"
-#              allow-credentials: true
-#              allowed-headers:
-#                - x-requested-with
-#                - authorization
-#                - content-type
-#                - X-AUTH-TOKEN
-#                - X-CSRF-TOKEN
-#              allowed-methods:
-#                - POST
-#                - GET
-#                - PUT
-#                - DELETE
+        globalcors:
+          cors-configurations:
+            '[/**]':
+              allowed-origins: "https://k7c2091.p.ssafy.io"
+              allow-credentials: true
+              allowed-headers: '*'
+              allowed-methods:
+                - POST
+                - GET
+                - PUT
+                - DELETE
+                - OPTIONS
+        default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
 
