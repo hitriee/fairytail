@@ -75,10 +75,8 @@ public class PostServiceImpl implements PostService {
 
             img.setDayType(dayType); //dayType값 넣어주기
             img.setDate(now);
-
-            postRepository.save(img); //저장
-
-            data = modelMapper.map(img, PostDto.class); //dto로 매핑
+            PostEntity res = postRepository.save(img); //저장
+            data = modelMapper.map(res, PostDto.class); //dto로 매핑
             filePath.delete();//사용한 파일 삭제
         }
 
