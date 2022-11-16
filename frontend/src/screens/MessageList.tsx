@@ -20,14 +20,12 @@ function MessageList() {
 
   // 0: text, 1: img, 2:video, 3:audio
   const types = [0, 1, 2, 3];
-  // const types = [1];
   const userId = Number(localStorage.getItem('userId'));
   useEffect(() => {
     if (userId !== null) {
       types.forEach(type => {
         getMesssageList(type, userId)
           .then(res => {
-            // setMessageItems(oldArray => [...oldArray, res.data]);
             setMessageItems(prev => prev.concat(res.data));
           })
           .catch(err => {

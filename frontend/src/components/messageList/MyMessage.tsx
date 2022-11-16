@@ -35,7 +35,6 @@ function MyMessage({messageItem}: messageProps) {
           <span className="myMessage-container-date">{date}</span>
         </div>
         <div className="myMessage-container-like">
-          {/* <img src={Heart} alt="emoji" /> */}
           <Heart className="myMessage-container-like-heart" />
           {messageItem.likeCnt}
         </div>

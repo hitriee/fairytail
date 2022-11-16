@@ -32,7 +32,6 @@ function Process() {
   });
 
   // 작업 완료 후 main 페이지로 이동
-  // setTimeout(() => navigate('/main'), 100);
   return <div className="process" />;
 }
 
