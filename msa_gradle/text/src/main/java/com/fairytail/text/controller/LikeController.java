@@ -21,7 +21,7 @@ import java.util.HashMap;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/like")
-//@CrossOrigin("*")
+@CrossOrigin("*")
 public class LikeController {
 
     private final ModelMapper modelMapper;
