@@ -31,9 +31,9 @@ function VR() {
   // iframe 준비됐는지 확인
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // iframe 준비 끝나고 받은 위치 정보가 없을 경우(Main에서 넘어온 경우), 현재 위치 받아오기
   useEffect(() => {
-    // 받은 위치 정보가 없을 경우(Main에서 넘어온 경우), 현재 위치 받아오기
-    if (location === null) {
+    if (isLoaded && location === null) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async pos => {
           setLocation({
@@ -45,8 +45,12 @@ function VR() {
         alert('브라우저에서 위치 정보를 얻을 수 없습니다.');
         navigate(-1);
       }
-    } else {
-      // 위치 정보 가지고 서버에서 데이터 받아오기
+    }
+  }, [isLoaded]);
+
+  // iframe 준비 끝나고 위치가 준비된 경우, 서버에서 데이터 받아오기
+  useEffect(() => {
+    if (isLoaded && location !== null) {
       const optionString = option ? 'like' : 'latest';
 
       for (let i = 0; i < 4; i++) {
@@ -60,16 +64,16 @@ function VR() {
           });
       }
     }
-  }, [isLoaded, option]);
+  }, [isLoaded, location, option]);
 
   // 데이터 다 받았다면 자식에 데이터 전달
   useEffect(() => {
-    if (isFinished === 3 && data.length > 0) {
+    if (isFinished === 3) {
       const child = document.getElementsByTagName('iframe');
       child[0].contentWindow?.postMessage(data, '*');
       setIsFinished(-1);
     }
-  }, [isFinished, data]);
+  }, [isFinished]);
 
   // 자식에게서 메세지 받을 경우 deatil 페이지로 이동
   const [postId, setPostId] = useState(0);
