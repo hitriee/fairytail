@@ -59,8 +59,8 @@ public class PostServiceImpl implements PostService {
         Integer dayType = mainUtil.checkTime(hour); //dayType 계산
         img.setDayType(dayType); //dayType값 넣어주기
         img.setDate(now);
-        postRepository.save(img);
-        data = modelMapper.map(img, PostDto.class);
+        PostEntity res = postRepository.save(img);
+        data = modelMapper.map(res, PostDto.class);
         filePath.delete();
         return data;
     }
