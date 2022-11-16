@@ -29,7 +29,7 @@ function init() {
       }
     }
 
-    if (data.length < 1) {
+    if (data.length < 1 || data === undefined || data === null) {
       // 풍선이 하나도 없는 경우
       const emptyText = document.createElement("a-troika-text");
       emptyText.setAttribute(

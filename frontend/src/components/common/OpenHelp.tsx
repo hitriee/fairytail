@@ -16,24 +16,34 @@ const helpImages = [helpMain, helpMap, helpVR];
 
 // 좌측 하단 도움말
 function OpenHelp({imagesIndex, color = 'white'}: OpenHelpProps) {
-  const [isOpened, setIsOpened] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
   const closeHelp = () => setIsOpened(false);
 
   const location = useLocation();
-  const pageName = location.pathname;
-  const path = ['/main', '/vr', '/map'];
+  const pathname = location.pathname;
+  const path = ['/main', '/map', '/vr'];
 
+  // 최초 방문 시 도움말 자동으로 표시
   useEffect(() => {
-    // 현재 주소를 방문한 적이 있다면 안내문 off
-    if (pageName in localStorage) {
-      setIsOpened(false);
-      // 방문한 적이 없다면 url 주소 localstorage에 저장
-    } else if (path.includes(pageName)) {
-      setTimeout(() => {
-        localStorage.setItem(`${pageName}`, `${pageName}`);
-      }, 100);
+    if (path.includes(pathname)) {
+      const pathCntJson = localStorage.getItem('pathCnt');
+      let pathCnt = [0, 0, 0];
+      if (pathCntJson !== null) {
+        pathCnt = JSON.parse(pathCntJson);
+      }
+      const idx = path.indexOf(pathname);
+
+      pathCnt[idx] += 1;
+
+      if (idx === 0 && pathCnt[idx] === 1) {
+        setIsOpened(true);
+      } else if (idx !== 0 && pathCnt[idx] === 2) {
+        setIsOpened(true);
+      }
+
+      localStorage.setItem('pathCnt', JSON.stringify(pathCnt));
     }
-  }, [pageName]);
+  }, [pathname]);
 
   return (
     <>

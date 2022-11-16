@@ -107,7 +107,7 @@ function Map() {
           [90, 180],
         ]}
         minZoom={2}
-        maxZoom={14}
+        maxZoom={18}
         style={{width: '100%', height: '100%'}}
         center={center}
         zoom={14}

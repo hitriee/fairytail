@@ -31,12 +31,19 @@ function BgmListItem({title, index}: BgmListItemProps) {
     }
   };
 
+  const handleChangeBgm = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    changeBgm(index);
+    localStorage.setItem('bgmNo', JSON.stringify(index));
+  };
+
   return (
     <div
       className={'bgm-list-item ' + checkSelected(index)}
       onClick={() => {
         if (isPlaying) {
           setBgmNo(index);
+          localStorage.setItem('bgmNo', JSON.stringify(index));
         }
       }}>
       <span className="bgm-list-item-title">{title}</span>
@@ -45,19 +52,13 @@ function BgmListItem({title, index}: BgmListItemProps) {
         <Pause
           className="bgm-list-item-play"
           fill="black"
-          onClick={event => {
-            event.stopPropagation();
-            changeBgm(index);
-          }}
+          onClick={handleChangeBgm}
         />
       ) : (
         <Play
           className="bgm-list-item-play"
           fill="black"
-          onClick={event => {
-            event.stopPropagation();
-            changeBgm(index);
-          }}
+          onClick={handleChangeBgm}
         />
       )}
     </div>
