@@ -59,6 +59,5 @@ spring:
                 - POST
                 - GET
                 - PUT
-                - OPTIONS
                 - DELETE
 
