@@ -47,9 +47,10 @@ spring:
         globalcors:
           cors-configurations:
             '[/**]':
-              allowed-origins: "https://k7c2091.p.ssafy.io"
+              allowed-origins: "https://k7c2091.p.ssafy.io", "http://localhost:3000"
               allow-credentials: true
               allowed-headers: '*'
+              exposed-headers: '*'
               allowed-methods:
                 - POST
                 - GET
