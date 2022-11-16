@@ -4,17 +4,32 @@ import {useEffect, useState} from 'react';
 import MyNotification from '@/components/individual/MyNotification';
 import '@individual/Notifications.scss';
 import {item} from '@individual/notification';
-import {collection, query, where, getDocs} from 'firebase/firestore';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore';
 import {db} from '@apis/notifications/firebaseConfig';
+import {currentUser} from '@common/commonFunc';
 
 function Notifications() {
   const [newItems, setNewItems] = useState<item[]>([]);
   const deleteEach = (index: number) => {
+    console.log(newItems[index]);
+    deleteDoc(doc(db, 'notification', String(newItems[index].id)));
     setNewItems(() => newItems.filter((element, i) => i !== index));
   };
-  const deleteAll = () => {
+  const deleteAll = async () => {
+    const deletedItems = [...newItems];
     setNewItems(() => []);
+    deletedItems.forEach(element => {
+      deleteDoc(doc(db, 'notification', String(element.id)));
+    });
   };
+  const userId = currentUser();
 
   const readData = async (userId: number) => {
     const q = query(

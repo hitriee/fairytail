@@ -29,16 +29,14 @@ function InitMessage() {
   onMessage(messaging, payload => {
     if (payload.data?.body && payload.data?.title) {
       const body = JSON.parse(payload.data?.body);
-      const list = JSON.parse(localStorage.getItem('list') || '[]');
       const newInfo = {
-        id: body?.postId,
-        emoji: body?.emojiNo,
+        userId: body?.userId,
+        postId: body?.postId,
+        emojiNo: body?.emojiNo,
         type: body?.type,
         title: payload.data?.title,
       };
       setInfo(() => newInfo);
-      list.unshift(body);
-      localStorage.setItem('list', JSON.stringify(list));
     }
   });
 
