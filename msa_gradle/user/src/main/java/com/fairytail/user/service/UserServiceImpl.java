@@ -39,4 +39,10 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    @Override
+    public String getFirebaseToken(Long userId) {
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        return modelMapper.map(userEntity.get(), UserDto.class).getFirebaseToken();
+    }
 }
