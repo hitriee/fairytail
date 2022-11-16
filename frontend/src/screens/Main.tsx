@@ -21,8 +21,6 @@ import MessageList from '@screens/MessageList';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
-// import {readData} from '@/apis/notifications/firestore';
-// import {addData} from '@/apis/notifications/firestore';
 
 function Main() {
   // 로그인 여부 확인
@@ -76,9 +74,6 @@ function Main() {
       setTransitionName('fadeIn');
     }
   }, [pathname]);
-  // createCollection();
-  // addData('title', 1, 3, 32, 1);
-  // readData();
 
   return (
     <>
