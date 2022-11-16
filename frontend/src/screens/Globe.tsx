@@ -6,14 +6,13 @@ import Stars from '@globe/Stars';
 import {Earth} from '@globe/Sphere';
 import {main} from '@apis/router';
 import MoveToBack from '@common/MoveToBack';
-import {returnFalse} from '@common/commonFunc';
+import {returnFalse, returnTrue} from '@common/commonFunc';
 import '@screens/Globe.scss';
 
 function Globe() {
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
-  const [isFirstVisit, setFirstVisit] = useState(true);
-  const firstRef = useRef<HTMLDivElement>(null);
+  const [isFirstVisit, setFirstVisit] = useState(false);
 
   const onResize = () => {
     setWidth(window.innerWidth);
@@ -26,8 +25,8 @@ function Globe() {
   };
   useEffect(() => {
     window.addEventListener('resize', onResize);
-    if (localStorage.getItem('visited')) {
-      setVisited();
+    if (!localStorage.getItem('visited')) {
+      setFirstVisit(returnTrue);
     }
     return () => {
       window.removeEventListener('resize', onResize);
@@ -45,7 +44,9 @@ function Globe() {
           </div>
         ) : null}
         <MoveToBack path={main()} />
-        <Canvas style={{width, height}} camera={{near: 6, far: 30, zoom: 1.2}}>
+        <Canvas
+          style={{width, height, cursor: 'grab'}}
+          camera={{near: 6, far: 30, zoom: 1.2}}>
           {/* <color attach="background" args={[0, 0, 0]} /> */}
           <Stars position={[0, 0, 0]} />
           <ambientLight />
