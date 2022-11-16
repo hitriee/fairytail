@@ -45,6 +45,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto createPost(PostDto dto) throws IOException {
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         PostDto data = null;
         PostEntity img = modelMapper.map(dto, PostEntity.class);
         Long maxIdx = postRepository.getMaxId() + 1;
