@@ -12,6 +12,7 @@ import BgmModal from '@individual/BgmModal';
 import InfoModal from '@/components/individual/InfoModal';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
+import {intro} from '@/apis/router';
 
 function Settings() {
   const [permitNoti, setPermitNoti] = useState(true);
@@ -44,22 +45,21 @@ function Settings() {
 
   // 로그아웃 요청 백에 보내기
   const logout = () => {
-    window.localStorage.removeItem('userId');
-    window.localStorage.removeItem('token');
+    window.localStorage.clear();
     changeInfo('완료', '정상적으로 로그아웃되었습니다.');
-    cancelLogout();
     setOpenAlert(returnTrue);
   };
 
   // alert 창 닫기
   const closeAlert = () => {
     setOpenAlert(returnFalse);
+    navigate(intro());
+    console.log('여긴가?');
   };
 
   // 모달 창에서 로그아웃 취소
   const cancelLogout = () => {
     setWantLogout(returnFalse);
-    navigate('/');
   };
 
   // bgm 모달
