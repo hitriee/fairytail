@@ -1,10 +1,13 @@
 // ** 설정
 
+import {useEffect} from 'react';
 import '@individual/Settings.scss';
 import Toggle from '@messageCreate/Toggle';
 import {returnTrue, returnFalse} from '@common/commonFunc';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {popUp} from '@common/commonFunc';
+import {bgmArr} from '@/assets/bgms';
 import BgmModal from '@individual/BgmModal';
 import InfoModal from '@/components/individual/InfoModal';
 import Confirm from '@common/Confirm';
@@ -19,6 +22,7 @@ function Settings() {
   const [infoType, setInfoType] = useState('');
   const [info, setInfo] = useState<popUp>({title: '', message: ''});
   const [openAlert, setOpenAlert] = useState(false);
+  const navigate = useNavigate();
 
   // 좋아요 알림 변경
   // 백그라운드
@@ -79,6 +83,8 @@ function Settings() {
 
   // 로그아웃 요청 백에 보내기
   const logout = () => {
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('token');
     changeInfo('완료', '정상적으로 로그아웃되었습니다.');
     cancelLogout();
     setOpenAlert(returnTrue);
@@ -103,7 +109,7 @@ function Settings() {
     setIsBgmModalOpened(returnFalse);
   };
 
-  // 라이선스, 도움말 모달
+  // 라이선스, 개인정보 처리방침 모달
   const openInfoModal = (type: string) => {
     return () => {
       setInfoType(type);
@@ -160,8 +166,8 @@ function Settings() {
         </div>
         <span
           className="settings-each settings-margin-bottom"
-          onClick={openInfoModal('help')}>
-          도움말
+          onClick={openInfoModal('privacyPolicy')}>
+          개인정보 처리방침
         </span>
       </section>
 
@@ -179,7 +185,7 @@ function Settings() {
       {/* 배경음악 목록 */}
       <BgmModal open={isBgmModalOpened} onCancel={closeBgmModal} />
 
-      {/* 라이선스, 도움말 모달 */}
+      {/* 라이선스, 개인정보 처리방침 모달 */}
       <InfoModal open={wantInfo} onConfirmed={closeInfoModal} type={infoType} />
     </main>
   );

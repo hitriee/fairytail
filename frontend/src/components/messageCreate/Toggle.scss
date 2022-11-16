@@ -57,11 +57,11 @@
 }
 
 input:checked + .toggle-circle {
-  background-color: $PURPLE-2;
+  background-color: $YELLOW;
 }
 
 input:focus + .toggle-circle {
-  box-shadow: 0 0 1px $PURPLE-2;
+  box-shadow: 0 0 1px $YELLOW;
 }
 
 input:checked + .toggle-circle:before {

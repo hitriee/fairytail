@@ -25,11 +25,6 @@ export default function Scene({...props}) {
 
   const navigate = useNavigate();
 
-  const moveGlobe = event => {
-    event.stopPropagation();
-    navigate(globe());
-  };
-
   const moveMap = event => {
     event.stopPropagation();
     navigate(map());
@@ -60,20 +55,21 @@ export default function Scene({...props}) {
     navigate(notifications());
   };
 
-  const [isPlaying, setISPlaying] = useRecoilState(playingState);
+  const [isPlaying, setIsPlaying] = useRecoilState(playingState);
   const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
   const [cnt, setCnt] = useState(0);
 
   const changeBgmNo = event => {
     event.stopPropagation();
-    setISPlaying(true);
-    setBgmNo(prev => {
-      if (prev >= 9) {
-        return 0;
-      } else {
-        return prev + 1;
-      }
-    });
+    setIsPlaying(true);
+    let tempNo = 0;
+    if (bgmNo >= 9) {
+      tempNo = 0;
+    } else {
+      tempNo = bgmNo + 1;
+    }
+    setBgmNo(tempNo);
+    localStorage.setItem('bgmNo', JSON.stringify(tempNo));
   };
 
   const handleMoveGlobe = () => {
@@ -1432,13 +1428,12 @@ export default function Scene({...props}) {
         <PerspectiveCamera
           name="1"
           makeDefault={true}
-          far={1000000}
+          far={100000}
           near={100}
-          fov={35}
-          position={[-2776.27, 1133.08, 2325.68]}
-          rotation={[-0.45, -0.82, -0.34]}
+          fov={45}
+          position={[-3464.2, 2872.21, 3531.06]}
+          rotation={[-0.68, -0.65, -0.46]}
           scale={1}
-          zoom={0.5}
         />
         <hemisphereLight
           name="Default Ambient Light"
