@@ -44,7 +44,9 @@ spring:
               predicates:
                   - Path=/text/**
         #CORS
-        globalcors:
+        default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+        globalises:
           cors-configurations:
             '[/**]':
               allowed-origins:
@@ -60,6 +62,4 @@ spring:
                 - PUT
                 - DELETE
                 - OPTIONS
-        default-filters:
-          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
 
