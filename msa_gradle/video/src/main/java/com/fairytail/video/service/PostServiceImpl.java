@@ -8,6 +8,7 @@ import com.fairytail.video.jpa.*;
 import com.fairytail.video.util.FfmpegUtil;
 import com.fairytail.video.util.MainUtil;
 import com.fairytail.video.util.S3Util;
+import com.fairytail.video.util.UserReportFeign;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,8 @@ public class PostServiceImpl implements PostService {
     private final FfmpegUtil ffmpegUtil;
 
     private String dirName = "video";
+
+    private final UserReportFeign userReportFeign;
 
     /**
      * 게시글 생성
@@ -257,6 +260,7 @@ public class PostServiceImpl implements PostService {
         if(reportCnt >= 3){
             post.setStatus(2);
             postRepository.save(post);
+            userReportFeign.userReport(post.getUserId());
             return true;
         }
         return false;
