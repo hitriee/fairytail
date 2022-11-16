@@ -1,6 +1,7 @@
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import config from "./config";
+import { config, email, password } from "./config";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const app = initializeApp(config);
 const db = getFirestore(app);
@@ -15,6 +16,8 @@ interface addData {
   ): void;
 }
 
+const auth = getAuth(app);
+
 // node 서버에서 추가
 export const addData: addData = async (
   title,
@@ -23,16 +26,22 @@ export const addData: addData = async (
   emojiNo,
   type
 ) => {
-  try {
-    const docRef = await addDoc(collection(db, "notification"), {
-      userId,
-      emojiNo,
-      title,
-      postId,
-      type,
+  signInWithEmailAndPassword(auth, email, password) //정보를 토대로 로그인
+    .then(async () => {
+      try {
+        const docRef = await addDoc(collection(db, "notification"), {
+          userId,
+          emojiNo,
+          title,
+          postId,
+          type,
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
 };
