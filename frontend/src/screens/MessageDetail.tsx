@@ -25,7 +25,6 @@ function MessageDetail() {
 
   // 현재 사용자 정보
   const userId = currentUser();
-  // const userId = 1;
 
   // 서버 통신으로 게시글 정보 가져오기
   const dataType = {
