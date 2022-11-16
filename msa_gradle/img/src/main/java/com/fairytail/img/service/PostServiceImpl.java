@@ -227,7 +227,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Boolean changeStatus(PostEntity post) throws Exception {
         Integer reportCnt =  post.getReportCnt();
-        if(reportCnt >= 5){
+        if(reportCnt >= 3){
             post.setStatus(2);
             postRepository.save(post);
             return true;
