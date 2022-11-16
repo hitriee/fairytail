@@ -7,6 +7,7 @@ import com.fairytail.img.dto.PostReportDto;
 import com.fairytail.img.jpa.*;
 import com.fairytail.img.util.MainUtil;
 import com.fairytail.img.util.S3Util;
+import com.fairytail.img.util.UserReportFeign;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class PostServiceImpl implements PostService {
 
     private final MainUtil mainUtil;
 
+    private final UserReportFeign userReportFeign;
     private String dirName = "image";
 
     /**
@@ -230,6 +232,7 @@ public class PostServiceImpl implements PostService {
         if(reportCnt >= 3){
             post.setStatus(2);
             postRepository.save(post);
+            userReportFeign.userReport(post.getUserId()); //Feign을 이용해 userId 신고 횟수 증가
             return true;
         }
         return false;
