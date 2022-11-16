@@ -43,4 +43,22 @@ spring:
               uri: lb://Text
               predicates:
                   - Path=/text/**
+        #CORS
+        globalcors:
+          cors-configurations:
+            '[/**]':
+              allowed-origins: "http://localhost:3000", "https://k7c209.p.ssafy.io"
+              allow-credentials: true
+              allowed-headers:
+                - x-requested-with
+                - authorization
+                - content-type
+                - X-AUTH-TOKEN
+                - X-CSRF-TOKEN
+              allowed-methods:
+                - POST
+                - GET
+                - PUT
+                - OPTIONS
+                - DELETE
 
