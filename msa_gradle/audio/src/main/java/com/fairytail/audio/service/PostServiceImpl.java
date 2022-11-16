@@ -5,10 +5,7 @@ import com.fairytail.audio.dto.PostDto;
 import com.fairytail.audio.dto.PostLikeDto;
 import com.fairytail.audio.dto.PostReportDto;
 import com.fairytail.audio.jpa.*;
-import com.fairytail.audio.util.BadWordsUtils;
-import com.fairytail.audio.util.FfmpegUtil;
-import com.fairytail.audio.util.MainUtil;
-import com.fairytail.audio.util.S3Util;
+import com.fairytail.audio.util.*;
 import com.google.cloud.speech.v1.*;
 import com.google.cloud.speech.v1.RecognitionConfig.AudioEncoding;
 import com.google.protobuf.ByteString;
@@ -44,6 +41,8 @@ public class PostServiceImpl implements PostService {
     private final BadWordsUtils badWordsUtils;
 
     private String dirName = "audio";
+
+    private final UserReportFeign userReportFeign;
 
     /**
      * 게시글 생성
@@ -263,6 +262,7 @@ public class PostServiceImpl implements PostService {
         if(reportCnt >= 3){
             post.setStatus(2);
             postRepository.save(post);
+            userReportFeign.userReport(post.getUserId());
             return true;
         }
         return false;
