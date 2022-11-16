@@ -34,6 +34,13 @@ spring:
   devtools:
     livereload:
       enabled: true
+    restart:
+      enabled: true
+
+  # return pretty print json
+  jackson:
+    serialization:
+      indent-output: true
 
 logging:
   level:
