@@ -1,13 +1,17 @@
 export interface item {
-  id: number;
+  id?: string;
+  userId: number;
+  postId: number;
   title: string;
-  emoji: number;
+  emojiNo: number;
   type: number;
 }
 
+// 알림 받을 때 초기값
 export const initialItem = {
-  id: 0,
+  userId: 0,
+  postId: 0,
   title: '',
-  emoji: 0,
+  emojiNo: 0,
   type: 0,
 };

@@ -45,6 +45,7 @@ function Like({
       setMessageCount(prev => prev + 1);
     }
     setLike(() => !myLike);
+    // likeMessage(type, {isLike: myLike, ...likeInfo});
     // }
   };
 
@@ -55,11 +56,8 @@ function Like({
         case 'text':
           likeMessage(type, {isLike: myLike, ...likeInfo});
           break;
-        case 'img':
-          likeMessage(type, {...likeInfo, writerId});
-          break;
         default:
-          return '';
+          likeMessage(type, {...likeInfo, writerId});
       }
     }
   };

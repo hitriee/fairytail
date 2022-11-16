@@ -1,7 +1,7 @@
 // ** 사용자가 서비스를 이용하고 있을 때 내부 알림 컴포넌트
 
 import {getMessaging, onMessage} from 'firebase/messaging';
-import app from '@apis/notifications/firebaseConfig';
+import {app} from '@apis/notifications/firebaseConfig';
 import MyNotification from '@individual/MyNotification';
 import {useEffect, useState} from 'react';
 import {returnFalse, returnTrue} from '@common/commonFunc';
@@ -29,16 +29,14 @@ function InitMessage() {
   onMessage(messaging, payload => {
     if (payload.data?.body && payload.data?.title) {
       const body = JSON.parse(payload.data?.body);
-      const list = JSON.parse(localStorage.getItem('list') || '[]');
       const newInfo = {
-        id: body?.postId,
-        emoji: body?.emojiNo,
+        userId: body?.userId,
+        postId: body?.postId,
+        emojiNo: body?.emojiNo,
         type: body?.type,
         title: payload.data?.title,
       };
       setInfo(() => newInfo);
-      list.unshift(body);
-      localStorage.setItem('list', JSON.stringify(list));
     }
   });
 
