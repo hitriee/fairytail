@@ -52,7 +52,12 @@ public class PostServiceImpl implements PostService {
         ModelMapper modelMapper = new ModelMapper();
         PostDto data = null;
         PostEntity img = modelMapper.map(dto, PostEntity.class);
-        Long maxIdx = postRepository.getMaxId() + 1;
+        Long maxIdx = Long.valueOf(0);
+        if(postRepository.getMaxId() == null) {
+            maxIdx = Long.valueOf(1);
+        } else{
+            maxIdx = postRepository.getMaxId() + 1; //s3 저장 파일에 idx를 넣어주기 위해 조회
+        }
         MultipartFile file = dto.getFile();
         File filePath = new File(mainUtil.osCheck() + "/" + dirName + "_" + maxIdx + "_" + file.getOriginalFilename());
         file.transferTo(filePath);
