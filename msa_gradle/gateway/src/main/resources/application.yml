@@ -16,6 +16,26 @@ spring:
 
   cloud:
     gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://just-pickup.com:8080"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+              - DELETE
+              - PATCH
+            allowedHeaders: '*'
+            allow-credentials: true
       routes:
         - id: user
           uri: lb://USER

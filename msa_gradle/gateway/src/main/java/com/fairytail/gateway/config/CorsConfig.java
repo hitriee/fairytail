@@ -1,3 +1,4 @@
+/*
 package com.fairytail.gateway.config;
 
 import org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration;
@@ -13,4 +14,4 @@ public class CorsConfig extends WebMvcAutoConfiguration {
                 .allowedOrigins("http://localhost:3000", "https://k7c209.p.ssafy.io", "https://k7c2091.p.ssafy.io")
                 .allowedMethods("*");
     }
-}
+}*/
