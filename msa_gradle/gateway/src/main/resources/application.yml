@@ -16,7 +16,7 @@ spring:
 
   cloud:
     gateway:
-      globalcors:
+      globalises:
         cors-configurations:
           '[/**]':
             allowedOrigins: "https://k7c2091.p.ssafy.io/"
