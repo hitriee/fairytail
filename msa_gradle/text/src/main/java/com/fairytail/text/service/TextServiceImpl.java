@@ -50,7 +50,6 @@ public class TextServiceImpl implements TextService {
             Boolean isLike = likeRepository.existsByPostAndUserId(selectedTextEntity.get(), userId);
 
             responseDto.setIsLike(isLike);
-            responseDto.setLik
         }
         else {
             /** textEntity 없을 경우 예외처리 */
