@@ -1,66 +1,46 @@
 server:
-  port: 8000
+    port: 8000
 
 eureka:
-  instance:
-    prefer-ip-address: true
-
   client:
-    fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
-    register-with-eureka: true       # client 등록 시, true로 세팅
-    service-url:
-      defaultZone: http://k7c209.p.ssafy.io:8761/eureka
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://k7c209.p.ssafy.io:8761
+  instance:
+    ip-address: true
 
 spring:
   application:
-    name: gateway-service
+      name: gateway-service
 
   cloud:
     gateway:
       routes:
+        - id: user
+          uri: lb://USER
+          predicates: # 전제 조건
+            - Path=/user/**
+#
         - id: img
           uri: lb://IMG
           predicates: # 전제 조건
             - Path=/img/**
-          filters:
-#           - AuthorizationHeaderFilter
-
-        - id: user
-          uri: lb://USER
-          predicates:
-              - Path=/user/**
-
-        - id: video
-          uri: lb://VIDEO
-          predicates:
-              - Path=/video/**
-
+#
         - id: audio
           uri: lb://AUDIO
-          predicates:
-              - Path=/audio/**
-
+          predicates: # 전제 조건
+            - Path=/audio/**
+#
         - id: text
-          uri: lb://Text
-          predicates:
-              - Path=/text/**
+          uri: lb://TEXT
+          predicates: # 전제 조건
+            - Path=/text/**
+#
+        - id: video
+          uri: lb://VIDEO
+          predicates: # 전제 조건
+            - Path=/video/**
+#
 
 
-    #CORS
-#        default-filters:
-#          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
-#        globalises:
-#          cors-configurations:
-#            '[/**]':
-#              allowed-origins:
-#                - "https://k7c2091.p.ssafy.io"
-#                - "http://localhost:3000"
-#              allow-credentials: true
-#              allowed-headers: '*'
-#              exposed-headers: '*'
-#              allowed-methods:
-#                - POST
-#                - GET
-#                - PUT
-#                - DELETE
-#                - OPTIONS
