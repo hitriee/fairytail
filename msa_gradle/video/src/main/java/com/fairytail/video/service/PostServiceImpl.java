@@ -1,21 +1,18 @@
 package com.fairytail.video.service;
 
 
-import com.fairytail.video.dto.PostDto;
-import com.fairytail.video.dto.PostLikeDto;
-import com.fairytail.video.dto.PostReportDto;
+import com.fairytail.video.client.NotiFeignClient;
+import com.fairytail.video.dto.*;
 import com.fairytail.video.jpa.*;
 import com.fairytail.video.util.FfmpegUtil;
 import com.fairytail.video.util.MainUtil;
 import com.fairytail.video.util.S3Util;
-import com.fairytail.video.util.UserReportFeign;
+import com.fairytail.video.client.UserReportFeignClient;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,7 +42,9 @@ public class PostServiceImpl implements PostService {
 
     private String dirName = "video";
 
-    private final UserReportFeign userReportFeign;
+    private final UserReportFeignClient userReportFeignClient;
+
+    private final NotiFeignClient notiFeignClient;
 
     /**
      * 게시글 생성
@@ -220,11 +219,24 @@ public class PostServiceImpl implements PostService {
             PostLikeEntity postLike = modelMapper.map(dto, PostLikeEntity.class);
             postLikeRepository.save(postLike);
             Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+            PostEntity post = null;
+
             if(optional.isPresent()){
-                PostEntity post = optional.get();
+                post = optional.get();
                 Long count = postLikeRepository.countByPostId(dto.getPostId());
                 post.setLikeCnt(count);
                 postRepository.save(post);
+
+                PostDto postDto = modelMapper.map(post, PostDto.class);
+
+                /** 좋아요 알림 요청 보내기 */
+                // 요청 데이터 세팅
+                NotiRequestDto requestDto = new NotiRequestDto();
+                requestDto.setToken(userReportFeignClient.getUserToken(dto.getWriterId()));
+                requestDto.setTitle(postDto.getTitle());
+                requestDto.setData(modelMapper.map(post, NotiLikeRequestDto.class));
+                // 요청 보내기
+                notiFeignClient.createNotiLike(requestDto);
             }
             return true;
         }
@@ -265,7 +277,7 @@ public class PostServiceImpl implements PostService {
         if(reportCnt >= 3){
             post.setStatus(2);
             postRepository.save(post);
-            userReportFeign.userReport(post.getUserId());
+            userReportFeignClient.userReport(post.getUserId());
             return true;
         }
         return false;
