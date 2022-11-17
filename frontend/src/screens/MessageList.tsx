@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
@@ -17,6 +18,7 @@ interface items {
 
 function MessageList() {
   const [messageItems, setMessageItems] = useState<items[]>([]);
+  const location = useLocation();
 
   // 0: text, 1: img, 2:video, 3:audio
   const types = [0, 1, 2, 3];
@@ -33,11 +35,21 @@ function MessageList() {
           });
       });
     }
-  }, []);
+    // messageItems.sort((a: items, b: items): string => {
+    //   return b.date - a.date;
+    // });
+    if (messageItems.length > 0) {
+      console.log(messageItems[0].date);
+    }
+  }, [location.pathname]);
 
-  // messageList 저장 확인
+  // messageList 최신순으로 정렬
   useEffect(() => {
-    console.log(messageItems);
+    if (messageItems.length > 0) {
+      messageItems.sort((a, b) =>
+        a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
+      );
+    }
   }, [messageItems]);
 
   return (
