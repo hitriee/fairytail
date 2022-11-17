@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
@@ -17,6 +18,7 @@ interface items {
 
 function MessageList() {
   const [messageItems, setMessageItems] = useState<items[]>([]);
+  const location = useLocation();
 
   // 0: text, 1: img, 2:video, 3:audio
   const types = [0, 1, 2, 3];
@@ -33,7 +35,8 @@ function MessageList() {
           });
       });
     }
-  }, []);
+    console.log('메세지 리스트 불러오기');
+  }, [location.pathname]);
 
   // messageList 저장 확인
   useEffect(() => {
