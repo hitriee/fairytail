@@ -3,21 +3,22 @@
   flex-direction: column;
   align-items: center;
   .introLogo {
-    margin-top: 18vh;
-    height: 32vh;
+    margin-top: 17vh;
+    height: 28vh;
   }
   &-title {
     color: white;
     font-family: 'PyeongChangPeace-Light';
-    font-size: 10vh;
+    font-size: 8.3vh;
     font-weight: 500;
     margin-bottom: -2vh;
     margin-top: 2vh;
   }
   &-subTitle {
+    margin-top: 3vh;
     color: white;
     font-family: 'PretendardVariable';
-    font-size: 2.5vh;
+    font-size: 2vh;
     font-weight: 500;
   }
 }

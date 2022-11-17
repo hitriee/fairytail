@@ -5,16 +5,18 @@ a {
 .googleLogin {
   display: flex;
   justify-content: center;
-
   background-color: white;
-  font-size: 2.5vh;
-  width: 25vh;
-  height: 5vh;
-  margin-top: 1vh;
+  // opacity: 0.95;
+  width: 20vh;
+  height: 5.5vh;
+  margin-top: 2vh;
   border-radius: 50px;
-  box-shadow: inset -3px -3px 3px #4747477b;
+  box-shadow: inset -2px -2px 2px #4747477b;
 
   &-text {
+    font-size: 2vh;
+    font-family: 'PyeongChangPeace-Light';
+    font-weight: 300;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,7 +24,7 @@ a {
     color: black;
   }
   img {
-    margin: 3%;
+    margin: 6%;
     margin-right: 10%;
     margin-left: -5%;
   }

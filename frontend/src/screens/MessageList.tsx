@@ -35,9 +35,6 @@ function MessageList() {
           });
       });
     }
-    // messageItems.sort((a: items, b: items): string => {
-    //   return b.date - a.date;
-    // });
     if (messageItems.length > 0) {
       console.log(messageItems[0].date);
     }
