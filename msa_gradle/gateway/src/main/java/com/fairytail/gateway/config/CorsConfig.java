@@ -1,3 +1,4 @@
+/*
 package com.fairytail.gateway.config;
 
 
@@ -16,3 +17,4 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedMethods("*");
     }
 }
+*/
