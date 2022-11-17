@@ -175,7 +175,6 @@ function MessageCreate() {
                 if (message === 'FAIL') {
                   failSpinner('부적절한 내용이\n포함되어 있습니다.');
                 } else {
-                  console.log(data);
                   successSpinner(data.postId, data.type);
                 }
               })

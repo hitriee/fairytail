@@ -1,14 +1,13 @@
-import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 // notification
 import {
   initToken,
   requestPermission,
 } from '@apis/notifications/getMessagingToken';
-
-import {useNavigate} from 'react-router-dom';
 import {saveToken, saveFirebaseToken} from '@/apis/process';
-import './Process.scss';
+
+import Loading from '@loading/Loading';
 
 function Process() {
   const navigate = useNavigate();
@@ -18,12 +17,12 @@ function Process() {
 
   // firebase token 불러오기
   initToken().then(res => {
-    console.log(res);
     // 불러온 firebase token, backend에 저장
     const data = {
       firebaseToken: res,
       userId: localStorage.userId,
     };
+    // 작업 완료 후 main 페이지로 이동
     saveFirebaseToken(data)
       .then(res => console.log(res))
       .catch(err => console.log(err))
@@ -31,8 +30,7 @@ function Process() {
       .then(() => navigate('/main'));
   });
 
-  // 작업 완료 후 main 페이지로 이동
-  return <div className="process" />;
+  return <Loading fillBackground={true} />;
 }
 
 export default Process;
