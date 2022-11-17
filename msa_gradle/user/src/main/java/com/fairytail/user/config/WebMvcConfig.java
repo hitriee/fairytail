@@ -1,3 +1,4 @@
+/*
 package com.fairytail.user.config;
 
 
@@ -12,4 +13,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000", "https://k7c209.p.ssafy.io", "https://k7c2091.p.ssafy.io");
     }
-}
+}*/
