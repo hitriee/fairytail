@@ -1,18 +1,15 @@
 // ** 설정
-
-import {useEffect} from 'react';
-import '@individual/Settings.scss';
-import Toggle from '@messageCreate/Toggle';
-import {returnTrue, returnFalse} from '@common/commonFunc';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {popUp} from '@common/commonFunc';
-import {bgmArr} from '@/assets/bgms';
+
+import '@individual/Settings.scss';
 import BgmModal from '@individual/BgmModal';
-import InfoModal from '@/components/individual/InfoModal';
+import InfoModal from '@individual/InfoModal';
+import {returnTrue, returnFalse, popUp} from '@common/commonFunc';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
-import {intro} from '@/apis/router';
+import Toggle from '@messageCreate/Toggle';
+import {intro} from '@apis/router';
 
 function Settings() {
   const [permitPush, setPermitPush] = useState('설정 가능');
@@ -40,15 +37,15 @@ function Settings() {
       });
     } else {
       changeInfo(
-        '알림 설정',
-        `현재 알림 ${permitPush} 상태입니다. \n 브라우저의 알림 설정 페이지에서 \n 변경이 가능합니다`,
+        '안내',
+        `현재 알림 ${permitPush} 상태입니다. \n 브라우저의 알림 설정 페이지에서 \n 변경이 가능합니다.`,
       );
       setOpenAlert(returnTrue);
     }
   };
+
   // 포그라운드
   const changePermitNoti = () => {
-    console.log('clicked');
     setPermitNoti(prev => !prev);
     if (localStorage.getItem('noti')) {
       localStorage.removeItem('noti');
@@ -56,6 +53,7 @@ function Settings() {
       localStorage.setItem('noti', 'true');
     }
   };
+
   useEffect(() => {
     const {permission} = Notification;
     if (permission === 'denied') {
@@ -92,8 +90,9 @@ function Settings() {
   // alert 창 닫기
   const closeAlert = () => {
     setOpenAlert(returnFalse);
-    navigate(intro());
-    console.log('여긴가?');
+    if (info.message === '정상적으로 로그아웃되었습니다.') {
+      navigate(intro());
+    }
   };
 
   // 모달 창에서 로그아웃 취소

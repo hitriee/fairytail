@@ -1,19 +1,19 @@
 // ** 상세 페이지 더보기 메뉴
-
 import {useEffect, useState} from 'react';
 import html2canvas from 'html2canvas';
 import {useNavigate} from 'react-router-dom';
 import {saveAs} from 'file-saver';
-import {returnTrue, returnFalse} from '@common/commonFunc';
+
+import '@common/Common.scss';
 import Report from '@messageDetail/Report';
+import {returnTrue, returnFalse} from '@common/commonFunc';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import {popUp} from '@common/commonFunc';
-import '@common/Common.scss';
 import {
   changeMessageStatus,
   deleteMessage,
-} from '@/apis/messageDetail/detailFunc';
+} from '@apis/messageDetail/detailFunc';
 
 // props 유형
 interface MoreMenuProps {
@@ -55,9 +55,8 @@ function MoreMenu({
   };
 
   // 저장
-  const saveMessage = async () => {
-    close();
-    if (type === 'text') {
+  const saveMessage = () => {
+    if (type === 'text' || type === 'img') {
       const height = window.innerHeight;
       const width = window.innerWidth;
 
@@ -73,8 +72,11 @@ function MoreMenu({
         x: x,
         width: resultWidth,
         height: height,
+        useCORS: true,
       }).then(canvas => {
         saveAs(canvas.toDataURL(), `fairytail_${type}_${messageId}.png`);
+        changeInfo('완료', '게시글이 저장되었습니다.');
+        setAlert(returnTrue);
       });
     } else {
       const extension = content.split('.').at(-1);
@@ -82,6 +84,8 @@ function MoreMenu({
         `https://${content}`,
         `fairytail_${type}_${messageId}.${extension}`,
       );
+      changeInfo('완료', '파일이 저장되었습니다.');
+      setAlert(returnTrue);
     }
   };
 
@@ -144,15 +148,15 @@ function MoreMenu({
       .then((res: any) => {
         if (res.message === 'SUCCESS') {
           setDeleted(returnTrue);
-          changeInfo('삭제 완료', '글이 정상적으로 삭제되었습니다');
+          changeInfo('성공', '정상적으로 삭제되었습니다.');
         } else {
           setDeleted(returnFalse);
-          changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
+          changeInfo('실패', '오류가 발생해 삭제되지 않았습니다.');
         }
       })
       .catch((err: any) => {
         setDeleted(returnFalse);
-        changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
+        changeInfo('실패', '오류가 발생해 삭제되지 않았습니다.');
       })
       .finally(() => {
         setAlert(returnTrue);

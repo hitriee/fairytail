@@ -1,14 +1,14 @@
 // ** 신고 모달
 
-import React, {useState, useEffect, useRef, ReactHTMLElement} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import {useNavigate} from 'react-router-dom';
+
+import '@common/Common.scss';
 import Alert from '@common/Alert';
 import {returnTrue, returnFalse, currentUser} from '@common/commonFunc';
-import '@common/Common.scss';
-import SelectBox from '../common/SelectBox';
-import {reportMessage} from '@/apis/messageDetail/detailFunc';
-import {checkType} from '@/apis';
-import {useNavigate} from 'react-router-dom';
-import {intro} from '@/apis/router';
+import SelectBox from '@common/SelectBox';
+import {reportMessage} from '@apis/messageDetail/detailFunc';
+import {intro} from '@apis/router';
 
 interface ReportProps {
   open: boolean;
@@ -58,12 +58,12 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
     };
     reportMessage(type, data)
       .then(() => {
-        const newInfo = {title: '신고 확인', message: '신고가 접수되었습니다.'};
+        const newInfo = {title: '완료', message: '신고가 접수되었습니다.'};
         setInfo(() => newInfo);
         setReported(returnTrue);
       })
       .catch(() => {
-        const newInfo = {title: '신고 실패', message: '오류가 발생했습니다.'};
+        const newInfo = {title: '실패', message: '오류가 발생했습니다.'};
         setInfo(() => newInfo);
         setReported(returnFalse);
       })

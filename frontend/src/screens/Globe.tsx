@@ -39,7 +39,7 @@ function Globe() {
         {isFirstVisit ? (
           <div className="first-visit-background" onClick={setVisited}>
             <span className="white center first-visit">
-              숨겨진 페이지에 온 것을 환영합니다 <br /> 지구를 돌려보세요
+              숨겨진 페이지에 오신 것을 환영합니다. <br /> 지구를 돌려보세요.
             </span>
           </div>
         ) : null}
