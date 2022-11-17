@@ -12,6 +12,6 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
 
     Boolean existsByPostAndUserId(TextEntity textEntity, Long userId);
 
-    Optional<LikeEntity> findByPostAndUserId(TextEntity textEntity, Long userId);
+    Optional<LikeEntity> findByPostAndUserIdAndWriterId(TextEntity textEntity, Long userId, Long writerId);
 
 }

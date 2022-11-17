@@ -75,7 +75,7 @@ public class TextController {
 
         if (badWordsUtils.filterText(title) || badWordsUtils.filterText(content)) { // 금지어가 있을 경우
             resultMap.put("data", null);
-            resultMap.put("message", "금지어 발견");
+            resultMap.put("message", FAIL);
         }
         else { // 금지어가 없을 경우
             TextDto responseDto = textService.saveText(requestDto); // DB에 저장

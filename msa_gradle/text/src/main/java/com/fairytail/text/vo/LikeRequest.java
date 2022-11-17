@@ -9,6 +9,6 @@ public class LikeRequest {
 
     private Long postId;
 
-    private Boolean isLike;
+    private Long writerId;
 
 }

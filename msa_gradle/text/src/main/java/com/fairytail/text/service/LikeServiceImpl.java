@@ -40,9 +40,20 @@ public class LikeServiceImpl implements LikeService {
         if (selectedTextEntity.isPresent()) {
             textEntity = selectedTextEntity.get();
 
-            if (requestDto.getIsLike()) { // 좋아요 눌렀을 때 요청 처리 -> like 테이블에 데이터 생성
-                requestDto.setWriterId(textEntity.getUserId());
+            Optional<LikeEntity> selectedLikeEntity
+                    = likeRepository.findByPostAndUserIdAndWriterId(textEntity, requestDto.getUserId(), requestDto.getWriterId());
 
+            if (selectedLikeEntity.isPresent()) { // like 테이블이 있을 경우 -> 좋아요 취소
+                // like 테이블의 데이터 삭제
+                likeRepository.delete(selectedLikeEntity.get());
+
+                // post 테이블의 like_cnt 1 감소
+                textEntity.setLikeCnt(textEntity.getLikeCnt() - 1);
+                textRepository.save(textEntity);
+
+                response = 0;
+            }
+            else { // like 테이블이 없을 경우 -> 좋아요 등록
                 // like 테이블에 데이터 추가
                 LikeEntity likeEntity = modelMapper.map(requestDto, LikeEntity.class);
                 likeEntity.setPost(textEntity);
@@ -62,24 +73,6 @@ public class LikeServiceImpl implements LikeService {
                 notiFeignClient.createNotiLike(requsetDto);
 
                 response = 1;
-            }
-            else { // 좋아요 해제했을 때 요청 처리 -> like 테이블의 데이터 삭제
-                /** userId 나중에 User 객체로 바꿔주기!! */
-                Optional<LikeEntity> selectedLikeEntity = likeRepository.findByPostAndUserId(textEntity, requestDto.getUserId());
-
-                if (selectedLikeEntity.isPresent()) {
-                    // like 테이블의 데이터 삭제
-                    likeRepository.delete(selectedLikeEntity.get());
-
-                    // post 테이블의 like_cnt 1 감소
-                    textEntity.setLikeCnt(textEntity.getLikeCnt() - 1);
-                    textRepository.save(textEntity);
-
-                    response = 0;
-                }
-                else {
-                    /** likeEntity 없을 경우 예외처리 */
-                }
             }
         }
         else {

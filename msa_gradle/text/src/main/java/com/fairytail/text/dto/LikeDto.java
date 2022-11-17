@@ -13,6 +13,4 @@ public class LikeDto {
 
     private Long writerId;
 
-    private Boolean isLike;
-
 }
