@@ -32,7 +32,12 @@
   );
 }
 .background5 {
-  background: linear-gradient(45deg, lightCyan 20%, skyblue 80%, deepskyblue);
+  background: linear-gradient(
+    45deg,
+    rgb(181, 255, 255) 10%,
+    skyblue 60%,
+    deepskyblue
+  );
 }
 
 .background6 {
@@ -72,11 +77,13 @@
   );
 }
 .background11 {
-  background: rgb(11, 8, 5);
+  background: rgb(2, 0, 43);
   background: linear-gradient(
-    29deg,
-    rgba(11, 8, 5, 1) 6%,
-    rgba(153, 112, 182, 1) 97%
+    30deg,
+    rgba(2, 0, 43, 1) 8%,
+    rgb(35, 60, 105) 45%,
+    rgba(0, 16, 135, 1) 76%,
+    rgba(2, 13, 106, 0.935) 100%
   );
 }
 
