@@ -71,12 +71,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("Succeeded to update block cnt.");
     }
 
-/*    @ApiOperation(value ="유저 firebase 토큰 가져오기", notes = "유저의 firebase 토큰을 반환합니다.")
+    @ApiOperation(value ="유저 firebase 토큰 가져오기", notes = "유저의 firebase 토큰을 반환합니다.")
     @GetMapping("/token/{userId}")
     public ResponseEntity<?> getFirebaseToken(@PathVariable(value = "userId") Long userId) {
         String result = userService.getFirebaseToken(userId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
-    }*/
+    }
 
 
     @ApiOperation(value ="토큰 검사", notes = "액세스 토큰이 유효기간을 검사합니다.")
