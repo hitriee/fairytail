@@ -35,4 +35,6 @@ public class TextDto {
 
     private Boolean isLike;
 
+    private Integer likeCnt;
+
 }
