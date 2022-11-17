@@ -1,8 +1,6 @@
 server:
     port: 8000
 
-spring.main.allow-bean-definition-overriding: true
-
 eureka:
   client:
         register-with-eureka: true
@@ -14,10 +12,24 @@ eureka:
 
 spring:
   application:
-      name: gateway-service
+      name: gateway
 
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://k7c2091.p.ssafy.io"
+            allow-credentials: true
+            allowed-headers:
+              - '*'
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+
       routes:
         - id: user
           uri: lb://USER

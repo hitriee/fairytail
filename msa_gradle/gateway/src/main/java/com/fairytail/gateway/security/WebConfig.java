@@ -1,3 +1,4 @@
+/*
 package com.fairytail.gateway.security;
 
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .cors()
-                .configurationSource(corsConfigurationSource())
+                .configurationSource(corsConfiguraionSource())
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
@@ -60,3 +61,4 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 //    }
 //}
 
+*/
