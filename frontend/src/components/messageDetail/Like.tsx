@@ -44,16 +44,17 @@ function Like({type, userId, data, setData}: LikeProps) {
       let likeData;
       if (type === 'text') {
         likeData = {isLike: !myLike, postId, userId};
+        console.log(likeData);
       } else {
         likeData = {writerId: data.userId, postId, userId};
       }
-      likeMessage(type, likeData).then((res: any) => {
-        if (res.message === 'SUCCESS') {
-          setData(prev => {
-            return {...prev, ...res.data};
-          });
-        }
-      });
+      // likeMessage(type, likeData).then((res: any) => {
+      //   if (res.message === 'SUCCESS') {
+      //     setData(prev => {
+      //       return {...prev, ...res.data};
+      //     });
+      //   }
+      // });
     }
   };
 
