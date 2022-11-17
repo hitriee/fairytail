@@ -1,4 +1,4 @@
-package com.fairytail.text.util;
+package com.fairytail.text.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 @FeignClient(name = "userReport", url="https://k7c209.p.ssafy.io/user")
-public interface UserReportFeign {
+public interface UserReportFeignClient {
     @PostMapping("/alert/{userId}")
     void userReport(@PathVariable Long userId);
 
