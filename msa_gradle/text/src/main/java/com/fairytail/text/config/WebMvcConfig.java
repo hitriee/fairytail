@@ -1,3 +1,4 @@
+/*
 package com.fairytail.text.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -13,3 +14,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedMethods("*");
     }
 }
+*/
