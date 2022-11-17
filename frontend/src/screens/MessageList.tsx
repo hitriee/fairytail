@@ -35,12 +35,21 @@ function MessageList() {
           });
       });
     }
-    console.log('메세지 리스트 불러오기');
+    // messageItems.sort((a: items, b: items): string => {
+    //   return b.date - a.date;
+    // });
+    if (messageItems.length > 0) {
+      console.log(messageItems[0].date);
+    }
   }, [location.pathname]);
 
-  // messageList 저장 확인
+  // messageList 최신순으로 정렬
   useEffect(() => {
-    console.log(messageItems);
+    if (messageItems.length > 0) {
+      messageItems.sort((a, b) =>
+        a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
+      );
+    }
   }, [messageItems]);
 
   return (
