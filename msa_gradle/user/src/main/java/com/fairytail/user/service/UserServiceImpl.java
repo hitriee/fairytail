@@ -55,6 +55,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getFirebaseToken(Long userId) {
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        return modelMapper.map(userEntity.get(), UserDto.class).getFirebaseToken();
+    }
+
+    @Override
     public Boolean isValidToken(String token) {
         Claims jwtBody = parseJWT(token);
         Date now = new Date();

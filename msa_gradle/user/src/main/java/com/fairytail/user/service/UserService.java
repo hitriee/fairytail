@@ -6,6 +6,7 @@ public interface UserService {
     Integer saveFirebaseToken(UserDto userDto);
     Boolean findUser(Long userId);
     Integer updateAlert(Long userId);
+    String getFirebaseToken(Long userId);
 
     Boolean isValidToken(String token);
 
