@@ -3,18 +3,32 @@ package com.fairytail.user.service;
 import com.fairytail.user.dto.UserDto;
 import com.fairytail.user.jpa.UserEntity;
 import com.fairytail.user.jpa.UserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    @Resource
+    private Environment env;
+
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+
+
 
     @Override
     public Integer saveFirebaseToken(UserDto userDto) {
@@ -39,4 +53,19 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    @Override
+    public Boolean isValidToken(String token) {
+        Claims jwtBody = parseJWT(token);
+        Date now = new Date();
+
+        return now.before(jwtBody.getExpiration());
+    }
+
+    private Claims parseJWT(String token) {
+        Key key = Keys.hmacShaKeyFor(Objects.requireNonNull(env.getProperty("token.secret")).getBytes(StandardCharsets.UTF_8));
+        return Jwts.parserBuilder().setSigningKey(key)
+                .build().parseClaimsJws(token).getBody();
+    }
+
 }

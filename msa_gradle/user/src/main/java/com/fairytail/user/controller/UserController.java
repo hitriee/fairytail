@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.http.HttpHeaders;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @Api(value = "user")
 @RestController
@@ -69,4 +71,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("Succeeded to update block cnt.");
     }
 
+
+    @ApiOperation(value ="토큰 검사", notes = "액세스 토큰이 유효기간을 검사합니다.")
+    @GetMapping("/token")
+    public ResponseEntity<?> updateAlert(HttpServletRequest request) {
+       String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+       
+       if(userService.isValidToken(token))
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unavailable Token");
+       else
+           return ResponseEntity.status(HttpStatus.OK).body("Available Token");
+
+    }
 }

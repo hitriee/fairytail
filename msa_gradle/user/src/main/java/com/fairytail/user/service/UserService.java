@@ -7,4 +7,6 @@ public interface UserService {
     Boolean findUser(Long userId);
     Integer updateAlert(Long userId);
 
+    Boolean isValidToken(String token);
+
 }
