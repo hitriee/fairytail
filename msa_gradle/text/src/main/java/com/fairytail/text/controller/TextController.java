@@ -23,7 +23,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/message")
-//@CrossOrigin("*")
 public class TextController {
     @Resource
     private Environment env;
@@ -49,7 +48,7 @@ public class TextController {
         HashMap<String, Object> resultMap = new HashMap<>();
 
         TextDto responseDto = textService.getTextDetail(postId, userId);
-        TextDetailResponse responseVo = null;
+        TextDetailResponse responseVo;
 
         if (responseDto != null) { // 상세 조회할 메시지 정보를 찾았을 경우
             responseVo = modelMapper.map(responseDto, TextDetailResponse.class);
@@ -95,9 +94,7 @@ public class TextController {
         List<TextListResponse> responseVoList = new ArrayList<>();
 
         List<TextDetailDto> responseDtoList = textService.getMyTextList(userId);
-        responseDtoList.forEach(v -> {
-            responseVoList.add(modelMapper.map(v, TextListResponse.class));
-        });
+        responseDtoList.forEach(v -> responseVoList.add(modelMapper.map(v, TextListResponse.class)));
 
         resultMap.put("data", responseVoList);
         resultMap.put("message", SUCCESS);
@@ -112,9 +109,7 @@ public class TextController {
         List<TextListResponse> responseVoList = new ArrayList<>();
 
         List<TextDetailDto> responseDtoList = textService.getVrTextList(curLat, curLng, "latest");
-        responseDtoList.forEach(v -> {
-            responseVoList.add(modelMapper.map(v, TextListResponse.class));
-        });
+        responseDtoList.forEach(v -> responseVoList.add(modelMapper.map(v, TextListResponse.class)));
 
         resultMap.put("data", responseVoList);
         resultMap.put("message", SUCCESS);
@@ -129,9 +124,7 @@ public class TextController {
         List<TextListResponse> responseVoList = new ArrayList<>();
 
         List<TextDetailDto> responseDtoList = textService.getVrTextList(curLat, curLng, "like");
-        responseDtoList.forEach(v -> {
-            responseVoList.add(modelMapper.map(v, TextListResponse.class));
-        });
+        responseDtoList.forEach(v -> responseVoList.add(modelMapper.map(v, TextListResponse.class)));
 
         resultMap.put("data", responseVoList);
         resultMap.put("message", SUCCESS);
@@ -146,9 +139,7 @@ public class TextController {
         List<TextMapResponse> responseVoList = new ArrayList<>();
 
         List<TextDto> responseDtoList = textService.getAllTextList();
-        responseDtoList.forEach(v -> {
-            responseVoList.add(modelMapper.map(v, TextMapResponse.class));
-        });
+        responseDtoList.forEach(v -> responseVoList.add(modelMapper.map(v, TextMapResponse.class)));
 
         resultMap.put("data", responseVoList);
         resultMap.put("message", SUCCESS);

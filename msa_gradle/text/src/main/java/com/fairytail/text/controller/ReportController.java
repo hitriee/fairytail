@@ -19,7 +19,6 @@ import java.util.HashMap;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/report")
-//@CrossOrigin("*")
 public class ReportController {
 
     private final ModelMapper modelMapper;
