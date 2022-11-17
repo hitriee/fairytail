@@ -1,7 +1,5 @@
-spring.profiles.include: auth
-
 server:
-    port: 8000
+  port: 8000
 
 eureka:
   instance:
@@ -13,41 +11,42 @@ eureka:
     service-url:
       defaultZone: http://k7c209.p.ssafy.io:8761/eureka
 
-
 spring:
-    application:
-        name: gateway-service
+  application:
+    name: gateway-service
 
-    cloud:
-      gateway:
-        routes:
-            - id: img
-              uri: lb://IMG
-              predicates: # 전제 조건
-                  - Path=/img/**
-              filters:
-#                - AuthorizationHeaderFilter
+  cloud:
+    gateway:
+      routes:
+        - id: img
+          uri: lb://IMG
+          predicates: # 전제 조건
+            - Path=/img/**
+          filters:
+#           - AuthorizationHeaderFilter
 
-            - id: user
-              uri: lb://USER
-              predicates:
-                  - Path=/user/**
+        - id: user
+          uri: lb://USER
+          predicates:
+              - Path=/user/**
 
-            - id: video
-              uri: lb://VIDEO
-              predicates:
-                  - Path=/video/**
+        - id: video
+          uri: lb://VIDEO
+          predicates:
+              - Path=/video/**
 
-            - id: audio
-              uri: lb://AUDIO
-              predicates:
-                  - Path=/audio/**
+        - id: audio
+          uri: lb://AUDIO
+          predicates:
+              - Path=/audio/**
 
-            - id: text
-              uri: lb://Text
-              predicates:
-                  - Path=/text/**
-        #CORS
+        - id: text
+          uri: lb://Text
+          predicates:
+              - Path=/text/**
+
+
+    #CORS
 #        default-filters:
 #          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
 #        globalises:
@@ -65,4 +64,3 @@ spring:
 #                - PUT
 #                - DELETE
 #                - OPTIONS
-
