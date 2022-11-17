@@ -1,20 +1,17 @@
 package com.fairytail.img.service;
 
 
-import com.fairytail.img.dto.PostDto;
-import com.fairytail.img.dto.PostLikeDto;
-import com.fairytail.img.dto.PostReportDto;
+import com.fairytail.img.client.NotiFeignClient;
+import com.fairytail.img.dto.*;
 import com.fairytail.img.jpa.*;
 import com.fairytail.img.util.MainUtil;
 import com.fairytail.img.util.S3Util;
-import com.fairytail.img.util.UserReportFeign;
+import com.fairytail.img.client.UserReportFeignClient;
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +25,8 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class PostServiceImpl implements PostService {
+public class
+PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostLikeRepository postLikeRepository;
 
@@ -38,7 +36,10 @@ public class PostServiceImpl implements PostService {
 
     private final MainUtil mainUtil;
 
-    private final UserReportFeign userReportFeign;
+    private final UserReportFeignClient userReportFeignClient;
+
+    private final NotiFeignClient notiFeignClient;
+
     private String dirName = "image";
 
     /**
@@ -189,12 +190,26 @@ public class PostServiceImpl implements PostService {
             PostLikeEntity postLike = modelMapper.map(dto, PostLikeEntity.class);
             postLikeRepository.save(postLike);
             Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+            PostEntity post = null;
+
             if(optional.isPresent()){
-                PostEntity post = optional.get();
+                post = optional.get();
                 Long count = postLikeRepository.countByPostId(dto.getPostId());
                 post.setLikeCnt(count);
                 postRepository.save(post);
+
+                PostDto postDto = modelMapper.map(post, PostDto.class);
+
+                /** 좋아요 알림 요청 보내기 */
+                // 요청 데이터 세팅
+                NotiRequestDto requestDto = new NotiRequestDto();
+                requestDto.setToken(userReportFeignClient.getUserToken(dto.getWriterId()));
+                requestDto.setTitle(postDto.getTitle());
+                requestDto.setData(modelMapper.map(post, NotiLikeRequestDto.class));
+                // 요청 보내기
+                notiFeignClient.createNotiLike(requestDto);
             }
+            
             return true;
         }
     }
@@ -232,7 +247,7 @@ public class PostServiceImpl implements PostService {
         if(reportCnt >= 3){
             post.setStatus(2);
             postRepository.save(post);
-            userReportFeign.userReport(post.getUserId()); //Feign을 이용해 userId 신고 횟수 증가
+            userReportFeignClient.userReport(post.getUserId()); //Feign을 이용해 userId 신고 횟수 증가
             return true;
         }
         return false;
