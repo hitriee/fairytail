@@ -7,7 +7,7 @@ import {emojiArr} from '@emojis/index';
 import '@messageDetail/Like.scss';
 import {returnFalse, returnTrue} from '../common/commonFunc';
 import {likeMessage} from '@apis/messageDetail/detailFunc';
-import {imgData} from '@apis/messageDetail/detailInterface';
+import {dataType} from '@apis/messageDetail/detailInterface';
 
 // props 유형
 // interface LikeProps {
@@ -23,13 +23,12 @@ import {imgData} from '@apis/messageDetail/detailInterface';
 //   };
 // }
 interface LikeProps {
-  data: imgData;
+  data: dataType;
   type: string;
   userId: number;
-  setData: React.Dispatch<React.SetStateAction<imgData>>;
 }
 
-function Like({type, userId, data, setData}: LikeProps) {
+function Like({type, userId, data}: LikeProps) {
   const {isLike, likeCnt, postId, emojiNo} = data;
   // 현재 사용자가 좋아요 눌렀는지 여부
   const [myLike, setLike] = useState(isLike);
@@ -38,24 +37,14 @@ function Like({type, userId, data, setData}: LikeProps) {
 
   // 좋아요 수, 좋아요 여부 변경
   const sendChangeSignal = () => {
-    console.log(myLike, isLike);
-    if (myLike !== undefined && myLike === isLike) {
-      console.log('yes');
-      let likeData;
-      if (type === 'text') {
-        likeData = {isLike: !myLike, postId, userId};
-        console.log(likeData);
-      } else {
-        likeData = {writerId: data.userId, postId, userId};
-      }
-      // likeMessage(type, likeData).then((res: any) => {
-      //   if (res.message === 'SUCCESS') {
-      //     setData(prev => {
-      //       return {...prev, ...res.data};
-      //     });
-      //   }
-      // });
-    }
+    likeMessage(type, {writerId: data.userId, postId, userId});
+    //   .then(
+    //   (res: any) => {
+    //     if (res.message === 'SUCCESS') {
+    //       setLike(prev => !prev);
+    //     }
+    //   },
+    // );
   };
 
   const changeLike = () => {
@@ -64,18 +53,18 @@ function Like({type, userId, data, setData}: LikeProps) {
     } else {
       setMessageCount(prev => prev + 1);
     }
+    setLike(prev => !prev);
     sendChangeSignal();
-    setLike(() => !myLike);
   };
 
-  // props 데이터 갱신 (count, like)
-  useEffect(() => {
-    setMessageCount(() => likeCnt);
-  }, [likeCnt]);
+  // // props 데이터 갱신 (count, like)
+  // useEffect(() => {
+  //   setMessageCount(() => likeCnt);
+  // }, [likeCnt]);
 
-  useEffect(() => {
-    setLike(() => isLike);
-  }, [isLike]);
+  // useEffect(() => {
+  //   setLike(() => isLike);
+  // }, [isLike]);
 
   return (
     <article className="like">
