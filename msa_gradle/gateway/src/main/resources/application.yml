@@ -12,8 +12,6 @@ eureka:
   instance:
     ip-address: true
 
-spring.gateway```
-
 spring:
   application:
       name: gateway-service
