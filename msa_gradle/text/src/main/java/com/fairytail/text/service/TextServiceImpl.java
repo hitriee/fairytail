@@ -41,12 +41,12 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    public TextDetailDto getTextDetail(Long postId, Long userId) {
+    public TextDto getTextDetail(Long postId, Long userId) {
         Optional<TextEntity> selectedTextEntity = textRepository.findById(postId);
-        TextDetailDto responseDto = null;
+        TextDto responseDto = null;
 
         if (selectedTextEntity.isPresent()) {
-            responseDto = modelMapper.map(selectedTextEntity.get(), TextDetailDto.class);
+            responseDto = modelMapper.map(selectedTextEntity.get(), TextDto.class);
             Boolean isLike = likeRepository.existsByPostAndUserId(selectedTextEntity.get(), userId);
 
             responseDto.setIsLike(isLike);

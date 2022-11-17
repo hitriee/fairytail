@@ -9,7 +9,7 @@ public interface TextService {
 
     TextDto saveText(TextDto requestDto);
 
-    TextDetailDto getTextDetail(Long postId, Long userId);
+    TextDto getTextDetail(Long postId, Long userId);
 
     List<TextDetailDto> getMyTextList(Long userId);
 

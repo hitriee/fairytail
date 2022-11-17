@@ -25,4 +25,12 @@ public class TextDetailResponse extends TextIdResponse {
 
     private Integer status;
 
+    private String url;
+
+    private Double lat;
+
+    private Double lng;
+
+    private Integer reportCnt;
+
 }

@@ -48,7 +48,7 @@ public class TextController {
     public ResponseEntity<HashMap<String, Object>> getTextDetail(@RequestParam Long postId, @RequestParam Long userId) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
-        TextDetailDto responseDto = textService.getTextDetail(postId, userId);
+        TextDto responseDto = textService.getTextDetail(postId, userId);
         TextDetailResponse responseVo = null;
 
         if (responseDto != null) { // 상세 조회할 메시지 정보를 찾았을 경우

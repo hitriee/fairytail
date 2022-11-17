@@ -33,4 +33,6 @@ public class TextDto {
 
     private Integer dayType;
 
+    private Boolean isLike;
+
 }
