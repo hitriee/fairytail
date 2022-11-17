@@ -23,22 +23,22 @@ spring:
           uri: lb://USER
           predicates: # 전제 조건
             - Path=/user/**
-#
+
         - id: img
           uri: lb://IMG
           predicates: # 전제 조건
             - Path=/img/**
-#
+
         - id: audio
           uri: lb://AUDIO
           predicates: # 전제 조건
             - Path=/audio/**
-#
+
         - id: text
           uri: lb://TEXT
           predicates: # 전제 조건
             - Path=/text/**
-#
+
         - id: video
           uri: lb://VIDEO
           predicates: # 전제 조건
