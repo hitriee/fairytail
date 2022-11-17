@@ -37,3 +37,8 @@ export const convStringType = (type: string | undefined) => {
     return '';
   }
 };
+
+// 현재 type이 text인지 판별
+export const isText = (type: string | undefined) => {
+  return type === 'text';
+};

@@ -1,14 +1,14 @@
 // ** 백과 통신할 때의 함수, 데이터 형식
 
 // 텍스트 좋아요 요청 데이터 형식
-export interface likeRequest {
-  isLike: boolean;
-  postId: number;
-  userId: number;
-}
+// export interface likeRequest {
+//   isLike: boolean;
+//   postId: number;
+//   userId: number;
+// }
 
 // 이미지 좋아요 요청 데이터 형식
-export interface imgLikeRequest {
+export interface likeRequest {
   writerId: number;
   postId: number;
   userId: number;
@@ -28,22 +28,22 @@ export interface statusRequest {
 }
 
 // text 데이터의 data 응답 형식
-export interface textData {
-  postId: number;
-  type: number;
-  title: string;
-  userId: number;
-  emojiNo: number;
-  content: string;
-  likeCnt: number;
-  isLike: boolean;
-  date: string;
-  dayType: number;
-  status: number;
-}
+// export interface textData {
+//   postId: number;
+//   type: number;
+//   title: string;
+//   userId: number;
+//   emojiNo: number;
+//   content: string;
+//   likeCnt: number;
+//   isLike: boolean;
+//   date: string;
+//   dayType: number;
+//   status: number;
+// }
 
 // img 데이터의 data 응답 형식
-export interface imgData {
+export interface dataType {
   postId: number;
   type: number;
   title: string;
@@ -61,14 +61,14 @@ export interface imgData {
 }
 
 // text 조회 시 응답 형식
-export interface textDetailResponse {
-  data: textData;
-  message: string;
-}
+// export interface textDetailResponse {
+//   data: textData;
+//   message: string;
+// }
 
 // img 조회 시 응답 형식
-export interface imgDetailResponse {
-  data: imgData;
+export interface detailResponse {
+  data: dataType;
   message: string;
 }
 
@@ -84,7 +84,7 @@ export interface messageImgType {
 
 // 좋아요 변경 함수 유형
 export interface likeMessageType {
-  (type: string, data: likeRequest | imgLikeRequest): any;
+  (type: string, data: likeRequest): any;
 }
 
 // 공개 여부 변경 함수 유형
