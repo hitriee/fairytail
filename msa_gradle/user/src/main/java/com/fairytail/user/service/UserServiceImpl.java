@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isValidToken(String token) {
-        Claims jwtBody = parseJWT(token);
+        Claims jwtBody = parseJWT(token.replace("Bearer ", ""));
         Date now = new Date();
 
         return now.before(jwtBody.getExpiration());
