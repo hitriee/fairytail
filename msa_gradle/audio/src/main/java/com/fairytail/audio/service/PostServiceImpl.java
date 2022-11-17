@@ -1,9 +1,9 @@
 package com.fairytail.audio.service;
 
 
-import com.fairytail.audio.dto.PostDto;
-import com.fairytail.audio.dto.PostLikeDto;
-import com.fairytail.audio.dto.PostReportDto;
+import com.fairytail.audio.client.NotiFeignClient;
+import com.fairytail.audio.client.UserReportFeignClient;
+import com.fairytail.audio.dto.*;
 import com.fairytail.audio.jpa.*;
 import com.fairytail.audio.util.*;
 import com.google.cloud.speech.v1.*;
@@ -42,7 +42,9 @@ public class PostServiceImpl implements PostService {
 
     private String dirName = "audio";
 
-    private final UserReportFeign userReportFeign;
+    private final UserReportFeignClient userReportFeignClient;
+
+    private final NotiFeignClient notiFeignClient;
 
     /**
      * 게시글 생성
@@ -222,11 +224,24 @@ public class PostServiceImpl implements PostService {
             PostLikeEntity postLike = modelMapper.map(dto, PostLikeEntity.class);
             postLikeRepository.save(postLike);
             Optional<PostEntity> optional = postRepository.findByPostId(dto.getPostId());
+            PostEntity post = null;
+
             if(optional.isPresent()){
-                PostEntity post = optional.get();
+                post = optional.get();
                 Long count = postLikeRepository.countByPostId(dto.getPostId());
                 post.setLikeCnt(count);
                 postRepository.save(post);
+
+                PostDto postDto = modelMapper.map(post, PostDto.class);
+
+                /** 좋아요 알림 요청 보내기 */
+                // 요청 데이터 세팅
+                NotiRequestDto requestDto = new NotiRequestDto();
+                requestDto.setToken(userReportFeignClient.getUserToken(dto.getWriterId()));
+                requestDto.setTitle(postDto.getTitle());
+                requestDto.setData(modelMapper.map(post, NotiLikeRequestDto.class));
+                // 요청 보내기
+                notiFeignClient.createNotiLike(requestDto);
             }
             return true;
         }
@@ -267,7 +282,7 @@ public class PostServiceImpl implements PostService {
         if(reportCnt >= 3){
             post.setStatus(2);
             postRepository.save(post);
-            userReportFeign.userReport(post.getUserId());
+            userReportFeignClient.userReport(post.getUserId());
             return true;
         }
         return false;
