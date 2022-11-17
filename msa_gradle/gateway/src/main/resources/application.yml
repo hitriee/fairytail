@@ -16,12 +16,6 @@ spring:
 
   cloud:
     gateway:
-      default-filters:
-        - name: GlobalFilter
-          args:
-            baseMessage: Spring Cloud Gateway Global Filter
-            preLogger: true
-            postLogger: true
       globalcors:
         cors-configurations:
           '[/**]':
@@ -36,6 +30,7 @@ spring:
               - PATCH
             allowedHeaders: '*'
             allow-credentials: true
+
       routes:
         - id: user
           uri: lb://USER
