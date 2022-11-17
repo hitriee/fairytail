@@ -13,7 +13,6 @@ eureka:
 spring:
   application:
       name: gateway-service
-      
       routes:
         - id: user
           uri: lb://USER
@@ -40,5 +39,23 @@ spring:
           predicates: # 전제 조건
             - Path=/video/**
 #
-
+  cloud:
+    gateway:
+      globalises:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "https://k7c2091.p.ssafy.io"
+            allowedHeaders:
+              - x-requested-with
+              - authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - OPTIONS
+              - DELETE
 
