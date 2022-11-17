@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "img")
+@Api(value = "message")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/message")
