@@ -34,22 +34,22 @@
 }
 
 .grabbed {
-  box-shadow: rgba(0, 0, 0, 0.3) 0 0 0 99999px;
+  // box-shadow: rgba(0, 0, 0, 0.3) 0 0 0 99999px;
   z-index: 10;
 }
 
-.deleted {
-  animation-name: move;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
-  // position: absolute;
-}
+// .deleted {
+//   animation-name: move;
+//   animation-duration: 10s;
+//   animation-iteration-count: infinite;
+//   // position: absolute;
+// }
 
-@keyframes move {
-  from {
-    left: 0px;
-  }
-  to {
-    left: 300px;
-  }
-}
+// @keyframes move {
+//   from {
+//     left: 0px;
+//   }
+//   to {
+//     left: 300px;
+//   }
+// }

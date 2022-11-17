@@ -72,8 +72,7 @@ function MessageCreate() {
     setSpinnerMessage('성공적으로 등록되었습니다.');
     setTimeout(() => {
       setSpinner(false);
-      console.log(toMessageDetail(postId, type));
-      // navigate(toMessageDetail(postId, type));
+      navigate(toMessageDetail(postId, type));
     }, 1500);
   };
 

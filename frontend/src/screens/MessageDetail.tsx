@@ -45,17 +45,19 @@ function MessageDetail() {
   };
   const [data, setData] = useState(dataType);
   const getDetailMessage = () => {
-    getMesssage(type, {postId: messageId, userId}).then((res: any) => {
-      console.log(res);
-      if (res.message === 'SUCCESS') {
-        setData(prev => {
-          return {...prev, ...res.data};
-        });
-      } else {
-        // 실패했을 경우 404로 이동
-        navigate(notFound());
-      }
-    });
+    getMesssage(type, {postId: messageId, userId})
+      .then((res: any) => {
+        console.log(res);
+        if (res.message === 'SUCCESS') {
+          setData(prev => {
+            return {...prev, ...res.data};
+          });
+        } else {
+          // 실패했을 경우 404로 이동
+          navigate(notFound());
+        }
+      })
+      .catch((error: any) => navigate(notFound()));
   };
   // if (type === 'text') {
   //   getTextMesssage(type, messageId).then((res: textDetailResponse) => {
@@ -122,11 +124,12 @@ function MessageDetail() {
   const [newStatus, setNewStatus] = useState(data.status);
   // content에 들어갈 내용
   const detailContent = () => {
-    switch (type) {
-      case 'text':
-        return data.content;
-      default:
-        return `https://${data.url}`;
+    if (type === 'text') {
+      return data.content;
+    } else if (data.url) {
+      return `https://${data.url}`;
+    } else {
+      return '';
     }
   };
 
@@ -161,18 +164,7 @@ function MessageDetail() {
             date={modifiedDate()}
             status={newStatus}
           />
-          <Like
-            count={data.likeCnt}
-            like={data.isLike}
-            isMine={isMine()}
-            emoji={data.emojiNo}
-            type={type}
-            writerId={data.userId}
-            likeInfo={{
-              postId: messageId,
-              userId,
-            }}
-          />
+          <Like data={data} type={type} userId={userId} setData={setData} />
         </section>
       </main>
     </div>

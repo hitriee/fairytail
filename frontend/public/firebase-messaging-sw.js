@@ -25,7 +25,12 @@ messaging.onBackgroundMessage((payload) => {
   //   "[firebase-messaging-sw.js] Received background message ",
   //   payload
   // );
-  if (Notification.permission === "granted") {
+  const ua = window.navigator.userAgent;
+  const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+  const webkit = !!ua.match(/WebKit/i);
+  const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
+  if (!iOSSafari && Notification.permission === "granted") {
     // 알림 설정
     const { title } = payload.data;
     const shortTitle = () => {
@@ -43,16 +48,5 @@ messaging.onBackgroundMessage((payload) => {
       badge: "./android/android-launchericon-72-72.png", // 모바일에서만 - 권장 크기 72px
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
-    //   self.registration.getSubscription().then((subscription) => {
-    //     if (!subscription) {
-    //       return subscription.scribe();
-    //     }
-    //   });
-    // } else {
-    //   self.registration.getSubscription().then((subscription) => {
-    //     if (subscription) {
-    //       return subscription.unsubscribe();
-    //     }
-    //   });
   }
 });
