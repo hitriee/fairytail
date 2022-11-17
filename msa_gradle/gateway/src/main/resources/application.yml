@@ -12,10 +12,13 @@ eureka:
   instance:
     ip-address: true
 
+spring.gateway```
+
 spring:
   application:
       name: gateway-service
-  gateway:
+  cloud:
+    gateway:
       routes:
         - id: user
           uri: lb://USER
