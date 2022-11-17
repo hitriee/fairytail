@@ -61,22 +61,22 @@ public class UserController {
     }
 
 
-//    @ApiOperation(value = "신고 횟수 증가", notes = "UserId의 신고 횟수를 증가시킵니다.")
-//    @PostMapping("/alert/{userId}")
-//    public ResponseEntity<?> updateAlert(@PathVariable(value = "userId") Long userId) {
-//        Integer result = userService.updateAlert(userId);
-//        if(result != 1) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to to update block cnt.");
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body("Succeeded to update block cnt.");
-//    }
+    @ApiOperation(value = "신고 횟수 증가", notes = "UserId의 신고 횟수를 증가시킵니다.")
+    @PostMapping("/alert/{userId}")
+    public ResponseEntity<?> updateAlert(@PathVariable(value = "userId") Long userId) {
+        Integer result = userService.updateAlert(userId);
+        if(result != 1) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to to update block cnt.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Succeeded to update block cnt.");
+    }
 
-    @ApiOperation(value ="유저 firebase 토큰 가져오기", notes = "유저의 firebase 토큰을 반환합니다.")
+/*    @ApiOperation(value ="유저 firebase 토큰 가져오기", notes = "유저의 firebase 토큰을 반환합니다.")
     @GetMapping("/token/{userId}")
     public ResponseEntity<?> getFirebaseToken(@PathVariable(value = "userId") Long userId) {
         String result = userService.getFirebaseToken(userId);
         return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
+    }*/
 
 
     @ApiOperation(value ="토큰 검사", notes = "액세스 토큰이 유효기간을 검사합니다.")
@@ -88,6 +88,5 @@ public class UserController {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unavailable Token");
        else
            return ResponseEntity.status(HttpStatus.OK).body("Available Token");
-
     }
 }
