@@ -16,13 +16,14 @@ function Intro() {
   useEffect(() => {
     const userInfo = currentUser();
 
-    // 유효한 토큰이 있으면서 userId도 있으면 main으로 이동
+    // 유효한 토큰이 있는지 확인
     getIdentification()
       .then(res => {
+        // 유효한 토큰이 있으면서 userId도 있으면 main으로 이동
         if (userInfo !== -1) {
           navigate('/main');
         } else {
-          // userId가 없으면 localStorage 초기화
+          // 유효한 토큰은 있는데 userId가 없으면 localStorage 초기화
           localStorage.clear();
         }
       })

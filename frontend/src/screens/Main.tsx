@@ -30,20 +30,19 @@ function Main() {
   useEffect(() => {
     const userInfo = currentUser();
 
-    // userId가 있으면 유효한 토큰이 있는지 확인
-    if (userInfo !== -1) {
-      getIdentification()
-        // userId도 있고 유효한 토큰도 있으면 그대로 진행
-        .then(res => console.log(res))
-        // 유효한 토큰이 없으면 알림 열기
-        .catch(err => {
-          console.log(err);
+    // 유효한 토큰이 있는지 확인
+    getIdentification()
+      .then(res => {
+        // 유효한 토큰은 있는데 userId가 없으면 알림 표시
+        if (userInfo === -1) {
           setIsAlertOpend(true);
-        });
-    } else {
-      // userId가 없으면 알림 열기
-      setIsAlertOpend(true);
-    }
+        }
+      })
+      // 유효한 토큰이 없으면 알림 표시
+      .catch(err => {
+        console.log(err);
+        setIsAlertOpend(true);
+      });
   }, []);
 
   const navigate = useNavigate();
