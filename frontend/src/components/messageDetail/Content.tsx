@@ -33,7 +33,12 @@ function Content({data, status}: ContentProps) {
     <article className="detail-container">
       <p className="detail-title">{title}</p>
       <div className="detail-content">
-        <Preview type={type} fileURL={detailContent()} />
+        <Preview
+          type={type}
+          fileURL={detailContent()}
+          subtitle={content}
+          isDetail={true}
+        />
       </div>
       <div className="detail-bottom-container">
         <span className="detail-date">{modifiedDate}</span>

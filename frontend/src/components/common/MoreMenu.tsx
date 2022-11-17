@@ -182,7 +182,7 @@ MoreMenuProps) {
   return (
     <>
       {open ? (
-        <main id="menu">
+        <main id="menu fadeIn">
           <article className="button" onClick={saveMessage}>
             저장
           </article>

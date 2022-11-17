@@ -30,7 +30,7 @@ function InfoModal({open, type, onConfirmed}: InfoModalProps) {
     <>
       {open ? (
         <div
-          className="bgm-background"
+          className="bgm-background fadeIn"
           onClick={onConfirmed}
           ref={infoModalRef}>
           <div
