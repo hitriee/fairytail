@@ -2,9 +2,9 @@
 
 import {useEffect, useState} from 'react';
 import html2canvas from 'html2canvas';
-import {useNavigate} from 'react-router-dom';
+import {redirect, useNavigate} from 'react-router-dom';
 import {saveAs} from 'file-saver';
-import {returnTrue, returnFalse} from '@common/commonFunc';
+import {returnTrue, returnFalse, isText} from '@common/commonFunc';
 import Report from '@messageDetail/Report';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
@@ -14,6 +14,7 @@ import {
   changeMessageStatus,
   deleteMessage,
 } from '@/apis/messageDetail/detailFunc';
+import {dataType} from '@apis/messageDetail/detailInterface';
 
 // props 유형
 interface MoreMenuProps {
@@ -22,8 +23,10 @@ interface MoreMenuProps {
   detail: any;
   messageId: number;
   type: string;
-  content: string;
+  // content: string;
   close: () => void;
+  data: dataType;
+  // setData: React.Dispatch<React.SetStateAction<dataType>>;
   status: number;
   setStatus: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -34,11 +37,15 @@ function MoreMenu({
   detail,
   messageId,
   type,
-  content,
+  // content,
   close,
+  data,
   status,
   setStatus,
-}: MoreMenuProps) {
+}: // setData,
+MoreMenuProps) {
+  const {url} = data;
+
   const navigate = useNavigate();
   const [info, setInfo] = useState({title: '', message: ''});
   const [openConfirm, setConfirm] = useState(false);
@@ -57,7 +64,7 @@ function MoreMenu({
   // 저장
   const saveMessage = async () => {
     close();
-    if (type === 'text') {
+    if (isText(type) || type === 'img') {
       const height = window.innerHeight;
       const width = window.innerWidth;
 
@@ -77,11 +84,8 @@ function MoreMenu({
         saveAs(canvas.toDataURL(), `fairytail_${type}_${messageId}.png`);
       });
     } else {
-      const extension = content.split('.').at(-1);
-      saveAs(
-        `https://${content}`,
-        `fairytail_${type}_${messageId}.${extension}`,
-      );
+      const extension = url.split('.').at(-1);
+      saveAs(`https://${url}`, `fairytail_${type}_${messageId}.${extension}`);
     }
   };
 
@@ -92,23 +96,31 @@ function MoreMenu({
 
   // 메시지 공개 여부
   const presentStatus = (statusNum: number) =>
-    statusNum === 1 ? '비공개' : '공개';
+    statusNum === 0 ? '공개' : '비공개';
 
   // 메시지 공개 여부 변경
   const changeStatus = () => {
     changeMessageStatus(type, {
       postId: messageId,
       status: 1 - status,
-    }).then((res: any) => {
-      console.log(res);
-      setStatus(prev => 1 - prev);
-      // 변경되었음을 알림
-      changeInfo(
-        '완료',
-        `작성한 메시지가\n${presentStatus(1 - status)}로 변경되었습니다.`,
-      );
-      setAlert(returnTrue);
-    });
+    })
+      .then((res: any) => {
+        if (res.message === 'SUCCESS') {
+          changeInfo(
+            '완료',
+            `작성한 메시지가\n${presentStatus(1 - status)}로 변경되었습니다.`,
+          );
+          setStatus(prev => 1 - prev);
+        } else {
+          changeInfo('오류', `요청이 제대로 처리되지 않았습니다`);
+        }
+      })
+      .catch(() => {
+        changeInfo('오류', `요청이 제대로 처리되지 않았습니다`);
+      })
+      .finally(() => {
+        setAlert(returnTrue);
+      });
   };
 
   // 삭제 확인
@@ -130,6 +142,9 @@ function MoreMenu({
     setAlert(returnFalse);
     changeInfo('', '');
     close();
+    if (deleted) {
+      navigate(-1);
+    }
   };
 
   // 신고 취소
@@ -143,27 +158,22 @@ function MoreMenu({
     deleteMessage(type, messageId)
       .then((res: any) => {
         if (res.message === 'SUCCESS') {
-          setDeleted(returnTrue);
           changeInfo('삭제 완료', '글이 정상적으로 삭제되었습니다');
+          setDeleted(returnTrue);
         } else {
-          setDeleted(returnFalse);
           changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
+          setDeleted(returnFalse);
         }
       })
       .catch((err: any) => {
-        setDeleted(returnFalse);
         changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
+        setDeleted(returnFalse);
       })
       .finally(() => {
-        setAlert(returnTrue);
         setConfirm(returnFalse);
+        setAlert(returnTrue);
       });
   };
-  useEffect(() => {
-    if (deleted && !openConfirm) {
-      navigate(-1);
-    }
-  }, [deleted]);
 
   return (
     <>
@@ -191,7 +201,7 @@ function MoreMenu({
         </main>
       ) : null}
 
-      {/* 공개 여부 변경 모달 */}
+      {/* 공개 여부 변경, 삭제 모달 */}
       <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
 
       {/* 삭제 확인 모달 */}

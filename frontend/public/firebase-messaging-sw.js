@@ -27,10 +27,10 @@ messaging.onBackgroundMessage((payload) => {
   // );
   const ua = window.navigator.userAgent;
   const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
-  const webkit = !!ua.match(/WebKit/i);
-  const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+  // const webkit = !!ua.match(/WebKit/i);
+  // const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
 
-  if (!iOSSafari && Notification.permission === "granted") {
+  if (!iOS && Notification.permission === "granted") {
     // 알림 설정
     const { title } = payload.data;
     const shortTitle = () => {
@@ -40,7 +40,7 @@ messaging.onBackgroundMessage((payload) => {
         return title;
       }
     };
-    const notificationTitle = `익명의 작가가 당신의 이야기 \n${shortTitle()}을(를) 좋아합니다`;
+    const notificationTitle = `누군가 당신의 이야기 \n${shortTitle()}을(를) 좋아합니다`;
     const notificationOptions = {
       body: "",
       icon: "./windows11/LargeTile.scale-100.png", // web

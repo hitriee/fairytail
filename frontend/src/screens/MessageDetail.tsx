@@ -12,6 +12,7 @@ import '@screens/MessageDetail.scss';
 import {getMesssage} from '@/apis/messageDetail/detailFunc';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {currentUser} from '@common/commonFunc';
+import {dataType} from '@apis/messageDetail/detailInterface';
 
 function MessageDetail() {
   // 풍선 저장 관련
@@ -27,31 +28,13 @@ function MessageDetail() {
   const userId = currentUser();
 
   // 서버 통신으로 게시글 정보 가져오기
-  const dataType = {
-    postId: 0,
-    type: 0,
-    title: '',
-    userId: 0,
-    emojiNo: 0,
-    content: '',
-    likeCnt: 0,
-    isLike: false,
-    date: '',
-    dayType: 4,
-    status: 0,
-    url: '',
-    lat: 0,
-    lng: 0,
-  };
-  const [data, setData] = useState(dataType);
+  const [data, setData] = useState<dataType>(null!);
   const getDetailMessage = () => {
     getMesssage(type, {postId: messageId, userId})
       .then((res: any) => {
         console.log(res);
         if (res.message === 'SUCCESS') {
-          setData(prev => {
-            return {...prev, ...res.data};
-          });
+          setData(() => res.data);
         } else {
           // 실패했을 경우 404로 이동
           navigate(notFound());
@@ -88,7 +71,7 @@ function MessageDetail() {
   // }
   // };
   // 현재 사용자가 작성한 게시글인지 확인
-  const isMine = () => userId === data.userId;
+  const isMine = () => data?.userId === userId;
 
   useEffect(() => {
     if (messageId === -1) {
@@ -102,11 +85,36 @@ function MessageDetail() {
 
   // 비공개 글일 때 작성자가 자신이 아니면 404 페이지로 이동
   useEffect(() => {
-    if (!isMine() && data.status) {
+    if (!isMine() && data?.status) {
       navigate(notFound());
     }
-    setNewStatus(data.status);
   }, [data]);
+
+  useEffect(() => {
+    setNewStatus(() => data?.status);
+  }, [data]);
+
+  // useEffect(() => {
+
+  //   if (isText(type)) {
+  //     if (!isMine() && textData?.status) {
+  //       navigate(notFound())
+  //     } else {
+  //       setTextData(() => textData)
+  //     }
+  //   } else {
+  //     if (!isMine() && imgData?.status) {
+  //       navigate(notFound())
+  //     } else {
+  //       setImgData(() => imgData)
+  //     }
+  //   }
+  //   // if (!isMine() && (textData?.status || imgData?.status)) {
+  //   //   navigate(notFound());
+  //   // }
+  //   // setData(() => data);
+  //   // setNewStatus(data?.status);
+  // }, [data]);
 
   // 메뉴 표시 여부
   const [more, setMore] = useState(false);
@@ -117,57 +125,61 @@ function MessageDetail() {
 
   const showMenu = () => setMore(!more);
 
-  // 날짜 형식에 맞춰 표시
-  const modifiedDate = () => data.date.split('T')[0];
-
   // 공개 여부 변경 대비
-  const [newStatus, setNewStatus] = useState(data.status);
+  const [newStatus, setNewStatus] = useState(data?.status);
   // content에 들어갈 내용
-  const detailContent = () => {
-    if (type === 'text') {
-      return data.content;
-    } else if (data.url) {
-      return `https://${data.url}`;
-    } else {
-      return '';
-    }
-  };
+  // const detailContent = () => {
+  //   if (isText(type)) {
+  //     return textData?.content;
+  //   } else {
+  //     return imgData?.url ? `https://${imgData?.url}` : '';
+  //   }
+  // };
+
+  const dayType = () => data?.dayType;
 
   return (
-    <div
-      className={`screen background${data.dayType}`}
-      ref={messageDetailRef}
-      onClick={hiddenMenu}>
-      <main id="container">
-        <section data-html2canvas-ignore="true" className="ignore">
-          <MoveToBack path="" />
-          <div id="message-detail-nav-more" onClick={showMenu}>
-            <EllipsisVertical width="32" height="32" fill="white" />
-          </div>
-          <MoreMenu
-            open={more}
-            isMine={isMine()}
-            detail={messageDetailRef}
-            messageId={messageId}
-            type={type}
-            content={data.url || data.content}
-            close={hiddenMenu}
-            status={newStatus}
-            setStatus={setNewStatus}
-          />
-        </section>
-        <section className="container">
-          <Content
-            title={data.title}
-            content={detailContent()}
-            type={data.type}
-            date={modifiedDate()}
-            status={newStatus}
-          />
-          <Like data={data} type={type} userId={userId} setData={setData} />
-        </section>
-      </main>
-    </div>
+    <>
+      {data ? (
+        <div
+          className={`screen background${dayType()}`}
+          ref={messageDetailRef}
+          onClick={hiddenMenu}>
+          <main id="container">
+            <section data-html2canvas-ignore="true" className="ignore">
+              <MoveToBack path="" />
+              <div id="message-detail-nav-more" onClick={showMenu}>
+                <EllipsisVertical width="32" height="32" fill="white" />
+              </div>
+              <MoreMenu
+                open={more}
+                isMine={isMine()}
+                detail={messageDetailRef}
+                messageId={messageId}
+                type={type}
+                // content={data?.url || data?.content}
+                close={hiddenMenu}
+                data={data}
+                // setData={setData}
+                status={newStatus}
+                setStatus={setNewStatus}
+              />
+            </section>
+            <section className="container">
+              <Content
+                data={data}
+                // title={textData?.title || imgData?.title || ''}
+                // content={detailContent()}
+                // type={data.type}
+                // date={modifiedDate()}
+                status={newStatus}
+              />
+              <Like data={data} type={type} userId={userId} />
+            </section>
+          </main>
+        </div>
+      ) : null}
+    </>
   );
 }
 
