@@ -14,6 +14,9 @@ import Alert from '@common/Alert';
 import {postText, postFile} from '@apis/messageCreate';
 import {toMessageDetail} from '@apis/router';
 
+import {ReactComponent as Send} from '@images/send.svg';
+import {ReactComponent as Airplane} from '@images/airplaneIcon.svg';
+
 // 내용 타입 정의
 export type Content = {
   type: number; // 0: text, 1: image, 2: video, 3: audio
@@ -223,7 +226,8 @@ function MessageCreate() {
               <div className="message-create-save-container">
                 <Toggle label="비공개" onClick={setIsShare} value={isShare} />
                 <button className="btn" onClick={handleSubmit}>
-                  등록
+                  {/* <Airplane fill="black" transform="rotate(30)" /> */}
+                  <Send fill="grey" transform="rotate(0)" />
                 </button>
               </div>
             </>
