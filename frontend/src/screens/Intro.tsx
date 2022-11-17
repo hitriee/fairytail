@@ -1,18 +1,36 @@
-import '@screens/Intro.scss';
-import GoogleLoginForm from '@intro/GoogleLoginForm';
-import IntroLogo from '@images/introLogo.png';
-import Iframe from 'react-iframe';
 import {useNavigate} from 'react-router-dom';
 import {useEffect} from 'react';
+import Iframe from 'react-iframe';
+
+import {getIdentification} from '@apis/main';
+
+import '@screens/Intro.scss';
+import GoogleLoginForm from '@intro/GoogleLoginForm';
+import {currentUser} from '@common/commonFunc';
+import IntroLogo from '@images/introLogo.png';
 
 function Intro() {
   const navigate = useNavigate();
 
+  // 로그인 여부 확인
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (userId !== null) {
-      navigate('/main');
-    }
+    const userInfo = currentUser();
+
+    // 유효한 토큰이 있으면서 userId도 있으면 main으로 이동
+    getIdentification()
+      .then(res => {
+        if (userInfo !== -1) {
+          navigate('/main');
+        } else {
+          // userId가 없으면 localStorage 초기화
+          localStorage.clear();
+        }
+      })
+      // 유효한 토큰이 없으면 localStorage 초기화
+      .catch(err => {
+        console.log(err);
+        localStorage.clear();
+      });
   }, []);
 
   return (

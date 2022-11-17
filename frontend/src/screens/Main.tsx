@@ -9,7 +9,6 @@ import Loading from '@loading/Loading';
 import Room from '@main/Room';
 import OpenHelp from '@common/OpenHelp';
 import BgmBtn from '@common/BgmBtn';
-import {currentUser} from '@common/commonFunc';
 import Alert from '@common/Alert';
 
 import '@screens/Main.scss';
@@ -21,13 +20,31 @@ import MessageList from '@screens/MessageList';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
 import Individual from '@screens/Individual';
+import {getIdentification} from '@apis/main';
+import {currentUser} from '@common/commonFunc';
 
 function Main() {
+  const [isAlertOpened, setIsAlertOpend] = useState(false);
+
   // 로그인 여부 확인
-  const userInfo = currentUser();
-  const [isAlertOpened, setIsAlertOpend] = useState(
-    userInfo === -1 ? true : false,
-  );
+  useEffect(() => {
+    const userInfo = currentUser();
+
+    // userId가 있으면 유효한 토큰이 있는지 확인
+    if (userInfo !== -1) {
+      getIdentification()
+        // userId도 있고 유효한 토큰도 있으면 그대로 진행
+        .then(res => console.log(res))
+        // 유효한 토큰이 없으면 알림 열기
+        .catch(err => {
+          console.log(err);
+          setIsAlertOpend(true);
+        });
+    } else {
+      // userId가 없으면 알림 열기
+      setIsAlertOpend(true);
+    }
+  }, []);
 
   const navigate = useNavigate();
 
