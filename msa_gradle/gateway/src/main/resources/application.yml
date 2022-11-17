@@ -19,7 +19,9 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "https://just-pickup.com:8080"
+            allowedOrigins:
+              - "https://k9c2091.p.ssafy.io"
+              - "http://localhost:3000"
             allowedMethods:
               - GET
               - POST
