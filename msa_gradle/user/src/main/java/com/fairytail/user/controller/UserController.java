@@ -84,7 +84,7 @@ public class UserController {
     public ResponseEntity<?> updateAlert(HttpServletRequest request) {
        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-       if(userService.isValidToken(token))
+       if(!userService.isValidToken(token))
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unavailable Token");
        else
            return ResponseEntity.status(HttpStatus.OK).body("Available Token");
