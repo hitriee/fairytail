@@ -50,31 +50,35 @@ function MessageList() {
   }, [messageItems]);
 
   return (
-    <div className="messageList">
-      <MoveToBack path={main()} />
-      {/* <div className="navbarContainer">
-      </div> */}
-      <div className="messageList-container">
-        <div className="messageList-container-info">내 이야기</div>
+    <>
+      {messageItems.length ? (
+        <div className="messageList">
+          <MoveToBack path={main()} />
+          {/* <div className="navbarContainer">
+        </div> */}
+          <div className="messageList-container">
+            <div className="messageList-container-info">내 이야기</div>
 
-        <div className="messageList-container-list">
-          {messageItems.length === 0 && (
-            <div className="messageList-container-list-empty">
-              작성한 메세지가 없습니다.
+            <div className="messageList-container-list">
+              {messageItems.length === 0 && (
+                <div className="messageList-container-list-empty">
+                  작성한 메세지가 없습니다.
+                </div>
+              )}
+              {messageItems.length !== 0 &&
+                messageItems.map(messageItem => {
+                  return (
+                    <MyMessage
+                      key={`${messageItem.type}+${messageItem.postId}`}
+                      messageItem={messageItem}
+                    />
+                  );
+                })}
             </div>
-          )}
-          {messageItems.length !== 0 &&
-            messageItems.map(messageItem => {
-              return (
-                <MyMessage
-                  key={`${messageItem.type}+${messageItem.postId}`}
-                  messageItem={messageItem}
-                />
-              );
-            })}
+          </div>
         </div>
-      </div>
-    </div>
+      ) : null}
+    </>
   );
 }
 
