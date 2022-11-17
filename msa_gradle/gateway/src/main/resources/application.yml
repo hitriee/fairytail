@@ -15,6 +15,7 @@ eureka:
 spring:
   application:
       name: gateway-service
+  gateway:
       routes:
         - id: user
           uri: lb://USER
