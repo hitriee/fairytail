@@ -1,17 +1,18 @@
-/*
 package com.fairytail.gateway.config;
 
-import org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CorsConfig extends WebMvcAutoConfiguration {
+@EnableWebMvc
+public class CorsConfig implements WebMvcConfigurer {
 
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000", "https://k7c209.p.ssafy.io", "https://k7c2091.p.ssafy.io")
                 .allowedMethods("*");
     }
-}*/
+}
