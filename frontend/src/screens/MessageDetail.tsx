@@ -1,18 +1,19 @@
 // ** 메시지 상세
-
 import {useState, useRef, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router';
-import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
-import MoreMenu from '@common/MoreMenu';
+
+import '@screens/MessageDetail.scss';
 import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
+import MoreMenu from '@common/MoreMenu';
 import MoveToBack from '@common/MoveToBack';
-import {notFound, intro} from '@apis/router';
 import '@screens/MessageDetail.scss';
-import {getMesssage} from '@/apis/messageDetail/detailFunc';
 import {intMessageId, convStringType} from '@/components/common/commonFunc';
 import {currentUser} from '@common/commonFunc';
 import {dataType} from '@apis/messageDetail/detailInterface';
+import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
+import {notFound, intro} from '@apis/router';
+import {getMesssage} from '@apis/messageDetail/detailFunc';
 
 function MessageDetail() {
   // 풍선 저장 관련

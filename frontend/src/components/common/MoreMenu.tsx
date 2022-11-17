@@ -1,15 +1,15 @@
 // ** 상세 페이지 더보기 메뉴
-
 import {useEffect, useState} from 'react';
 import html2canvas from 'html2canvas';
 import {redirect, useNavigate} from 'react-router-dom';
 import {saveAs} from 'file-saver';
-import {returnTrue, returnFalse, isText} from '@common/commonFunc';
+
+import '@common/Common.scss';
 import Report from '@messageDetail/Report';
+import {returnTrue, returnFalse} from '@common/commonFunc';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import {popUp} from '@common/commonFunc';
-import '@common/Common.scss';
 import {
   changeMessageStatus,
   deleteMessage,
@@ -62,9 +62,8 @@ MoreMenuProps) {
   };
 
   // 저장
-  const saveMessage = async () => {
-    close();
-    if (isText(type) || type === 'img') {
+  const saveMessage = () => {
+    if (type === 'text' || type === 'img') {
       const height = window.innerHeight;
       const width = window.innerWidth;
 
@@ -80,12 +79,17 @@ MoreMenuProps) {
         x: x,
         width: resultWidth,
         height: height,
+        useCORS: true,
       }).then(canvas => {
         saveAs(canvas.toDataURL(), `fairytail_${type}_${messageId}.png`);
+        changeInfo('완료', '게시글이 저장되었습니다.');
+        setAlert(returnTrue);
       });
     } else {
       const extension = url.split('.').at(-1);
       saveAs(`https://${url}`, `fairytail_${type}_${messageId}.${extension}`);
+      changeInfo('완료', '파일이 저장되었습니다.');
+      setAlert(returnTrue);
     }
   };
 
@@ -158,16 +162,16 @@ MoreMenuProps) {
     deleteMessage(type, messageId)
       .then((res: any) => {
         if (res.message === 'SUCCESS') {
-          changeInfo('삭제 완료', '글이 정상적으로 삭제되었습니다');
           setDeleted(returnTrue);
+          changeInfo('성공', '정상적으로 삭제되었습니다.');
         } else {
-          changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
           setDeleted(returnFalse);
+          changeInfo('실패', '오류가 발생해 삭제되지 않았습니다.');
         }
       })
       .catch((err: any) => {
-        changeInfo('삭제 미완료', '오류가 발생해 글이 삭제되지 않았습니다');
         setDeleted(returnFalse);
+        changeInfo('실패', '오류가 발생해 삭제되지 않았습니다.');
       })
       .finally(() => {
         setConfirm(returnFalse);
