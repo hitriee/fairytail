@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -64,7 +66,7 @@ public class UserServiceImpl implements UserService {
     public Boolean isValidToken(String token) {
         Claims jwtBody = parseJWT(token.replace("Bearer ", ""));
         Date now = new Date();
-
+        log.debug("time__________________________" + jwtBody.getExpiration());
         return now.before(jwtBody.getExpiration());
     }
 
