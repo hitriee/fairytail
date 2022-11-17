@@ -1,3 +1,4 @@
+/*
 package com.fairytail.gateway.filter;
 
 import io.jsonwebtoken.Claims;
@@ -25,12 +26,14 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         super(Config.class);
     }
 
-    /**
+    */
+/**
      * Spring 5 부터는 ServletHttpRequest와 ServletHttpResponse 를 더이상 지원하지 않는다.
      * SPring 5 부터는 WebFlux를 지원하기 때문에 ServerHttpRequest, ServerHttpResponse를 지원한다.
      *
      * 로그인 후 토큰 반환 -> 로그인 이외의 서비스를 요청하고자 할 때, 토큰 정보를 가지고 온다. -> header(토큰이 포함되어있다)
-     * */
+     * *//*
+
 
 
     @Override
@@ -79,11 +82,13 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         return returnValue;
     }
 
-    /**
+    */
+/**
      * 토큰 정보가 유효하지 않거나 토큰이 없을 때, 에러 메시지 반환
      * WebFlux에서 데이터를 처리하는 단위 중 하나가 Mono - 단일 값
                                            단일 값이 아닐 경우 Flux
-     */
+     *//*
+
     private Mono<Void> tokenError(ServerWebExchange exchange, String errorMessage, HttpStatus statusCode) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(statusCode);
@@ -97,3 +102,4 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
 }
+*/
