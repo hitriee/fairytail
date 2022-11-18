@@ -1,4 +1,4 @@
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import '@screens/MessageCreate.scss';
@@ -13,6 +13,9 @@ import Alert from '@common/Alert';
 
 import {postText, postFile} from '@apis/messageCreate';
 import {toMessageDetail} from '@apis/router';
+
+import {ReactComponent as Send} from '@images/send.svg';
+import {ReactComponent as Airplane} from '@images/airplaneIcon.svg';
 
 // 내용 타입 정의
 export type Content = {
@@ -87,15 +90,6 @@ function MessageCreate() {
     }, 1500);
   };
 
-  // 유저 아이디 확인
-  const userId = localStorage.getItem('userId');
-
-  if (userId === null) {
-    setAlertInfo({title: '알림', message: '로그인이 필요합니다.'});
-    setIsAlertOpend(true);
-    navigate(-1);
-  }
-
   // 풍선 등록
   function handleSubmit() {
     // 제목이나 내용이 비어있는지 확인
@@ -108,10 +102,6 @@ function MessageCreate() {
     } else if (content.type !== 0 && content.file === null) {
       setAlertInfo({title: '알림', message: '파일을 첨부해주세요.'});
       setIsAlertOpend(true);
-    } else if (userId === null) {
-      setAlertInfo({title: '알림', message: '로그인이 필요합니다.'});
-      setIsAlertOpend(true);
-      navigate(-1);
     } else {
       // 모두 작성되었다면 서버로 전송
       if (navigator.geolocation) {
@@ -132,6 +122,8 @@ function MessageCreate() {
           }
 
           let data;
+
+          const userId = localStorage.getItem('userId');
 
           // 서버 통신, type에 따라 보내는 방식이 달라짐
           // text인 경우
@@ -168,7 +160,7 @@ function MessageCreate() {
             data.append('status', isShare ? '1' : '0');
             data.append('title', title);
             data.append('type', content.type.toString());
-            data.append('userId', userId);
+            data.append('userId', userId ? userId : '');
 
             postFile(content.type, data)
               .then(({data, message}) => {
@@ -222,9 +214,16 @@ function MessageCreate() {
 
               <div className="message-create-save-container">
                 <Toggle label="비공개" onClick={setIsShare} value={isShare} />
-                <button className="btn" onClick={handleSubmit}>
-                  등록
-                </button>
+                {/* <button
+                  className="message-create-save-btn"
+                  onClick={handleSubmit}>
+                  <Airplane fill="black" transform="rotate(30)" />
+                </button> */}
+                <Send
+                  onClick={handleSubmit}
+                  transform="rotate(-20)"
+                  className="message-create-save-btn-icon"
+                />
               </div>
             </>
           )}

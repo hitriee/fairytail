@@ -1,8 +1,14 @@
-import React, {useRef, useState, Dispatch, SetStateAction} from 'react';
+import React, {
+  useRef,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+} from 'react';
 
 import '@messageCreate/Message.scss';
-import {Content} from '@screens/MessageCreate';
 import Preview from '@messageCreate/Preview';
+import {Content} from '@screens/MessageCreate';
 import Alert from '@common/Alert';
 import {ReactComponent as ImageIcon} from '@images/image.svg';
 import {ReactComponent as ImageFillIcon} from '@images/imageFill.svg';
@@ -34,6 +40,12 @@ function Message({content, setContent}: MessageProps) {
   const [newFile, setNewFile] = useState(content.file);
   const [newFileType, setNewFileType] = useState(content.type);
   const [newFileURL, setNewFileURL] = useState(content.fileURL);
+
+  // textarea 높이 자동 조절
+  const textRef = useRef<HTMLTextAreaElement>(null!);
+  const handleResizeHeight = useCallback(() => {
+    textRef.current.style.height = textRef.current.scrollHeight + 'px';
+  }, []);
 
   // 버튼 클릭 시 파일 등록 창 보여주기
   const handleClickFileUpload = () => {
@@ -172,21 +184,27 @@ function Message({content, setContent}: MessageProps) {
       </div>
       <div className="message-create-content-container">
         {newFile === null && newFileType === 0 ? (
-          <textarea
-            className="message-create-content-text"
-            placeholder={`내용을 입력해주세요.\n(최대 100자)`}
-            maxLength={100}
-            onChange={e => {
-              setNewFile(null);
-              setNewFileURL(e.target.value);
-              setContent(prev => {
-                prev.type = 0;
-                prev.file = null;
-                prev.fileURL = e.target.value;
-                return prev;
-              });
-            }}
-          />
+          <>
+            <div className="message-create-content-text">
+              <textarea
+                ref={textRef}
+                className="message-create-content-textarea"
+                placeholder="내용을 입력해주세요 &#13; (최대 100자)"
+                maxLength={100}
+                onInput={handleResizeHeight}
+                onChange={e => {
+                  setNewFile(null);
+                  setNewFileURL(e.target.value);
+                  setContent(prev => {
+                    prev.type = 0;
+                    prev.file = null;
+                    prev.fileURL = e.target.value;
+                    return prev;
+                  });
+                }}
+              />
+            </div>
+          </>
         ) : null}
 
         {newFile === null && newFileType !== 0 ? (
@@ -203,7 +221,11 @@ function Message({content, setContent}: MessageProps) {
         {newFile !== null && newFileType !== 0 ? (
           <>
             <div className="message-create-content-align">
-              <Preview type={newFileType} fileURL={newFileURL} />
+              <Preview
+                type={newFileType}
+                fileURL={newFileURL}
+                subtitle={null}
+              />
             </div>
             <button className="btn" onClick={handleClickFileUpload}>
               변경

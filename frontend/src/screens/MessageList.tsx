@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
-import {main} from '@apis/router';
+import {main, notFound} from '@apis/router';
 import {getMesssageList} from '@/apis/messageList';
-// import filter from '@images/filter.svg';
+import {currentUser} from '@/components/common/commonFunc';
 import {ReactComponent as Filter} from '@images/filter.svg';
 
 interface items {
@@ -20,54 +20,83 @@ interface items {
 
 function MessageList() {
   const [messageItems, setMessageItems] = useState<items[]>([]);
-  const location = useLocation();
+  const [filterState, setFilterState] = useState(true);
+
+  // 데이터 및 데이터 받아오기가 끝났는지 확인하기 위한 state
+  const [isFinished, setIsFinished] = useState(-1);
+
+  // const location = useLocation();
+  const navigate = useNavigate();
+
+  const [isSorted, setIsSorted] = useState(false);
 
   // 0: text, 1: img, 2:video, 3:audio
   const types = [0, 1, 2, 3];
-  const userId = Number(localStorage.getItem('userId'));
+  const userId = currentUser();
+
   useEffect(() => {
-    if (userId !== null) {
+    if (userId !== -1) {
       types.forEach(type => {
         getMesssageList(type, userId)
           .then(res => {
             setMessageItems(prev => prev.concat(res.data));
+            setIsFinished(prev => prev + 1);
           })
           .catch(err => {
             console.log(err);
           });
       });
+    } else {
+      navigate(notFound());
     }
-    if (messageItems.length > 0) {
-      console.log(messageItems[0].date);
-    }
-  }, [location.pathname]);
+  }, []);
 
   // messageList 최신순으로 정렬
   useEffect(() => {
-    if (messageItems.length > 0) {
-      messageItems.sort((a, b) =>
-        a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
-      );
+    if (isFinished === 3 && messageItems.length > 0) {
+      console.log(messageItems);
+      console.log(filterState);
+      console.log(isFinished);
+      const sortedData = messageItems;
+      if (filterState) {
+        sortedData.sort((a, b) =>
+          a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
+        );
+        console.log('내림차순');
+        console.log(sortedData);
+        setMessageItems(() => sortedData);
+      } else {
+        sortedData.sort((a, b) =>
+          a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
+        );
+        console.log('오름차순');
+        console.log(sortedData);
+        setMessageItems(() => sortedData);
+      }
+      setIsSorted(() => true);
     }
-  }, [messageItems]);
+  }, [filterState, isFinished]);
+
+  useEffect(() => {}, [messageItems]);
 
   return (
     <div className="messageList">
       <MoveToBack path={main()} />
       <div className="messageList-container">
         <div className="messageList-container-info">내 이야기</div>
-        <Filter fill="white" width="40" height="40" viewBox="0 0 50 50" />
-        <span className="messageList-container-filter">
-          {/* <img src={filter} alt="filter" /> */}
-          {/* <svg src={filter} alt="filter" /> */}
-        </span>
+        <div
+          className="messageList-container-filter"
+          onClick={() => setFilterState(prev => !prev)}>
+          <Filter viewBox="0 0 80 80" fill="white" />
+        </div>
+
         <div className="messageList-container-list">
           {messageItems.length === 0 && (
             <div className="messageList-container-list-empty">
               작성한 메세지가 없습니다.
             </div>
           )}
-          {messageItems.length !== 0 &&
+          {isSorted &&
             messageItems.map(messageItem => {
               return (
                 <MyMessage

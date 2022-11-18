@@ -1,11 +1,18 @@
 import React, {useState, useRef} from 'react';
 import styled from 'styled-components';
+
 import '@messageCreate/MusicPlayer.scss';
+import subtitleImg from '@images/speechToText.svg';
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
 
+import {useRecoilState} from 'recoil';
+import {playingState} from '@apis/recoil';
+
 type MusicPlayerProps = {
   fileURL: string;
+  subtitle: string | null;
+  isDetail: boolean;
 };
 
 type AudioInfo = {
@@ -14,7 +21,14 @@ type AudioInfo = {
 };
 
 // audio 재생기
-function MusicPlayer({fileURL}: MusicPlayerProps) {
+function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
+  // 자막 표시 여부
+  const [isShowingSubtitle, setIsShowingSubtitle] = useState(false);
+
+  // 배경음악
+  const [isPlayingBGM, setIsPlayingBGM] = useRecoilState(playingState);
+  const currentPlayingBGM = localStorage.getItem('isPlaying');
+
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -45,8 +59,12 @@ function MusicPlayer({fileURL}: MusicPlayerProps) {
   const handlePlay = () => {
     if (isPlaying) {
       audioRef.current && audioRef.current.pause();
+      if (currentPlayingBGM === 'true') {
+        setIsPlayingBGM(true);
+      }
     } else {
       audioRef.current && audioRef.current.play();
+      setIsPlayingBGM(false);
     }
     setIsPlaying(prev => !prev);
   };
@@ -66,42 +84,59 @@ function MusicPlayer({fileURL}: MusicPlayerProps) {
 
   return (
     <div className="music-player-container">
-      {isPlaying ? (
-        <Pause
-          width="70%"
-          height="70%"
-          fill="#b49aff"
-          onClick={handlePlay}
-          className="play-btn"
+      {isDetail ? (
+        <img
+          src={subtitleImg}
+          alt="자막 표시"
+          className="music-player-subtitle-btn"
+          onClick={() => setIsShowingSubtitle(prev => !prev)}
         />
+      ) : null}
+
+      {isShowingSubtitle ? (
+        <div className="message-create-content-text message-create-content-text-preview">
+          {subtitle !== null ? subtitle : '말소리가 없는 음성입니다.'}
+        </div>
       ) : (
-        <Play
-          width="70%"
-          height="70%"
-          fill="#b49aff"
-          onClick={handlePlay}
-          className="play-btn"
-        />
+        <>
+          {isPlaying ? (
+            <Pause
+              width="70%"
+              height="70%"
+              fill="#b49aff"
+              onClick={handlePlay}
+              className="play-btn"
+            />
+          ) : (
+            <Play
+              width="70%"
+              height="70%"
+              fill="#b49aff"
+              onClick={handlePlay}
+              className="play-btn"
+            />
+          )}
+
+          <div className="track-container">
+            <div className="track">
+              <input
+                className="track-input"
+                onChange={handleDrag}
+                min={0}
+                max={audioInfo.duration || 0}
+                value={audioInfo.currentTime}
+                type="range"
+              />
+              <AnimateTrack audioInfo={audioInfo} />
+            </div>
+
+            <div className="time-container">
+              <span>{getTime(audioInfo.currentTime || 0)}</span>
+              <span>{getTime(audioInfo.duration || 0)}</span>
+            </div>
+          </div>
+        </>
       )}
-
-      <div className="track-container">
-        <div className="track">
-          <input
-            className="track-input"
-            onChange={handleDrag}
-            min={0}
-            max={audioInfo.duration || 0}
-            value={audioInfo.currentTime}
-            type="range"
-          />
-          <AnimateTrack audioInfo={audioInfo} />
-        </div>
-
-        <div className="time-container">
-          <span>{getTime(audioInfo.currentTime || 0)}</span>
-          <span>{getTime(audioInfo.duration || 0)}</span>
-        </div>
-      </div>
 
       <audio
         onLoadedMetadata={handleChangeFile}

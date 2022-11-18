@@ -1,12 +1,14 @@
 // ** bgm 설정 모달
+import {useRef, useEffect} from 'react';
 
 import {useRecoilState} from 'recoil';
-import {playingState, bgmNoState} from '@/apis/recoil';
+import {playingState} from '@/apis/recoil';
+
 import '@individual/BgmModal.scss';
 import Toggle from '@messageCreate/Toggle';
 import {bgmArr} from '@bgms/index';
 import BgmListItem from '@individual/BgmListItem';
-import {useRef, useEffect} from 'react';
+import {ReactComponent as Cancel} from '@images/cancelFill.svg';
 
 interface BgmModalProps {
   open: boolean;
@@ -28,14 +30,24 @@ function BgmModal({open, onCancel}: BgmModalProps) {
   });
 
   const [isPlaying, setIsPlaying] = useRecoilState<boolean>(playingState);
-  const [bgmNo, setBgmNo] = useRecoilState(bgmNoState);
 
-  const handlePlay = () => setIsPlaying(prev => !prev);
+  const handlePlay = () => {
+    setIsPlaying(prev => !prev);
+    const isPlayingBGM = localStorage.getItem('isPlaying');
+    if (isPlayingBGM === 'true') {
+      localStorage.setItem('isPlaying', 'false');
+    } else {
+      localStorage.setItem('isPlaying', 'true');
+    }
+  };
 
   return (
     <>
       {open ? (
-        <div className="bgm-background" onClick={onCancel} ref={bgmModalRef}>
+        <div
+          className="bgm-background fadeIn"
+          onClick={onCancel}
+          ref={bgmModalRef}>
           <div
             className="container bgm-container"
             onClick={event => {
@@ -46,17 +58,13 @@ function BgmModal({open, onCancel}: BgmModalProps) {
               <Toggle label="" onClick={handlePlay} value={isPlaying} />
             </div>
 
-            <div
-              className="bgm-list"
-              style={{overflow: isPlaying ? 'auto' : 'hidden'}}>
+            <div className="bgm-list">
               {bgmArr.map(({title}, index) => {
                 return <BgmListItem title={title} index={index} key={index} />;
               })}
             </div>
 
-            <button className="btn" onClick={onCancel}>
-              닫기
-            </button>
+            <Cancel fill="#bfbfbf" onClick={onCancel} className="help-cancel" />
           </div>
         </div>
       ) : null}

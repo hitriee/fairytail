@@ -1,17 +1,30 @@
-.music-player-container {
-  width: 95%;
-  height: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
+.music-player {
+  &-container {
+    width: 95%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+  }
 
-.track-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  &-subtitle {
+    &-btn {
+      position: absolute;
+      width: 4vh;
+      height: 4vh;
+      top: -1vh;
+      right: -0.5vh;
+      filter: invert(75%) hue-rotate(8deg) brightness(103%) contrast(91%);
+      cursor: pointer;
+
+      &:hover {
+        filter: invert(22%) sepia(4%) saturate(27%) hue-rotate(353deg)
+          brightness(100%) contrast(90%);
+      }
+    }
+  }
 }
 
 .play-btn {
@@ -25,29 +38,36 @@
   border-radius: 15px;
   overflow: hidden;
   background: linear-gradient(to right, #e5dcff, #a07dff);
-}
 
-.track-input {
-  width: 100%;
-  background: transparent;
-  appearance: none;
-  -webkit-appearance: none;
-
-  cursor: pointer;
-  &:focus {
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
+  &-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  &::-webkit-slider-thumb {
-    height: 2vh;
-    width: 1vw;
+  &-input {
+    width: 100%;
     background: transparent;
-    border: none;
-    outline: 0;
     appearance: none;
     -webkit-appearance: none;
+
+    cursor: pointer;
+    &:focus {
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    &::-webkit-slider-thumb {
+      height: 2vh;
+      width: 1vw;
+      background: transparent;
+      border: none;
+      outline: 0;
+      appearance: none;
+      -webkit-appearance: none;
+    }
   }
 }
 

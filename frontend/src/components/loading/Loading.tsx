@@ -16,6 +16,17 @@ function Loading({fillBackground}: {fillBackground: boolean}) {
     '영원도록 빛나는 별이길',
     '곧 빛나는 순간이 올거야',
     '당신의 눈동자에 건배',
+    '빛나는 내일을 위해',
+    '겨울이 지나면 따뜻한 봄이온다',
+    '난 괜찮아',
+    '하루 한 번 하늘 보기',
+    '행복하게 여행 하기',
+    '당신에게 행운이 있길',
+    '이번에는 잘할 수 있을거야',
+    '오늘도 한걸음씩',
+    '조만간 멋진 일이 일어날거예요',
+    '좋다고 하니까 나도 좋다',
+    '햇살이 너무 좋아',
   ];
 
   function rand(min: number, max: number) {
@@ -25,7 +36,7 @@ function Loading({fillBackground}: {fillBackground: boolean}) {
   return (
     <div className={fillBackground ? 'loading loading-background' : 'loading'}>
       <img className="loading-image" src={emojiArr[66]} alt="로딩 이미지" />
-      <p className="loading-message">{letter[rand(0, 11)]}</p>
+      <p className="loading-message">{letter[rand(0, 22)]}</p>
     </div>
   );
 }

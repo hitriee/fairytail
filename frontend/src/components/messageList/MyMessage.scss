@@ -36,21 +36,26 @@
       font-size: 2vh;
     }
     &-like {
+      // width: 100%;
       font-size: 2vh;
       display: flex;
       flex-direction: row;
       align-items: flex-end;
-      margin: 3%;
+      justify-content: space-between;
+      // margin: 3%;
+      margin-bottom: 2vh;
+      padding-right: 1vw;
+      margin-right: 3%;
       &-heart {
-        fill: red;
-        margin-right: 3px;
+        // fill: red;
+        margin-right: 10%;
         height: 26%;
       }
-      img {
-        fill: red;
-        margin-right: 3px;
-        height: 26%;
-      }
+      // img {
+      //   fill: red;
+      //   margin-right: 3px;
+      //   height: 26%;
+      // }
     }
   }
 }

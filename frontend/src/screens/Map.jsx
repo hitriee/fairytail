@@ -85,14 +85,14 @@ function Map() {
 
   return (
     <div className="screen">
-      <MoveToBack path="/main" color="#779BFF " />
+      <MoveToBack path="/main" color="#779BFF" />
       <OpenHelp imagesIndex={1} color="#779BFF" />
       <div
         className="map-random"
         onClick={() => {
           setPosition({
-            lat: generateRandomFloat(-90, 90),
-            lng: generateRandomFloat(-180, 180),
+            lat: generateRandomFloat(33, 43),
+            lng: generateRandomFloat(124, 132),
           });
           setIsClicked(true);
         }}>

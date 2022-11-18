@@ -51,7 +51,7 @@ function ClickMarker({isClicked, setIsClicked, position, setPosition}) {
           setRefReady(true);
         }}>
         <div className="clickmarker-popup">
-          <div className="clickmarker-popup-title">여기는</div>
+          <div className="clickmarker-popup-title">이곳은</div>
           <div className="clickmarker-popup-content">
             {place ? place : '알려지지 않은 곳'} 입니다.
           </div>

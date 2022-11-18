@@ -1,12 +1,44 @@
 import MusicPlayer from '@messageCreate/MusicPlayer';
 
+import {useRecoilState} from 'recoil';
+import {playingState} from '@apis/recoil';
+
 type PreviewProps = {
   type: number;
   fileURL: string;
+  subtitle: string | null;
+  isDetail?: boolean;
 };
 
+function VideoPreview({fileURL}: {fileURL: string}) {
+  // 배경음악
+  const [isPlayingBGM, setIsPlayingBGM] = useRecoilState(playingState);
+  const currentPlayingBGM = localStorage.getItem('isPlaying');
+
+  return (
+    <video
+      key={fileURL}
+      className="message-create-content-image"
+      controls={true}
+      playsInline={true}
+      onPlay={() => {
+        setIsPlayingBGM(false);
+      }}
+      onPause={() => {
+        if (currentPlayingBGM === 'true') {
+          setIsPlayingBGM(true);
+        }
+      }}
+      onSeeking={() => {
+        setIsPlayingBGM(false);
+      }}>
+      <source src={fileURL} />
+    </video>
+  );
+}
+
 // 전달받은 type에 따라 다른 미리보기 컴포넌트 반환
-function Preview({type, fileURL}: PreviewProps) {
+function Preview({type, fileURL, subtitle, isDetail = false}: PreviewProps) {
   let preview: any;
 
   if (type === 0) {
@@ -20,17 +52,11 @@ function Preview({type, fileURL}: PreviewProps) {
       <img className="message-create-content-image" src={fileURL} alt="사진" />
     );
   } else if (type === 2) {
-    preview = (
-      <video
-        key={fileURL}
-        className="message-create-content-image"
-        controls={true}
-        playsInline={true}>
-        <source src={fileURL} />
-      </video>
-    );
+    preview = <VideoPreview fileURL={fileURL} />;
   } else if (type === 3) {
-    preview = <MusicPlayer fileURL={fileURL} />;
+    preview = (
+      <MusicPlayer fileURL={fileURL} subtitle={subtitle} isDetail={isDetail} />
+    );
   }
 
   return preview;
