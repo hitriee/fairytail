@@ -14,13 +14,13 @@ API_TEST.interceptors.request.use(
     console.dir(config);
     const token = localStorage.getItem('token');
     console.log('1번', token);
-    if (config.headers !== undefined && !config.headers.Authorization) {
-      const token = localStorage.getItem('token');
+    console.dir(config.headers);
+
+    if (token && token.length > 0 && config.headers) {
       console.log('2번', token);
-      if (token && token.length > 0) {
-        config.headers.Authorization = token;
-      }
+      config.headers.Authorization = token;
     }
+
     return config;
   },
   error => {
