@@ -27,15 +27,16 @@ function Main() {
   // 로그인 여부 확인
   useEffect(() => {
     console.log(localStorage.token);
-
-    // 유효한 토큰이 있는지 확인
-    getIdentification()
-      .then(res => console.log(res))
-      // 유효한 토큰이 없으면 알림 표시
-      .catch(err => {
-        console.log(err);
-        setIsAlertOpend(true);
-      });
+    setTimeout(() => {
+      // 유효한 토큰이 있는지 확인
+      getIdentification()
+        .then(res => console.log(res))
+        // 유효한 토큰이 없으면 알림 표시
+        .catch(err => {
+          console.log(err);
+          setIsAlertOpend(true);
+        });
+    }, 1000);
   }, []);
 
   const navigate = useNavigate();
