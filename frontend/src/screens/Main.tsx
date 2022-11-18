@@ -36,7 +36,7 @@ function Main() {
           console.log(err);
           setIsAlertOpend(true);
         });
-    }, 1000);
+    }, 3000);
   }, []);
 
   const navigate = useNavigate();
