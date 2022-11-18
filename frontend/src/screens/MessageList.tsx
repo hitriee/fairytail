@@ -17,10 +17,11 @@ interface items {
   title: string;
   type: number;
 }
-const [messageItems, setMessageItems] = useState<items[]>([]);
-const [filterState, setFilterState] = useState(true);
 
-function MessageList(filterState: boolean) {
+function MessageList() {
+  const [messageItems, setMessageItems] = useState<items[]>([]);
+  const [filterState, setFilterState] = useState(true);
+
   // 데이터 및 데이터 받아오기가 끝났는지 확인하기 위한 state
   const [isFinished, setIsFinished] = useState(-1);
 
