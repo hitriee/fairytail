@@ -9,6 +9,19 @@ export const API_AUTH = axios.create({
   },
 });
 
+API_AUTH.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token');
+    if (token && token.length > 0 && config.headers) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);
+
 export const API_FILE = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -16,6 +29,19 @@ export const API_FILE = axios.create({
     'Content-Type': 'multipart/form-data',
   },
 });
+
+API_FILE.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token');
+    if (token && token.length > 0 && config.headers) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);
 
 export const checkType = (type: number) => {
   switch (type) {
