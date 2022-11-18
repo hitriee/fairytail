@@ -1,5 +1,3 @@
-import {useEffect, useRef} from 'react';
-
 import MusicPlayer from '@messageCreate/MusicPlayer';
 
 import {useRecoilState} from 'recoil';
@@ -17,26 +15,20 @@ function VideoPreview({fileURL}: {fileURL: string}) {
   const [isPlayingBGM, setIsPlayingBGM] = useRecoilState(playingState);
   const currentPlayingBGM = localStorage.getItem('isPlaying');
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    console.log('비디오 재생 여부 변경');
-    if (videoRef.current?.paused) {
-      if (currentPlayingBGM === 'true') {
-        setIsPlayingBGM(true);
-      }
-    } else {
-      setIsPlayingBGM(false);
-    }
-  }, [videoRef.current?.paused]);
-
   return (
     <video
-      ref={videoRef}
       key={fileURL}
       className="message-create-content-image"
       controls={true}
-      playsInline={true}>
+      playsInline={true}
+      onPlay={() => {
+        setIsPlayingBGM(false);
+      }}
+      onPause={() => {
+        if (currentPlayingBGM === 'true') {
+          setIsPlayingBGM(true);
+        }
+      }}>
       <source src={fileURL} />
     </video>
   );
