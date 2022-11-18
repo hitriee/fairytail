@@ -1,5 +1,16 @@
+@media (max-device-aspect-ratio: 9 / 16) {
+  .leaflet-popup-content-wrapper {
+    min-width: 60vw;
+  }
+}
+
+@media (min-device-aspect-ratio: 9 / 16) {
+  .leaflet-popup-content-wrapper {
+    min-width: 33.75vh;
+  }
+}
+
 .leaflet-popup-content-wrapper {
-  min-width: 60vw;
   min-height: 20vh;
   padding: 0.5vh;
   padding-bottom: 0.1vh;
