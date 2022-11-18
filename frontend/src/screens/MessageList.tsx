@@ -5,6 +5,8 @@ import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
 import {main} from '@apis/router';
 import {getMesssageList} from '@/apis/messageList';
+// import filter from '@images/filter.svg';
+import {ReactComponent as Filter} from '@images/filter.svg';
 
 interface items {
   postId: number;
@@ -52,11 +54,13 @@ function MessageList() {
   return (
     <div className="messageList">
       <MoveToBack path={main()} />
-      {/* <div className="navbarContainer">
-      </div> */}
       <div className="messageList-container">
         <div className="messageList-container-info">내 이야기</div>
-
+        <Filter fill="white" width="40" height="40" viewBox="0 0 50 50" />
+        <span className="messageList-container-filter">
+          {/* <img src={filter} alt="filter" /> */}
+          {/* <svg src={filter} alt="filter" /> */}
+        </span>
         <div className="messageList-container-list">
           {messageItems.length === 0 && (
             <div className="messageList-container-list-empty">

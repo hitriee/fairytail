@@ -135,8 +135,7 @@ function MessageDetail() {
 
   return (
     <div
-      // className={`screen background${data.dayType}`}
-      className={`screen background${11}`}
+      className={`screen background${data.dayType}`}
       ref={messageDetailRef}
       onClick={hiddenMenu}>
       <main id="container">

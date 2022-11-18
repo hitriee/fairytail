@@ -1,28 +1,4 @@
-.background2 {
-  background: rgb(65, 64, 75);
-  background: linear-gradient(
-    45deg,
-    rgba(65, 64, 75, 1) 0%,
-    rgba(63, 63, 142, 1) 13%,
-    rgba(82, 179, 199, 1) 75%
-  );
-}
-.background1 {
-  background: rgb(68, 161, 162);
-  background: linear-gradient(
-    29deg,
-    rgba(68, 161, 162, 1) 6%,
-    rgba(185, 160, 108, 1) 97%
-  );
-}
-.background3 {
-  background: rgb(162, 110, 68);
-  background: linear-gradient(
-    29deg,
-    rgba(162, 110, 68, 1) 6%,
-    rgba(185, 108, 183, 1) 97%
-  );
-}
+// 1 ~ 5시
 .background0 {
   background: rgb(238, 174, 202);
   background: radial-gradient(
@@ -31,7 +7,8 @@
     rgba(148, 187, 233, 1) 100%
   );
 }
-.background5 {
+// 6 ~ 10시
+.background1 {
   background: linear-gradient(
     45deg,
     rgb(181, 255, 255) 10%,
@@ -40,43 +17,28 @@
   );
 }
 
-.background6 {
-  background: rgb(167, 151, 177);
-  background: linear-gradient(
-    to right,
-    rgba(167, 151, 177, 1) 0%,
-    rgba(180, 102, 102, 1) 50%,
-    rgba(199, 149, 78, 1) 100%
-  );
-}
-
-.background0 {
-  background: rgb(73, 71, 92);
-  background: linear-gradient(
-    rgba(73, 71, 92, 1) 0%,
-    rgba(99, 99, 144, 1) 13%,
-    rgba(189, 193, 194, 1) 75%
-  );
-}
-
-.background8 {
+// 11 ~ 16시
+.background2 {
   background: rgb(68, 161, 162);
   background: linear-gradient(
     29deg,
     rgba(68, 161, 162, 1) 6%,
+    rgba(185, 160, 108, 1) 97%
+  );
+}
+
+// 17 ~ 20시
+.background3 {
+  background: rgb(162, 110, 68);
+  background: linear-gradient(
+    29deg,
+    rgba(162, 110, 68, 1) 6%,
     rgba(185, 108, 183, 1) 97%
   );
 }
 
-.background10 {
-  background: rgb(147, 162, 68);
-  background: linear-gradient(
-    29deg,
-    rgba(147, 162, 68, 1) 6%,
-    rgba(185, 108, 183, 1) 97%
-  );
-}
-.background11 {
+// 21 ~ 24시
+.background4 {
   background: rgb(2, 0, 43);
   background: linear-gradient(
     30deg,
