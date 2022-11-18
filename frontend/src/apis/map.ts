@@ -9,9 +9,6 @@ export const getMessageMap = async (type: number) => {
 export const getRandomLandKR = async () => {
   const res = await axios.get(
     'https://api.3geonames.org/?randomland=KR&json=1',
-    {
-      withCredentials: true,
-    },
   );
   return res;
 };

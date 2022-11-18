@@ -17,11 +17,11 @@ import {intMessageId, convStringType, currentUser} from '@common/commonFunc';
 
 // dayType에 따른 다른 배경색 조합
 const dayTypeColors = [
-  ['44427f', '9fc3eb', 'ffb7d7'], // 1 ~ 5시
-  ['00bfff', '9de4ff', 'eeffff'], // 6 ~ 10시
-  ['74dee0', 'c4e88e', 'f1ca92'], // 11 ~ 16시
-  ['ff8c2f', 'f84a68', '99408c'], // 17 ~ 20시
-  ['050069', '204382', '020830'], // 21 ~ 24시
+  ['f4b0ce', '5281b5', '08053b'], // 1 ~ 5시
+  ['e9fcfb', '8fdcfa', '0fc3ff'], // 6 ~ 10시
+  ['f7a937', 'b4d583', '32c9f7'], // 11 ~ 16시
+  ['851975', 'dd4e67', 'ff7100'], // 17 ~ 20시
+  ['010519', '1b396e', '03012e'], // 21 ~ 24시
 ];
 
 function MessageDetail() {
@@ -147,7 +147,7 @@ const gradient = keyframes`
 
 const MessageDetailScreen = styled.div`
   background: linear-gradient(
-    -30deg,
+    -45deg,
     ${(props: BackgroundColorProps) =>
       ` #${props.first}, #${props.second}, #${props.third}`}
   );
