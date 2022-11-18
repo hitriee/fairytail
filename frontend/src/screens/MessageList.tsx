@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
@@ -77,7 +77,9 @@ function MessageList() {
     }
   }, [filterState, isFinished]);
 
-  useEffect(() => {}, [messageItems]);
+  const handleFilter = useCallback(() => {
+    setFilterState(!filterState);
+  }, [filterState]);
 
   return (
     <div className="messageList">
@@ -86,7 +88,8 @@ function MessageList() {
         <div className="messageList-container-info">내 이야기</div>
         <div
           className="messageList-container-filter"
-          onClick={() => setFilterState(prev => !prev)}>
+          // onClick={() => setFilterState(prev => !prev)}>
+          onClick={() => handleFilter()}>
           <Filter viewBox="0 0 80 80" fill="white" />
         </div>
 
