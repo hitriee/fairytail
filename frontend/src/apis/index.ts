@@ -2,16 +2,28 @@ import axios from 'axios';
 
 export const BASE_URL = 'https://k7c209.p.ssafy.io';
 
-const getToken = () => {
-  return `Bearer ${localStorage.token}`;
-};
-
 export const API_TEST = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: getToken(),
+    Authorization: `Bearer ${localStorage.token}`,
   },
 });
+
+API_TEST.interceptors.request.use(
+  config => {
+    if (config.headers !== undefined && !config.headers.Authorization) {
+      const token = localStorage.getItem('token');
+      if (token && token.length > 0) {
+        console.log(token);
+        config.headers.Authorization = token;
+      }
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);
 
 export const API_AUTH = axios.create({
   baseURL: BASE_URL,
