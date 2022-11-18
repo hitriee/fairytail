@@ -1,5 +1,4 @@
-/*  CORS 에러 Spring Server 자체 해결 시 해제
-
+/*
 package com.fairytail.gateway.security;
 
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .cors()
-                .configurationSource(corsConfigurationSource())
+                .configurationSource(corsConfiguraionSource())
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
@@ -46,4 +45,20 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 }
+
+//package com.fairytail.gateway.security;
+//
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.web.servlet.config.annotation.CorsRegistry;
+//import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+//
+//@Configuration
+//public class WebConfig implements WebMvcConfigurer {
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("http://localhost:3000", "https://k7c209.p.ssafy.io", "https://k7c2091.p.ssafy.io");
+//    }
+//}
+
 */
