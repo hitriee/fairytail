@@ -21,14 +21,14 @@ function VideoPreview({fileURL}: {fileURL: string}) {
 
   useEffect(() => {
     console.log('비디오 재생 여부 변경');
-    if (videoRef.current?.pause) {
+    if (videoRef.current?.paused) {
       if (currentPlayingBGM === 'true') {
         setIsPlayingBGM(true);
       }
     } else {
       setIsPlayingBGM(false);
     }
-  }, [videoRef.current?.pause]);
+  }, [videoRef.current?.paused]);
 
   return (
     <video
