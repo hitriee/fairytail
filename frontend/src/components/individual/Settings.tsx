@@ -10,6 +10,7 @@ import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import Toggle from '@messageCreate/Toggle';
 import {intro} from '@apis/router';
+import infoImg from '@images/info.svg';
 
 function Settings() {
   const [permitPush, setPermitPush] = useState('설정 가능');
@@ -129,8 +130,15 @@ function Settings() {
           <div className="settings-each" onClick={changePermitPush}>
             좋아요 푸시 알림
           </div>
-          <div className="settings-push" onClick={changePermitPush}>
+          <div
+            className="settings-each settings-push"
+            onClick={changePermitPush}>
             {permitPush}
+            <img
+              src={infoImg}
+              alt="좋아요 푸시 알림 안내"
+              className="settings-push-icon"
+            />
           </div>
         </div>
         <div className="settings-between">

@@ -25,7 +25,7 @@ function Confirm({info, onConfirmed, onCancel, open}: ConfirmProps) {
   return (
     <>
       {open ? (
-        <section className="modal" ref={confirmRef}>
+        <section className="modal fadeIn" ref={confirmRef}>
           <p className="modal-title">{info.title}</p>
           <p className="modal-message">{info.message}</p>
           <footer className="modal-footer">

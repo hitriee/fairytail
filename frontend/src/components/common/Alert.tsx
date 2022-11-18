@@ -29,7 +29,7 @@ function Alert({info, open, onConfirmed}: AlertProps) {
   return (
     <>
       {open ? (
-        <section className="modal" ref={alertRef}>
+        <section className="modal fadeIn" ref={alertRef}>
           <p className="modal-title">{info.title}</p>
           <p className="modal-message">{info.message}</p>
           <button className="btn" onClick={onConfirmed}>

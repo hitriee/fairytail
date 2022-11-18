@@ -3,6 +3,7 @@ import {useLocation} from 'react-router-dom';
 
 import '@common/Common.scss';
 import {ReactComponent as Help} from '@images/help.svg';
+import {ReactComponent as Cancel} from '@images/cancelFill.svg';
 import helpMap from '@images/helpMap.jpg';
 import helpMain from '@images/helpMain.jpg';
 import helpVR from '@images/helpVR.jpg';
@@ -64,9 +65,11 @@ function OpenHelp({imagesIndex, color = 'white'}: OpenHelpProps) {
                 event.stopPropagation();
               }}
             />
-            <button className="btn" onClick={closeHelp}>
-              닫기
-            </button>
+            <Cancel
+              fill="#bfbfbf"
+              onClick={closeHelp}
+              className="help-cancel"
+            />
           </div>
         </div>
       ) : null}

@@ -16,12 +16,13 @@
   &-container {
     background-color: white;
     border-radius: 15px;
-    width: 85%;
-    height: 75vh;
-    padding: 4vh;
+    width: 81%;
+    height: 80vh;
+    padding: 4vh 5vh;
+    padding-bottom: 0.5vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
   }
 
@@ -31,19 +32,21 @@
     align-items: center;
 
     span {
-      color: black;
-      font-size: 2.5vh;
+      color: $GRAY-61;
+      font-size: 2.7vh;
+      font-weight: 700;
       cursor: pointer;
     }
   }
 
   &-list {
-    height: 55vh;
-    margin: 1.5vh 0;
+    height: 57vh;
+    margin: 0 1.5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
+    overflow: auto;
 
     &::-webkit-scrollbar {
       display: none;
@@ -56,7 +59,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid #a07dff32;
+      border: 1px solid #00000019;
       border-radius: 15px;
       cursor: pointer;
       color: black;
@@ -67,7 +70,8 @@
       }
 
       &-selected {
-        background-color: $YELLOW;
+        border: 1px solid $BLUE;
+        background-color: $BLUE;
         color: white;
       }
 

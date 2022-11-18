@@ -35,10 +35,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: $GRAY-DB;
+    background-color: $GRAY-BF;
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 34px;
+    box-shadow: 1px 1px 3px #4040404b;
 
     &::before {
       position: absolute;
@@ -57,11 +58,11 @@
 }
 
 input:checked + .toggle-circle {
-  background-color: $YELLOW;
+  background-color: $BLUE;
 }
 
 input:focus + .toggle-circle {
-  box-shadow: 0 0 1px $YELLOW;
+  box-shadow: 0 0 1px $BLUE;
 }
 
 input:checked + .toggle-circle:before {
