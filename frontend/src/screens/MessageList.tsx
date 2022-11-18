@@ -28,6 +28,8 @@ function MessageList() {
   // const location = useLocation();
   const navigate = useNavigate();
 
+  const [isSorted, setIsSorted] = useState(false);
+
   // 0: text, 1: img, 2:video, 3:audio
   const types = [0, 1, 2, 3];
   const userId = currentUser();
@@ -51,20 +53,23 @@ function MessageList() {
 
   // messageList 최신순으로 정렬
   useEffect(() => {
-    console.log(messageItems);
-
     if (isFinished === 3 && messageItems.length > 0) {
-      console.log('정렬');
+      console.log(messageItems);
+      console.log(filterState);
+      console.log(isFinished);
 
       if (filterState) {
         messageItems.sort((a, b) =>
           a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
         );
+        console.log('내림차순');
       } else {
         messageItems.sort((a, b) =>
           a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
         );
+        console.log('오름차순');
       }
+      setIsSorted(true);
     }
   }, [filterState, isFinished]);
 
@@ -87,7 +92,7 @@ function MessageList() {
                   작성한 메세지가 없습니다.
                 </div>
               )}
-              {isFinished === 3 &&
+              {isSorted &&
                 messageItems.map(messageItem => {
                   return (
                     <MyMessage
