@@ -3,7 +3,7 @@ import axios from 'axios';
 export const BASE_URL = 'https://k7c209.p.ssafy.io';
 
 const getToken = () => {
-  return localStorage.token;
+  return `Bearer ${localStorage.token}`;
 };
 
 export const API_TEST = axios.create({
