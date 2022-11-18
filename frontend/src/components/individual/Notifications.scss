@@ -1,0 +1,35 @@
+.notifications {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: inherit;
+  margin: auto;
+  cursor: grab;
+
+  &-delete-all {
+    color: white;
+    text-align: end;
+    margin: 0;
+    font-size: 2.5vh;
+    padding-bottom: 1vh;
+  }
+
+  &-empty {
+    width: fit-content;
+    // height: fit-content;
+    // margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8vh;
+    color: white;
+    font-size: 2.5vh;
+  }
+
+  &-list {
+    height: 63vh;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

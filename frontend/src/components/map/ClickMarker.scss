@@ -1,0 +1,49 @@
+.leaflet-popup-content-wrapper {
+  min-width: 60vw;
+  min-height: 20vh;
+  padding: 0.5vh;
+  padding-bottom: 0.1vh;
+}
+
+.leaflet-popup-content {
+  margin: 2.5vh auto;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  width: 4vh;
+  height: 4vh;
+  font-size: 4vh;
+  top: 0.5vh;
+  right: 0.5vh;
+}
+
+.clickmarker-popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &-title {
+    font-weight: 700;
+    font-size: 2.7vh;
+    margin-top: 0.5vh;
+  }
+
+  &-content {
+    max-width: 85%;
+    font-size: 2.2vh;
+    margin-top: 1.5vh;
+    margin-bottom: 2.2vh;
+    text-align: center;
+  }
+
+  &-btn {
+    border: 1px solid #779bff;
+    color: #779bff;
+    font-size: 1.6vh;
+
+    &:hover {
+      background-color: #779bff;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@import '@styles/_colors.scss';
+
+.message-create {
+  &-card {
+    height: 63vh;
+    width: 85%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-title {
+    width: 100%;
+    font-size: 4vh;
+    font-weight: 700;
+    background-color: transparent;
+    color: $WHITE;
+    padding: 0;
+
+    &::placeholder {
+      color: $GRAY-DB;
+      font-size: 3vh;
+    }
+  }
+
+  &-save-container {
+    width: 95%;
+    height: 4vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+input,
+textarea {
+  border: 0;
+  text-align: center;
+  resize: none;
+  outline: none;
+}
