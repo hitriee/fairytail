@@ -1,4 +1,4 @@
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import '@screens/MessageCreate.scss';
@@ -93,11 +93,13 @@ function MessageCreate() {
   // 유저 아이디 확인
   const userId = localStorage.getItem('userId');
 
-  if (userId === null) {
-    setAlertInfo({title: '알림', message: '로그인이 필요합니다.'});
-    setIsAlertOpend(true);
-    navigate(-1);
-  }
+  // useEffect(() => {
+  //   if (!userId) {
+  //     setAlertInfo({title: '알림', message: '로그인이 필요합니다.'});
+  //     setIsAlertOpend(true);
+  //     navigate(-1);
+  //   }
+  // }, []);
 
   // 풍선 등록
   function handleSubmit() {
@@ -225,9 +227,14 @@ function MessageCreate() {
 
               <div className="message-create-save-container">
                 <Toggle label="비공개" onClick={setIsShare} value={isShare} />
-                <button className="btn" onClick={handleSubmit}>
+                <button
+                  className="message-create-save-btn"
+                  onClick={handleSubmit}>
                   {/* <Airplane fill="black" transform="rotate(30)" /> */}
-                  <Send fill="grey" transform="rotate(0)" />
+                  <Send
+                    transform="rotate(0)"
+                    className="message-create-save-btn-icon"
+                  />
                 </button>
               </div>
             </>
