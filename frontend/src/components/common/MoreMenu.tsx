@@ -1,7 +1,7 @@
 // ** 상세 페이지 더보기 메뉴
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import html2canvas from 'html2canvas';
-import {redirect, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {saveAs} from 'file-saver';
 
 import '@common/Common.scss';
@@ -182,7 +182,7 @@ MoreMenuProps) {
   return (
     <>
       {open ? (
-        <main id="menu fadeIn">
+        <main id="menu">
           <article className="button" onClick={saveMessage}>
             저장
           </article>
