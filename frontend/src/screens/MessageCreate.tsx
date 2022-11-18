@@ -227,15 +227,16 @@ function MessageCreate() {
 
               <div className="message-create-save-container">
                 <Toggle label="비공개" onClick={setIsShare} value={isShare} />
-                <button
+                {/* <button
                   className="message-create-save-btn"
                   onClick={handleSubmit}>
-                  {/* <Airplane fill="black" transform="rotate(30)" /> */}
-                  <Send
-                    transform="rotate(0)"
-                    className="message-create-save-btn-icon"
-                  />
-                </button>
+                  <Airplane fill="black" transform="rotate(30)" />
+                </button> */}
+                <Send
+                  onClick={handleSubmit}
+                  transform="rotate(-20)"
+                  className="message-create-save-btn-icon"
+                />
               </div>
             </>
           )}

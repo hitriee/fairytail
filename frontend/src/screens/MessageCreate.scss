@@ -34,29 +34,29 @@
       align-items: center;
     }
     &-btn {
-      width: 2.5em;
-      height: 2.5em;
-      cursor: pointer;
-      background-color: $WHITE;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
-      box-shadow: 1px 1px 3px #4040404b;
-      border: 0;
-      // width: 38px;
-      // height: 38px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        background-color: $BLUE;
-        fill: white;
-      }
+      // display: flex;
+      // justify-content: center;
+      // background-color: white;
+      // opacity: 0.98;
+      // width: 5.5vh;
+      // height: 5.5vh;
+      // border-radius: 50%;
+      // box-shadow: inset -1px -1px 1px #4747477b;
+      // border: 0;
+      // align-items: center;
+
+      // &:hover {
+      //   opacity: 1;
+      //   background-color: $GRAY-E4;
+      // }
       &-icon {
-        // width: 50px;
-        fill: gray;
-        // width: 2.5em;
-        // height: 2.5em;
+        fill: $WHITE;
+        width: 4.5vh;
+        height: 4.5vh;
+        cursor: pointer;
+        :hover {
+          fill: $GRAY-BF;
+        }
       }
     }
   }
