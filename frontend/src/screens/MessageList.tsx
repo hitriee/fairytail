@@ -63,7 +63,7 @@ function MessageList() {
         a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
       );
     }
-  }, [messageItems, filterState]);
+  }, [location.pathname, messageItems, filterState]);
 
   return (
     <>
