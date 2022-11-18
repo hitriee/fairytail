@@ -7,7 +7,7 @@ importScripts(
 );
 const ua = window.navigator.userAgent;
 const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
-
+alert(iOS);
 if (!iOS) {
   const config = {
     apiKey: "AIzaSyC2L6taSK-Ee-zv8Ajsvz2ZtgLl-6kXOcI",
