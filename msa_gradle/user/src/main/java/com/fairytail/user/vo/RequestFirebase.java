@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class RequestFirebase {
     Long userId;
-    String FirebaseToken;
+    String firebaseToken;
 }

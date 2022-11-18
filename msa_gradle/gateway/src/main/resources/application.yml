@@ -47,6 +47,7 @@ spring:
           predicates: # 전제 조건
             - Path=/audio/**
 
+
         - id: text
           uri: lb://TEXT
           predicates: # 전제 조건

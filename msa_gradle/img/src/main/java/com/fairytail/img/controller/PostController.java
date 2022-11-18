@@ -22,8 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "img")
-@CrossOrigin("*")
+@Api(value = "post")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/message")
@@ -81,7 +80,9 @@ public class PostController {
                 resultMap.put("message", OKAY);
                 status = HttpStatus.OK;
             } else {
+                resultMap.put("data", data);
                 resultMap.put("message", FAIL);
+                status = HttpStatus.ACCEPTED;
             }
         } else { // 유해 이미지 판단 중 에러 발생했을 경우
             /** 예외 처리 해줄 것 */
@@ -109,7 +110,9 @@ public class PostController {
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else{
+            resultMap.put("data", data);
             resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -119,7 +122,7 @@ public class PostController {
      */
     @ApiOperation(value = "이미지 게시글 공개 여부 수정", notes = "이미지 게시글 공개 여부 수정 API 입니다.")
     @PostMapping("status")
-    public ResponseEntity<?> putPost(RequestPostPut req) throws Exception{
+    public ResponseEntity<?> putPost(@RequestBody RequestPostPut req) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         PostDto dto = modelMapper.map(req, PostDto.class);
@@ -129,12 +132,14 @@ public class PostController {
         if(res != null){
             data = modelMapper.map(res, ResponsePost.class);
         }
-        if(res != null){
+        if(data != null){
             resultMap.put("data", data);
             resultMap.put("message", OKAY);
             status = HttpStatus.OK;
         } else{
+            resultMap.put("data", data);
             resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -153,6 +158,7 @@ public class PostController {
             status = HttpStatus.OK;
         } else{
             resultMap.put("message", FAIL);
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -179,7 +185,7 @@ public class PostController {
         } else{
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -206,7 +212,7 @@ public class PostController {
         } else{
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -234,7 +240,7 @@ public class PostController {
         } else {
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -257,7 +263,7 @@ public class PostController {
         } else{
             resultMap.put("data", data);
             resultMap.put("message", FAIL);
-            status = HttpStatus.OK;
+            status = HttpStatus.ACCEPTED;
         }
         return new ResponseEntity<>(resultMap, status);
     }
