@@ -57,18 +57,20 @@ function MessageList() {
       console.log(messageItems);
       console.log(filterState);
       console.log(isFinished);
-
+      const sortedData = messageItems;
       if (filterState) {
-        const sortedData = messageItems.sort((a, b) =>
+        sortedData.sort((a, b) =>
           a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
         );
         console.log('내림차순');
+        console.log(sortedData);
         setMessageItems(sortedData);
       } else {
-        const sortedData = messageItems.sort((a, b) =>
+        sortedData.sort((a, b) =>
           a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
         );
         console.log('오름차순');
+        console.log(sortedData);
         setMessageItems(sortedData);
       }
       setIsSorted(true);
