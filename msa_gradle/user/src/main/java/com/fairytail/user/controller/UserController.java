@@ -80,7 +80,7 @@ public class UserController {
 
 
     @ApiOperation(value ="토큰 검사", notes = "액세스 토큰이 유효기간을 검사합니다.")
-    @GetMapping("/token")
+    @GetMapping("/accesstoken")
     public ResponseEntity<?> updateAlert(HttpServletRequest request) {
        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 

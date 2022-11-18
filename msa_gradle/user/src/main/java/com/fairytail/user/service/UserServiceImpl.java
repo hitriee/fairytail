@@ -30,8 +30,6 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
-
-
     @Override
     public Integer saveFirebaseToken(UserDto userDto) {
         userRepository.findById(userDto.getUserId());
@@ -64,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isValidToken(String token) {
-        log.debug("token++++++++++++++++++++++++++", token);
+        log.debug("token+++++++++++++++++++++++++++", token);
         Claims jwtBody = parseJWT(token.replace("Bearer ", ""));
         Date now = new Date();
         log.debug("time__________________________" + jwtBody.getExpiration());
@@ -76,5 +74,4 @@ public class UserServiceImpl implements UserService {
         return Jwts.parserBuilder().setSigningKey(key)
                 .build().parseClaimsJws(token).getBody();
     }
-
 }
