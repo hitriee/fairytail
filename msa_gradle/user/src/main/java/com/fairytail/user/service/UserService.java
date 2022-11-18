@@ -1,5 +1,7 @@
 package com.fairytail.user.service;
 
-public interface UserService {
+import com.fairytail.user.dto.UserDto;
 
+public interface UserService {
+    UserDto saveFirebaseToken(UserDto userDto);
 }

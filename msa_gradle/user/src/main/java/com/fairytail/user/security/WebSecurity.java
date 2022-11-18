@@ -2,11 +2,17 @@ package com.fairytail.user.security;
 
 import com.fairytail.user.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +47,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter  {
                 .and()
                 .successHandler(oAuth2SuccessHandler);  // JWT - access token을 발행한다. 따로 refresh 토큰을 발급하지는 않고 단일 access token만을 사용한다.
 
-        /** TODO: h2 데이터베이스 조회 시, 프레임 엑스박스 현상 - 추후 삭제 예정 */
-        http.headers().frameOptions().disable();
+        /** h2 데이터베이스 조회 시, 프레임 엑스박스 현상 해결 - 삭제
+        http.headers().frameOptions().disable(); */
     }
+
 }

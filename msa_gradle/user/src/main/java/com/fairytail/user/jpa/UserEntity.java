@@ -1,6 +1,7 @@
 package com.fairytail.user.jpa;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,17 +9,18 @@ import javax.persistence.*;
 
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 @Table(name = "user")
 public class UserEntity {
 
     @Builder
     public UserEntity(String email,
-                      String username, Integer block_cnt,
+                      String username, String firebaseToken, Integer block_cnt,
                       Integer status) {
         this.email = email;
         this.username = username;
+        this.firebaseToken = firebaseToken;
         this.block_cnt = block_cnt == null ? 0 : block_cnt;
         this.status = status == null ? 0 : status;
     }
@@ -37,6 +39,8 @@ public class UserEntity {
     @Column(nullable = false)
     private String username;
 
+    @Column(unique = true)
+    private String firebaseToken;
     // 신고횟수
     private Integer block_cnt;
 

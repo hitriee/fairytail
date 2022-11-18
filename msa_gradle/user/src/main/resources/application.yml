@@ -1,7 +1,9 @@
 spring.profiles.include : auth
 
 server:
-  port: 0
+  port: 9096
+  servlet:
+    context-path: /user
 #server: #random port
 #  port: 0
 
@@ -22,7 +24,7 @@ eureka:
     register-with-eureka: true       # client 등록 시, true로 세팅
     service-url:
       # TODO: eureka 서버 주소로 변경 필요
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://k7c209.p.ssafy.io:8761/eureka
 
 # application.yml 에 저장된 값을 읽어 REST API를 테스트하기 위한 dummy data
 greeting:
