@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 
 import '@messageCreate/Message.scss';
-import {Content} from '@screens/MessageCreate';
 import Preview from '@messageCreate/Preview';
+import {Content} from '@screens/MessageCreate';
 import Alert from '@common/Alert';
 import {ReactComponent as ImageIcon} from '@images/image.svg';
 import {ReactComponent as ImageFillIcon} from '@images/imageFill.svg';
@@ -190,7 +190,6 @@ function Message({content, setContent}: MessageProps) {
                 ref={textRef}
                 className="message-create-content-textarea"
                 placeholder="내용을 입력해주세요 &#13; (최대 100자)"
-                // {`내용을 입력해주세요.\n(최대 100자)`}
                 maxLength={100}
                 onInput={handleResizeHeight}
                 onChange={e => {
@@ -205,7 +204,6 @@ function Message({content, setContent}: MessageProps) {
                 }}
               />
             </div>
-            {/* <span className="message-create-content-text-explain">{`내용을 입력해주세요.\n(최대 100자)`}</span> */}
           </>
         ) : null}
 
@@ -223,7 +221,11 @@ function Message({content, setContent}: MessageProps) {
         {newFile !== null && newFileType !== 0 ? (
           <>
             <div className="message-create-content-align">
-              <Preview type={newFileType} fileURL={newFileURL} />
+              <Preview
+                type={newFileType}
+                fileURL={newFileURL}
+                subtitle={null}
+              />
             </div>
             <button className="btn" onClick={handleClickFileUpload}>
               변경

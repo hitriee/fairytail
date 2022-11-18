@@ -12,8 +12,10 @@
   &-subtitle {
     &-btn {
       position: absolute;
-      width: 5vh;
-      height: 5vh;
+      width: 4vh;
+      height: 4vh;
+      top: -1vh;
+      right: -0.5vh;
       filter: invert(75%) hue-rotate(8deg) brightness(103%) contrast(91%);
       cursor: pointer;
 
