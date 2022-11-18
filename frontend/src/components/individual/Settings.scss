@@ -6,11 +6,6 @@
   width: 90%;
   margin: auto;
 
-  &-push {
-    cursor: pointer;
-    font-size: 2.2vh;
-  }
-
   &-section {
     display: flex;
     flex-direction: column;
@@ -19,8 +14,8 @@
 
   &-title {
     font-size: 2vh;
-    margin-bottom: 1vh;
-    color: $GRAY-BF;
+    margin-bottom: 2vh;
+    color: $NAVY;
   }
 
   &-between {
@@ -34,9 +29,24 @@
     flex: 1;
     font-size: 2.6vh;
     cursor: pointer;
+  }
 
-    div {
-      padding-right: auto;
+  &-push {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+    &-icon {
+      filter: invert(100%) sepia(97%) hue-rotate(25deg) brightness(101%)
+        contrast(103%);
+      width: 3vh;
+      height: 3vh;
+      margin-left: 1vh;
+      margin-top: 0.2vh;
+
+      &:hover {
+        filter: invert(75%) hue-rotate(8deg) brightness(103%) contrast(91%);
+      }
     }
   }
 

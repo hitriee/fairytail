@@ -22,7 +22,13 @@ function MoveToBack({path, color = 'white'}: MoveToBackProps) {
           navigate(-1);
         }
       }}>
-      <ArrowBack viewBox="0 0 45 50" width="40" height="40" fill={color} />
+      <ArrowBack
+        viewBox="0 0 45 50"
+        width="40"
+        height="40"
+        fill={color}
+        className="move-to-back-icon"
+      />
     </div>
   );
 }

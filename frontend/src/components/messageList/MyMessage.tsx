@@ -1,7 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {smallEmojiArr} from '../../assets/emojis';
-import {ReactComponent as Heart} from '@images/heartFilled.svg';
 import './MyMessage.scss';
 import {messageUrl} from '@/apis/messageList';
 
@@ -34,10 +33,15 @@ function MyMessage({messageItem}: messageProps) {
           <p className="myMessage-container-title">{messageItem.title}</p>
           <span className="myMessage-container-date">{date}</span>
         </div>
-        <div className="myMessage-container-like">
-          <Heart className="myMessage-container-like-heart" />
-          {messageItem.likeCnt}
-        </div>
+        {messageItem.likeCnt ? (
+          <div className="myMessage-container-like">
+            <img
+              src={smallEmojiArr[5]}
+              className="myMessage-container-like-heart"
+            />
+            {messageItem.likeCnt}
+          </div>
+        ) : null}
       </div>
     </>
   );

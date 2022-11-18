@@ -1,32 +1,40 @@
+@import '@styles/_colors.scss';
+
 a {
   text-decoration: none;
 }
 
 .googleLogin {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  background-color: white;
-  opacity: 0.95;
-  // width: 20vh;
-  width: 7vh;
-  height: 7vh;
+  align-items: center;
   margin-top: 2vh;
-  border-radius: 50px;
-  box-shadow: inset -2px -2px 2px #4747477b;
 
   &-text {
+    margin-bottom: 1.5vh;
     font-size: 2vh;
-    font-family: 'PyeongChangPeace-Light';
     font-weight: 300;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: black;
+    color: $GRAY-DB;
   }
-  img {
-    margin: 15%;
-    // margin-right: 10%;
-    // margin-left: -5%;
+
+  &-img {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    opacity: 0.98;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 1px #4747477b;
+
+    &:hover {
+      opacity: 1;
+      background-color: $GRAY-E4;
+    }
+
+    img {
+      margin: 20%;
+    }
   }
 }

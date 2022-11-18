@@ -1,27 +1,10 @@
 //** 좋아요, 이모지 관련
 
 import React, {useEffect, useState, useRef} from 'react';
-import {ReactComponent as HeartEmpty} from '@images/heartEmpty.svg';
-import {ReactComponent as HeartFilled} from '@images/heartFilled.svg';
-import {emojiArr} from '@emojis/index';
+import {emojiArr, smallEmojiArr} from '@emojis/index';
 import '@messageDetail/Like.scss';
-import {returnFalse, returnTrue} from '../common/commonFunc';
 import {likeMessage} from '@apis/messageDetail/detailFunc';
 import {dataType} from '@apis/messageDetail/detailInterface';
-
-// props 유형
-// interface LikeProps {
-//   count: number;
-//   like: boolean;
-//   isMine: boolean;
-//   emoji: number;
-//   type: string;
-//   writerId: number;
-//   likeInfo: {
-//     postId: number;
-//     userId: number;
-//   };
-// }
 interface LikeProps {
   data: dataType;
   type: string;
@@ -38,13 +21,6 @@ function Like({type, userId, data}: LikeProps) {
   // 좋아요 수, 좋아요 여부 변경
   const sendChangeSignal = () => {
     likeMessage(type, {writerId: data.userId, postId, userId});
-    //   .then(
-    //   (res: any) => {
-    //     if (res.message === 'SUCCESS') {
-    //       setLike(prev => !prev);
-    //     }
-    //   },
-    // );
   };
 
   const changeLike = () => {
@@ -57,25 +33,24 @@ function Like({type, userId, data}: LikeProps) {
     sendChangeSignal();
   };
 
-  // // props 데이터 갱신 (count, like)
-  // useEffect(() => {
-  //   setMessageCount(() => likeCnt);
-  // }, [likeCnt]);
-
-  // useEffect(() => {
-  //   setLike(() => isLike);
-  // }, [isLike]);
-
   return (
     <article className="like">
-      <img src={emojiArr[emojiNo]} alt="풍선 이모지" className="like-balloon" />
       <div className="like-container">
         {myLike ? (
-          <HeartFilled className="like-icon" onClick={changeLike} fill="red" />
+          <img src={emojiArr[5]} className="like-icon" onClick={changeLike} />
         ) : (
-          <HeartEmpty className="like-icon" onClick={changeLike} fill="white" />
+          <img
+            src={smallEmojiArr[11]}
+            className="like-icon like-icon-stable"
+            onClick={changeLike}
+          />
         )}
         <p className="like-count">{messageCount}</p>
+        <img
+          src={emojiArr[emojiNo]}
+          alt="풍선 이모지"
+          className="like-balloon"
+        />
       </div>
     </article>
   );
