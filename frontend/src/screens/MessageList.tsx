@@ -73,13 +73,13 @@ function MessageList() {
         console.log(sortedData);
         setMessageItems(() => sortedData);
       }
-      // setIsSorted(true);
+      setIsSorted(() => true);
     }
-  }, [filterState, isFinished]);
+  }, [filterState, messageItems, isFinished]);
 
-  useEffect(() => {
-    setIsSorted(() => true);
-  }, [messageItems]);
+  // useEffect(() => {
+  //   setIsSorted(() => true);
+  // }, [messageItems]);
 
   return (
     <div className="messageList">
