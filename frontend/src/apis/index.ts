@@ -11,6 +11,7 @@ export const API_TEST = axios.create({
 
 API_TEST.interceptors.request.use(
   config => {
+    console.dir(config);
     const token = localStorage.getItem('token');
     console.log('1번', token);
     if (config.headers !== undefined && !config.headers.Authorization) {
