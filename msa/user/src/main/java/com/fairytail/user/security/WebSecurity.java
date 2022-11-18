@@ -31,6 +31,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter  {
                 .anyRequest().permitAll();
 //                .hasIpAddress("")   TODO: 통과시키고 싶은 IP 주소 - 내부 IP만 접근 가능하도록 추후 설정 필요
 
+
+
         /**
          * 구글 로그인 연동
          * 사용자 로그인 성공 시, successHandler를 사용하여 사용자를 임의 등록 혹은 로그인 진행을 하고, jwt 토큰을 응답으로 제공할 수 있다.
@@ -42,7 +44,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter  {
                 .and()
                 .successHandler(oAuth2SuccessHandler);  // JWT - access token을 발행한다. 따로 refresh 토큰을 발급하지는 않고 단일 access token만을 사용한다.
 
-        /** TODO: h2 데이터베이스 조회 시, 프레임 엑스박스 현상 - 추후 삭제 예정 */
-        http.headers().frameOptions().disable();
+//        /** TODO: h2 데이터베이스 조회 시, 프레임 엑스박스 현상 - 추후 삭제 예정 */
+//        http.headers().frameOptions().disable();
     }
 }
