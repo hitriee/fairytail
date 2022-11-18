@@ -75,11 +75,11 @@ function MessageList() {
       }
       setIsSorted(() => true);
     }
-  }, [filterState, isFinished]);
+  }, [filterState, isFinished, messageItems]);
 
   const handleFilter = useCallback(() => {
     setFilterState(!filterState);
-  }, [filterState]);
+  }, [filterState, messageItems]);
 
   return (
     <div className="messageList">
