@@ -1,4 +1,4 @@
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import '@screens/MessageCreate.scss';
@@ -13,6 +13,9 @@ import Alert from '@common/Alert';
 
 import {postText, postFile} from '@apis/messageCreate';
 import {toMessageDetail} from '@apis/router';
+
+import {ReactComponent as Send} from '@images/send.svg';
+import {ReactComponent as Airplane} from '@images/airplaneIcon.svg';
 
 // 내용 타입 정의
 export type Content = {
@@ -211,9 +214,16 @@ function MessageCreate() {
 
               <div className="message-create-save-container">
                 <Toggle label="비공개" onClick={setIsShare} value={isShare} />
-                <button className="btn" onClick={handleSubmit}>
-                  등록
-                </button>
+                {/* <button
+                  className="message-create-save-btn"
+                  onClick={handleSubmit}>
+                  <Airplane fill="black" transform="rotate(30)" />
+                </button> */}
+                <Send
+                  onClick={handleSubmit}
+                  transform="rotate(-20)"
+                  className="message-create-save-btn-icon"
+                />
               </div>
             </>
           )}

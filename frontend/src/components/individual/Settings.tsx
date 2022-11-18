@@ -25,21 +25,32 @@ function Settings() {
 
   // 좋아요 알림 변경
   // 백그라운드
+  const ua = window.navigator.userAgent;
+  const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
   const changePermitPush = () => {
-    if (Notification.permission === 'default') {
-      Notification.requestPermission().then(async permission => {
-        if (permission === 'default') {
-          setPermitPush(() => '설정 가능');
-        } else if (permission === 'denied') {
-          setPermitPush(() => '거부');
-        } else {
-          setPermitPush(() => '허용');
-        }
-      });
+    if (!iOS) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission().then(async permission => {
+          if (permission === 'default') {
+            setPermitPush(() => '설정 가능');
+          } else if (permission === 'denied') {
+            setPermitPush(() => '거부');
+          } else {
+            setPermitPush(() => '허용');
+          }
+        });
+      } else {
+        changeInfo(
+          '안내',
+          `현재 알림 ${permitPush} 상태입니다. \n 브라우저의 알림 설정 페이지에서 \n 변경이 가능합니다.`,
+        );
+        setOpenAlert(returnTrue);
+      }
     } else {
+      setPermitPush(() => '거부');
       changeInfo(
         '안내',
-        `현재 알림 ${permitPush} 상태입니다. \n 브라우저의 알림 설정 페이지에서 \n 변경이 가능합니다.`,
+        `현재 알림 ${permitPush} 상태입니다. \n iOS는 알림 기능이 지원되지 않습니다`,
       );
       setOpenAlert(returnTrue);
     }
@@ -56,14 +67,16 @@ function Settings() {
   };
 
   useEffect(() => {
-    const {permission} = Notification;
-    if (permission === 'denied') {
-      setPermitPush(() => '거부');
-    } else if (permission === 'granted') {
-      setPermitPush(() => '허용');
-    }
-    if (localStorage.getItem('noti')) {
-      setPermitNoti(returnTrue);
+    if (!iOS) {
+      const {permission} = Notification;
+      if (permission === 'denied') {
+        setPermitPush(() => '거부');
+      } else if (permission === 'granted') {
+        setPermitPush(() => '허용');
+      }
+      if (localStorage.getItem('noti')) {
+        setPermitNoti(returnTrue);
+      }
     }
   }, []);
 
