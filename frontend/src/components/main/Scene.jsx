@@ -62,6 +62,7 @@ export default function Scene({...props}) {
   const changeBgmNo = event => {
     event.stopPropagation();
     setIsPlaying(true);
+    localStorage.setItem('isPlaying', 'true');
     let tempNo = 0;
     if (bgmNo >= 9) {
       tempNo = 0;

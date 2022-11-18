@@ -30,6 +30,12 @@ function BgmListItem({title, index}: BgmListItemProps) {
   const handleChangeBgm = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsPlaying(prev => !prev);
+    const isPlayingBGM = localStorage.getItem('isPlaying');
+    if (isPlayingBGM === 'true') {
+      localStorage.setItem('isPlaying', 'false');
+    } else {
+      localStorage.setItem('isPlaying', 'true');
+    }
     changeBgm(index);
   };
 
@@ -38,6 +44,7 @@ function BgmListItem({title, index}: BgmListItemProps) {
       className={'bgm-list-item ' + checkSelected(index)}
       onClick={() => {
         setIsPlaying(true);
+        localStorage.setItem('isPlaying', 'true');
         changeBgm(index);
       }}>
       <span className="bgm-list-item-title">{title}</span>

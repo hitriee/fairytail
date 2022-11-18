@@ -31,7 +31,15 @@ function BgmModal({open, onCancel}: BgmModalProps) {
 
   const [isPlaying, setIsPlaying] = useRecoilState<boolean>(playingState);
 
-  const handlePlay = () => setIsPlaying(prev => !prev);
+  const handlePlay = () => {
+    setIsPlaying(prev => !prev);
+    const isPlayingBGM = localStorage.getItem('isPlaying');
+    if (isPlayingBGM === 'true') {
+      localStorage.setItem('isPlaying', 'false');
+    } else {
+      localStorage.setItem('isPlaying', 'true');
+    }
+  };
 
   return (
     <>

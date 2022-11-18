@@ -27,7 +27,7 @@ function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
 
   // 배경음악
   const [isPlayingBGM, setIsPlayingBGM] = useRecoilState(playingState);
-  const currentPlayingBGM = isPlayingBGM;
+  const currentPlayingBGM = localStorage.getItem('isPlaying');
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -59,7 +59,7 @@ function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
   const handlePlay = () => {
     if (isPlaying) {
       audioRef.current && audioRef.current.pause();
-      if (currentPlayingBGM) {
+      if (currentPlayingBGM === 'true') {
         setIsPlayingBGM(true);
       }
     } else {
