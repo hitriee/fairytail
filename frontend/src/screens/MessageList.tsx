@@ -57,55 +57,59 @@ function MessageList() {
       console.log(messageItems);
       console.log(filterState);
       console.log(isFinished);
-
+      const sortedData = messageItems;
       if (filterState) {
-        messageItems.sort((a, b) =>
+        sortedData.sort((a, b) =>
           a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
         );
         console.log('내림차순');
+        console.log(sortedData);
+        setMessageItems(() => sortedData);
       } else {
-        messageItems.sort((a, b) =>
+        sortedData.sort((a, b) =>
           a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
         );
         console.log('오름차순');
+        console.log(sortedData);
+        setMessageItems(() => sortedData);
       }
-      setIsSorted(true);
+      // setIsSorted(true);
     }
   }, [filterState, isFinished]);
 
-  return (
-    <>
-      {messageItems ? (
-        <div className="messageList">
-          <MoveToBack path={main()} />
-          <div className="messageList-container">
-            <div className="messageList-container-info">내 이야기</div>
-            <div
-              className="messageList-container-filter"
-              onClick={() => setFilterState(prev => !prev)}>
-              <Filter viewBox="0 0 80 80" fill="white" />
-            </div>
+  useEffect(() => {
+    setIsSorted(() => true);
+  }, [messageItems]);
 
-            <div className="messageList-container-list">
-              {messageItems.length === 0 && (
-                <div className="messageList-container-list-empty">
-                  작성한 메세지가 없습니다.
-                </div>
-              )}
-              {isSorted &&
-                messageItems.map(messageItem => {
-                  return (
-                    <MyMessage
-                      key={`${messageItem.type}+${messageItem.postId}`}
-                      messageItem={messageItem}
-                    />
-                  );
-                })}
-            </div>
-          </div>
+  return (
+    <div className="messageList">
+      <MoveToBack path={main()} />
+      <div className="messageList-container">
+        <div className="messageList-container-info">내 이야기</div>
+        <div
+          className="messageList-container-filter"
+          onClick={() => setFilterState(prev => !prev)}>
+          <Filter viewBox="0 0 80 80" fill="white" />
         </div>
-      ) : null}
-    </>
+
+        <div className="messageList-container-list">
+          {messageItems.length === 0 && (
+            <div className="messageList-container-list-empty">
+              작성한 메세지가 없습니다.
+            </div>
+          )}
+          {isSorted &&
+            messageItems.map(messageItem => {
+              return (
+                <MyMessage
+                  key={`${messageItem.type}+${messageItem.postId}`}
+                  messageItem={messageItem}
+                />
+              );
+            })}
+        </div>
+      </div>
+    </div>
   );
 }
 
