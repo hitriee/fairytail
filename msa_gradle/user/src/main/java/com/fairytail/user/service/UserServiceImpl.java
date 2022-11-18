@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isValidToken(String token) {
+        log.debug("token++++++++++++++++++++++++++", token);
         Claims jwtBody = parseJWT(token.replace("Bearer ", ""));
         Date now = new Date();
         log.debug("time__________________________" + jwtBody.getExpiration());
