@@ -28,6 +28,9 @@ function VideoPreview({fileURL}: {fileURL: string}) {
         if (currentPlayingBGM === 'true') {
           setIsPlayingBGM(true);
         }
+      }}
+      onChange={() => {
+        setIsPlayingBGM(false);
       }}>
       <source src={fileURL} />
     </video>
