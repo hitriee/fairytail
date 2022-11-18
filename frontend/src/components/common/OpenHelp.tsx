@@ -4,9 +4,9 @@ import {useLocation} from 'react-router-dom';
 import '@common/Common.scss';
 import {ReactComponent as Help} from '@images/help.svg';
 import {ReactComponent as Cancel} from '@images/cancelFill.svg';
-import helpMap from '@images/helpMap.jpg';
-import helpMain from '@images/helpMain.jpg';
-import helpVR from '@images/helpVR.jpg';
+import helpMap from '@images/helpMap.png';
+import helpMain from '@images/helpMain.png';
+import helpVR from '@images/helpVR.png';
 
 interface OpenHelpProps {
   imagesIndex: number;

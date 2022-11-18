@@ -11,7 +11,7 @@ import {playingState} from '@apis/recoil';
 
 type MusicPlayerProps = {
   fileURL: string;
-  subtitle: string;
+  subtitle: string | null;
   isDetail: boolean;
 };
 
@@ -95,7 +95,7 @@ function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
 
       {isShowingSubtitle ? (
         <div className="message-create-content-text message-create-content-text-preview">
-          {subtitle}
+          {subtitle !== null ? subtitle : '말소리가 없는 음성입니다.'}
         </div>
       ) : (
         <>

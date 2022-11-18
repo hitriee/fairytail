@@ -13,7 +13,7 @@ import {popUp} from '@common/commonFunc';
 import {
   changeMessageStatus,
   deleteMessage,
-} from '@/apis/messageDetail/detailFunc';
+} from '@apis/messageDetail/detailFunc';
 import {dataType} from '@apis/messageDetail/detailInterface';
 
 // props 유형
@@ -23,10 +23,8 @@ interface MoreMenuProps {
   detail: any;
   messageId: number;
   type: string;
-  // content: string;
   close: () => void;
   data: dataType;
-  // setData: React.Dispatch<React.SetStateAction<dataType>>;
   status: number;
   setStatus: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -37,13 +35,11 @@ function MoreMenu({
   detail,
   messageId,
   type,
-  // content,
   close,
   data,
   status,
   setStatus,
-}: // setData,
-MoreMenuProps) {
+}: MoreMenuProps) {
   const {url} = data;
 
   const navigate = useNavigate();
