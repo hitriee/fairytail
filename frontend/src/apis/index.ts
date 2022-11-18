@@ -2,10 +2,14 @@ import axios from 'axios';
 
 export const BASE_URL = 'https://k7c209.p.ssafy.io';
 
+const getToken = () => {
+  return localStorage.token;
+};
+
 export const API_TEST = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: localStorage.token,
+    Authorization: getToken(),
   },
 });
 
