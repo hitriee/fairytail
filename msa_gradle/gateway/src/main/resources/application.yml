@@ -19,7 +19,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "https://k7c2091.p.ssafy.io"
+            allowedOrigins: "*"
             allow-credentials: true
             allowed-headers:
               - '*'
@@ -28,6 +28,7 @@ spring:
               - POST
               - PUT
               - DELETE
+              - PATCH
               - OPTIONS
 
       routes:
