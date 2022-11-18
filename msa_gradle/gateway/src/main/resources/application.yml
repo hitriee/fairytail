@@ -16,19 +16,19 @@ spring:
 
   cloud:
     gateway:
-#      globalcors:
-#        cors-configurations:
-#          '[/**]':
-#            allowedOrigins: "https://k7c2091.p.ssafy.io"
-#            allow-credentials: true
-#            allowed-headers:
-#              - '*'
-#            allowedMethods:
-#              - GET
-#              - POST
-#              - PUT
-#              - DELETE
-#              - OPTIONS
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://k7c2091.p.ssafy.io"
+            allow-credentials: true
+            allowed-headers:
+              - '*'
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
 
       routes:
         - id: user
