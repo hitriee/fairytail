@@ -1,5 +1,5 @@
 import {useEffect, useRef, Suspense} from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import '@/App.scss';
 import Loading from '@components/loading/Loading';
 
@@ -17,6 +17,7 @@ import {
   nonexistent,
   settings,
   notifications,
+  notFound,
 } from '@apis/router';
 import Intro from '@screens/Intro';
 import Process from '@screens/Process';
@@ -71,7 +72,11 @@ function App() {
             <Route path={messageDetail()} element={<Main />} />
             <Route path={settings()} element={<Main />} />
             <Route path={notifications()} element={<Main />} />
-            <Route path={nonexistent()} element={<Main />} />
+            <Route path={notFound()} element={<Main />} />
+            <Route
+              path={nonexistent()}
+              element={<Navigate to={notFound()} replace />}
+            />
           </Routes>
         </Suspense>
       </BrowserRouter>
