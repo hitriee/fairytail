@@ -8,27 +8,27 @@ import Content from '@messageDetail/Content';
 import Like from '@messageDetail/Like';
 import MoreMenu from '@common/MoreMenu';
 import MoveToBack from '@common/MoveToBack';
-import '@screens/MessageDetail.scss';
-import {intMessageId, convStringType} from '@/components/common/commonFunc';
-import {currentUser} from '@common/commonFunc';
-import {dataType} from '@apis/messageDetail/detailInterface';
 import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
-import {notFound, intro} from '@apis/router';
-import {getMesssage} from '@apis/messageDetail/detailFunc';
 
+import {notFound} from '@apis/router';
+import {getMesssage} from '@apis/messageDetail/detailFunc';
+import {dataType} from '@apis/messageDetail/detailInterface';
+import {intMessageId, convStringType, currentUser} from '@common/commonFunc';
+
+// dayType에 따른 다른 배경색 조합
 const dayTypeColors = [
-  ['9794e9', '94bce9', 'eeaeca'],
-  ['00bfff', '87cfeb', 'b5ffff'],
-  ['44a0a2', '9ab96c', 'b9a16c'],
-  ['b96cb6', 'b96c7a', 'a26e44'],
-  ['02002b', '233c69', '001087'],
+  ['44427f', '9fc3eb', 'ffb7d7'], // 1 ~ 5시
+  ['00bfff', '9de4ff', 'eeffff'], // 6 ~ 10시
+  ['74dee0', 'c4e88e', 'f1ca92'], // 11 ~ 16시
+  ['ff8c2f', 'f84a68', '99408c'], // 17 ~ 20시
+  ['050069', '204382', '020830'], // 21 ~ 24시
 ];
 
 function MessageDetail() {
   // 풍선 저장 관련
   const messageDetailRef = useRef(null!);
 
-  // 전달 받은 messageId가 숫자가 아니라면 notfound로 이동
+  // 전달 받은 messageId, type을 올바른 자료형으로 변환해서 변수에 저장
   const navigate = useNavigate();
   const params = useParams();
   const messageId = intMessageId(params.id);
@@ -52,42 +52,14 @@ function MessageDetail() {
       })
       .catch((error: any) => navigate(notFound()));
   };
-  // if (type === 'text') {
-  //   getTextMesssage(type, messageId).then((res: textDetailResponse) => {
-  //     if (res.message === 'SUCCESS') {
-  //       setData(prev => {
-  //         return {...prev, ...res.data};
-  //       });
-  //     } else {
-  //       // 실패했을 경우 404로 이동
-  //       navigate(notFound());
-  //     }
-  //   });
-  // } else if (type === 'img') {
-  //   getImgMesssage(type, {postId: messageId, userId}).then(
-  //     (res: imgDetailResponse) => {
-  //       if (res.message === 'SUCCESS') {
-  //         setData(prev => {
-  //           return {...prev, ...res.data};
-  //         });
-  //       } else {
-  //         // 실패했을 경우 404로 이동
-  //         navigate(notFound());
-  //       }
-  //     },
-  //   );
-  // } else {
-  //   navigate(notFound());
-  // }
-  // };
+
   // 현재 사용자가 작성한 게시글인지 확인
   const isMine = () => data?.userId === userId;
 
+  // 전달 받은 messageId가 숫자가 아니라면 notfound로 이동
   useEffect(() => {
     if (messageId === -1) {
       navigate(notFound());
-    } else if (userId === -1) {
-      navigate(intro());
     } else if (type) {
       getDetailMessage();
     }
@@ -100,32 +72,6 @@ function MessageDetail() {
     }
   }, [data]);
 
-  useEffect(() => {
-    setNewStatus(() => data?.status);
-  }, [data]);
-
-  // useEffect(() => {
-
-  //   if (isText(type)) {
-  //     if (!isMine() && textData?.status) {
-  //       navigate(notFound())
-  //     } else {
-  //       setTextData(() => textData)
-  //     }
-  //   } else {
-  //     if (!isMine() && imgData?.status) {
-  //       navigate(notFound())
-  //     } else {
-  //       setImgData(() => imgData)
-  //     }
-  //   }
-  //   // if (!isMine() && (textData?.status || imgData?.status)) {
-  //   //   navigate(notFound());
-  //   // }
-  //   // setData(() => data);
-  //   // setNewStatus(data?.status);
-  // }, [data]);
-
   // 메뉴 표시 여부
   const [more, setMore] = useState(false);
 
@@ -135,16 +81,11 @@ function MessageDetail() {
 
   const showMenu = () => setMore(!more);
 
-  // 공개 여부 변경 대비
+  // 공개 여부 변경
   const [newStatus, setNewStatus] = useState(data?.status);
-  // content에 들어갈 내용
-  // const detailContent = () => {
-  //   if (isText(type)) {
-  //     return textData?.content;
-  //   } else {
-  //     return imgData?.url ? `https://${imgData?.url}` : '';
-  //   }
-  // };
+  useEffect(() => {
+    setNewStatus(() => data?.status);
+  }, [data]);
 
   const dayType = data?.dayType;
 
@@ -169,23 +110,14 @@ function MessageDetail() {
                 detail={messageDetailRef}
                 messageId={messageId}
                 type={type}
-                // content={data?.url || data?.content}
                 close={hiddenMenu}
                 data={data}
-                // setData={setData}
                 status={newStatus}
                 setStatus={setNewStatus}
               />
             </section>
             <section className="container">
-              <Content
-                data={data}
-                // title={textData?.title || imgData?.title || ''}
-                // content={detailContent()}
-                // type={data.type}
-                // date={modifiedDate()}
-                status={newStatus}
-              />
+              <Content data={data} status={newStatus} />
               <Like data={data} type={type} userId={userId} />
             </section>
           </main>

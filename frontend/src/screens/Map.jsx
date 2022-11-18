@@ -15,7 +15,7 @@ import MoveToBack from '@common/MoveToBack';
 import OpenHelp from '@common/OpenHelp';
 import Airplane from '@images/airplane.webp';
 
-import {getMessageMap} from '@apis/map';
+import {getMessageMap, getRandomLandKR} from '@apis/map';
 
 // 최소, 최대 범위 이내 랜덤 실수 생성
 function generateRandomFloat(min, max) {
@@ -90,9 +90,16 @@ function Map() {
       <div
         className="map-random"
         onClick={() => {
+          getRandomLandKR()
+            .then(res => {
+              console.log(res);
+            })
+            .catch(err => {
+              console.log(err);
+            });
           setPosition({
-            lat: generateRandomFloat(33, 43),
-            lng: generateRandomFloat(124, 132),
+            lat: generateRandomFloat(38.61, 33.11),
+            lng: generateRandomFloat(124.6, 131.87),
           });
           setIsClicked(true);
         }}>
