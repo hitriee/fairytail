@@ -22,6 +22,9 @@ function MessageList() {
   const [messageItems, setMessageItems] = useState<items[]>([]);
   const [filterState, setFilterState] = useState(true);
 
+  // 데이터 및 데이터 받아오기가 끝났는지 확인하기 위한 state
+  const [isFinished, setIsFinished] = useState(-1);
+
   // const location = useLocation();
   const navigate = useNavigate();
 
@@ -40,6 +43,7 @@ function MessageList() {
         getMesssageList(type, userId)
           .then(res => {
             setMessageItems(prev => prev.concat(res.data));
+            setIsFinished(prev => prev + 1);
           })
           .catch(err => {
             console.log(err);
@@ -48,14 +52,15 @@ function MessageList() {
     } else {
       navigate(notFound());
     }
-    if (messageItems && messageItems?.length > 0) {
-      console.log(messageItems[0].date);
-    }
+    // if (messageItems && messageItems?.length > 0) {
+    //   console.log(messageItems[0].date);
+    // }
   }, []);
 
   // messageList 최신순으로 정렬
   useEffect(() => {
-    if (messageItems.length > 0) {
+    console.log(messageItems);
+    if (isFinished === 3 && messageItems.length > 0) {
       if (filterState) {
         messageItems.sort((a, b) =>
           a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
@@ -86,7 +91,7 @@ function MessageList() {
     //     a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
     //   );
     // }
-  }, [filterState]);
+  }, [filterState, isFinished]);
 
   return (
     <>
