@@ -22,6 +22,8 @@ type AudioInfo = {
 
 // audio 재생기
 function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
+  console.log(fileURL, subtitle, isDetail);
+
   // 자막 표시 여부
   const [isShowingSubtitle, setIsShowingSubtitle] = useState(false);
 
