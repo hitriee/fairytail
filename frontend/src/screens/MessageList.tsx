@@ -52,9 +52,6 @@ function MessageList() {
     } else {
       navigate(notFound());
     }
-    // if (messageItems && messageItems?.length > 0) {
-    //   console.log(messageItems[0].date);
-    // }
   }, []);
 
   // messageList 최신순으로 정렬
