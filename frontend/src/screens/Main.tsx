@@ -26,7 +26,7 @@ function Main() {
 
   // 로그인 여부 확인
   useEffect(() => {
-    console.log('몇 번 찍히나');
+    console.log(localStorage.token);
 
     // 유효한 토큰이 있는지 확인
     getIdentification()
