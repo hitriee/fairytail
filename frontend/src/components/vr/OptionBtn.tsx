@@ -17,7 +17,7 @@ function OptionBtn({option, setOption, setData}: OptionBtnProps) {
           setData([]);
         }
       }}>
-      {option ? '최신순으로\n보기' : '좋아요순으로\n보기'}
+      {option ? '최신순' : '좋아요순'}
     </div>
   );
 }

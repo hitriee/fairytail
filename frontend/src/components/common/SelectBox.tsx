@@ -40,7 +40,7 @@ function SelectBox({reportType, setReportType, options}: SelectBoxProps) {
       </div>
 
       {showSelect ? (
-        <ul className="select-ul" ref={selectRef}>
+        <ul className="select-ul fadeIn" ref={selectRef}>
           {options.map((option: string, index) => (
             <li
               className="select-li"

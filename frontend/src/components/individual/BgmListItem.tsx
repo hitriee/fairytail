@@ -18,33 +18,27 @@ function BgmListItem({title, index}: BgmListItemProps) {
   const checkSelected = (index: number) => {
     if (isPlaying && index === bgmNo) {
       return 'bgm-list-item-selected';
-    } else if (!isPlaying) {
-      return 'bgm-list-item-disabled';
     }
   };
 
-  // 아이템 선택 -> 재생 중이라면 번호 바꾸고 재생 여부 뒤집기
+  // 아이템 선택 -> 번호 바꾸고 재생
   const changeBgm = (index: number) => {
-    if (isPlaying) {
-      setBgmNo(index);
-      localStorage.setItem('bgmNo', JSON.stringify(index));
-    }
+    setBgmNo(index);
+    localStorage.setItem('bgmNo', JSON.stringify(index));
   };
 
   const handleChangeBgm = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setIsPlaying(prev => !prev);
     changeBgm(index);
-    localStorage.setItem('bgmNo', JSON.stringify(index));
   };
 
   return (
     <div
       className={'bgm-list-item ' + checkSelected(index)}
       onClick={() => {
-        if (isPlaying) {
-          setBgmNo(index);
-          localStorage.setItem('bgmNo', JSON.stringify(index));
-        }
+        setIsPlaying(true);
+        changeBgm(index);
       }}>
       <span className="bgm-list-item-title">{title}</span>
 

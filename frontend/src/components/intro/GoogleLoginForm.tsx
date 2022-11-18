@@ -9,8 +9,10 @@ function GoogleLoginForm() {
         // href="https://k7c209.p.ssafy.io/user/oauth2/authorization/google"
         role="button">
         <div className="googleLogin">
-          <img src={googleLogo} alt="GoogleLogo" />
-          <span className="googleLogin-text">구글 로그인</span>
+          <span className="googleLogin-text">다음 계정으로 로그인:</span>
+          <div className="googleLogin-img">
+            <img src={googleLogo} alt="GoogleLogo" />
+          </div>
         </div>
       </a>
     </>
