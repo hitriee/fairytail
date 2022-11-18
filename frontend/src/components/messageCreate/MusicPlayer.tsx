@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import styled from 'styled-components';
 
 import '@messageCreate/MusicPlayer.scss';
-import subtitle from '@images/speechToText.svg';
+import subtitleImg from '@images/speechToText.svg';
 import {ReactComponent as Play} from '@images/play.svg';
 import {ReactComponent as Pause} from '@images/pause.svg';
 
@@ -86,7 +86,7 @@ function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
     <div className="music-player-container">
       {isDetail ? (
         <img
-          src={subtitle}
+          src={subtitleImg}
           alt="자막 표시"
           className="music-player-subtitle-btn"
           onClick={() => setIsShowingSubtitle(prev => !prev)}
