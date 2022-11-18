@@ -1,0 +1,37 @@
+# Application Auth 와 관련한 인증 정보가 들어감
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 972146122059-e028ed3mkq6g5g40rrkm67mqjv5f9oc6.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: https://k7c209.p.ssafy.io/user/login/oauth2/code/google
+            scope: profile, email
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/user
+    username: dongsim
+    password: dongsim12!
+
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    livereload:
+      enabled: true
+
+# Token expiration 관련 설정
+token:
+  expiration_time: 86400000     # 토큰 유효기간 - 하루 (86400000 Milliseconds)
+  secret: dongsimc209welovetoshareourballoonswithyou
+

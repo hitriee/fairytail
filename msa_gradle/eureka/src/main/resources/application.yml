@@ -1,0 +1,15 @@
+server:
+  port: 8761    # Eureka server
+
+spring:
+  application:
+    name: eureka
+
+# Eureka 클라이언트로 등록하지는 않는다.
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    prefer-ip-address: true # 각 마이크로 서비스를 ip로 접근하겠다.
+
