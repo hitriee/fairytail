@@ -14,31 +14,31 @@ function InitMessage() {
 
   // 알림 창 관련 내용
   const [info, setInfo] = useState(initialItem);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   // 알림이 뜨고 5초 후에 사라짐
-  const changeOpenState = () => {
-    if (open) {
-      setInterval(() => {
-        setOpen(returnFalse);
-      }, 5000);
-    }
-  };
+  // const changeOpenState = () => {
+  //   if (open) {
+  //     setInterval(() => {
+  //       setOpen(returnFalse);
+  //     }, 5000);
+  //   }
+  // };
 
   // fcm에서 요청이 오면 info값 변경, localStorage에 값 저장
-  onMessage(messaging, payload => {
-    if (payload.data?.body && payload.data?.title) {
-      const body = JSON.parse(payload.data?.body);
-      const newInfo = {
-        userId: body?.userId,
-        postId: body?.postId,
-        emojiNo: body?.emojiNo,
-        type: body?.type,
-        title: payload.data?.title,
-      };
-      setInfo(() => newInfo);
-    }
-  });
+  // onMessage(messaging, payload => {
+  //   if (payload.data?.body && payload.data?.title) {
+  //     const body = JSON.parse(payload.data?.body);
+  //     const newInfo = {
+  //       userId: body?.userId,
+  //       postId: body?.postId,
+  //       emojiNo: body?.emojiNo,
+  //       type: body?.type,
+  //       title: payload.data?.title,
+  //     };
+  //     setInfo(() => newInfo);
+  //   }
+  // });
 
   // info 값 변경 시 알림 팝업 띄움
   useEffect(() => {
@@ -47,7 +47,7 @@ function InitMessage() {
     }
   }, [info]);
 
-  useEffect(changeOpenState, [open]);
+  // useEffect(changeOpenState, [open]);
 
   return (
     <>

@@ -185,18 +185,21 @@
   top: 10px;
   cursor: pointer !important;
   opacity: 75%;
+  display: flex;
 }
 
 @media (max-device-aspect-ratio: 9 / 16) {
   #foreground {
-    width: 90vw;
-    left: 5%;
+    width: 86vw;
+    left: 7%;
   }
 }
 
 @media (min-device-aspect-ratio: 9 / 16) {
   #foreground {
-    width: 40vw;
-    left: 30%;
+    width: 50%;
+    // left: 25%;
+    // margin-right: 10%;
+    margin-left: 25%;
   }
 }

@@ -8,6 +8,7 @@ import '@screens/Intro.scss';
 import GoogleLoginForm from '@intro/GoogleLoginForm';
 import {currentUser} from '@common/commonFunc';
 import IntroLogo from '@images/introLogo.png';
+import InitMessage from '@/apis/notifications/foregroundMessaging';
 
 function Intro() {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function Intro() {
         src="background/Background.html"
         frameBorder={0}
       />
+      <InitMessage />
       <div className="contaier">
         <div className="intro">
           <img className="introLogo" src={IntroLogo} alt="loading" />
