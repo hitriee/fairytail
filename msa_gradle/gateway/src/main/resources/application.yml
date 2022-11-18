@@ -41,7 +41,7 @@ spring:
           predicates: # 전제 조건
             - Path=/img/**
 
-        - id: audio
+        - id: audio-service
           uri: lb://AUDIO
           predicates: # 전제 조건
             - Path=/audio/**
