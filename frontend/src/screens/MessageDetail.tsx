@@ -1,6 +1,7 @@
 // ** 메시지 상세
 import {useState, useRef, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router';
+import styled, {keyframes} from 'styled-components';
 
 import '@screens/MessageDetail.scss';
 import Content from '@messageDetail/Content';
@@ -14,6 +15,14 @@ import {dataType} from '@apis/messageDetail/detailInterface';
 import {ReactComponent as EllipsisVertical} from '@images/ellipsisVertical.svg';
 import {notFound, intro} from '@apis/router';
 import {getMesssage} from '@apis/messageDetail/detailFunc';
+
+const dayTypeColors = [
+  ['9794e9', '94bce9', 'eeaeca'],
+  ['00bfff', '87cfeb', 'b5ffff'],
+  ['44a0a2', '9ab96c', 'b9a16c'],
+  ['b96cb6', 'b96c7a', 'a26e44'],
+  ['02002b', '233c69', '001087'],
+];
 
 function MessageDetail() {
   // 풍선 저장 관련
@@ -137,13 +146,15 @@ function MessageDetail() {
   //   }
   // };
 
-  const dayType = () => data?.dayType;
+  const dayType = data?.dayType;
 
   return (
     <>
       {data ? (
-        <div
-          className={`screen background${dayType()}`}
+        <MessageDetailScreen
+          first={dayTypeColors[dayType][0]}
+          second={dayTypeColors[dayType][1]}
+          third={dayTypeColors[dayType][2]}
           ref={messageDetailRef}
           onClick={hiddenMenu}>
           <main id="container">
@@ -178,10 +189,43 @@ function MessageDetail() {
               <Like data={data} type={type} userId={userId} />
             </section>
           </main>
-        </div>
+        </MessageDetailScreen>
       ) : null}
     </>
   );
 }
+
+interface BackgroundColorProps {
+  first: string;
+  second: string;
+  third: string;
+}
+
+const gradient = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+
+const MessageDetailScreen = styled.div`
+  background: linear-gradient(
+    -30deg,
+    ${(props: BackgroundColorProps) =>
+      ` #${props.first}, #${props.second}, #${props.third}`}
+  );
+  background-size: 400% 400%;
+  animation: ${gradient} 7s ease infinite;
+
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+`;
 
 export default MessageDetail;
