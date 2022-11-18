@@ -32,11 +32,6 @@ function MessageList() {
   const types = [0, 1, 2, 3];
   const userId = currentUser();
 
-  const handleFilter = () => {
-    console.log('정렬 변경');
-    setFilterState(prev => !prev);
-  };
-
   useEffect(() => {
     if (userId !== -1) {
       types.forEach(type => {
@@ -57,37 +52,20 @@ function MessageList() {
   // messageList 최신순으로 정렬
   useEffect(() => {
     console.log(messageItems);
+
     if (isFinished === 3 && messageItems.length > 0) {
+      console.log('정렬');
+
       if (filterState) {
         messageItems.sort((a, b) =>
           a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
         );
       } else {
-        messageItems?.sort((a, b) =>
+        messageItems.sort((a, b) =>
           a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
         );
       }
     }
-
-    // if (filterState && messageItems.length > 0) {
-    //   messageItems.sort((a, b) =>
-    //     a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
-    //   );
-    // } else if (!filterState && messageItems.length > 0) {
-    //   messageItems?.sort((a, b) =>
-    //     a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
-    //   );
-    // }
-
-    // if (messageItems && messageItems.length > 0) {
-    //   messageItems.sort((a, b) =>
-    //     a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
-    //   );
-    // } else {
-    //   messageItems?.sort((a, b) =>
-    //     a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
-    //   );
-    // }
   }, [filterState, isFinished]);
 
   return (
@@ -95,13 +73,11 @@ function MessageList() {
       {messageItems ? (
         <div className="messageList">
           <MoveToBack path={main()} />
-          {/* <div className="navbarContainer">
-        </div> */}
           <div className="messageList-container">
             <div className="messageList-container-info">내 이야기</div>
             <div
               className="messageList-container-filter"
-              onClick={() => handleFilter()}>
+              onClick={() => setFilterState(prev => !prev)}>
               <Filter viewBox="0 0 80 80" fill="white" />
             </div>
 
@@ -111,7 +87,7 @@ function MessageList() {
                   작성한 메세지가 없습니다.
                 </div>
               )}
-              {messageItems.length !== 0 &&
+              {isFinished === 3 &&
                 messageItems.map(messageItem => {
                   return (
                     <MyMessage

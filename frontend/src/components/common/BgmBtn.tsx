@@ -13,12 +13,19 @@ function BgmBtn() {
   // 배경음악 재생 여부
   const [isPlaying, setIsPlaying] = useRecoilState<boolean>(playingState);
   const bgmNo = useRecoilValue<number>(bgmNoState);
+
   return (
     <>
       <div
         id="bgm-btn"
         onClick={() => {
           setIsPlaying(prev => !prev);
+          const isPlayingBGM = localStorage.getItem('isPlaying');
+          if (isPlayingBGM === 'true') {
+            localStorage.setItem('isPlaying', 'false');
+          } else {
+            localStorage.setItem('isPlaying', 'true');
+          }
         }}>
         <div className="main-bgm-title white">{bgmArr[bgmNo].title}</div>
         {isPlaying ? (

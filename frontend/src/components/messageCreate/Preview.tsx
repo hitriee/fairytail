@@ -15,13 +15,14 @@ type PreviewProps = {
 function VideoPreview({fileURL}: {fileURL: string}) {
   // 배경음악
   const [isPlayingBGM, setIsPlayingBGM] = useRecoilState(playingState);
-  const currentPlayingBGM = isPlayingBGM;
+  const currentPlayingBGM = localStorage.getItem('isPlaying');
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    console.log('비디오 재생 여부 변경');
     if (videoRef.current?.pause) {
-      if (currentPlayingBGM) {
+      if (currentPlayingBGM === 'true') {
         setIsPlayingBGM(true);
       }
     } else {
