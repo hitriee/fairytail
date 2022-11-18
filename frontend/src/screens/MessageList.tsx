@@ -75,7 +75,7 @@ function MessageList() {
       }
       setIsSorted(true);
     }
-  }, [filterState, isFinished]);
+  }, [filterState, isFinished, messageItems]);
 
   return (
     <>
