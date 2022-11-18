@@ -10,7 +10,7 @@ export const initToken = async () => {
   const token = getToken(messaging, {
     vapidKey: process.env.REACT_APP_VAPID_KEY,
   })
-    .then(currentToken => {
+    .then(async currentToken => {
       if (currentToken) {
         return currentToken;
       } else {
