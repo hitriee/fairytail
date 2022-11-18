@@ -6,7 +6,7 @@ import {playingState} from '@apis/recoil';
 type PreviewProps = {
   type: number;
   fileURL: string;
-  subtitle?: string;
+  subtitle: string | null;
   isDetail?: boolean;
 };
 
@@ -38,12 +38,7 @@ function VideoPreview({fileURL}: {fileURL: string}) {
 }
 
 // 전달받은 type에 따라 다른 미리보기 컴포넌트 반환
-function Preview({
-  type,
-  fileURL,
-  subtitle = '말소리가 없는 음성입니다.',
-  isDetail = false,
-}: PreviewProps) {
+function Preview({type, fileURL, subtitle, isDetail = false}: PreviewProps) {
   let preview: any;
 
   if (type === 0) {

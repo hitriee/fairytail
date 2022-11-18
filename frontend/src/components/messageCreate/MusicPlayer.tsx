@@ -11,7 +11,7 @@ import {playingState} from '@apis/recoil';
 
 type MusicPlayerProps = {
   fileURL: string;
-  subtitle: string;
+  subtitle: string | null;
   isDetail: boolean;
 };
 
@@ -22,8 +22,6 @@ type AudioInfo = {
 
 // audio 재생기
 function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
-  console.log(fileURL, subtitle, isDetail);
-
   // 자막 표시 여부
   const [isShowingSubtitle, setIsShowingSubtitle] = useState(false);
 
@@ -97,7 +95,7 @@ function MusicPlayer({fileURL, subtitle, isDetail}: MusicPlayerProps) {
 
       {isShowingSubtitle ? (
         <div className="message-create-content-text message-create-content-text-preview">
-          {subtitle}
+          {subtitle !== null ? subtitle : '말소리가 없는 음성입니다.'}
         </div>
       ) : (
         <>
