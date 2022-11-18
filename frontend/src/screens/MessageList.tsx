@@ -1,10 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
 import {main} from '@apis/router';
 import {getMesssageList} from '@/apis/messageList';
+import {ReactComponent as Filter} from '@images/filter.svg';
 
 interface items {
   postId: number;
@@ -18,11 +19,27 @@ interface items {
 
 function MessageList() {
   const [messageItems, setMessageItems] = useState<items[]>([]);
+  const [filterState, setFilterState] = useState(true);
   const location = useLocation();
+
+  const handleFilter = () => {
+    setFilterState(!filterState);
+  };
 
   // 0: text, 1: img, 2:video, 3:audio
   const types = [0, 1, 2, 3];
   const userId = Number(localStorage.getItem('userId'));
+
+  // types.forEach(type => {
+  //   getMesssageList(type, userId)
+  //     .then(res => {
+  //       setMessageItems(prev => prev.concat(res.data));
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // });
+
   useEffect(() => {
     if (userId !== null) {
       types.forEach(type => {
@@ -42,12 +59,16 @@ function MessageList() {
 
   // messageList 최신순으로 정렬
   useEffect(() => {
-    if (messageItems.length > 0) {
+    if (filterState && messageItems.length > 0) {
       messageItems.sort((a, b) =>
         a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
       );
+    } else if (!filterState && messageItems.length > 0) {
+      messageItems.sort((a, b) =>
+        a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
+      );
     }
-  }, [messageItems]);
+  }, [messageItems, filterState]);
 
   return (
     <div className="messageList">
@@ -56,7 +77,13 @@ function MessageList() {
       </div> */}
       <div className="messageList-container">
         <div className="messageList-container-info">내 이야기</div>
-
+        {/* <span> */}
+        <div
+          className="messageList-container-filter"
+          onClick={() => handleFilter()}>
+          <Filter viewBox="0 0 80 80" fill="white" />
+        </div>
+        {/* </span> */}
         <div className="messageList-container-list">
           {messageItems.length === 0 && (
             <div className="messageList-container-list-empty">

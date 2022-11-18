@@ -10,7 +10,7 @@ function GoogleLoginForm() {
         role="button">
         <div className="googleLogin">
           <img src={googleLogo} alt="GoogleLogo" />
-          <span className="googleLogin-text">구글 로그인</span>
+          {/* <span className="googleLogin-text">구글 로그인</span> */}
         </div>
       </a>
     </>

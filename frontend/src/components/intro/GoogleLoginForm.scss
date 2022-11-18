@@ -6,9 +6,10 @@ a {
   display: flex;
   justify-content: center;
   background-color: white;
-  // opacity: 0.95;
-  width: 20vh;
-  height: 5.5vh;
+  opacity: 0.95;
+  // width: 20vh;
+  width: 7vh;
+  height: 7vh;
   margin-top: 2vh;
   border-radius: 50px;
   box-shadow: inset -2px -2px 2px #4747477b;
@@ -24,8 +25,8 @@ a {
     color: black;
   }
   img {
-    margin: 6%;
-    margin-right: 10%;
-    margin-left: -5%;
+    margin: 15%;
+    // margin-right: 10%;
+    // margin-left: -5%;
   }
 }

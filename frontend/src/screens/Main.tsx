@@ -5,13 +5,11 @@ import {loadingState, transitionState} from '@apis/recoil';
 
 import InitMessage from '@apis/notifications/foregroundMessaging';
 
-import Loading from '@loading/Loading';
 import Room from '@main/Room';
 import OpenHelp from '@common/OpenHelp';
 import BgmBtn from '@common/BgmBtn';
 import Alert from '@common/Alert';
 
-import '@screens/Main.scss';
 import Globe from '@screens/Globe';
 import Map from '@screens/Map';
 import MessageCreate from '@screens/MessageCreate';
@@ -27,23 +25,23 @@ function Main() {
   const [isAlertOpened, setIsAlertOpend] = useState(false);
 
   // 로그인 여부 확인
-  useEffect(() => {
-    const userInfo = currentUser();
+  // useEffect(() => {
+  //   const userInfo = currentUser();
 
-    // 유효한 토큰이 있는지 확인
-    getIdentification()
-      .then(res => {
-        // 유효한 토큰은 있는데 userId가 없으면 알림 표시
-        if (userInfo === -1) {
-          setIsAlertOpend(true);
-        }
-      })
-      // 유효한 토큰이 없으면 알림 표시
-      .catch(err => {
-        console.log(err);
-        setIsAlertOpend(true);
-      });
-  }, []);
+  //   // 유효한 토큰이 있는지 확인
+  //   getIdentification()
+  //     .then(res => {
+  //       // 유효한 토큰은 있는데 userId가 없으면 알림 표시
+  //       if (userInfo === -1) {
+  //         setIsAlertOpend(true);
+  //       }
+  //     })
+  //     // 유효한 토큰이 없으면 알림 표시
+  //     .catch(err => {
+  //       console.log(err);
+  //       setIsAlertOpend(true);
+  //     });
+  // }, []);
 
   const navigate = useNavigate();
 
@@ -102,10 +100,6 @@ function Main() {
                 setTransitionName('');
               }
             }}>
-            {pathname === '/main' && !isLoaded ? (
-              <Loading fillBackground={false} />
-            ) : null}
-
             <InitMessage />
             <div
               className="screen"
