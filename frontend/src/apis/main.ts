@@ -1,6 +1,6 @@
-import {API_TEST} from '@apis/index';
+import {API_AUTH} from '@apis/index';
 
 export const getIdentification = async () => {
-  const res = await API_TEST.get('/user/accesstoken');
+  const res = await API_AUTH.get('/user/accesstoken');
   return res;
 };

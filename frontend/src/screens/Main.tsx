@@ -26,12 +26,17 @@ function Main() {
 
   // 로그인 여부 확인
   useEffect(() => {
-    console.log(localStorage.token);
+    const userInfo = currentUser();
 
     // 유효한 토큰이 있는지 확인
     getIdentification()
-      .then(res => console.log(res))
-      // 유효한 토큰이 없으면 알림 표시
+      .then(res => {
+        // 유효한 토큰은 있는데 userId가 없으면 알림 띄우기
+        if (userInfo === -1) {
+          setIsAlertOpend(true);
+        }
+      })
+      // 유효한 토큰이 없으면 알림 띄우기
       .catch(err => {
         console.log(err);
         setIsAlertOpend(true);

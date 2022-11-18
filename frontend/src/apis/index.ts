@@ -2,38 +2,25 @@ import axios from 'axios';
 
 export const BASE_URL = 'https://k7c209.p.ssafy.io';
 
-export const API_TEST = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${localStorage.token}`,
-  },
-});
-
-API_TEST.interceptors.request.use(
-  config => {
-    console.dir(config);
-    const token = localStorage.getItem('token');
-    console.log('1번', token);
-    console.dir(config.headers);
-
-    if (token && token.length > 0 && config.headers) {
-      console.log('2번', token);
-      config.headers.Authorization = token;
-    }
-
-    return config;
-  },
-  error => {
-    Promise.reject(error);
-  },
-);
-
 export const API_AUTH = axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${localStorage.token}`,
   },
 });
+
+API_AUTH.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token');
+    if (token && token.length > 0 && config.headers) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);
 
 export const API_FILE = axios.create({
   baseURL: BASE_URL,
@@ -42,6 +29,19 @@ export const API_FILE = axios.create({
     'Content-Type': 'multipart/form-data',
   },
 });
+
+API_FILE.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token');
+    if (token && token.length > 0 && config.headers) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  },
+);
 
 export const checkType = (type: number) => {
   switch (type) {
