@@ -105,7 +105,9 @@ function MessageList() {
             : null}
 
           {isSorted && messageItems.length < 1 ? (
-            <div className="messageList-container-list-empty"></div>
+            <div className="messageList-container-list-empty">
+              아직 작성한 이야기가 없습니다.
+            </div>
           ) : null}
         </div>
       </div>
