@@ -2,10 +2,9 @@
 
 import {getMessaging, getToken} from 'firebase/messaging';
 import {app} from '@apis/notifications/firebaseConfig';
+import {iOS} from '@common/commonFunc';
 
 const messaging = getMessaging(app);
-const ua = navigator.userAgent.toLowerCase();
-const iOS = ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad');
 
 // 토큰 받아오기
 export const initToken = async () => {

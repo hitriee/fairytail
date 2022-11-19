@@ -1,5 +1,16 @@
 // ** 공통으로 사용할 함수
 
+// ios 판별
+export const iOS = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  return (
+    ua.includes('ios') ||
+    ua.includes('iphone') ||
+    ua.includes('ipad') ||
+    ua.includes('like mac os x')
+  );
+};
+
 // boolean 값 반환
 export const returnTrue = () => true;
 export const returnFalse = () => false;
