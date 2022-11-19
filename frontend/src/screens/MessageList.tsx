@@ -75,7 +75,7 @@ function MessageList() {
 
       setIsSorted(true);
     }
-  }, [filterState, isFinished, messageItems]);
+  }, [filterState, isFinished]);
 
   return (
     <div className="messageList">

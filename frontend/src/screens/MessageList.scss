@@ -1,3 +1,5 @@
+@import '@styles/_colors.scss';
+
 @media (max-device-aspect-ratio: 9 / 16) {
   .messageList-container {
     height: 100vh;
@@ -48,13 +50,18 @@
           brightness(100%) contrast(104%);
 
         &:hover {
-          filter: invert(75%) hue-rotate(8deg) brightness(103%) contrast(91%);
+          filter: invert(94%) sepia(3%) saturate(9%) hue-rotate(314deg)
+            brightness(83%) contrast(88%);
         }
       }
 
       span {
         color: white;
         font-size: 2.5vh;
+
+        &:hover {
+          color: $GRAY-BF;
+        }
       }
     }
     &-list {
