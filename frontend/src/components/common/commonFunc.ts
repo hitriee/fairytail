@@ -10,7 +10,8 @@ export const iOS = () => {
     (ua.includes('like') &&
       ua.includes('mac') &&
       ua.includes('os') &&
-      ua.includes('x'))
+      ua.includes('x') &&
+      ua.includes('safari'))
   );
 };
 
