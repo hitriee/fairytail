@@ -85,11 +85,8 @@ function MessageList() {
         <div
           className="messageList-container-filter"
           onClick={() => setFilterState(prev => !prev)}>
-          <img
-            src={filterImg}
-            alt="자막 표시"
-            className="musicList-container-icon"
-          />
+          <img src={filterImg} alt="정렬" />
+          <span>{filterState ? '최신순' : '오래된순'}</span>
         </div>
 
         <div className="messageList-container-list">
