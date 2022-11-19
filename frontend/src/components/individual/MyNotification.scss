@@ -12,6 +12,10 @@
   height: 12vh;
   border-radius: 15px;
 
+  &:hover {
+    background-color: $GRAY-BF;
+  }
+
   &-emoji {
     height: 9vh;
     margin-right: 2.3vh;
