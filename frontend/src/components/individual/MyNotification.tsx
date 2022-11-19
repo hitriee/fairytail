@@ -33,11 +33,9 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     if (dragFlag) {
-      const {current} = ref;
       const img = new Image();
       e.dataTransfer?.setDragImage(img, 0, 0);
       e.dataTransfer.effectAllowed = 'move';
-      const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
       setIsGrabbing(true);
     }
   };
@@ -57,7 +55,6 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
       const {current} = ref;
       if ((current.offsetLeft + current.offsetWidth) / 2 < e.clientX * 0.4) {
         setDeleted(true);
-        console.log(true);
         if (deleteEach && index !== undefined) {
           deleteEach(index);
         }
@@ -69,8 +66,6 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   };
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (dragFlag) {
-      const {current} = ref;
-      const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
       setIsGrabbing(true);
     }
   };
@@ -86,6 +81,7 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     if (dragFlag) {
       setIsGrabbing(false);
       const {current} = ref;
+      console.dir(current);
       if (
         (current.offsetLeft + current.offsetWidth) / 2 <
         e.changedTouches[0].clientX
