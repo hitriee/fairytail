@@ -42,7 +42,6 @@ function MessageDetail() {
   const getDetailMessage = () => {
     getMesssage(type, {postId: messageId, userId})
       .then((res: any) => {
-        console.log(res);
         if (res.message === 'SUCCESS') {
           setData(() => res.data);
         } else {

@@ -85,21 +85,15 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     if (dragFlag) {
       setIsGrabbing(false);
       const {current} = ref;
-      console.dir(current.offsetLeft); // 163
-      console.dir(current.offsetWidth); // 338 // 501
-      console.dir(e);
       const newPosition = {
         x: e.changedTouches[0].clientX,
         y: e.changedTouches[0].clientY,
       };
-      console.log(newPosition, position);
       if (newPosition.x === position.x && newPosition.y === position.y) {
-        console.log(1, newPosition, position, postId);
         toDetail(postId)();
       } else if (
         (current.offsetLeft + current.offsetWidth) / 2 <
         e.changedTouches[0].clientX
-        // 304 // 285 // 289
       ) {
         setDeleted(returnTrue);
       } else {
