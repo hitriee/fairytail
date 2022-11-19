@@ -92,6 +92,7 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
         x: e.changedTouches[0].clientX,
         y: e.changedTouches[0].clientY,
       };
+      console.log(newPosition);
       if (newPosition.x === position.x && newPosition.y === position.y) {
         toDetail(postId);
       } else if (

@@ -43,7 +43,7 @@ function Settings() {
       } else {
         changeInfo(
           '안내',
-          `현재 알림 ${permitPush} 상태입니다. \n 브라우저/앱의 알림 설정 페이지에서 \n 변경이 가능합니다.`,
+          `현재 알림 ${permitPush} 상태입니다. \n 브라우저/앱의 알림 설정 페이지에서 \n 알림 허용 여부 변경이 가능합니다.`,
         );
         setOpenAlert(returnTrue);
       }

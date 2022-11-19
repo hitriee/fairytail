@@ -11,12 +11,6 @@ import {
   reportMessageType,
 } from '@apis/messageDetail/detailInterface';
 
-// text 정보 받아오기
-// export const getTextMesssage: messageType = async (type, postId) => {
-//   const res = await API_AUTH.get(`/${type}/message/detail/${postId}`);
-//   return res.data;
-// };
-
 // 상세 페이지 정보 받아오기
 export const getMesssage: messageImgType = async (type, params) => {
   const res = await API_AUTH.get(`/${type}/message/detail`, {params});
@@ -33,17 +27,7 @@ export const deleteMessage: messageType = async (type, postId) => {
 // data 타입만 다름
 export const likeMessage: likeMessageType = async (type, data) => {
   const res = await API_AUTH.post(`/${type}/like`, data);
-  console.log(res.data);
   return res.data;
-  // switch (type) {
-  //   case 'text':
-  //     const textRes = await API_AUTH.post(`/${type}/like`, data);
-  //     console.log(textRes.data)
-  //     return textRes.data;
-  //   default:
-  //     const res = await API_AUTH.post(`/${type}/like`, null, {params: data});
-  //     return res.data;
-  // }
 };
 
 // 공개 여부 변경
@@ -54,30 +38,10 @@ export const changeMessageStatus: changeMessageStatusType = async (
 ) => {
   const res = await API_AUTH.post(`/${type}/message/status`, data);
   return res.data;
-  // switch (type) {
-  //   case 'text':
-  //     const textRes = await API_AUTH.post(`/${type}/message/status`, data);
-  //     return textRes.data;
-  //   case 'img':
-  //     const imgRes = await API_AUTH.post(`/${type}/message/status`, null, {
-  //       params: data,
-  //     });
-  //     return imgRes.data;
-  // }
 };
 
 // 신고
 export const reportMessage: reportMessageType = async (type, data) => {
   const res = await API_AUTH.post(`/${type}/report`, data);
   return res.data;
-  // switch (type) {
-  //   case 'text':
-  //     const textRes = await API_AUTH.post(`/${type}/report`, data);
-  //     return textRes.data;
-  //   case 'img':
-  //     const imgRes = await API_AUTH.post(`/${type}/report`, null, {
-  //       params: data,
-  //     });
-  //     return imgRes.data;
-  // }
 };
