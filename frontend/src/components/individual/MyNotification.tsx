@@ -1,11 +1,12 @@
 // ** 각 알림당 설정
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router';
 
 import '@individual/MyNotification.scss';
 import {item} from '@individual/notification';
 import {smallEmojiArr} from '@emojis/index';
 import {toMessageDetail} from '@apis/router';
+import {returnFalse, returnTrue} from '../common/commonFunc';
 
 interface itemProps {
   item: item;
@@ -36,7 +37,7 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
       const img = new Image();
       e.dataTransfer?.setDragImage(img, 0, 0);
       e.dataTransfer.effectAllowed = 'move';
-      setIsGrabbing(true);
+      setIsGrabbing(returnTrue);
     }
   };
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -54,19 +55,16 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
       e.dataTransfer.dropEffect = 'move';
       const {current} = ref;
       if ((current.offsetLeft + current.offsetWidth) / 2 < e.clientX * 0.4) {
-        setDeleted(true);
-        if (deleteEach && index !== undefined) {
-          deleteEach(index);
-        }
+        setDeleted(returnTrue);
       } else {
         (ref.current as HTMLDivElement).style.marginLeft = `0`;
-        setDeleted(false);
+        setDeleted(returnFalse);
       }
     }
   };
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (dragFlag) {
-      setIsGrabbing(true);
+      setIsGrabbing(returnTrue);
     }
   };
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -81,18 +79,16 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     if (dragFlag) {
       setIsGrabbing(false);
       const {current} = ref;
-      console.dir(current);
       if (
         (current.offsetLeft + current.offsetWidth) / 2 <
         e.changedTouches[0].clientX
       ) {
-        setDeleted(true);
-        if (deleteEach && index) {
-          deleteEach(index);
-        }
+        console.dir(current);
+        console.dir(e);
+        setDeleted(returnTrue);
       } else {
         (ref.current as HTMLDivElement).style.marginLeft = '0';
-        setDeleted(false);
+        setDeleted(returnFalse);
       }
     }
   };
@@ -106,6 +102,12 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     }
     return result;
   };
+  useEffect(() => {
+    if (deleted && deleteEach && index !== undefined) {
+      deleteEach(index);
+      setDeleted(returnFalse);
+    }
+  }, [deleted]);
 
   return (
     <div
