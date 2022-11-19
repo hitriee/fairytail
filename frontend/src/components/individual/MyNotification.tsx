@@ -83,8 +83,6 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
         (current.offsetLeft + current.offsetWidth) / 2 <
         e.changedTouches[0].clientX
       ) {
-        console.dir(current);
-        console.dir(e);
         setDeleted(returnTrue);
       } else {
         (ref.current as HTMLDivElement).style.marginLeft = '0';
