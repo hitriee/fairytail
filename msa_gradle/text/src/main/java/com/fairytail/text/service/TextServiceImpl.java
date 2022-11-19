@@ -92,8 +92,10 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    public List<TextDto> getAllTextList() {
-        List<TextEntity> textEntityList = textRepository.findAllByStatus(0); // 공개인 글(status: 0)만 조회
+    public List<TextDto> getAllTextList(Long userId) {
+//        List<TextEntity> textEntityList = textRepository.findAllByStatus(0); // 공개인 글(status: 0)만 조회
+        /** 자신이 쓴 비공개인 글도 조회되도록 수정 */
+        List<TextEntity> textEntityList = textRepository.findAllByUserIdOrStatus(userId, 0);
         List<TextDto> responseDtoList = new ArrayList<>();
 
         textEntityList.forEach(v -> {

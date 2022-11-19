@@ -12,7 +12,7 @@ public interface TextRepository extends JpaRepository<TextEntity, Long> {
 
     List<TextEntity> findAllByUserId(Long userId);
 
-    List<TextEntity> findAllByStatus(Integer status);
+    List<TextEntity> findAllByUserIdOrStatus(Long userId, Integer status);
 
     @Query(
             value = "SELECT * FROM post p WHERE p.lat BETWEEN :curLat - 0.01 AND :curLat + 0.01 " +

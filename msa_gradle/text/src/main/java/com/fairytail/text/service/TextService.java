@@ -15,7 +15,7 @@ public interface TextService {
 
     List<TextDetailDto> getVrTextList(Double curLat, Double curLng, String orderBy);
 
-    List<TextDto> getAllTextList();
+    List<TextDto> getAllTextList(Long userId);
 
     Integer deleteText(Long postId);
 
