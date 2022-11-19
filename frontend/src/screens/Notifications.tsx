@@ -80,6 +80,9 @@ function Notifications() {
           querySnapshot.forEach(doc => {
             newData.push({id: String(doc.id), ...doc.data()});
           });
+          newData.sort((a: any, b: any) =>
+            a.id > b.id ? -1 : a.id < b.id ? 1 : 0,
+          );
           setNewItems(() => newData);
         } catch (e) {
           console.error('Error adding document: ', e);

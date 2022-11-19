@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, Timestamp } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { config, email, password } from "./config";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -29,14 +29,15 @@ export const addData: addData = async (
   signInWithEmailAndPassword(auth, email, password) //정보를 토대로 로그인
     .then(async () => {
       try {
-        const docRef = await addDoc(collection(db, "notification"), {
+        const date = String(Date.now());
+        const docRef = await setDoc(doc(db, "notification", date), {
           userId,
           emojiNo,
           title,
           postId,
           type,
         });
-        console.log("Document written with ID: ", docRef.id);
+        console.log("Document written with ID");
       } catch (e) {
         console.error("Error adding document: ", e);
       }
