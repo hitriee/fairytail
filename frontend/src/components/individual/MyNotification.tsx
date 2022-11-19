@@ -79,12 +79,13 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     if (dragFlag) {
       setIsGrabbing(false);
       const {current} = ref;
-      console.dir(current);
+      console.dir(current.offsetLeft);
+      console.dir(current.offsetWidth);
       console.dir(e);
       if (
         (current.offsetLeft + current.offsetWidth) / 2 <
         e.changedTouches[0].clientX
-        // 304
+        // 304 // 285
       ) {
         setDeleted(returnTrue);
       } else {
