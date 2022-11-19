@@ -29,7 +29,7 @@ function Settings() {
   // 좋아요 알림 변경
   // 백그라운드
   const informPermitPush = () => {
-    if (!iOS) {
+    if (!iOS()) {
       if (Notification.permission === 'default') {
         Notification.requestPermission().then(async permission => {
           if (permission === 'default') {
@@ -68,7 +68,7 @@ function Settings() {
   };
 
   useEffect(() => {
-    if (!iOS) {
+    if (!iOS()) {
       const {permission} = Notification;
       if (permission === 'denied') {
         setPermitPush(() => '거부');

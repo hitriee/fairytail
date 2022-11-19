@@ -30,7 +30,7 @@ export const initToken = async () => {
 
 // 등록 토큰에 액세스 (알림 권한 요청)
 export const requestPermission = () => {
-  if (!iOS) {
+  if (!iOS()) {
     Notification.requestPermission().then(permission => {
       if (permission !== 'denied') {
         localStorage.setItem('noti', 'true');
