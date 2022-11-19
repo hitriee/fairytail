@@ -187,16 +187,20 @@
   opacity: 75%;
 }
 
+.foreground-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
 @media (max-device-aspect-ratio: 9 / 16) {
   #foreground {
-    width: 90vw;
-    left: 5%;
+    width: 96vw;
   }
 }
 
 @media (min-device-aspect-ratio: 9 / 16) {
   #foreground {
-    width: 40vw;
-    left: 30%;
+    width: 50vh;
   }
 }

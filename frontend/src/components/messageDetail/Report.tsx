@@ -57,13 +57,13 @@ function Report({onCancel, open, type, messageId}: ReportProps) {
       userId: userId,
     };
     reportMessage(type, data)
-      .then(() => {
-        const newInfo = {title: '완료', message: '신고가 접수되었습니다.'};
+      .then((res: any) => {
+        const newInfo = {title: '신고 확인', message: res.message};
         setInfo(() => newInfo);
         setReported(returnTrue);
       })
       .catch(() => {
-        const newInfo = {title: '실패', message: '오류가 발생했습니다.'};
+        const newInfo = {title: '신고 확인', message: '오류가 발생했습니다.'};
         setInfo(() => newInfo);
         setReported(returnFalse);
       })

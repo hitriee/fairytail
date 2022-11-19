@@ -5,7 +5,7 @@ import {app} from '@apis/notifications/firebaseConfig';
 import MyNotification from '@individual/MyNotification';
 import {useEffect, useState} from 'react';
 import {returnFalse, returnTrue} from '@common/commonFunc';
-import {initialItem} from '@individual/notification';
+import {item} from '@individual/notification';
 import '@common/Common.scss';
 
 function InitMessage() {
@@ -13,7 +13,7 @@ function InitMessage() {
   const messaging = getMessaging(app);
 
   // 알림 창 관련 내용
-  const [info, setInfo] = useState(initialItem);
+  const [info, setInfo] = useState<item>();
   const [open, setOpen] = useState(false);
 
   // 알림이 뜨고 5초 후에 사라짐
@@ -42,7 +42,7 @@ function InitMessage() {
 
   // info 값 변경 시 알림 팝업 띄움
   useEffect(() => {
-    if (info !== initialItem) {
+    if (info) {
       setOpen(returnTrue);
     }
   }, [info]);
@@ -51,9 +51,11 @@ function InitMessage() {
 
   return (
     <>
-      {open ? (
-        <div id="foreground">
-          <MyNotification item={info} dragFlag={false} />
+      {open && info ? (
+        <div className="foreground-container">
+          <div id="foreground">
+            <MyNotification item={info} dragFlag={false} />
+          </div>
         </div>
       ) : null}
     </>

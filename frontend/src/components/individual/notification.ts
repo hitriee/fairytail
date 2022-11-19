@@ -11,7 +11,7 @@ export interface item {
 export const initialItem = {
   userId: 0,
   postId: 0,
-  title: '',
+  title: '안녕하세요 하하',
   emojiNo: 0,
   type: 0,
 };
