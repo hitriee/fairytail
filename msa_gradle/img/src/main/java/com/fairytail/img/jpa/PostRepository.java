@@ -22,15 +22,15 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     List<PostEntity> findListLatest(Double lat, Double lng);
     @Query(
             value = "SELECT * FROM post p WHERE p.lat BETWEEN :lat - 0.01 AND :lat + 0.01 " +
-                    "AND p.lng BETWEEN :lng - 0.01 AND :lng + 0.01 AND p.status = 0 ORDER BY p.date DESC LIMIT 25", nativeQuery = true
+                    "AND p.lng BETWEEN :lng - 0.01 AND :lng + 0.01 AND (p.status = 0 OR p.user_id = :userId) ORDER BY p.date DESC LIMIT 25", nativeQuery = true
     )
-    List<PostEntity> findTop25ByLatAndLngAndStatusOrderByDateDesc(Double lat, Double lng);
+    List<PostEntity> findTop25ByLatAndLngAndStatusOrderByDateDesc(Double lat, Double lng, Long userId);
     List<PostEntity> findByUserIdOrderByDateDesc(Long userId);
     @Query(
             value = "SELECT * FROM post p WHERE p.lat BETWEEN :lat - 0.01 AND :lat + 0.01 " +
-                    "AND p.lng BETWEEN :lng - 0.01 AND :lng + 0.01 AND p.status = 0 ORDER BY p.like_cnt DESC LIMIT 25", nativeQuery = true
+                    "AND p.lng BETWEEN :lng - 0.01 AND :lng + 0.01 AND (p.status = 0 OR p.user_id = :userId) ORDER BY p.like_cnt DESC LIMIT 25", nativeQuery = true
     )
-    List<PostEntity> findTop25ByLatAndLngAndStatusOrderByLikeCntDesc(Double lat, Double lng);
+    List<PostEntity> findTop25ByLatAndLngAndStatusOrderByLikeCntDesc(Double lat, Double lng, Long userId);
 
-    List<PostEntity> findAllByStatus(Integer status);
+    List<PostEntity> findAllByUserIdOrStatus(Long userId, Integer status);
 }

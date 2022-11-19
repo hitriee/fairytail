@@ -168,11 +168,11 @@ public class PostController {
      */
     @ApiOperation(value = "근처 이미지 게시글 최신순 리스트 조회", notes = "근처 이미지 게시글 최신순 리스트 조회 API 입니다.")
     @GetMapping("/vr/latest")
-    public ResponseEntity<?> readPostListLatest(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
+    public ResponseEntity<?> readPostListLatest(@RequestParam Double lat, @RequestParam Double lng, @RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readPostListLatest(lat, lng);
+        List<PostDto> res = postService.readPostListLatest(lat, lng, userId);
         List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r:res) {
             ResponsePostList insert = modelMapper.map(r, ResponsePostList.class);
@@ -195,11 +195,11 @@ public class PostController {
      */
     @ApiOperation(value = "근처 이미지 게시글 좋아요 순 리스트 조회", notes = "근처 이미지 게시글 좋아요 순 리스트 조회 API 입니다.")
     @GetMapping("/vr/like")
-    public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
+    public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng, @RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readPostListLike(lat, lng);
+        List<PostDto> res = postService.readPostListLike(lat, lng, userId);
         List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r : res){
             ResponsePostList insert = modelMapper.map(r, ResponsePostList.class);
@@ -246,11 +246,11 @@ public class PostController {
     }
 
     @GetMapping("/map")
-    public ResponseEntity<?> readAll() throws Exception{
+    public ResponseEntity<?> readAll(@RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readAllPost();
+        List<PostDto> res = postService.readAllPost(userId);
         List<ResponsePostMap> data = new ArrayList<>();
         for(PostDto r : res){
             ResponsePostMap d = modelMapper.map(r, ResponsePostMap.class);
