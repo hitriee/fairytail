@@ -178,7 +178,7 @@ function MoreMenu({
   return (
     <>
       {open ? (
-        <main id="menu fadeIn">
+        <main id="menu">
           <article className="button" onClick={saveMessage}>
             저장
           </article>
