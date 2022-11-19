@@ -6,7 +6,11 @@ importScripts(
   "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"
 );
 const ua = navigator.userAgent.toLowerCase();
-const iOS = ua.includes("ios") || ua.includes("iphone") || ua.includes("ipad");
+const iOS =
+  ua.includes("ios") ||
+  ua.includes("iphone") ||
+  ua.includes("ipad") ||
+  ua.includes("like mac os x");
 if (!iOS) {
   const config = {
     apiKey: "AIzaSyC2L6taSK-Ee-zv8Ajsvz2ZtgLl-6kXOcI",

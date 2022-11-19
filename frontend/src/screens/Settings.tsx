@@ -9,7 +9,7 @@ import Toggle from '@messageCreate/Toggle';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
 import MoveToBack from '@common/MoveToBack';
-import {returnTrue, returnFalse, popUp} from '@common/commonFunc';
+import {returnTrue, returnFalse, popUp, iOS} from '@common/commonFunc';
 import {intro} from '@apis/router';
 
 import gear from '@images/gear.png';
@@ -28,9 +28,6 @@ function Settings() {
 
   // 좋아요 알림 변경
   // 백그라운드
-  const ua = navigator.userAgent.toLowerCase();
-  const iOS =
-    ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad');
   const informPermitPush = () => {
     if (!iOS) {
       if (Notification.permission === 'default') {
