@@ -5,7 +5,7 @@ import {app} from '@apis/notifications/firebaseConfig';
 import MyNotification from '@individual/MyNotification';
 import {useEffect, useState} from 'react';
 import {returnFalse, returnTrue} from '@common/commonFunc';
-import {initialItem} from '@individual/notification';
+import {item} from '@individual/notification';
 import '@common/Common.scss';
 
 function InitMessage() {
@@ -13,47 +13,49 @@ function InitMessage() {
   const messaging = getMessaging(app);
 
   // 알림 창 관련 내용
-  const [info, setInfo] = useState(initialItem);
-  const [open, setOpen] = useState(true);
+  const [info, setInfo] = useState<item>();
+  const [open, setOpen] = useState(false);
 
   // 알림이 뜨고 5초 후에 사라짐
-  // const changeOpenState = () => {
-  //   if (open) {
-  //     setInterval(() => {
-  //       setOpen(returnFalse);
-  //     }, 5000);
-  //   }
-  // };
+  const changeOpenState = () => {
+    if (open) {
+      setInterval(() => {
+        setOpen(returnFalse);
+      }, 5000);
+    }
+  };
 
   // fcm에서 요청이 오면 info값 변경, localStorage에 값 저장
-  // onMessage(messaging, payload => {
-  //   if (payload.data?.body && payload.data?.title) {
-  //     const body = JSON.parse(payload.data?.body);
-  //     const newInfo = {
-  //       userId: body?.userId,
-  //       postId: body?.postId,
-  //       emojiNo: body?.emojiNo,
-  //       type: body?.type,
-  //       title: payload.data?.title,
-  //     };
-  //     setInfo(() => newInfo);
-  //   }
-  // });
+  onMessage(messaging, payload => {
+    if (payload.data?.body && payload.data?.title) {
+      const body = JSON.parse(payload.data?.body);
+      const newInfo = {
+        userId: body?.userId,
+        postId: body?.postId,
+        emojiNo: body?.emojiNo,
+        type: body?.type,
+        title: payload.data?.title,
+      };
+      setInfo(() => newInfo);
+    }
+  });
 
   // info 값 변경 시 알림 팝업 띄움
   useEffect(() => {
-    if (info !== initialItem) {
+    if (info) {
       setOpen(returnTrue);
     }
   }, [info]);
 
-  // useEffect(changeOpenState, [open]);
+  useEffect(changeOpenState, [open]);
 
   return (
     <>
-      {open ? (
-        <div id="foreground">
-          <MyNotification item={info} dragFlag={false} />
+      {open && info ? (
+        <div className="foreground-container">
+          <div id="foreground">
+            <MyNotification item={info} dragFlag={false} />
+          </div>
         </div>
       ) : null}
     </>

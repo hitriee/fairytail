@@ -185,21 +185,22 @@
   top: 10px;
   cursor: pointer !important;
   opacity: 75%;
+}
+
+.foreground-container {
   display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 @media (max-device-aspect-ratio: 9 / 16) {
   #foreground {
-    width: 86vw;
-    left: 7%;
+    width: 96vw;
   }
 }
 
 @media (min-device-aspect-ratio: 9 / 16) {
   #foreground {
-    width: 50%;
-    // left: 25%;
-    // margin-right: 10%;
-    margin-left: 25%;
+    width: 50vh;
   }
 }
