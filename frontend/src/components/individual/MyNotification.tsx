@@ -18,6 +18,7 @@ interface itemProps {
 function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   const ref = useRef<HTMLDivElement>(null!);
   const navigate = useNavigate();
+  const [position, setPosition] = useState({x: 0, y: 0});
   const [deleted, setDeleted] = useState(false);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const {postId, title, emojiNo, type} = item;
@@ -64,6 +65,11 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   };
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (dragFlag) {
+      const newPosition = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY,
+      };
+      setPosition(() => newPosition);
       setIsGrabbing(returnTrue);
     }
   };
@@ -79,13 +85,19 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     if (dragFlag) {
       setIsGrabbing(false);
       const {current} = ref;
-      console.dir(current.offsetLeft);
-      console.dir(current.offsetWidth);
+      console.dir(current.offsetLeft); // 163
+      console.dir(current.offsetWidth); // 338 // 501
       console.dir(e);
-      if (
+      const newPosition = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY,
+      };
+      if (newPosition.x === position.x && newPosition.y === position.y) {
+        toDetail(postId);
+      } else if (
         (current.offsetLeft + current.offsetWidth) / 2 <
         e.changedTouches[0].clientX
-        // 304 // 285
+        // 304 // 285 // 289
       ) {
         setDeleted(returnTrue);
       } else {
