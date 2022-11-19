@@ -16,7 +16,7 @@ import gear from '@images/gear.png';
 import infoImg from '@images/info.svg';
 
 function Settings() {
-  const [permitPush, setPermitPush] = useState('설정 가능');
+  const [permitPush, setPermitPush] = useState('');
   const [permitNoti, setPermitNoti] = useState(false);
   const [isBgmModalOpened, setIsBgmModalOpened] = useState(false);
   const [wantLogout, setWantLogout] = useState(false);
@@ -28,9 +28,10 @@ function Settings() {
 
   // 좋아요 알림 변경
   // 백그라운드
-  const ua = navigator.userAgent;
-  const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
-  const changePermitPush = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  const iOS =
+    ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad');
+  const informPermitPush = () => {
     if (!iOS) {
       if (Notification.permission === 'default') {
         Notification.requestPermission().then(async permission => {
@@ -45,7 +46,7 @@ function Settings() {
       } else {
         changeInfo(
           '안내',
-          `현재 알림 ${permitPush} 상태입니다. \n 브라우저의 알림 설정 페이지에서 \n 변경이 가능합니다.`,
+          `현재 알림 ${permitPush} 상태입니다. \n 브라우저/앱의 알림 설정 페이지에서 \n 변경이 가능합니다.`,
         );
         setOpenAlert(returnTrue);
       }
@@ -76,10 +77,14 @@ function Settings() {
         setPermitPush(() => '거부');
       } else if (permission === 'granted') {
         setPermitPush(() => '허용');
+      } else {
+        setPermitPush(() => '설정 가능');
       }
-      if (localStorage.getItem('noti')) {
-        setPermitNoti(returnTrue);
-      }
+    } else {
+      setPermitPush(() => '거부');
+    }
+    if (localStorage.getItem('noti')) {
+      setPermitNoti(returnTrue);
     }
   }, []);
 
@@ -148,12 +153,12 @@ function Settings() {
         <section className="settings-section">
           <div className="settings-title">애플리케이션</div>
           <div className="settings-between">
-            <div className="settings-each" onClick={changePermitPush}>
+            <div className="settings-each" onClick={informPermitPush}>
               좋아요 푸시 알림
             </div>
             <div
               className="settings-each settings-push"
-              onClick={changePermitPush}>
+              onClick={informPermitPush}>
               {permitPush}
               <img
                 src={infoImg}
