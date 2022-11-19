@@ -5,7 +5,7 @@ importScripts(
 importScripts(
   "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"
 );
-const ua = window.navigator.userAgent;
+const ua = navigator.userAgent;
 const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
 
 if (!iOS) {
@@ -55,4 +55,6 @@ if (!iOS) {
       );
     }
   });
+} else {
+  alert("iOS");
 }
