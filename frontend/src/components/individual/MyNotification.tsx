@@ -88,22 +88,24 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
       console.dir(current.offsetLeft); // 163
       console.dir(current.offsetWidth); // 338 // 501
       console.dir(e);
-      console.log(position);
       const newPosition = {
         x: e.changedTouches[0].clientX,
         y: e.changedTouches[0].clientY,
       };
-      console.log(newPosition);
+      console.log(newPosition, position);
       if (newPosition.x === position.x && newPosition.y === position.y) {
+        console.log(1, newPosition, position);
         toDetail(postId);
       } else if (
         (current.offsetLeft + current.offsetWidth) / 2 <
         e.changedTouches[0].clientX
         // 304 // 285 // 289
       ) {
+        console.log(2, newPosition, position);
         setDeleted(returnTrue);
       } else {
         (ref.current as HTMLDivElement).style.marginLeft = '0';
+        console.log(3, newPosition, position);
         setDeleted(returnFalse);
       }
     }
