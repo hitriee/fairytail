@@ -16,14 +16,14 @@ public interface TextRepository extends JpaRepository<TextEntity, Long> {
 
     @Query(
             value = "SELECT * FROM post p WHERE p.lat BETWEEN :curLat - 0.01 AND :curLat + 0.01 " +
-            "AND p.lng BETWEEN :curLng - 0.01 AND :curLng + 0.01 AND p.status = 0 ORDER BY p.date DESC LIMIT 25", nativeQuery = true
+            "AND p.lng BETWEEN :curLng - 0.01 AND :curLng + 0.01 AND (p.status = 0 OR p.user_id = :userId) ORDER BY p.date DESC LIMIT 25", nativeQuery = true
     )
-    List<TextEntity> findAllVrMessageLatest(Double curLat, Double curLng);
+    List<TextEntity> findAllVrMessageLatest(Double curLat, Double curLng, Long userId);
 
     @Query(
             value = "SELECT * FROM post p WHERE p.lat BETWEEN :curLat - 0.01 AND :curLat + 0.01 " +
-                    "AND p.lng BETWEEN :curLng - 0.01 AND :curLng + 0.01 AND p.status = 0 ORDER BY p.like_cnt DESC LIMIT 25", nativeQuery = true
+                    "AND p.lng BETWEEN :curLng - 0.01 AND :curLng + 0.01 AND (p.status = 0 OR p.user_id = :userId) ORDER BY p.like_cnt DESC LIMIT 25", nativeQuery = true
     )
-    List<TextEntity> findAllVrMessageLike(Double curLat, Double curLng);
+    List<TextEntity> findAllVrMessageLike(Double curLat, Double curLng, Long userId);
 
 }

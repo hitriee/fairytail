@@ -104,11 +104,11 @@ public class TextController {
 
     @ApiOperation(value = "주변 메시지 최신순으로 조회", notes = "위도, 경도 0.01 이내 텍스트 메시지의 목록이 최신순으로 반환됩니다.")
     @GetMapping("/vr/latest")
-    public ResponseEntity<HashMap<String, Object>> getVrTextListLatest(@RequestParam("lat") Double curLat, @RequestParam("lng") Double curLng) {
+    public ResponseEntity<HashMap<String, Object>> getVrTextListLatest(@RequestParam("lat") Double curLat, @RequestParam("lng") Double curLng, @RequestParam Long userId) {
         HashMap<String, Object> resultMap = new HashMap<>();
         List<TextListResponse> responseVoList = new ArrayList<>();
 
-        List<TextDetailDto> responseDtoList = textService.getVrTextList(curLat, curLng, "latest");
+        List<TextDetailDto> responseDtoList = textService.getVrTextList(curLat, curLng, userId, "latest");
         responseDtoList.forEach(v -> responseVoList.add(modelMapper.map(v, TextListResponse.class)));
 
         resultMap.put("data", responseVoList);
@@ -119,11 +119,11 @@ public class TextController {
 
     @ApiOperation(value = "주변 메시지 좋아요순으로 조회", notes = "위도, 경도 0.01 이내 텍스트 메시지의 목록이 좋아요순으로 반환됩니다.")
     @GetMapping("/vr/like")
-    public ResponseEntity<HashMap<String, Object>> getVrTextListLike(@RequestParam("lat") Double curLat, @RequestParam("lng") Double curLng) {
+    public ResponseEntity<HashMap<String, Object>> getVrTextListLike(@RequestParam("lat") Double curLat, @RequestParam("lng") Double curLng, @RequestParam Long userId) {
         HashMap<String, Object> resultMap = new HashMap<>();
         List<TextListResponse> responseVoList = new ArrayList<>();
 
-        List<TextDetailDto> responseDtoList = textService.getVrTextList(curLat, curLng, "like");
+        List<TextDetailDto> responseDtoList = textService.getVrTextList(curLat, curLng, userId, "like");
         responseDtoList.forEach(v -> responseVoList.add(modelMapper.map(v, TextListResponse.class)));
 
         resultMap.put("data", responseVoList);

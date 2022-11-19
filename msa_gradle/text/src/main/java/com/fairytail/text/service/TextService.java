@@ -13,7 +13,7 @@ public interface TextService {
 
     List<TextDetailDto> getMyTextList(Long userId);
 
-    List<TextDetailDto> getVrTextList(Double curLat, Double curLng, String orderBy);
+    List<TextDetailDto> getVrTextList(Double curLat, Double curLng, Long userId, String orderBy);
 
     List<TextDto> getAllTextList(Long userId);
 

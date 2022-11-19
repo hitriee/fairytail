@@ -72,14 +72,14 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    public List<TextDetailDto> getVrTextList(Double curLat, Double curLng, String orderBy) {
+    public List<TextDetailDto> getVrTextList(Double curLat, Double curLng, Long userId, String orderBy) {
         List<TextEntity> textEntityList = null;
 
         if (orderBy.equals("latest")) { // 최신순으로 정렬
-            textEntityList = textRepository.findAllVrMessageLatest(curLat, curLng);
+            textEntityList = textRepository.findAllVrMessageLatest(curLat, curLng, userId);
         }
         else if (orderBy.equals("like")) { // 좋아요순으로 정렬
-            textEntityList = textRepository.findAllVrMessageLike(curLat, curLng);
+            textEntityList = textRepository.findAllVrMessageLike(curLat, curLng, userId);
         }
 
         List<TextDetailDto> responseDtoList = new ArrayList<>();
