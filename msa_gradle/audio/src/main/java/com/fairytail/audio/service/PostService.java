@@ -17,8 +17,8 @@ public interface PostService {
     PostDto putPost(PostDto postDto) throws Exception;
     Boolean deletePost(Long postId) throws Exception;
 
-    List<PostDto> readPostListLatest(Double lat, Double lng) throws Exception;
-    List<PostDto> readPostListLike(Double lat, Double lng) throws Exception;
+    List<PostDto> readPostListLatest(Double lat, Double lng, Long userId) throws Exception;
+    List<PostDto> readPostListLike(Double lat, Double lng, Long userId) throws Exception;
     List<PostDto> readMyPostList(Long userId) throws Exception;
 
     Boolean createLike(PostLikeDto postLikeDto) throws Exception;
@@ -27,7 +27,7 @@ public interface PostService {
 
     Boolean changeStatus(PostEntity post)throws Exception;
 
-    List<PostDto> readAllPost() throws Exception;
+    List<PostDto> readAllPost(Long userId) throws Exception;
 
     String speechToText(File file) throws IOException;
 }
