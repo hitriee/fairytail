@@ -10,7 +10,10 @@ const iOS =
   ua.includes("ios") ||
   ua.includes("iphone") ||
   ua.includes("ipad") ||
-  ua.includes("like mac os x");
+  (ua.includes("like") &&
+    ua.includes("mac") &&
+    ua.includes("os") &&
+    ua.includes("x"));
 if (!iOS) {
   const config = {
     apiKey: "AIzaSyC2L6taSK-Ee-zv8Ajsvz2ZtgLl-6kXOcI",
