@@ -17,7 +17,8 @@ import MessageDetail from '@screens/MessageDetail';
 import MessageList from '@screens/MessageList';
 import VR from '@screens/VR';
 import NotFound from '@screens/NotFound';
-import Individual from '@screens/Individual';
+import Settings from '@screens/Settings';
+import Notifications from '@screens/Notifications';
 import {getIdentification} from '@apis/main';
 import {currentUser} from '@common/commonFunc';
 
@@ -61,9 +62,9 @@ function Main() {
     } else if (pathname.startsWith('/globe')) {
       return <Globe />;
     } else if (pathname.startsWith('/settings')) {
-      return <Individual />;
+      return <Settings />;
     } else if (pathname.startsWith('/notification')) {
-      return <Individual />;
+      return <Notifications />;
     } else if (pathname.startsWith('/map')) {
       return <Map />;
     } else {

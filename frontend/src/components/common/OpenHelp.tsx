@@ -59,6 +59,7 @@ function OpenHelp({imagesIndex, color = 'white'}: OpenHelpProps) {
         <div className="help-background fadeIn" onClick={closeHelp}>
           <div className="container help-container">
             <img
+              alt="icon"
               className="help-img"
               src={helpImages[imagesIndex]}
               onClick={event => {

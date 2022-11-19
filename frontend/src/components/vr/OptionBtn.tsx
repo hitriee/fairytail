@@ -12,10 +12,8 @@ function OptionBtn({option, setOption, setData}: OptionBtnProps) {
     <div
       id="option-btn"
       onClick={() => {
-        {
-          setOption(prev => !prev);
-          setData([]);
-        }
+        setOption(prev => !prev);
+        setData([]);
       }}>
       {option ? '좋아요순' : '최신순'}
     </div>

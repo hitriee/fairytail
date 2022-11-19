@@ -1,12 +1,11 @@
-import React, {useRef, useState} from 'react';
-import {smallEmojiArr} from 'src/assets/emojis';
 // ** 각 알림당 설정
-
-import '@individual/MyNotifications.scss';
+import React, {useRef, useState} from 'react';
 import {useNavigate} from 'react-router';
-import {toMessageDetail} from '@apis/router';
-import {checkType} from '@/apis';
+
+import '@individual/MyNotification.scss';
 import {item} from '@individual/notification';
+import {smallEmojiArr} from '@emojis/index';
+import {toMessageDetail} from '@apis/router';
 
 interface itemProps {
   item: item;
@@ -18,7 +17,6 @@ interface itemProps {
 function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
   const ref = useRef<HTMLDivElement>(null!);
   const navigate = useNavigate();
-  // const [originPos, setOriginPos] = useState({x: 0, y: 0});
   const [deleted, setDeleted] = useState(false);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const {postId, title, emojiNo, type} = item;
@@ -40,7 +38,6 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
       e.dataTransfer?.setDragImage(img, 0, 0);
       e.dataTransfer.effectAllowed = 'move';
       const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
-      // setOriginPos(() => originPosTemp);
       setIsGrabbing(true);
     }
   };
@@ -74,7 +71,6 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     if (dragFlag) {
       const {current} = ref;
       const originPosTemp = {x: current.offsetLeft, y: current.offsetTop};
-      // setOriginPos(() => originPosTemp);
       setIsGrabbing(true);
     }
   };
@@ -114,35 +110,30 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
     }
     return result;
   };
-  // useEffect(() => {
-  //   dynamicClass();
-  // }, [isGrabbing, deleted]);
 
   return (
-    <>
-      <div
-        ref={ref}
-        className={dynamicClass()}
-        draggable={dragFlag}
-        onClick={toDetail(postId)}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}>
-        <img
-          src={smallEmojiArr[emojiNo]}
-          alt="emoji"
-          className="myNotification-emoji"
-        />
-        <p className="myNotification-message">
-          누군가 당신의 이야기 <br />
-          <span className="myNotification-title">{shortTitle()}</span>을(를)
-          좋아합니다
-        </p>
-      </div>
-    </>
+    <div
+      ref={ref}
+      className={dynamicClass()}
+      draggable={dragFlag}
+      onClick={toDetail(postId)}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}>
+      <img
+        src={smallEmojiArr[emojiNo]}
+        alt="emoji"
+        className="myNotification-emoji"
+      />
+      <p className="myNotification-message">
+        누군가 당신의 이야기 <br />
+        <span className="myNotification-title">{shortTitle()}</span>을(를)
+        좋아합니다.
+      </p>
+    </div>
   );
 }
 

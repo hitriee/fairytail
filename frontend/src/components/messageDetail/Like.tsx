@@ -1,10 +1,13 @@
 //** 좋아요, 이모지 관련
 
-import React, {useEffect, useState, useRef} from 'react';
-import {emojiArr, smallEmojiArr} from '@emojis/index';
+import {useState} from 'react';
+
 import '@messageDetail/Like.scss';
+import {emojiArr, smallEmojiArr} from '@emojis/index';
+
 import {likeMessage} from '@apis/messageDetail/detailFunc';
 import {dataType} from '@apis/messageDetail/detailInterface';
+
 interface LikeProps {
   data: dataType;
   type: string;
@@ -37,9 +40,15 @@ function Like({type, userId, data}: LikeProps) {
     <article className="like">
       <div className="like-container">
         {myLike ? (
-          <img src={emojiArr[5]} className="like-icon" onClick={changeLike} />
+          <img
+            alt="like icon"
+            src={emojiArr[5]}
+            className="like-icon"
+            onClick={changeLike}
+          />
         ) : (
           <img
+            alt="like icon"
             src={smallEmojiArr[11]}
             className="like-icon like-icon-stable"
             onClick={changeLike}

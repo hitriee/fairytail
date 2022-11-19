@@ -36,6 +36,7 @@ function MyMessage({messageItem}: messageProps) {
         {messageItem.likeCnt ? (
           <div className="myMessage-container-like">
             <img
+              alt="emoji"
               src={smallEmojiArr[5]}
               className="myMessage-container-like-heart"
             />

@@ -1,13 +1,14 @@
 // ** 숨겨진 페이지
-
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect} from 'react';
 import {Canvas} from '@react-three/fiber';
+
+import '@screens/Globe.scss';
 import Stars from '@globe/Stars';
 import {Earth} from '@globe/Sphere';
-import {main} from '@apis/router';
 import MoveToBack from '@common/MoveToBack';
+
+import {main} from '@apis/router';
 import {returnFalse, returnTrue} from '@common/commonFunc';
-import '@screens/Globe.scss';
 
 function Globe() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -47,10 +48,8 @@ function Globe() {
         <Canvas
           style={{width, height, cursor: 'grab'}}
           camera={{near: 6, far: 30, zoom: 1.2}}>
-          {/* <color attach="background" args={[0, 0, 0]} /> */}
           <Stars position={[0, 0, 0]} />
           <ambientLight />
-          {/* <pointLight position={[5, 1, 2]} /> */}
           <pointLight position={[10, 10, 10]} />
           <Earth position={[0, 0, 0]} />
         </Canvas>

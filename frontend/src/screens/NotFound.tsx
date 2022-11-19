@@ -10,7 +10,7 @@ function NotFound() {
   return (
     <div className="notFound">
       <div className="white notFound-title">길을 잃었습니다</div>
-      <img src={IntroLogo} />
+      <img src={IntroLogo} alt="logo" />
       <button className="notFound-button" onClick={toMain}>
         내 방으로 돌아가기
       </button>

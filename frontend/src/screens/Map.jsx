@@ -16,6 +16,7 @@ import OpenHelp from '@common/OpenHelp';
 import Airplane from '@images/airplane.webp';
 
 import {getMessageMap} from '@apis/map';
+import {currentUser} from '@common/commonFunc';
 
 // 최소, 최대 범위 이내 랜덤 실수 생성
 function generateRandomFloat(min, max) {
@@ -62,8 +63,10 @@ function Map() {
   // 서버에서 데이터 받아오기
   useEffect(() => {
     if (isReady) {
+      const userId = currentUser();
+
       for (let i = 0; i < 4; i++) {
-        getMessageMap(i)
+        getMessageMap(i, {userId: userId})
           .then(res => {
             setData(prev => prev.concat(res.data));
             setIsFinished(prev => prev + 1);

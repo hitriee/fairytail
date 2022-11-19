@@ -1,8 +1,5 @@
 // ** 알림 모달 (제목, 내용, 확인 버튼으로 구성)
-
 import {useEffect, useRef} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {intro} from '@/apis/router';
 
 interface AlertProps {
   info: {
@@ -14,8 +11,6 @@ interface AlertProps {
 }
 
 function Alert({info, open, onConfirmed}: AlertProps) {
-  const navigate = useNavigate();
-
   // 모달 바깥을 누르면 종료
   const alertRef = useRef<HTMLSelectElement>(null);
   useEffect(() => {

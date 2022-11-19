@@ -1,0 +1,39 @@
+.notifications {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: grab;
+
+  &-delete-all {
+    position: absolute;
+    top: -4vh;
+    right: 5%;
+    color: white;
+    text-align: end;
+    margin: 0;
+    font-size: 2.5vh;
+  }
+
+  &-container {
+    width: 90%;
+    height: 76.5vh;
+    padding: 1vh 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &-empty {
+    color: white;
+    font-size: 2.5vh;
+    margin-top: 10vh;
+  }
+}

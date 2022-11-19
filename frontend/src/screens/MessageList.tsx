@@ -1,12 +1,14 @@
-import {useEffect, useState, useCallback} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+
 import '@screens/MessageList.scss';
 import MyMessage from '@messageList/MyMessage';
 import MoveToBack from '@common/MoveToBack';
+import {currentUser} from '@common/commonFunc';
 import {main, notFound} from '@apis/router';
-import {getMesssageList} from '@/apis/messageList';
-import {currentUser} from '@/components/common/commonFunc';
-import {ReactComponent as Filter} from '@images/filter.svg';
+import {getMesssageList} from '@apis/messageList';
+
+import filterImg from '@images/filter.svg';
 
 interface items {
   postId: number;
@@ -19,15 +21,13 @@ interface items {
 }
 
 function MessageList() {
+  const navigate = useNavigate();
+
   const [messageItems, setMessageItems] = useState<items[]>([]);
   const [filterState, setFilterState] = useState(true);
 
   // 데이터 및 데이터 받아오기가 끝났는지 확인하기 위한 state
   const [isFinished, setIsFinished] = useState(-1);
-
-  // const location = useLocation();
-  const navigate = useNavigate();
-
   const [isSorted, setIsSorted] = useState(false);
 
   // 0: text, 1: img, 2:video, 3:audio
@@ -54,32 +54,28 @@ function MessageList() {
   // messageList 최신순으로 정렬
   useEffect(() => {
     if (isFinished === 3 && messageItems.length > 0) {
-      console.log(messageItems);
-      console.log(filterState);
-      console.log(isFinished);
-      const sortedData = messageItems;
+      const copiedData = messageItems.slice();
+
       if (filterState) {
-        sortedData.sort((a, b) =>
+        const sortedData = copiedData.sort((a, b) =>
           a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
         );
-        console.log('내림차순');
-        console.log(sortedData);
+
         setMessageItems(() => sortedData);
       } else {
-        sortedData.sort((a, b) =>
+        const sortedData = copiedData.sort((a, b) =>
           a.date < b.date ? -1 : a.date > b.date ? 1 : 0,
         );
-        console.log('오름차순');
-        console.log(sortedData);
+
         setMessageItems(() => sortedData);
       }
-      setIsSorted(() => true);
+
+      console.log(filterState);
+      console.log(messageItems);
+
+      setIsSorted(true);
     }
   }, [filterState, isFinished, messageItems]);
-
-  const handleFilter = useCallback(() => {
-    setFilterState(!filterState);
-  }, [filterState, messageItems]);
 
   return (
     <div className="messageList">
@@ -88,26 +84,35 @@ function MessageList() {
         <div className="messageList-container-info">내 이야기</div>
         <div
           className="messageList-container-filter"
-          // onClick={() => setFilterState(prev => !prev)}>
-          onClick={() => handleFilter()}>
-          <Filter viewBox="0 0 80 80" fill="white" />
+          onClick={() => setFilterState(prev => !prev)}>
+          <img
+            src={filterImg}
+            alt="자막 표시"
+            className="musicList-container-icon"
+          />
         </div>
 
         <div className="messageList-container-list">
-          {messageItems.length === 0 && (
+          {!isSorted ? (
             <div className="messageList-container-list-empty">
-              작성한 메세지가 없습니다.
+              잠시만 기다려주세요...
             </div>
-          )}
-          {isSorted &&
-            messageItems.map(messageItem => {
-              return (
-                <MyMessage
-                  key={`${messageItem.type}+${messageItem.postId}`}
-                  messageItem={messageItem}
-                />
-              );
-            })}
+          ) : null}
+
+          {isSorted && messageItems.length > 0
+            ? messageItems.map(messageItem => {
+                return (
+                  <MyMessage
+                    key={`${messageItem.type}+${messageItem.postId}`}
+                    messageItem={messageItem}
+                  />
+                );
+              })
+            : null}
+
+          {isSorted && messageItems.length < 1 ? (
+            <div className="messageList-container-list-empty"></div>
+          ) : null}
         </div>
       </div>
     </div>

@@ -2,14 +2,17 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import '@individual/Settings.scss';
+import '@screens/Settings.scss';
 import BgmModal from '@individual/BgmModal';
 import InfoModal from '@individual/InfoModal';
-import {returnTrue, returnFalse, popUp} from '@common/commonFunc';
+import Toggle from '@messageCreate/Toggle';
 import Confirm from '@common/Confirm';
 import Alert from '@common/Alert';
-import Toggle from '@messageCreate/Toggle';
+import MoveToBack from '@common/MoveToBack';
+import {returnTrue, returnFalse, popUp} from '@common/commonFunc';
 import {intro} from '@apis/router';
+
+import gear from '@images/gear.png';
 import infoImg from '@images/info.svg';
 
 function Settings() {
@@ -135,79 +138,88 @@ function Settings() {
   };
 
   return (
-    <main className="white settings">
-      {/* 애플리케이션 */}
-      <section className="settings-section">
-        <div className="settings-title">애플리케이션</div>
-        <div className="settings-between">
-          <div className="settings-each" onClick={changePermitPush}>
-            좋아요 푸시 알림
+    <main className="screen">
+      <MoveToBack path="-1" />
+      <div className="container settings-container">
+        <div className="settings-header">
+          <img src={gear} alt="icon" className="settings-header-icon" />
+        </div>
+        {/* 애플리케이션 */}
+        <section className="settings-section">
+          <div className="settings-title">애플리케이션</div>
+          <div className="settings-between">
+            <div className="settings-each" onClick={changePermitPush}>
+              좋아요 푸시 알림
+            </div>
+            <div
+              className="settings-each settings-push"
+              onClick={changePermitPush}>
+              {permitPush}
+              <img
+                src={infoImg}
+                alt="좋아요 푸시 알림 안내"
+                className="settings-push-icon"
+              />
+            </div>
           </div>
+          <div className="settings-between">
+            <div className="settings-each" onClick={changePermitNoti}>
+              앱 사용 중 좋아요 알림
+            </div>
+            <Toggle label="" onClick={changePermitNoti} value={permitNoti} />
+          </div>
+          <div className="settings-between">
+            <div className="settings-each" onClick={openBgmModal}>
+              배경음악 설정
+            </div>
+          </div>
+        </section>
+
+        {/* 계정 */}
+        <section className="settings-section">
+          <div className="settings-title">계정</div>
           <div
-            className="settings-each settings-push"
-            onClick={changePermitPush}>
-            {permitPush}
-            <img
-              src={infoImg}
-              alt="좋아요 푸시 알림 안내"
-              className="settings-push-icon"
-            />
+            className="settings-each settings-margin-bottom"
+            onClick={logoutConfirm}>
+            로그아웃
           </div>
-        </div>
-        <div className="settings-between">
-          <div className="settings-each" onClick={changePermitNoti}>
-            앱 사용 중 좋아요 알림
+        </section>
+
+        {/* 기타 */}
+        <section className="settings-section">
+          <div className="settings-title">기타</div>
+          <div
+            className="settings-each settings-margin-bottom"
+            onClick={openInfoModal('license')}>
+            라이선스
           </div>
-          <Toggle label="" onClick={changePermitNoti} value={permitNoti} />
-        </div>
-        <div className="settings-between">
-          <div className="settings-each" onClick={openBgmModal}>
-            배경음악 설정
-          </div>
-        </div>
-      </section>
+          <span
+            className="settings-each settings-margin-bottom"
+            onClick={openInfoModal('privacyPolicy')}>
+            개인정보 처리방침
+          </span>
+        </section>
+        {/* 로그아웃 확인 */}
+        <Confirm
+          info={info}
+          open={wantLogout}
+          onConfirmed={logout}
+          onCancel={cancelLogout}
+        />
 
-      {/* 계정 */}
-      <section className="settings-section">
-        <div className="settings-title">계정</div>
-        <div
-          className="settings-each settings-margin-bottom"
-          onClick={logoutConfirm}>
-          로그아웃
-        </div>
-      </section>
+        {/* 로그아웃 완료 */}
+        <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
 
-      {/* 기타 */}
-      <section className="settings-section">
-        <div className="settings-title">기타</div>
-        <div
-          className="settings-each settings-margin-bottom"
-          onClick={openInfoModal('license')}>
-          라이선스
-        </div>
-        <span
-          className="settings-each settings-margin-bottom"
-          onClick={openInfoModal('privacyPolicy')}>
-          개인정보 처리방침
-        </span>
-      </section>
+        {/* 배경음악 목록 */}
+        <BgmModal open={isBgmModalOpened} onCancel={closeBgmModal} />
 
-      {/* 로그아웃 확인 */}
-      <Confirm
-        info={info}
-        open={wantLogout}
-        onConfirmed={logout}
-        onCancel={cancelLogout}
-      />
-
-      {/* 로그아웃 완료 */}
-      <Alert info={info} open={openAlert} onConfirmed={closeAlert} />
-
-      {/* 배경음악 목록 */}
-      <BgmModal open={isBgmModalOpened} onCancel={closeBgmModal} />
-
-      {/* 라이선스, 개인정보 처리방침 모달 */}
-      <InfoModal open={wantInfo} onConfirmed={closeInfoModal} type={infoType} />
+        {/* 라이선스, 개인정보 처리방침 모달 */}
+        <InfoModal
+          open={wantInfo}
+          onConfirmed={closeInfoModal}
+          type={infoType}
+        />
+      </div>
     </main>
   );
 }

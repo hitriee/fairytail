@@ -11,6 +11,7 @@ import OptionBtn from '@components/vr/OptionBtn';
 import {getMessageVR} from '@apis/vr';
 import {LocationParams} from '@apis/index';
 import {toMessageDetail} from '@apis/router';
+import {currentUser} from '@common/commonFunc';
 
 function VR() {
   // detail 페이지로 이동하기 위한 navigate
@@ -53,8 +54,15 @@ function VR() {
     if (isLoaded && location !== null) {
       const optionString = option ? 'like' : 'latest';
 
+      const userId = currentUser();
+
+      const params = {
+        ...location,
+        userId: userId,
+      };
+
       for (let i = 0; i < 4; i++) {
-        getMessageVR(i, optionString, location)
+        getMessageVR(i, optionString, params)
           .then(res => {
             setData(prev => prev.concat(res.data));
             setIsFinished(prev => prev + 1);

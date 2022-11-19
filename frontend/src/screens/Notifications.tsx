@@ -1,9 +1,5 @@
 // ** 알림
-
 import {useEffect, useState} from 'react';
-import MyNotification from '@/components/individual/MyNotification';
-import '@individual/Notifications.scss';
-import {item} from '@individual/notification';
 import {
   collection,
   query,
@@ -13,8 +9,15 @@ import {
   doc,
 } from 'firebase/firestore';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+
+import '@screens/Notifications.scss';
+import MyNotification from '@individual/MyNotification';
+import {item} from '@individual/notification';
+import MoveToBack from '@common/MoveToBack';
 import {db} from '@apis/notifications/firebaseConfig';
 import {currentUser} from '@common/commonFunc';
+
+import bell from '@images/bell.png';
 
 function Notifications() {
   const [newItems, setNewItems] = useState<item[]>([]);
@@ -92,27 +95,44 @@ function Notifications() {
   }, []);
 
   return (
-    <div className="notifications">
-      <p className="notifications-delete-all" onClick={deleteAll} draggable>
-        전체 삭제
-      </p>
-      {newItems.length === 0 ? (
-        <div className="notifications-empty">새로운 알림이 없습니다.</div>
-      ) : (
-        <div className="notifications-list">
-          {newItems.map((item, index) => {
-            return (
-              <MyNotification
-                item={item}
-                key={item.id}
-                deleteEach={deleteEach}
-                index={index}
-                dragFlag={true}
-              />
-            );
-          })}
+    <div className="screen">
+      <MoveToBack path="-1" />
+      <div className="container settings-container">
+        <div className="settings-header">
+          <img src={bell} alt="icon" className="settings-header-icon" />
         </div>
-      )}
+
+        <div className="notifications">
+          {newItems.length > 0 ? (
+            <p
+              className="notifications-delete-all"
+              onClick={deleteAll}
+              draggable>
+              전체 삭제
+            </p>
+          ) : null}
+
+          <div className="notifications-container">
+            {newItems.length === 0 ? (
+              <div className="notifications-empty">새로운 알림이 없습니다.</div>
+            ) : (
+              <>
+                {newItems.map((item, index) => {
+                  return (
+                    <MyNotification
+                      item={item}
+                      key={item.id}
+                      deleteEach={deleteEach}
+                      index={index}
+                      dragFlag={true}
+                    />
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
