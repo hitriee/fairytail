@@ -1,3 +1,5 @@
+@import '@styles/_colors.scss';
+
 .ignore {
   width: 100%;
 }
@@ -13,4 +15,9 @@
   top: 10px;
   right: 10px;
   cursor: pointer;
+
+  &:hover {
+    filter: invert(94%) sepia(3%) saturate(9%) hue-rotate(314deg)
+      brightness(83%) contrast(88%);
+  }
 }
