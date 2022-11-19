@@ -70,9 +70,6 @@ function MessageList() {
         setMessageItems(() => sortedData);
       }
 
-      console.log(filterState);
-      console.log(messageItems);
-
       setIsSorted(true);
     }
   }, [filterState, isFinished]);
