@@ -4,6 +4,8 @@ import {getMessaging, getToken} from 'firebase/messaging';
 import {app} from '@apis/notifications/firebaseConfig';
 
 const messaging = getMessaging(app);
+const ua = navigator.userAgent.toLowerCase();
+const iOS = ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad');
 
 // 토큰 받아오기
 export const initToken = async () => {
@@ -29,9 +31,11 @@ export const initToken = async () => {
 
 // 등록 토큰에 액세스 (알림 권한 요청)
 export const requestPermission = () => {
-  Notification.requestPermission().then(permission => {
-    if (permission !== 'denied') {
-      localStorage.setItem('noti', 'true');
-    }
-  });
+  if (!iOS) {
+    Notification.requestPermission().then(permission => {
+      if (permission !== 'denied') {
+        localStorage.setItem('noti', 'true');
+      }
+    });
+  }
 };
