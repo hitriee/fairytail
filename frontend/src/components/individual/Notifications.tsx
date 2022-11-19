@@ -61,8 +61,6 @@ function Notifications() {
 
   const auth = getAuth();
   const readData = async (userId: number) => {
-    console.log(process.env.REACT_APP_ADMIN_EMAIL);
-    console.log(process.env.REACT_APP_ADMIN_PASSWORD);
     signInWithEmailAndPassword(
       auth,
       process.env.REACT_APP_ADMIN_EMAIL || '',

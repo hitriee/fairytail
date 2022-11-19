@@ -25,7 +25,7 @@ function Settings() {
 
   // 좋아요 알림 변경
   // 백그라운드
-  const ua = window.navigator.userAgent;
+  const ua = navigator.userAgent;
   const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
   const changePermitPush = () => {
     if (!iOS) {
