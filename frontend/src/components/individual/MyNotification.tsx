@@ -88,6 +88,7 @@ function MyNotification({item, index, deleteEach, dragFlag}: itemProps) {
       console.dir(current.offsetLeft); // 163
       console.dir(current.offsetWidth); // 338 // 501
       console.dir(e);
+      console.log(position);
       const newPosition = {
         x: e.changedTouches[0].clientX,
         y: e.changedTouches[0].clientY,
