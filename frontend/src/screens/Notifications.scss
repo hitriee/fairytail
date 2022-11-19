@@ -1,3 +1,5 @@
+@import '@styles/_colors.scss';
+
 .notifications {
   width: 100%;
   display: flex;
@@ -15,6 +17,11 @@
     text-align: end;
     margin: 0;
     font-size: 2.5vh;
+    cursor: pointer;
+
+    :hover {
+      color: $GRAY-BF;
+    }
   }
 
   &-container {

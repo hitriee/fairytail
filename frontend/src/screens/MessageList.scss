@@ -45,8 +45,8 @@
       cursor: pointer;
 
       &:hover {
-        filter: invert(94%) sepia(3%) saturate(9%) hue-rotate(314deg)
-          brightness(83%) contrast(88%);
+        filter: brightness(0) saturate(100%) invert(94%) sepia(3%) saturate(9%)
+          hue-rotate(314deg) brightness(83%) contrast(88%);
       }
 
       img {
