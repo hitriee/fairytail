@@ -1,0 +1,40 @@
+@import '@styles/_colors.scss';
+
+a {
+  text-decoration: none;
+}
+
+.googleLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vh;
+
+  &-text {
+    margin-bottom: 1.5vh;
+    font-size: 2vh;
+    font-weight: 300;
+    color: $GRAY-DB;
+  }
+
+  &-img {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    opacity: 0.98;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    box-shadow: inset -1px -1px 1px #4747477b;
+
+    &:hover {
+      opacity: 1;
+      background-color: $GRAY-E4;
+    }
+
+    img {
+      margin: 20%;
+    }
+  }
+}

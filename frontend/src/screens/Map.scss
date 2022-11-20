@@ -1,0 +1,27 @@
+.map {
+  &-random {
+    padding: 1vh;
+    font-size: 2vh;
+    position: absolute;
+    z-index: 999;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  &-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      margin: 0;
+    }
+  }
+}
