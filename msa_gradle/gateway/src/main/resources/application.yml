@@ -1,0 +1,60 @@
+server:
+    port: 8000
+
+eureka:
+  client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+          defaultZone: http://k7c209.p.ssafy.io:8761/eureka
+  instance:
+    ip-address: true
+
+spring:
+  application:
+      name: gateway
+
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://k7c2091.p.ssafy.io"
+            allow-credentials: true
+            allowed-headers:
+              - '*'
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+
+      routes:
+        - id: user
+          uri: lb://USER
+          predicates: # 전제 조건
+            - Path=/user/**
+
+        - id: img
+          uri: lb://IMG
+          predicates: # 전제 조건
+            - Path=/img/**
+
+        - id: audio
+          uri: lb://AUDIO
+          predicates: # 전제 조건
+            - Path=/audio/**
+
+
+        - id: text
+          uri: lb://TEXT
+          predicates: # 전제 조건
+            - Path=/text/**
+
+        - id: video
+          uri: lb://VIDEO
+          predicates: # 전제 조건
+            - Path=/video/**
+
