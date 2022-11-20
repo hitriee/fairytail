@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -287,7 +288,7 @@ public class PostServiceImpl implements PostService {
      * 전체 게시글 좌표 조회
      */
     @Override
-    public List<PostDto> readAllPost(Long userId) throws Exception {
+    public List<PostDto> readAllPost(@RequestParam Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         List<PostDto> data = new ArrayList<>();
         List<PostEntity> res = postRepository.findAllByUserIdOrStatus(userId, 0);
