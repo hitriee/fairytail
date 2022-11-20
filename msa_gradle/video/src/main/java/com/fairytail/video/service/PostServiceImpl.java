@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -150,9 +151,9 @@ public class PostServiceImpl implements PostService {
      * 근처 게시글 최신순 조회
      */
     @Override
-    public List<PostDto> readPostListLatest(Double lat, Double lng) throws Exception {
+    public List<PostDto> readPostListLatest(Double lat, Double lng, Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-        List<PostEntity> list = postRepository.findTop25ByLatAndLngAndStatusOrderByDateDesc(lat, lng);
+        List<PostEntity> list = postRepository.findTop25ByLatAndLngAndStatusOrderByDateDesc(lat, lng, userId);
         List<PostDto> data = new ArrayList<>();
         if(list != null){
             for (PostEntity l: list) {
@@ -167,9 +168,9 @@ public class PostServiceImpl implements PostService {
      * 근처 게시글 좋아요 순 조회
      */
     @Override
-    public List<PostDto> readPostListLike(Double lat, Double lng) throws Exception {
+    public List<PostDto> readPostListLike(Double lat, Double lng, Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
-        List<PostEntity> list = postRepository.findTop25ByLatAndLngAndStatusOrderByLikeCntDesc(lat, lng);
+        List<PostEntity> list = postRepository.findTop25ByLatAndLngAndStatusOrderByLikeCntDesc(lat, lng, userId);
         List<PostDto> data = new ArrayList<>();
         if(list != null){
             for (PostEntity l: list) {
@@ -287,10 +288,10 @@ public class PostServiceImpl implements PostService {
      * 전체 게시글 좌표 조회
      */
     @Override
-    public List<PostDto> readAllPost() throws Exception {
+    public List<PostDto> readAllPost(@RequestParam Long userId) throws Exception {
         ModelMapper modelMapper = new ModelMapper();
         List<PostDto> data = new ArrayList<>();
-        List<PostEntity> res = postRepository.findAllByStatus(0);
+        List<PostEntity> res = postRepository.findAllByUserIdOrStatus(userId, 0);
         for (PostEntity r: res) {
             PostDto d = modelMapper.map(r, PostDto.class);
             data.add(d);

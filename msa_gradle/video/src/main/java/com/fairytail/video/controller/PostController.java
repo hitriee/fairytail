@@ -150,11 +150,11 @@ public class PostController {
      */
     @ApiOperation(value = "근처 게시글 최신순 리스트 조회", notes = "근처 게시글 최신순 리스트 조회 API 입니다.")
     @GetMapping("/vr/latest")
-    public ResponseEntity<?> readPostListLatest(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
+    public ResponseEntity<?> readPostListLatest(@RequestParam Double lat, @RequestParam Double lng, @RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readPostListLatest(lat, lng); //서비스 실행 후 결과를 res 리스트로
+        List<PostDto> res = postService.readPostListLatest(lat, lng, userId); //서비스 실행 후 결과를 res 리스트로
         List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r:res) {
             ResponsePostList insert = modelMapper.map(r, ResponsePostList.class); //res만큼 data에 add
@@ -177,11 +177,11 @@ public class PostController {
      */
     @ApiOperation(value = "근처 게시글 좋아요 순 리스트 조회", notes = "근처 게시글 좋아요 순 리스트 조회 API 입니다.")
     @GetMapping("/vr/like")
-    public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng) throws Exception{
+    public ResponseEntity<?> readPostListLike(@RequestParam Double lat, @RequestParam Double lng, @RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readPostListLike(lat, lng); //서비스 결과를 res 리스트로
+        List<PostDto> res = postService.readPostListLike(lat, lng, userId); //서비스 결과를 res 리스트로
         List<ResponsePostList> data = new ArrayList<>();
         for (PostDto r : res){
             ResponsePostList insert = modelMapper.map(r, ResponsePostList.class); //res가 있으면 매핑
@@ -228,11 +228,11 @@ public class PostController {
     }
     @ApiOperation(value = "전체 게시글 좌표 조회", notes = "전체 게시글 좌표 조회 API 입니다.")
     @GetMapping("/map")
-    public ResponseEntity<?> readAll() throws Exception{
+    public ResponseEntity<?> readAll(@RequestParam Long userId) throws Exception{
         ModelMapper modelMapper = new ModelMapper();
         resultMap = new HashMap<>();
         status = HttpStatus.INTERNAL_SERVER_ERROR;
-        List<PostDto> res = postService.readAllPost(); //서비스 결과를 res 리스트로
+        List<PostDto> res = postService.readAllPost(userId); //서비스 결과를 res 리스트로
         List<ResponsePostMap> data = new ArrayList<>();
         for(PostDto r : res){
             ResponsePostMap d = modelMapper.map(r, ResponsePostMap.class);//res를 data로 매핑

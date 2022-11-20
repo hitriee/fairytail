@@ -1,12 +1,11 @@
-package com.fairytail.audio.service;
+package com.fairytail.img.service;
 
-import com.fairytail.audio.dto.PostDto;
-import com.fairytail.audio.dto.PostLikeDto;
-import com.fairytail.audio.dto.PostReportDto;
-import com.fairytail.audio.jpa.PostEntity;
+import com.fairytail.img.dto.PostDto;
+import com.fairytail.img.dto.PostLikeDto;
+import com.fairytail.img.dto.PostReportDto;
+import com.fairytail.img.jpa.PostEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,8 +16,8 @@ public interface PostService {
     PostDto putPost(PostDto postDto) throws Exception;
     Boolean deletePost(Long postId) throws Exception;
 
-    List<PostDto> readPostListLatest(Double lat, Double lng) throws Exception;
-    List<PostDto> readPostListLike(Double lat, Double lng) throws Exception;
+    List<PostDto> readPostListLatest(Double lat, Double lng, Long userId) throws Exception;
+    List<PostDto> readPostListLike(Double lat, Double lng, Long userId) throws Exception;
     List<PostDto> readMyPostList(Long userId) throws Exception;
 
     Boolean createLike(PostLikeDto postLikeDto) throws Exception;
@@ -27,7 +26,8 @@ public interface PostService {
 
     Boolean changeStatus(PostEntity post)throws Exception;
 
-    List<PostDto> readAllPost() throws Exception;
+    List<PostDto> readAllPost(Long userId) throws Exception;
 
-    String speechToText(File file) throws IOException;
+    Integer detectSafeSearch(MultipartFile file) throws IOException;
+
 }
