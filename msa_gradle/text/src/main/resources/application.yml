@@ -1,0 +1,58 @@
+spring.profiles.include : setting
+
+server:
+  port: 9092
+  servlet:
+    context-path: /text
+#server: #random port
+#  port: 0
+
+spring:
+  application:
+    name: text
+  # Swagger 2.6.* 버전 이후 Path matching 에러 발생 - 해결법
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+  # mariadb database setting
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/text?useSSL=false&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    username: dongsim
+    password: dongsim12!
+
+  # jpa setting
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  # return pretty print json
+  jackson:
+    serialization:
+      indent-output: true
+
+logging:
+  level:
+    com.fairytail: DEBUG
+
+# text eureka-client
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
+    register-with-eureka: true       # client 등록 시, true로 세팅
+    service-url:
+      defaultZone: http://k7c209.p.ssafy.io:8761/eureka
