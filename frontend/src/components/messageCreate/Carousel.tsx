@@ -5,7 +5,7 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {useState, Dispatch, SetStateAction, useEffect, useRef} from 'react';
 
 import '@messageCreate/Carousel.scss';
-import {emojiArr, smallEmojiArr} from '@emojis/index';
+import {emojiArr} from '@emojis/index';
 import useLongPress from '@apis/useLongPress';
 
 type CarouselProps = {
@@ -51,7 +51,7 @@ function CarouselImage({item, index}: CaroueslImageProps) {
       ref={imageRef}
       className="emoji"
       src={isLoaded ? item : ''}
-      alt={smallEmojiArr[index]}
+      alt={`${index}번 이모지`}
     />
   );
 }
