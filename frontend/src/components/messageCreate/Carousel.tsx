@@ -27,7 +27,6 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
 
   return (
     <Swiper
-      lazy={{loadPrevNext: true, loadPrevNextAmount: 5}}
       onSwiper={setSwiper}
       touchStartPreventDefault={false}
       initialSlide={Math.floor(Math.random() * 76)}
@@ -47,7 +46,12 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
       {emojiArr.map((item, index) => {
         return (
           <SwiperSlide key={index} {...longPress}>
-            <img className="emoji" src={item} alt={`${index}번 이모지`} />
+            <img
+              className="emoji"
+              src={item}
+              alt={`${index}번 이모지`}
+              loading="lazy"
+            />
           </SwiperSlide>
         );
       })}
