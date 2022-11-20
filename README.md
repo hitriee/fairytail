@@ -54,7 +54,7 @@
 ## 3. 시스템 구조도 및 핵심 기술
 #### 1) 아키텍처
 
-![architecture](assets/동하책_시스템아키텍처.png)
+![architecture](assets/동하책_시스템아키텍처.jpg)
 
 <br/>
 
