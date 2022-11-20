@@ -1,7 +1,7 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {transitionState} from '@apis/recoil';
+import {loadingState, transitionState} from '@apis/recoil';
 
 import InitMessage from '@apis/notifications/foregroundMessaging';
 
@@ -72,6 +72,15 @@ function Main() {
     }
   };
 
+  // main 최초 렌더링 확인
+  const [isLoaded, setIsLoaded] = useRecoilState(loadingState);
+
+  if (pathname === '/main' && !isLoaded) {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
+  }
+
   // main 렌더링 시 애니메이션 효과
   const [transitionName, setTransitionName] = useRecoilState(transitionState);
 
@@ -98,8 +107,12 @@ function Main() {
               style={{
                 display: pathname.startsWith('/main') ? 'block' : 'none',
               }}>
-              <OpenHelp imagesIndex={0} />
-              <BgmBtn />
+              {isLoaded ? (
+                <>
+                  <OpenHelp imagesIndex={0} />
+                  <BgmBtn />
+                </>
+              ) : null}
 
               <Room />
             </div>
