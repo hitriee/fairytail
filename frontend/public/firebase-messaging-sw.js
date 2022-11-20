@@ -17,7 +17,7 @@ export const iOS = () => {
       ua.includes("x"))
   );
 };
-if (!iOS()) {
+if (!iOS) {
   const config = {
     apiKey: "AIzaSyC2L6taSK-Ee-zv8Ajsvz2ZtgLl-6kXOcI",
     authDomain: "fairytail-1cde3.firebaseapp.com",
@@ -49,7 +49,7 @@ if (!iOS()) {
         icon: "./windows11/LargeTile.scale-100.png", // web
         // requireInteraction: false,
         badge: "./introLogo.png", // 모바일에서만 - 권장 크기 72px
-        click_action: "https://k7c209.p.ssafy.io",
+        click_action: "https://k7c2091.p.ssafy.io/",
       };
       self.registration.showNotification(
         notificationTitle,
