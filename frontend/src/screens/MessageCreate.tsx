@@ -192,35 +192,37 @@ function MessageCreate() {
           setIsLongClicked={setIsLongClicked}
         />
 
-        <div className="message-create-card">
-          {isLongClicked ? (
-            <EmojiGrid
-              setEmojiNo={setEmojiNo}
-              setIsLongClicked={setIsLongClicked}
+        <div
+          className="message-create-card"
+          style={{display: isLongClicked ? 'block' : 'none'}}>
+          <EmojiGrid
+            setEmojiNo={setEmojiNo}
+            setIsLongClicked={setIsLongClicked}
+          />
+        </div>
+
+        <div
+          className="message-create-card"
+          style={{display: isLongClicked ? 'none' : 'block'}}>
+          <input
+            className="message-create-title"
+            placeholder="제목을 입력해주세요.(최대 10자)"
+            maxLength={10}
+            onChange={e => {
+              setTitle(e.target.value);
+            }}
+          />
+
+          <Message content={content} setContent={setContent} />
+
+          <div className="message-create-save-container">
+            <Toggle label="비공개" onClick={setIsShare} value={isShare} />
+            <Send
+              onClick={handleSubmit}
+              transform="rotate(-20)"
+              className="message-create-save-btn-icon"
             />
-          ) : (
-            <>
-              <input
-                className="message-create-title"
-                placeholder="제목을 입력해주세요.(최대 10자)"
-                maxLength={10}
-                onChange={e => {
-                  setTitle(e.target.value);
-                }}
-              />
-
-              <Message content={content} setContent={setContent} />
-
-              <div className="message-create-save-container">
-                <Toggle label="비공개" onClick={setIsShare} value={isShare} />
-                <Send
-                  onClick={handleSubmit}
-                  transform="rotate(-20)"
-                  className="message-create-save-btn-icon"
-                />
-              </div>
-            </>
-          )}
+          </div>
         </div>
       </div>
 
