@@ -27,15 +27,17 @@ function BgmListItem({title, index}: BgmListItemProps) {
     localStorage.setItem('bgmNo', JSON.stringify(index));
   };
 
-  const handleChangeBgm = (e: React.MouseEvent) => {
+  const handlePlayBgm = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsPlaying(prev => !prev);
-    const isPlayingBGM = localStorage.getItem('isPlaying');
-    if (isPlayingBGM === 'true') {
-      localStorage.setItem('isPlaying', 'false');
-    } else {
-      localStorage.setItem('isPlaying', 'true');
-    }
+    setIsPlaying(true);
+    localStorage.setItem('isPlaying', 'true');
+    changeBgm(index);
+  };
+
+  const handlePauseBgm = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsPlaying(false);
+    localStorage.setItem('isPlaying', 'false');
     changeBgm(index);
   };
 
@@ -53,13 +55,13 @@ function BgmListItem({title, index}: BgmListItemProps) {
         <Pause
           className="bgm-list-item-play"
           fill="black"
-          onClick={handleChangeBgm}
+          onClick={handlePauseBgm}
         />
       ) : (
         <Play
           className="bgm-list-item-play"
           fill="black"
-          onClick={handleChangeBgm}
+          onClick={handlePlayBgm}
         />
       )}
     </div>
