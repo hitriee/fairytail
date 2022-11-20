@@ -191,6 +191,6 @@
 * [포팅매뉴얼](exec/자율_프로젝트_동하책_포팅매뉴얼.pdf)
 * [시연시나리오](exec/자율_프로젝트_동하책_시연시나리오.pdf)
 * [UCC](assets/동하책_UCC.mp4)
-* [최종발표 PPT](assets/동하책_최종발표_PPT.pdf)
+* [최종발표 PPT](assets/동하책_최종발표_PPT.pptx)
 
 
