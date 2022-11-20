@@ -6,14 +6,32 @@ spring:
       client:
         registration:
           google:
-            # Todo: 인증 정보 - EC2 서버에 올린 후 변경 필요
-            client-id: 917328640404-mdeookpsdnm9eg11p70t6vdovbtft8cj.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 972146122059-e028ed3mkq6g5g40rrkm67mqjv5f9oc6.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: https://k7c209.p.ssafy.io/user/login/oauth2/code/google
             scope: profile, email
 
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/user
+    username: dongsim
+    password: dongsim12!
+
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    livereload:
+      enabled: true
 
 # Token expiration 관련 설정
 token:
   expiration_time: 86400000     # 토큰 유효기간 - 하루 (86400000 Milliseconds)
-  secret: dongsim_c209
+  secret: dongsimc209welovetoshareourballoonswithyou
 

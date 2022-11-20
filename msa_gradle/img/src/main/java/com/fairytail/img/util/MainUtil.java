@@ -17,7 +17,28 @@ public class MainUtil {
     }
 
     public String urlToFilePath(String url){
-        String[] sp = url.split("/");
-        return sp[sp.length -2] + "/" + sp[sp.length -1];
+        if(url != null && url != ""){
+            String[] sp = url.split("/");
+            if(sp.length >= 2){
+                return sp[sp.length -2] + "/" + sp[sp.length -1];
+            }
+        }
+        return null;
+    }
+
+    public Integer checkTime(Integer hour){
+        if(hour >= 1 && hour <=5){
+            return 0;
+        } else if(hour >= 6 && hour <= 10){
+            return 1;
+        } else if(hour >= 11 && hour <= 16){
+            return 2;
+        } else if (hour >= 17 && hour <= 20){
+            return 3;
+        } else if ((hour >= 21 && hour <= 24) || hour == 0 ){
+            return 4;
+        } else {
+            return null;
+        }
     }
 }
