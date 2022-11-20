@@ -1,12 +1,11 @@
-package com.fairytail.audio.service;
+package com.fairytail.img.service;
 
-import com.fairytail.audio.dto.PostDto;
-import com.fairytail.audio.dto.PostLikeDto;
-import com.fairytail.audio.dto.PostReportDto;
-import com.fairytail.audio.jpa.PostEntity;
+import com.fairytail.img.dto.PostDto;
+import com.fairytail.img.dto.PostLikeDto;
+import com.fairytail.img.dto.PostReportDto;
+import com.fairytail.img.jpa.PostEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,5 +28,6 @@ public interface PostService {
 
     List<PostDto> readAllPost(Long userId) throws Exception;
 
-    String speechToText(File file) throws IOException;
+    Integer detectSafeSearch(MultipartFile file) throws IOException;
+
 }
