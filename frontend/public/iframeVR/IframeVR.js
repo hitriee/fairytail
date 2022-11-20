@@ -34,7 +34,7 @@ function init() {
       const emptyText = document.createElement("a-troika-text");
       emptyText.setAttribute(
         "value",
-        "여기는 아직 풍선이 없네요...\n첫 번째 풍선을 날려볼까요?"
+        "여기는 아직 풍선이 없네요...\n이곳에 방문해서 이야기를 나눠보세요 :)"
       );
       emptyText.setAttribute("font", "#font");
       emptyText.setAttribute("visible", true);
@@ -43,9 +43,6 @@ function init() {
         y: 0,
         z: -4,
       });
-
-      emptyText.setAttribute("handle-move", "");
-      emptyText.className = "move";
 
       emptyText.setAttribute("sound", {
         on: "mouseenter",

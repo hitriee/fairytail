@@ -89,8 +89,6 @@ function VR() {
   const receiveMsgFromChild = (ev: MessageEvent<any>) => {
     if (ev.data === 'denied') {
       navigate(-1);
-    } else if (ev.data === 'create') {
-      navigate('/message/create');
     } else if (ev.data.postId !== undefined && ev.data.postId !== null) {
       setPostId(ev.data.postId);
       navigate(toMessageDetail(ev.data.postId, ev.data.type));

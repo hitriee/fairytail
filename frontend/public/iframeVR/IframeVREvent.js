@@ -29,14 +29,6 @@ AFRAME.registerComponent("handle-click", {
   },
 });
 
-AFRAME.registerComponent("handle-move", {
-  init: function () {
-    this.el.addEventListener("click", function () {
-      window.parent.postMessage("create", "*");
-    });
-  },
-});
-
 AFRAME.registerComponent("limit-distance", {
   init: function () {},
   tick: function () {
