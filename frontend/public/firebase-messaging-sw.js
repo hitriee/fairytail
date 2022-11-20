@@ -5,7 +5,7 @@ importScripts(
 importScripts(
   "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"
 );
-export const iOS = () => {
+const iOS = () => {
   const ua = navigator.userAgent.toLowerCase();
   return (
     ua.includes("ios") ||
