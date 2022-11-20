@@ -35,10 +35,6 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation "org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE"
-	implementation group: 'com.google.cloud', name: 'google-cloud-vision', version: '3.3.0'
-	implementation group: 'org.json', name: 'json', version: '20220924'
-	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 }
 
 dependencyManagement {
