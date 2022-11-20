@@ -27,6 +27,7 @@ function Carousel({onSlideChange, setIsLongClicked, emojiNo}: CarouselProps) {
 
   return (
     <Swiper
+      lazy={{loadPrevNext: true, loadPrevNextAmount: 5}}
       onSwiper={setSwiper}
       touchStartPreventDefault={false}
       initialSlide={Math.floor(Math.random() * 76)}
