@@ -1,0 +1,39 @@
+.like {
+  height: 30vh;
+  width: 100%;
+  display: flex;
+  position: relative;
+
+  &-container {
+    position: absolute;
+    // top: 5vh;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-icon {
+    height: 5vh;
+    margin-right: 2vh;
+    cursor: pointer;
+    &-stable {
+      opacity: 60%;
+    }
+  }
+
+  &-count {
+    margin: 0;
+    font-size: 2.5vh;
+    color: white;
+  }
+
+  &-balloon {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 10%);
+    height: 23vh;
+  }
+}
