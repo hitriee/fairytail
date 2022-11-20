@@ -13,8 +13,7 @@ const iOS =
   (ua.includes("like") &&
     ua.includes("mac") &&
     ua.includes("os") &&
-    ua.includes("x")) ||
-  (ua.includes("safari") && ua.includes("mobile"));
+    ua.includes("x"));
 if (!iOS) {
   const config = {
     apiKey: "AIzaSyC2L6taSK-Ee-zv8Ajsvz2ZtgLl-6kXOcI",
