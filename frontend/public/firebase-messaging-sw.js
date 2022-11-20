@@ -13,8 +13,8 @@ const iOS =
   (ua.includes("like") &&
     ua.includes("mac") &&
     ua.includes("os") &&
-    ua.includes("x") &&
-    ua.includes("safari"));
+    ua.includes("x")) ||
+  (ua.includes("safari") && ua.includes("mobile"));
 if (!iOS) {
   const config = {
     apiKey: "AIzaSyC2L6taSK-Ee-zv8Ajsvz2ZtgLl-6kXOcI",
@@ -31,11 +31,6 @@ if (!iOS) {
 
   //백그라운드 서비스워커 설정
   messaging.onBackgroundMessage((payload) => {
-    // console.log(
-    //   "[firebase-messaging-sw.js] Received background message ",
-    //   payload
-    // );
-
     if (Notification.permission === "granted") {
       // 알림 설정
       const { title } = payload.data;
@@ -51,7 +46,8 @@ if (!iOS) {
         body: "",
         icon: "./windows11/LargeTile.scale-100.png", // web
         // requireInteraction: false,
-        badge: "./android/android-launchericon-72-72.png", // 모바일에서만 - 권장 크기 72px
+        badge: "./introLogo.png", // 모바일에서만 - 권장 크기 72px
+        click_action: "https://k7c209.p.ssafy.io",
       };
       self.registration.showNotification(
         notificationTitle,
