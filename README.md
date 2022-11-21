@@ -185,7 +185,7 @@
 ## 8. 참고 자료
 * [Git/Jira Convention](assets/동하책_Git_Jira_Convention.pdf)
 * [WBS](assets/동하책_WBS.pdf)
-* [기능명세서](assets/동하책_기능명세서.pdf)
+* [기능명세서](assets/동하책_기능명세서.md)
 * [와이어프레임](assets/동하책_와이어프레임.pdf)
 * [사용자흐름도](assets/동하책_사용자흐름도.pdf)
 * [포팅매뉴얼](exec/자율_프로젝트_동하책_포팅매뉴얼.pdf)
