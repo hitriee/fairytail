@@ -183,7 +183,7 @@
 ---
 
 ## 8. 참고 자료
-* [Git/Jira Convention](assets/동하책_Git_Jira_컨벤션.pdf)
+* [Git/Jira Convention](assets/동하책_Git_Jira_Convention.pdf)
 * [WBS](assets/동하책_WBS.pdf)
 * [기능명세서](assets/동하책_기능명세서.pdf)
 * [와이어프레임](assets/동하책_와이어프레임.pdf)
