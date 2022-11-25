@@ -137,5 +137,30 @@ public class TextServiceImpl implements TextService {
         return responseDto;
     }
 
+    @Override
+    public List<TextDetailDto> getVrTextListDateDesc(Double curLat, Double curLng, Long userId) {
+        List<TextEntity> textEntityList = textRepository.findAllByOrderByDateDesc();
+        List<TextDetailDto> textDetailDtoList = new ArrayList<>();
+        List<TextDetailDto> result = new ArrayList<>();
+
+        textEntityList.forEach(v -> {
+            textDetailDtoList.add(modelMapper.map(v, TextDetailDto.class));
+        });
+
+        for (TextDetailDto dto : textDetailDtoList) {
+            Double lat = dto.getLat();
+            Double lng = dto.getLng();
+
+            if (lat >= curLat - 0.01 && lat <= curLat + 0.01 && lng >= curLng - 0.01 && lng <= curLng + 0.01
+                    && (dto.getUserId() == userId || dto.getStatus() == 0)) {
+                result.add(dto);
+            }
+
+            if (result.size() == 25) break;
+        }
+
+        return result;
+    }
+
 
 }

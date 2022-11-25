@@ -26,4 +26,6 @@ public interface TextRepository extends JpaRepository<TextEntity, Long> {
     )
     List<TextEntity> findAllVrMessageLike(Double curLat, Double curLng, Long userId);
 
+    List<TextEntity> findAllByOrderByDateDesc();
+
 }

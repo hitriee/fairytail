@@ -175,8 +175,19 @@ public class TextController {
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
 
+    @ApiOperation(value = "주변 메시지 최신순으로 조회", notes = "위도, 경도 0.01 이내 텍스트 메시지의 목록이 최신순으로 반환됩니다.")
+    @GetMapping("/vr2/latest")
+    public ResponseEntity<HashMap<String, Object>> getVrTextListLatest2(@RequestParam("lat") Double curLat, @RequestParam("lng") Double curLng, @RequestParam Long userId) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        List<TextListResponse> responseVoList = new ArrayList<>();
 
+        List<TextDetailDto> responseDtoList = textService.getVrTextListDateDesc(curLat, curLng, userId);
+        responseDtoList.forEach(v -> responseVoList.add(modelMapper.map(v, TextListResponse.class)));
 
+        resultMap.put("data", responseVoList);
+        resultMap.put("message", SUCCESS);
 
-
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
+    
 }

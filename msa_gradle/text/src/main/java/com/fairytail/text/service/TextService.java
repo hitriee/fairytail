@@ -21,4 +21,6 @@ public interface TextService {
 
     TextDetailDto updateTextStatus(TextDetailDto requestDto);
 
+    List<TextDetailDto> getVrTextListDateDesc(Double curLat, Double curLng, Long userId);
+
 }
