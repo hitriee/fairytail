@@ -18,9 +18,9 @@ spring:
   # mariadb database setting
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://k7c209.p.ssafy.io:3306/text?useSSL=false&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
-    username: dongsim
-    password: dongsim12!
+    url: ''
+    username: ''
+    password: ''
 
   # jpa setting
   jpa:
@@ -55,4 +55,4 @@ eureka:
     fetch-registry: true    # client 등록 시, true로 세팅 - fetch(build) 될 때마다 새로 등록하여 사용
     register-with-eureka: true       # client 등록 시, true로 세팅
     service-url:
-      defaultZone: http://k7c209.p.ssafy.io:8761/eureka
+      defaultZone: ''

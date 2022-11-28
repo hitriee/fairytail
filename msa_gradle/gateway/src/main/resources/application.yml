@@ -6,7 +6,7 @@ eureka:
         register-with-eureka: true
         fetch-registry: true
         service-url:
-          defaultZone: http://k7c209.p.ssafy.io:8761/eureka
+          defaultZone: ''
   instance:
     ip-address: true
 
@@ -19,7 +19,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "https://k7c2091.p.ssafy.io"
+            allowedOrigins: ''
             allow-credentials: true
             allowed-headers:
               - '*'
